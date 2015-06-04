@@ -1,6 +1,6 @@
 package cdio.server;
 
-import cdio.client.GreetingService;
+import cdio.client.Service;
 import cdio.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -8,8 +8,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * The server-side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+public class ServiceImpl extends RemoteServiceServlet implements
+		Service {
 
 	public String greetServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 

@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>cdio.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>cdio.server.ServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
