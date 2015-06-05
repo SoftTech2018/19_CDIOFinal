@@ -4,13 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import dto.OperatoerDTO;
-
-public interface IOperatoerDAO {
-	OperatoerDTO getOperatoer(int oprId) throws DALException;
-	List<OperatoerDTO> getOperatoerList() throws DALException;
-	void createOperatoer(OperatoerDTO opr) throws DALException;
-	void updateOperatoer(OperatoerDTO opr) throws DALException;
+public interface IDAO {
+	DTO getOperatoer(int oprId) throws DALException;
+	List<DTO> getOperatoerList() throws DALException;
+	void createOperatoer(DTO opr) throws DALException;
+	void updateOperatoer(DTO opr) throws DALException;
 	public ResultSet getView() throws DALException;
 	public void callProcedure() throws DALException;
 	public void setFunction() throws DALException;

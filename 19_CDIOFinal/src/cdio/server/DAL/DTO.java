@@ -7,7 +7,7 @@ package cdio.server.DAL;
  * @version 1.2
  */
 
-public class OperatoerDTO
+public class DTO
 {
 	/** Operatoer-identifikationsnummer (opr_id) i omraadet 1-99999999. Vaelges af brugerne */
 	int oprId;                     
@@ -20,7 +20,7 @@ public class OperatoerDTO
 	/** Operatoer password min. 7 max. 8 karakterer */
 	String password;            
 
-	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password)
+	public DTO(int oprId, String oprNavn, String ini, String cpr, String password)
 	{
 		this.oprId = oprId;
 		this.oprNavn = oprNavn;
@@ -29,7 +29,7 @@ public class OperatoerDTO
 		this.password = password;
 	}
 	
-    public OperatoerDTO(OperatoerDTO opr)
+    public DTO(DTO opr)
     {
     	this.oprId = opr.getOprId();
     	this.oprNavn = opr.getOprNavn();

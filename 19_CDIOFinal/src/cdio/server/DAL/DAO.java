@@ -6,46 +6,41 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
 
-import connector.Connector;
-import daointerfaces.DALException;
-import daointerfaces.IOperatoerDAO;
-import dto.OperatoerDTO;
-
-public class OperatoerDAO implements IOperatoerDAO {
+public class DAO implements IDAO {
 	
 	TextReader txt;
 	
-	public OperatoerDAO() throws FileNotFoundException, DALException{
+	public DAO() throws FileNotFoundException, DALException{
 		txt = new TextReader();
 		Connector.doUpdate("CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'");
 		this.setProcedure();
 	}
 	
-	public OperatoerDTO getOperatoer(int oprId) throws DALException {
+	public DTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery(txt.getOperatoer(oprId));
 	    try {
 	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"));
+	    	return new DTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException {		
+	public void createOperatoer(DTO opr) throws DALException {		
 			Connector.doUpdate(txt.createOperatoer(opr));
 	}
 	
-	public void updateOperatoer(OperatoerDTO opr) throws DALException {
+	public void updateOperatoer(DTO opr) throws DALException {
 		Connector.doUpdate(txt.updateOperatoer(opr));
 	}
 	
-	public List<OperatoerDTO> getOperatoerList() throws DALException {
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+	public List<DTO> getOperatoerList() throws DALException {
+		List<DTO> list = new ArrayList<DTO>();
 		ResultSet rs = Connector.doQuery(txt.getCommand(4));
 		try
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password")));
+				list.add(new DTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
