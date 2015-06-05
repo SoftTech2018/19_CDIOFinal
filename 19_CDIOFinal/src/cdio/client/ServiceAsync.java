@@ -1,5 +1,7 @@
 package cdio.client;
 
+import cdio.shared.UserDTO;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
@@ -8,4 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface ServiceAsync {
 	void greetServer(String input, AsyncCallback<String> callback)
 			throws IllegalArgumentException;
+	
+	void login(UserDTO user, AsyncCallback<String> callback);
+
+	void getRole(String token, AsyncCallback<String> asyncCallback);
 }

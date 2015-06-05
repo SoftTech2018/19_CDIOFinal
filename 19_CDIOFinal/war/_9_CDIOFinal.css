@@ -1,34 +1,102 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+html {
+	width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 5px;
+	horizontal-alignment: center;
+	background-color: white;
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+.TextBox {
+	font-size: 12pt;
+	width: 200px;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+.TextLabel-ErrorMessage {
+	font-size: 10pt;
+	font-weight: bold;
+	color: red;
 }
 
-.dialogVPanel {
-  margin: 5px;
+.TextLabel {
+	font-size: 10pt;
 }
 
-.serverResponseLabelError {
-  color: red;
+.Header {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	height: 120px;
+	color: white;
+	text-align: center;
+	font-size: 40px;
+	padding: 5px;
+	padding-left: 40px;
+	font-family: Verdana;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.Menu {
+	line-height: 20px;
+	background: linear-gradient(#eeeeee , #FFFFFF);
+	min-height: 400px; 
+	width: 160px;
+	float: left;
+	padding: 10px;
+}
+
+.Content {
+	width: 624px;
+	padding: 10px;
+	float: left;
+}
+
+.Footer {
+	background: linear-gradient(to right, #95B0ED , #4671D5 , #200772);
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+	font-family: Courier;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	float: bottom;
+}
+
+.Content-Login {
+	width: 600px;
+	padding: 25px;
+	float: center;
+	min-height: 400px;
+}
+
+.Header-Login {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	height: 60px;
+	color: white;
+	text-align: center;
+	font-size: 20px;
+	padding: 15px;
+	font-family: Verdana;
+}
+
+.Footer-Login {
+	background: linear-gradient(to right, #95B0ED , #4671D5 , #200772);
+	color: white;
+	clear: both;
+	text-align: center;
+	padding: 10px;
+	font-family: Courier;
+	border-radius: 0px 0px 25px 100px;
+	height: 25px;
+	float: bottom;
+}
+
+.FlexTable-Login {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.TextLabel-Login {
+	font-size: 10pt;
+	color: #555555;
 }
