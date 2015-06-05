@@ -84,7 +84,7 @@ public class MenuController implements IMenuController {
 					if(nameInput.equals(name)) {
 						menu.show(nameInput+" bekraftet.");
 						mc.setOprID(inputInt);
-						return GET_PROD_NR;
+						return SETUP;
 					} else {
 						menu.show(nameInput);
 						menu.show("Forkert bruger. Prov igen.");
@@ -112,7 +112,7 @@ public class MenuController implements IMenuController {
 				}
 			}
 		},
-		GET_PROD_NR {
+		SETUP {
 			@Override
 			String desc() {
 				return "State: GET_PROD_NR";
@@ -143,11 +143,11 @@ public class MenuController implements IMenuController {
 					if(prodInput.equals(product)){
 						menu.show("Produkt bekraftet.");
 						mc.setVareID(inputInt);
-						return SET_CONTAINER;
+						return CLEAR;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
 						trans.RM20("Forkert produkt. Prov igen.", "OK", "?");
-						return GET_PROD_NR;
+						return SETUP;
 					}					
 				} catch (NumberFormatException e) {
 					try {
@@ -157,7 +157,7 @@ public class MenuController implements IMenuController {
 						System.out.println("IOException fejl");
 						System.exit(1);
 					}
-					return GET_PROD_NR;
+					return SETUP;
 				} catch (IOException e){
 					try {
 						menu.show("Produkt findes ikke. Prov igen.");
@@ -166,11 +166,11 @@ public class MenuController implements IMenuController {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
 						System.exit(1);
 					}
-					return GET_PROD_NR;
+					return SETUP;
 				}				
 			}
 		},
-		SET_CONTAINER {
+		CLEAR {
 			@Override
 			String desc() {
 				return "State: SET_CONTAINER";
@@ -193,11 +193,11 @@ public class MenuController implements IMenuController {
 						menu.show("Beholder pasat");
 						mc.setTara(Double.parseDouble(trans.T()));
 						menu.show("Vagt tareret: "+mc.getTara());
-						return ADD_PRODUCT;
+						return WEIGH;
 					} else {
 						menu.show("Beholder ej pasat. Prov igen.");
 						trans.RM20("Beholder ej pasat. Prov igen.", "OK", "?");
-						return SET_CONTAINER;
+						return CLEAR;
 					}					
 				} catch (NumberFormatException | IOException e) {
 					try {
@@ -207,11 +207,11 @@ public class MenuController implements IMenuController {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
 						System.exit(1);
 					}
-					return SET_CONTAINER;
+					return CLEAR;
 				}				
 			}
 		},
-		ADD_PRODUCT {
+		WEIGH {
 			@Override
 			String desc() {
 				return "State: ADD_PRODUCT";
@@ -241,7 +241,7 @@ public class MenuController implements IMenuController {
 					} else {
 						menu.show("Vare ej afvejet. Prov igen.");
 						trans.RM20("Vare ej afvejet. Prov igen.", "OK", "?");
-						return ADD_PRODUCT;
+						return WEIGH;
 					}
 
 				} catch (NumberFormatException | IOException e) {
@@ -252,7 +252,7 @@ public class MenuController implements IMenuController {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
 						System.exit(1);
 					}
-					return ADD_PRODUCT;
+					return WEIGH;
 				}
 			}
 		},
@@ -317,7 +317,7 @@ public class MenuController implements IMenuController {
 					trans.P111("");
 					if (input.equals(answer)) {
 						menu.show("Proceduren genstartes.");
-						return GET_PROD_NR;
+						return SETUP;
 					} else {
 						menu.show("Proceduren afbrudt af brugeren.");
 						return START;
