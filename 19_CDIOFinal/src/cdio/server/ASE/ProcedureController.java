@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import cdio.server.DAL.DALException;
 import cdio.server.DAL.DTO;
 import cdio.server.DAL.IDAO;
 
@@ -78,7 +79,7 @@ public class ProcedureController implements IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
-					name = fileAccess.getOpr(inputInt);
+					name = dao.getOperatoer(inputInt).getOprNavn();
 					menu.show("Bruger valgt: "+name+". Er dette korrekt?");		
 					nameInput = trans.RM20("Bekraft bruger:",name," ?");
 					if (nameInput.toLowerCase().equals("q")){
@@ -113,6 +114,10 @@ public class ProcedureController implements IProcedureController {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
 						System.exit(1);
 					}
+					return START;
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 					return START;
 				}
 			}
