@@ -1,6 +1,6 @@
 package cdio.server.ASE;
 
-public class Menu implements IMenu {
+public class Procedure implements IProcedure {
 
 	/* (non-Javadoc)
 	 * @see wcuMain.IMenu#show(java.lang.String)

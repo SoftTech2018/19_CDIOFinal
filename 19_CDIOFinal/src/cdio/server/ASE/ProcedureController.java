@@ -7,15 +7,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class MenuController implements IMenuController {
+public class ProcedureController implements IProcedureController {
 
 	private State state;
-	private IMenu menu;
+	private IProcedure menu;
 	private ITransmitter trans;
 	private int opr_nr,vare_nr;
 	private double afvejning,tara;
 
-	public MenuController(IMenu menu, IReadFiles rf, String host, int port, ITransmitter trans) {
+	public ProcedureController(IProcedure menu, IReadFiles rf, String host, int port, ITransmitter trans) {
 		this.menu = menu;
 		this.trans = trans;
 		this.state = State.START;
@@ -59,7 +59,7 @@ public class MenuController implements IMenuController {
 				return "State: START"; 
 			}
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				String input = null,name,nameInput;
 				int inputInt = 0;
 				try{
@@ -115,15 +115,15 @@ public class MenuController implements IMenuController {
 		SETUP {
 			@Override
 			String desc() {
-				return "State: GET_PROD_NR";
+				return "State: SETUP";
 			}
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				String input = null, product, prodInput;
 				int inputInt = 0;
 				try{
 					menu.show("Indtast varenummer:");
-					input = trans.RM20("Tast produkt ID (1-9):","","");
+					input = trans.RM20("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -167,7 +167,8 @@ public class MenuController implements IMenuController {
 						System.exit(1);
 					}
 					return SETUP;
-				}				
+				}
+				
 			}
 		},
 		CLEAR {
@@ -177,9 +178,18 @@ public class MenuController implements IMenuController {
 			}
 
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
+					menu.show("Pasat beholder og bekraft.");
+					input = trans.RM20("Ingen belastning, bekraeft:","OK","?");
+					menu.show(input);
+					if(input.toLowerCase().equals("q")){
+						menu.show("Proceduren afbrudt af brugeren");
+						trans.P111("");
+						return START;
+					}
+					trans.T();
 					menu.show("Pasat beholder og bekraft.");
 					input = trans.RM20("Pasat beholder, bekraft:","OK","?");
 					menu.show(input);
@@ -217,9 +227,36 @@ public class MenuController implements IMenuController {
 				return "State: ADD_PRODUCT";
 			}
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
-				String input = null, answer = "OK";
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
+				String input = null, answer = "OK",raavare,raavareInput;
+				int inputInt = 0;
 				try{
+					menu.show("Indtast varenummer:");
+					input = trans.RM20("Tast raavarebatch nr.:","","");
+					menu.show(input);
+					if(input.toLowerCase().equals("q")){
+						menu.show("Proceduren afbrudt af brugeren");
+						trans.P111("");
+						return START;
+					}
+					trans.P111("");
+					inputInt = Integer.parseUnsignedInt(input);
+					raavare = fileAccess.getProductName(inputInt);
+					menu.show("Produkt valgt: "+raavare+". Er dette korrekt?");
+					raavareInput = trans.RM20("Bekraft produkt:",raavare," ?");
+					if (raavareInput.toLowerCase().equals("q")){
+						menu.show("Proceduren afbrudt af brugeren");
+						trans.P111("");
+						return START;
+					}
+					if(raavareInput.equals(raavare)){
+						menu.show("Produkt bekraftet.");
+						mc.setVareID(inputInt);
+					} else {
+						menu.show("Forkert produkt. Prov igen.");
+						trans.RM20("Forkert produkt. Prov igen.", "OK", "?");
+						return WEIGH;
+					}		
 					menu.show("Afvej vare og bekraft.");
 					input = trans.RM20("Afvej vare og bekraft:","OK","?");
 					menu.show(input);
@@ -262,7 +299,7 @@ public class MenuController implements IMenuController {
 				return "State: REMOVE_CONTAINER";
 			}
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
 					menu.show("Fjern beholder og bekraft.");
@@ -308,7 +345,7 @@ public class MenuController implements IMenuController {
 			}
 
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
 					menu.show("Foretag ny vejning?");
@@ -342,11 +379,11 @@ public class MenuController implements IMenuController {
 			}
 
 			@Override
-			State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc) {
+			State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc) {
 				return STOP;
 			}
 		};
-		abstract State changeState(IMenu menu, IReadFiles fileAccess, ITransmitter trans, MenuController mc);
+		abstract State changeState(IProcedure menu, IReadFiles fileAccess, ITransmitter trans, ProcedureController mc);
 		abstract String desc();		
 	}
 

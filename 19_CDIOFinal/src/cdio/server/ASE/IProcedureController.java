@@ -1,6 +1,6 @@
 package cdio.server.ASE;
 
-public interface IMenuController {
+public interface IProcedureController {
 
 	public abstract void start();
 
