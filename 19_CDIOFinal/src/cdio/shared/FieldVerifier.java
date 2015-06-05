@@ -39,4 +39,27 @@ public class FieldVerifier {
 		}
 		return name.length() > 3;
 	}
+	
+	public static boolean isValidUserId(String id){
+		try {
+			int i = Integer.parseInt(id);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
+	
+	public static boolean isValidPassword(String pass){
+		for (int i=0; i<pass.length(); i++){
+			char x = pass.charAt(i);
+			if (x == '&' || x == '<' || x == '>'){
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

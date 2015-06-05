@@ -1,6 +1,7 @@
 package cdio.server;
 
 import cdio.client.Service;
+import cdio.server.DAL.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
@@ -19,23 +20,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	public String greetServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException(
-					"Name must be at least 4 characters long");
-		}
-
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-
-		// Escape data from the client to avoid cross-site script vulnerabilities.
-		input = escapeHtml(input);
-		userAgent = escapeHtml(userAgent);
-
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-				+ ".<br><br>It looks like you are using:<br>" + userAgent;
+		return input;
 	}
 
 	/**
@@ -54,9 +39,20 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	@Override
 	public String login(UserDTO user) throws Exception {
+		String userID = escapeHtml(Integer.toString(user.getUserId()));
 		String password = escapeHtml(user.getPassword());
-		UserDTO db_user = new UserDTO("1", "test"); //dal.getUser(userID);
-		db_user.setAdmin(true); // TESTKODE SKAL SLETTES
+		
+		// Inputvalidering på serveren
+		if (!FieldVerifier.isValidUserId(userID) || !FieldVerifier.isValidPassword(password))
+			throw new Exception("Adgang nægtet.");
+		
+		UserDTO db_user;
+//		try {
+			db_user = new UserDTO("1", "test"); //dal.getUser(userID);
+			db_user.setAdmin(true); // TESTKODE SKAL SLETTES	
+//		} catch (DALException e){
+//			throw new Exception("Forkert bruger ID.");
+//		}
 		String token;		
 		
 		if (db_user.getPassword().equals(password)){
@@ -83,7 +79,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 //				return "FARMACEUT";
 //			if (user.isVaerkfoerer())
 //				return "VAERKFOERER";
-////			if (user.isOperatoer())
+////			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
 ////				return "OPERATOER";
 //			throw new Exception("Bruger har ingen adgang.");
 			return "ADMIN"; // TESTKODE SKAL SLETTES

@@ -4,6 +4,8 @@ import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -15,12 +17,16 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import cdio.shared.FieldVerifier;
+
 public class Login extends Composite {
 
 	private TextBox userName;
 	private PasswordTextBox password;
 	private Label errorMsg;
 	private VerticalPanel vPane;
+	private Button send;
+	private boolean passValid, idValid;
 
 	public Login(final ServiceAsync service){
 		vPane = new VerticalPanel();
@@ -32,7 +38,8 @@ public class Login extends Composite {
 		Label passTxt = new Label("Adgangskode:");
 		userName = new TextBox();
 		password = new PasswordTextBox();
-		Button send = new Button("Login");
+		send = new Button("Login");
+		send.setEnabled(false);
 		Label header = new Label("Distribueret Afvejningssystem");
 		errorMsg = new Label("");
 		Label footer = new Label("Copyright © Gruppe 19");
@@ -88,6 +95,46 @@ public class Login extends Composite {
 						vPane.add(new Controller(token, service)); 
 					}
 				});
+			}
+		});
+		
+		// Tjek om user-id input er gyldigt
+		userName.addKeyUpHandler(new KeyUpHandler(){
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.isValidUserId(userName.getText())) {
+					userName.setStyleName("TextBox-Error");
+					idValid = false;
+				}
+				else {
+					userName.setStyleName("TextBox");
+					idValid = true;
+				}
+
+				if (passValid&&idValid)
+					send.setEnabled(true);
+				else
+					send.setEnabled(false);
+			}
+		});
+		
+		// Tjek om password input er gyldigt
+		password.addKeyUpHandler(new KeyUpHandler(){
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+				if (!FieldVerifier.isValidPassword(password.getText())) {
+					password.setStyleName("TextBox-Error");
+					passValid = false;
+				}
+				else {
+					password.setStyleName("TextBox");
+					passValid = true;
+				}
+
+				if (passValid&&idValid)
+					send.setEnabled(true);
+				else
+					send.setEnabled(false);
 			}
 		});
 	}
