@@ -10,7 +10,10 @@ public class Controller extends Composite {
 	private String token;
 	private ServiceAsync service;
 	private VerticalPanel vPane;
-	private Composite content, header, menu, footer;
+	private Menu menu;
+//	private Content content;
+	private Header header;
+	private Footer footer;
 	private Controller con;
 
 	public Controller(String token, final ServiceAsync service) {
@@ -40,24 +43,24 @@ public class Controller extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
-				new Menu(con, result);
+				menu.changeMenu(con, result); // Lav en specifik menu baseret på brugerens rolle
 			}
 		});
 	}
 	
-	public void setContent(Composite content){
-		this.content = content;
-	}
+//	public void setContent(Content content){
+//		this.content = content;
+//	}
 	
-	public void setMenu(Composite menu){
+	public void setMenu(Menu menu){
 		this.menu = menu;
 	}
 	
-	public void setHeader(Composite header){
+	public void setHeader(Header header){
 		this.header = header;
 	}
 	
-	public void setFooter(Composite footer){
+	public void setFooter(Footer footer){
 		this.footer = footer;
 	}
 	

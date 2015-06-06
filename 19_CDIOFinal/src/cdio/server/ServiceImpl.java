@@ -71,7 +71,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public String getRole(String token) throws Exception {
-		if (th.validateToken(token) != null){
+		return "ADMIN"; // TESTKODE SKAL SLETTES
+//		if (th.validateToken(token) != null){
 //			UserDTO user = dal.getUser(th.getUserID(token));
 //			if (user.isAdmin())
 //				return "ADMIN";
@@ -82,8 +83,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 ////			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
 ////				return "OPERATOER";
 //			throw new Exception("Bruger har ingen adgang.");
-			return "ADMIN"; // TESTKODE SKAL SLETTES
-		}
-		throw new Exception("Adgang nægtet.");
+//		}
+//		throw new Exception("Adgang nægtet.");
 	}
 }

@@ -113,3 +113,7 @@ html {
 	font-size: 16pt;
 	width: 200px;
 }
+
+.FlexTable-Header{
+	font-weight: bold;
+}
