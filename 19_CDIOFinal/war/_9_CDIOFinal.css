@@ -26,12 +26,15 @@ html {
 	border-radius: 25px 120px 0px 0px; 
 	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
 	height: 120px;
+	padding: 30px;
+	width: 1024px;
+}
+
+.Header-Text{
+	font-family: Verdana;
+	font-size: 40px;
 	color: white;
 	text-align: center;
-	font-size: 40px;
-	padding: 5px;
-	padding-left: 40px;
-	font-family: Verdana;
 }
 
 .Menu {
@@ -51,14 +54,18 @@ html {
 
 .Footer {
 	background: linear-gradient(to right, #95B0ED , #4671D5 , #200772);
-	color: white;
 	clear: both;
-	text-align: center;
-	padding: 10px;
-	font-family: Courier;
+	padding: 15px;
 	border-radius: 0px 0px 25px 100px;
 	height: 50px;
 	float: bottom;
+	width: 1024px;
+}
+
+.Footer-Text {
+	font-family: Courier;
+	color: white;
+	text-align: center;
 }
 
 .Content-Login {

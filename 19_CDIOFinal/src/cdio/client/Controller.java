@@ -1,65 +1,72 @@
 package cdio.client;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Controller extends Composite {
 
 	private String token;
 	private ServiceAsync service;
-	private Label errorMsg;
 	private VerticalPanel vPane;
+	private Composite content, header, menu, footer;
+	private Controller con;
 
 	public Controller(String token, final ServiceAsync service) {
 		this.token = token;
 		this.service = service;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
+		con = this;
 		
-		errorMsg = new Label();
-		errorMsg.setStyleName("ErrorMsg");
+		// Lav de indledende elementer
+		header = new Header();
+		footer = new Footer();
+		menu = new Menu(con);
+		
+		// Tilføj basis-elementerne til controlleren
+		vPane.add(header);
+		vPane.add(menu);
+//		vPane.add(content);
+		vPane.add(footer);
 
 		service.getRole(token, new AsyncCallback<String>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				errorMsg.setText(caught.getMessage());
-				vPane.add(errorMsg);
+				Window.alert(caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(String result) {
-				errorMsg.setText(result);
-				vPane.add(errorMsg);
-				switch (result.toUpperCase()){
-				case "ADMIN":
-					// TO DO
-					break;
-				case "FARMACEUT":
-					// TO DO
-					break;
-				case "VAERKFOERER":
-					// TO DO
-					break;
-				default:
-					errorMsg.setText("Der er sket en fejl. Din rolle kunne ikke genkendes");
-					vPane.add(errorMsg);
-					Button ok = new Button("Ok");
-					ok.addClickHandler(new ClickHandler(){
-						@Override
-						public void onClick(ClickEvent event) {
-							new Login(service);	
-						}
-					});
-				}
+				new Menu(con, result);
 			}
-
 		});
+	}
+	
+	public void setContent(Composite content){
+		this.content = content;
+	}
+	
+	public void setMenu(Composite menu){
+		this.menu = menu;
+	}
+	
+	public void setHeader(Composite header){
+		this.header = header;
+	}
+	
+	public void setFooter(Composite footer){
+		this.footer = footer;
+	}
+	
+	public String getToken(){
+		return token;
+	}
+	
+	public ServiceAsync getService(){
+		return service;
 	}
 
 }
