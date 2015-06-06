@@ -56,6 +56,7 @@ public class Login extends Composite {
 		errorMsg.setStyleName("TextLabel-ErrorMessage");
 		header.setStyleName("Header-Login");
 		footer.setStyleName("Footer-Login");
+		vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		// Tilføj elementerne til FlexTable
 		FlexTable ft = new FlexTable();

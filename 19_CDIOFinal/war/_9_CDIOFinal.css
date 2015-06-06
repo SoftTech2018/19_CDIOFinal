@@ -69,10 +69,11 @@ html {
 }
 
 .Content-Login {
-	width: 600px;
+	width: 1024px;
 	padding: 25px;
 	float: center;
 	min-height: 400px;
+	horizontal-alignment: center;
 }
 
 .Header-Login {
@@ -84,6 +85,7 @@ html {
 	font-size: 20px;
 	padding: 15px;
 	font-family: Verdana;
+	width: 600px;
 }
 
 .Footer-Login {
@@ -96,6 +98,7 @@ html {
 	border-radius: 0px 0px 25px 100px;
 	height: 25px;
 	float: bottom;
+	width: 600px;
 }
 
 .FlexTable-Login {
