@@ -1,6 +1,7 @@
 package cdio.server;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 import cdio.client.Service;
 import cdio.server.ASE.IProcedure;
@@ -9,6 +10,7 @@ import cdio.server.ASE.ITransmitter;
 import cdio.server.ASE.Procedure;
 import cdio.server.ASE.ProcedureController;
 import cdio.server.ASE.Transmitter;
+import cdio.server.DAL.Connector;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.DAO;
 import cdio.server.DAL.IDAO;
@@ -48,6 +50,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		IProcedure menu = new Procedure();
 		
 		try {
+			Connector con = new Connector();
 			IDAO dao = new DAO();
 			ITransmitter trans = new Transmitter();
 			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
@@ -59,6 +62,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			e.printStackTrace();
 		} catch (DALException e){
 			System.out.println("DALException");
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
