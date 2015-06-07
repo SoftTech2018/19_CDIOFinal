@@ -1,8 +1,12 @@
 package cdio.client;
 
+import cdio.client.contents.OpretOpr;
+import cdio.client.contents.RetOpr;
+import cdio.client.contents.SletOpr;
+import cdio.client.contents.VisOpr;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -97,15 +101,43 @@ public class Menu extends Composite {
 		ft.setText(0, 0, "Admin");
 
 		Anchor vis = new Anchor("Vis operatører");
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new VisOpr());
+			}
+		});
 		ft.setWidget(1, 0, vis);
 
 		Anchor ret = new Anchor("Ret operatører");
+		ret.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new RetOpr());
+			}
+		});
 		ft.setWidget(2, 0, ret);
 
 		Anchor opret = new Anchor("Opret operatør");
+		opret.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new OpretOpr());
+			}
+		});
 		ft.setWidget(3, 0, opret);
 
 		Anchor slet = new Anchor("Slet operatør");
+		slet.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new SletOpr());
+			}
+		});
 		ft.setWidget(4, 0, slet);
 
 		return ft;

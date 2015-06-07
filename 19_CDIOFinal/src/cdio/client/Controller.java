@@ -16,7 +16,7 @@ public class Controller extends Composite {
 	private VerticalPanel vPane;
 	private HorizontalPanel hPane;
 	private Menu menu;
-	private Composite content;
+	private VerticalPanel content;
 	private Header header;
 	private Footer footer;
 
@@ -31,7 +31,8 @@ public class Controller extends Composite {
 		header = new Header();
 		footer = new Footer();
 		menu = new Menu(this);
-		content = new StartPage();
+		content = new VerticalPanel();
+		content.add(new StartPage());
 		
 		// Sæt style på hver element (bestemmer delvis placering)
 		header.setStyleName("Header");
@@ -61,20 +62,10 @@ public class Controller extends Composite {
 		});
 	}
 	
+	// Fjerner content og erstatter det med den tilsendte widget
 	public void setContent(Composite content){
-		this.content = content;
-	}
-	
-	public void setMenu(Menu menu){
-		this.menu = menu;
-	}
-	
-	public void setHeader(Header header){
-		this.header = header;
-	}
-	
-	public void setFooter(Footer footer){
-		this.footer = footer;
+		this.content.clear();
+		this.content.add(content);
 	}
 	
 	public String getToken(){

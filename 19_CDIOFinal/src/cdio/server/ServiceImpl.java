@@ -13,14 +13,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
+	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
+
 	private TokenHandler th;
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
-	}
-
-	public String greetServer(String input) throws IllegalArgumentException {
-		return input;
 	}
 
 	/**
@@ -39,6 +37,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	@Override
 	public String login(UserDTO user) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
+		
 		String userID = escapeHtml(Integer.toString(user.getUserId()));
 		String password = escapeHtml(user.getPassword());
 		
@@ -71,6 +72,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public String getRole(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
+		
 		if (th.validateToken(token) != null){
 			return "ADMIN"; // TESTKODE SKAL SLETTES
 //			UserDTO user = dal.getUser(th.getUserID(token));
@@ -89,6 +93,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public String getUsername(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
+		
 		if (th.validateToken(token) != null){
 //			UserDTO user = dal.getUser(Integer.parseInt(th.getUserID(token)));
 //			return user.getName();
