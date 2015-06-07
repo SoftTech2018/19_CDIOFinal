@@ -12,8 +12,8 @@ public class DAO implements IDAO {
 	
 	public DAO() throws FileNotFoundException, DALException{
 		txt = new TextReader();
-		Connector.doUpdate("CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'");
-		this.setProcedure();
+//		Connector.doUpdate("CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'");
+//		this.setProcedure();
 	}
 	
 	public DTO getOperatoer(int oprId) throws DALException {

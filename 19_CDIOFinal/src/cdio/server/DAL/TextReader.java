@@ -15,7 +15,7 @@ public class TextReader {
 	private String illegalString;
 	
 	public TextReader() throws FileNotFoundException{
-		sqlFileCommands = new File("files/sqlCommands.txt");
+		sqlFileCommands = new File("WEB-INF/sqlCommands.txt");
 		sqlCommands = readFile(sqlFileCommands);
 		illegalString = "#";
 	}

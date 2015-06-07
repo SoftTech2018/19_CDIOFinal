@@ -13,12 +13,14 @@ public class Transmitter implements ITransmitter {
 	public void connected(BufferedReader in, PrintWriter out){
 		this.in = in;
 		this.out = out;
-		try {
-			System.out.println(in.readLine());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			System.out.println("pre rd.ln");
+//			System.out.println(in.readLine());
+//			System.out.println("post rd.ln");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	/* (non-Javadoc)

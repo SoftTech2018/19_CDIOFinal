@@ -1,7 +1,17 @@
 package cdio.server;
 
+import java.io.FileNotFoundException;
+
 import cdio.client.Service;
+import cdio.server.ASE.IProcedure;
+import cdio.server.ASE.IProcedureController;
+import cdio.server.ASE.ITransmitter;
+import cdio.server.ASE.Procedure;
+import cdio.server.ASE.ProcedureController;
+import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.DALException;
+import cdio.server.DAL.DAO;
+import cdio.server.DAL.IDAO;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
@@ -19,6 +29,37 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
+		runASE();
+	}
+	
+	public void runASE(){
+		int port;
+		String host;
+		
+//		if (args.length == 2){
+//			port = Integer.parseInt(args[1]);
+//			host = args[0];
+//		}
+//		else {
+			port = 8000;
+			host = "localhost";			
+//		}
+		
+		IProcedure menu = new Procedure();
+		
+		try {
+			IDAO dao = new DAO();
+			ITransmitter trans = new Transmitter();
+			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
+			Thread menuThread = new Thread((Runnable) menuCon);
+			menuThread.start();
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("Noget i filbehandlingen gik grueligt galt :-( Kontakt udvikleren.");
+			e.printStackTrace();
+		} catch (DALException e){
+			System.out.println("DALException");
+		}
 	}
 
 	/**

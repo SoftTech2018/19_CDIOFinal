@@ -11,7 +11,7 @@ import cdio.server.DAL.DALException;
 import cdio.server.DAL.DTO;
 import cdio.server.DAL.IDAO;
 
-public class ProcedureController implements IProcedureController {
+public class ProcedureController implements Runnable, IProcedureController {
 
 	private State state;
 	private IProcedure menu;
@@ -19,13 +19,23 @@ public class ProcedureController implements IProcedureController {
 	private IDAO dao;
 	private int opr_nr,vare_nr;
 	private double afvejning,tara;
+	private int port;
+	private String host;
 
 	public ProcedureController(IProcedure menu, IDAO dao, String host, int port, ITransmitter trans) {
 		this.menu = menu;
 		this.trans = trans;
 		this.dao = dao;
-		this.state = State.START;
+		this.host = host;
+		this.port = port;
+		this.state = State.START;		
+	}
+	
+
+	@Override
+	public void run() {
 		connect(host, port);
+		
 	}
 
 	@Override
@@ -33,14 +43,14 @@ public class ProcedureController implements IProcedureController {
 		try (Socket	socket = new Socket(host, port);
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
-			trans.connected(in, out);
+			trans.connected(in, out);			
 			start();
 		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException fejl");
-			System.exit(1);
+//			System.exit(1);
 		} catch (IOException e) {
-			System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-			System.exit(1);
+			System.out.println("Fejl ved forbindelse til vaegten. Programmet lukket.");
+//			System.exit(1);
 		}
 	}
 
@@ -428,4 +438,5 @@ public class ProcedureController implements IProcedureController {
 	private void setTara(double tara){
 		this.tara=tara;
 	}
+
 }
