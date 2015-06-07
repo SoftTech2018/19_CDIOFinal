@@ -14,4 +14,6 @@ public interface ServiceAsync {
 	void login(UserDTO user, AsyncCallback<String> callback);
 
 	void getRole(String token, AsyncCallback<String> asyncCallback);
+
+	void getUsername(String token, AsyncCallback<String> asyncCallback);
 }

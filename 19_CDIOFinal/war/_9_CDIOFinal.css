@@ -47,7 +47,7 @@ html {
 }
 
 .Content {
-	width: 624px;
+	width: 864px;
 	padding: 10px;
 	float: left;
 }
@@ -119,8 +119,29 @@ html {
 
 .FlexTable-Header{
 	font-weight: bold;
+	color: #555555;
 }
 
 .FlexTable-Menu {
 	width: 100%;
+}
+
+.FlexTable-Userinfo{
+	border-radius: 10px 10px 10px 10px; 
+	background:  linear-gradient(#FFFFFF, #eeeeee);
+	padding: 5px;
+	width: 100%;
+}
+
+.Button-Logud{
+	height: 2em;
+	font-size: 11px;
+	padding: 0px;
+	margin: 0px;
+	width: 40px;	
+}
+
+.TextLabel-Logud{
+	font-size: 11px;
+	color: #555555;
 }

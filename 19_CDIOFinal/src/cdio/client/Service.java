@@ -15,4 +15,6 @@ public interface Service extends RemoteService {
 	String login(UserDTO user) throws Exception;
 	
 	String getRole(String token) throws Exception;
+	
+	String getUsername(String token) throws Exception;
 }

@@ -1,8 +1,11 @@
 package cdio.client;
 
+import cdio.client.contents.StartPage;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -11,28 +14,36 @@ public class Controller extends Composite {
 	private String token;
 	private ServiceAsync service;
 	private VerticalPanel vPane;
+	private HorizontalPanel hPane;
 	private Menu menu;
-//	private Content content;
+	private Composite content;
 	private Header header;
 	private Footer footer;
-	private Controller con;
 
 	public Controller(String token, final ServiceAsync service) {
 		this.token = token;
 		this.service = service;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
-		con = this;
+		hPane = new HorizontalPanel();
 		
 		// Lav de indledende elementer
 		header = new Header();
 		footer = new Footer();
-		menu = new Menu(con);
+		menu = new Menu(this);
+		content = new StartPage();
+		
+		// Sæt style på hver element (bestemmer delvis placering)
+		header.setStyleName("Header");
+		footer.setStyleName("Footer");
+		menu.setStyleName("Menu");
+		content.setStyleName("Content");
 		
 		// Tilføj basis-elementerne til controlleren
 		vPane.add(header);
-		vPane.add(menu);
-//		vPane.add(content);
+		hPane.add(menu);
+		hPane.add(content);
+		vPane.add(hPane);
 		vPane.add(footer);
 
 		service.getRole(token, new AsyncCallback<String>(){
@@ -50,9 +61,9 @@ public class Controller extends Composite {
 		});
 	}
 	
-//	public void setContent(Content content){
-//		this.content = content;
-//	}
+	public void setContent(Composite content){
+		this.content = content;
+	}
 	
 	public void setMenu(Menu menu){
 		this.menu = menu;
