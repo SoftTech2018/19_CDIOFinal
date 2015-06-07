@@ -120,3 +120,7 @@ html {
 .FlexTable-Header{
 	font-weight: bold;
 }
+
+.FlexTable-Menu {
+	width: 100%;
+}

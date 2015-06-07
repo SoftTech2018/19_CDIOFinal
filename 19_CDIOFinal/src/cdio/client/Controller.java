@@ -3,6 +3,7 @@ package cdio.client;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Controller extends Composite {
@@ -39,11 +40,12 @@ public class Controller extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				Window.alert(caught.getMessage());
+				logud();
 			}
 
 			@Override
 			public void onSuccess(String result) {
-				menu.changeMenu(con, result); // Lav en specifik menu baseret på brugerens rolle
+				menu.changeMenu(result); // Lav en specifik menu baseret på brugerens rolle
 			}
 		});
 	}
@@ -70,6 +72,14 @@ public class Controller extends Composite {
 	
 	public ServiceAsync getService(){
 		return service;
+	}
+	
+	// Fjerner alle widgets og laver en ny login-session.
+	public void logud(){
+		this.token = null;
+		vPane.clear();
+		RootPanel.get().clear();
+		RootPanel.get().add(new Login(service));
 	}
 
 }
