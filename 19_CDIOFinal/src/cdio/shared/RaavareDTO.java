@@ -18,9 +18,9 @@ public class RaavareDTO implements Serializable
     /** min. 2 max. 20 karakterer */
     String leverandoer;         
 	
-	public RaavareDTO(String raavareId, String raavareNavn, String leverandoer)
+	public RaavareDTO(int raavareId, String raavareNavn, String leverandoer)
 	{
-		this.raavareId = Integer.parseInt(raavareId);
+		this.raavareId = raavareId;
 		this.raavareNavn = raavareNavn;
 		this.leverandoer = leverandoer;
 	}

@@ -197,7 +197,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			List<RaavareDTO> raavareList = new ArrayList<RaavareDTO>();
-			raavareList.add(new RaavareDTO("1", "Pizza", "Ebbes Pizzaria"));
+			raavareList.add(new RaavareDTO(1, "Pizza", "Ebbes Pizzaria"));
 		
 		return raavareList;
 		}
