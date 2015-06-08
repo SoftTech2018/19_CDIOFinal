@@ -136,7 +136,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new SletOpr());
+				con.setContent(new SletOpr()); //kommentar
 			}
 		});
 		ft.setWidget(4, 0, slet);
