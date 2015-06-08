@@ -12,7 +12,7 @@ import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 
-public interface IDAO {
+public interface IControllerDAO {
 	
 	public IOperatoerDAO getOprDAO();
 	

@@ -18,7 +18,7 @@ import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 
 
-public class DAO implements IDAO {
+public class ControllerDAO implements IControllerDAO {
 	
 	IOperatoerDAO oprDAO;
 	IProduktBatchDAO pbDAO;
@@ -29,7 +29,7 @@ public class DAO implements IDAO {
 	IRaavareDAO raavareDAO;
 	TextReader txt;
 	
-	public DAO() throws FileNotFoundException, DALException{
+	public ControllerDAO() throws FileNotFoundException, DALException{
 		txt = new TextReader();
 		oprDAO = new OperatoerDAO(txt);
 		pbDAO = new ProduktBatchDAO(txt);
