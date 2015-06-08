@@ -23,7 +23,7 @@ public class OperatoerDTO implements Serializable {
 		
 	}
 
-	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut, boolean varkforer)
+	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean farmaceut, boolean varkforer, boolean operatoer)
 	{
 		this.oprId = oprId;
 		this.navn = oprNavn;
