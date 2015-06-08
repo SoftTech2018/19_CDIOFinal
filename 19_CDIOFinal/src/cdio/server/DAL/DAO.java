@@ -18,7 +18,7 @@ import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 
 
-public class DAO {
+public class DAO implements IDAO {
 	
 	IOperatoerDAO oprDAO;
 	IProduktBatchDAO pbDAO;
