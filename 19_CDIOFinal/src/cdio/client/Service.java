@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.RaavareDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -23,4 +24,6 @@ public interface Service extends RemoteService {
 	List<UserDTO> getOprList(String token) throws Exception;
 	
 	UserDTO updateUser(String token, UserDTO user) throws Exception;
+	
+	List<RaavareDTO> getRaavareList(String token) throws Exception;
 }

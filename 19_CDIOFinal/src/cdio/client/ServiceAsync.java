@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.RaavareDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -20,4 +21,6 @@ public interface ServiceAsync {
 	void getOprList(String token, AsyncCallback<List<UserDTO>> asyncCallback);
 
 	void updateUser(String token, UserDTO user, AsyncCallback<UserDTO> asyncCallback);
+	
+	void getRaavareList(String token, AsyncCallback<List<RaavareDTO>> asyncCallback);
 }

@@ -16,6 +16,7 @@ import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.IControllerDAO;
+import cdio.server.DAL.dto.RaavareDTO;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
@@ -189,5 +190,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 //		} else {
 			throw new Exception("Adgang nægtet");
 //		}
+	}
+	
+	public List<RaavareDTO> getRaavareList(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
+		if (th.validateToken(token) != null){
+			List<RaavareDTO> RaavareList = new ArrayList<RaavareDTO>();
+			RaavareList.add(new RaavareDTO("1", "Pizza", "Ebbes Pizzaria"));
+		
+		return RaavareList;
+		}
+		throw new Exception("Adgang nægtet");
+		
 	}
 }
