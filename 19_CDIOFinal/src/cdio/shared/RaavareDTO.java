@@ -1,5 +1,7 @@
 package cdio.shared;
 
+import java.io.Serializable;
+
 /**
  * Raavare Data Objekt
  * 
@@ -7,7 +9,7 @@ package cdio.shared;
  * @version 1.2
  */
 
-public class RaavareDTO 
+public class RaavareDTO implements Serializable
 {
     /** i omraadet 1-99999999 vaelges af brugerne */
     int raavareId;                     
