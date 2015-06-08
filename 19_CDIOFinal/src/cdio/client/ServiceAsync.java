@@ -18,4 +18,6 @@ public interface ServiceAsync {
 	void getUsername(String token, AsyncCallback<String> asyncCallback);
 
 	void getOprList(String token, AsyncCallback<List<UserDTO>> asyncCallback);
+
+	void updateUser(String token, UserDTO user, AsyncCallback asyncCallback);
 }

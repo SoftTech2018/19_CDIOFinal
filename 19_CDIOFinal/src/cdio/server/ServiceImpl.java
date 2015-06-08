@@ -176,4 +176,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		throw new Exception("Adgang nægtet");
 		
 	}
+
+	@Override
+	public void updateUser(String token, UserDTO user) throws Exception {
+		if (th.validateToken(token) != null){
+			// Opdater brugeren i Databasen
+		} else {
+			throw new Exception("Adgang nægtet");
+		}
+	}
 }
