@@ -1,81 +1,72 @@
 package cdio.server.DAL;
 
 import java.io.FileNotFoundException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ArrayList;
 
-public class DAO implements IDAO {
+import cdio.server.DAL.dao.OperatoerDAO;
+import cdio.server.DAL.dao.ProduktBatchDAO;
+import cdio.server.DAL.dao.ProduktBatchKompDAO;
+import cdio.server.DAL.dao.RaavareBatchDAO;
+import cdio.server.DAL.dao.RaavareDAO;
+import cdio.server.DAL.dao.ReceptDAO;
+import cdio.server.DAL.dao.ReceptKompDAO;
+import cdio.server.DAL.idao.IOperatoerDAO;
+import cdio.server.DAL.idao.IProduktBatchDAO;
+import cdio.server.DAL.idao.IProduktBatchKompDAO;
+import cdio.server.DAL.idao.IRaavareBatchDAO;
+import cdio.server.DAL.idao.IRaavareDAO;
+import cdio.server.DAL.idao.IReceptDAO;
+import cdio.server.DAL.idao.IReceptKompDAO;
+
+
+public class DAO {
 	
+	IOperatoerDAO oprDAO;
+	IProduktBatchDAO pbDAO;
+	IProduktBatchKompDAO pbkompDAO;
+	IReceptDAO receptDAO;
+	IReceptKompDAO receptKompDAO;
+	IRaavareBatchDAO rbDAO;
+	IRaavareDAO raavareDAO;
 	TextReader txt;
 	
 	public DAO() throws FileNotFoundException, DALException{
 		txt = new TextReader();
-		Connector.doUpdate("CREATE TRIGGER oprTrig BEFORE INSERT ON operatoer FOR EACH ROW SET new.ini = 'trigger aktiveret!'");
-		this.setProcedure();
+		oprDAO = new OperatoerDAO(txt);
+		pbDAO = new ProduktBatchDAO(txt);
+		pbkompDAO = new ProduktBatchKompDAO(txt);
+		receptDAO = new ReceptDAO(txt);
+		receptKompDAO = new ReceptKompDAO(txt);
+		rbDAO = new RaavareBatchDAO(txt);
+		raavareDAO = new RaavareDAO(txt);
 	}
 	
-	public DTO getOperatoer(int oprId) throws DALException {
-		ResultSet rs = Connector.doQuery(txt.getOperatoer(oprId));
-	    try {
-	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new DTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"));
-	    }
-	    catch (SQLException e) {throw new DALException(e); }
+	public IOperatoerDAO getOprDAO(){
+		return oprDAO;
 	}
 	
-	public void createOperatoer(DTO opr) throws DALException {		
-			Connector.doUpdate(txt.createOperatoer(opr));
+	public IProduktBatchDAO getPbDAO(){
+		return pbDAO;
 	}
-	
-	public void updateOperatoer(DTO opr) throws DALException {
-		Connector.doUpdate(txt.updateOperatoer(opr));
-	}
-	
-	public List<DTO> getOperatoerList() throws DALException {
-		List<DTO> list = new ArrayList<DTO>();
-		ResultSet rs = Connector.doQuery(txt.getCommand(4));
-		try
-		{
-			while (rs.next()) 
-			{
-				list.add(new DTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password")));
-			}
-		}
-		catch (SQLException e) { throw new DALException(e); }
-		return list;
-	}
-	
-	public ResultSet getView() throws DALException {
-		return Connector.doQuery("select * from oprView");
 		
+	public IProduktBatchKompDAO getPbKompDAO(){
+		return pbkompDAO;
 	}
-	
-	public void setProcedure() throws DALException{
-		Connector.doUpdate("CREATE PROCEDURE setView() begin CREATE VIEW oprView AS SELECT opr_id, opr_navn, ini FROM operatoer; END;");
-	}
-	
-	public void callProcedure() throws DALException{
-		Connector.doUpdate("call setView()");
-	}
-	
-	public void setFunction() throws DALException{
-		Connector.doUpdate("CREATE FUNCTION oprID(oID INT) RETURNS VARCHAR(20) BEGIN DECLARE navn VARCHAR(20); SELECT opr_navn INTO navn FROM operatoer WHERE opr_id = oID; RETURN navn; END;");
-	}
-	
-	public String getFunction(int id) throws DALException, SQLException{
-		ResultSet temp = Connector.doQuery("SELECT oprID("+id+")");
-		temp.next();
-		return temp.getString(1);
-	}
-	
-	public void dropAll() throws DALException {
-		Connector.doUpdate("drop view oprView");
-		Connector.doUpdate("drop trigger oprTrig");
-		Connector.doUpdate("drop procedure setView");
-		Connector.doUpdate("drop function oprID");
-	}	
 		
+	public IReceptDAO getReceptDAO(){
+		return receptDAO;
+	}
+	
+	public IReceptKompDAO getReceptKompDAO(){
+		return receptKompDAO;
+	}
+	
+	public IRaavareBatchDAO getRbDAO(){
+		return rbDAO;
+	}
+	
+	public IRaavareDAO getRaavareDAO(){
+		return raavareDAO;
+	}
+	
 }
 	
