@@ -70,8 +70,9 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
 		output = output.replaceFirst(illegalString + "4", opr.getPassword());
 		output = output.replaceFirst(illegalString + "5", Boolean.toString(opr.isAdmin()));
-		output = output.replaceFirst(illegalString + "6", Boolean.toString(opr.isOperatoer()));
-		output = output.replaceFirst(illegalString + "7", Boolean.toString(opr.isFarmaceut()));
+		output = output.replaceFirst(illegalString + "6", Boolean.toString(opr.isFarmaceut()));
+		output = output.replaceFirst(illegalString + "7", Boolean.toString(opr.isVarkforer()));
+		output = output.replaceFirst(illegalString + "8", Boolean.toString(opr.isOperatoer()));
 		return output;
 	}
 	
