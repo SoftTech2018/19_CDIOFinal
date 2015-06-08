@@ -33,7 +33,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
-		//runASE();
+		runASE();
 	}
 	
 	public void runASE(){
