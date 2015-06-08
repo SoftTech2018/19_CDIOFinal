@@ -23,9 +23,26 @@ html {
 .TextBox-RetError{
 	font-size: 10pt;
 	width: 90%;
-	maring-left: auto;
+	marging-left: auto;
 	margin-right: auto;
 	height: 12px;
+	border-color: red;
+}
+
+.TextBox-Opret{
+	font-size: 10pt;
+	width: 90%;
+	marging-left: auto;
+	margin-right: auto;
+	height: 14px;
+}
+
+.TextBox-OpretError{
+	font-size: 10pt;
+	width: 90%;
+	marging-left: auto;
+	margin-right: auto;
+	height: 14px;
 	border-color: red;
 }
 

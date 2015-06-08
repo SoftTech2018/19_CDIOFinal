@@ -53,6 +53,10 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isValidPassword(String pass){
+		if (pass == null)
+			return false;
+		if (pass.length()<4)
+			return false;
 		for (int i=0; i<pass.length(); i++){
 			char x = pass.charAt(i);
 			if (x == '&' || x == '<' || x == '>'){
@@ -60,6 +64,14 @@ public class FieldVerifier {
 			}
 		}
 		
+		return true;
+	}
+	
+	public static boolean isValidInitial(String ini){
+		return true;
+	}
+	
+	public static boolean isValidCpr(String cpr){
 		return true;
 	}
 }
