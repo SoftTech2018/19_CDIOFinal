@@ -251,10 +251,15 @@ public class TextReader {
 		String output = sqlCommands[42];
 		output = output.replaceFirst(illegalString + "1", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isFarmaceut()));
-		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isOperatoer()));
-		output = output.replaceFirst(illegalString + "4", Integer.toString(opr.getOprId()));
+		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isVarkforer()));
+		output = output.replaceFirst(illegalString + "4", Boolean.toString(opr.isOperatoer()));
+		output = output.replaceFirst(illegalString + "5", Integer.toString(opr.getOprId()));
 		return output;
+		
 	}
+	
+	
+	
 
 	public String getReceptView(String recept) {
 		String output = sqlCommands[50];

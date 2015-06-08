@@ -17,13 +17,13 @@ public class OperatoerDTO implements Serializable {
 	/** Operatoer password min. 7 max. 8 karakterer */
 	private String password;
 
-	private boolean admin, operatoer, farmaceut;
+	private boolean admin, operatoer, farmaceut, varkforer;
 	
 	public OperatoerDTO(){
 		
 	}
 
-	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut)
+	public OperatoerDTO(int oprId, String oprNavn, String ini, String cpr, String password, boolean admin, boolean operatoer, boolean farmaceut, boolean varkforer)
 	{
 		this.oprId = oprId;
 		this.navn = oprNavn;
@@ -33,6 +33,7 @@ public class OperatoerDTO implements Serializable {
 		this.admin = admin;
 		this.operatoer = operatoer;
 		this.farmaceut = farmaceut;
+		this.varkforer = varkforer;
 	}
 
 	public OperatoerDTO(OperatoerDTO opr)
@@ -45,6 +46,7 @@ public class OperatoerDTO implements Serializable {
 		this.admin = opr.isAdmin();
 		this.operatoer = opr.isOperatoer();
 		this.farmaceut = opr.isFarmaceut();
+		this.varkforer = opr.isVarkforer();
 	}
 
 	public String getNavn() {
@@ -77,6 +79,14 @@ public class OperatoerDTO implements Serializable {
 
 	public void setFarmaceut(boolean farmaceut) {
 		this.farmaceut = farmaceut;
+	}
+	
+	public boolean isVarkforer(){
+		return varkforer;
+	}
+	
+	public void setVarkforer(boolean varkforer){
+		this.varkforer = varkforer;	
 	}
 
 	public int getOprId() { 
