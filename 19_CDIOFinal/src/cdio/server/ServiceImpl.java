@@ -34,7 +34,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
-		runASE();
+//		runASE();
 	}
 	
 	public void runASE(){
@@ -207,7 +207,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public UserDTO createUser(String token, UserDTO user) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return user;
 	}
 }

@@ -26,7 +26,7 @@ public class OpretOpr extends Composite {
 	private CheckBox admin, farm, vaerk, opr;
 	private Button ok;
 	
-	public OpretOpr(String token, ServiceAsync service){
+	public OpretOpr(String token, final ServiceAsync service){
 		this.token = token;
 		this.service = service;
 		vPane = new VerticalPanel();
