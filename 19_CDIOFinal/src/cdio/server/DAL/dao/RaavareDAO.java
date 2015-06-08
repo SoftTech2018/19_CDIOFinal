@@ -9,8 +9,8 @@ import java.util.List;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
-import cdio.server.DAL.dto.RaavareDTO;
 import cdio.server.DAL.idao.IRaavareDAO;
+import cdio.shared.RaavareDTO;
 
 public class RaavareDAO implements IRaavareDAO {
 	

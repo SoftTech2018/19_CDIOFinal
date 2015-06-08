@@ -16,8 +16,8 @@ import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.IControllerDAO;
-import cdio.server.DAL.dto.RaavareDTO;
 import cdio.shared.FieldVerifier;
+import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;

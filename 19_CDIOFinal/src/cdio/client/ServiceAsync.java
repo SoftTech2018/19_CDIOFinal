@@ -2,7 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.RaavareDTO;
+import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

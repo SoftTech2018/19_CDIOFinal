@@ -3,7 +3,7 @@ package cdio.server.DAL.idao;
 import java.util.List;
 
 import cdio.server.DAL.DALException;
-import cdio.server.DAL.dto.RaavareDTO;
+import cdio.shared.RaavareDTO;
 
 public interface IRaavareDAO {
 	RaavareDTO getRaavare(int raavareId) throws DALException;

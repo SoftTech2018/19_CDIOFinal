@@ -12,9 +12,9 @@ import cdio.server.DAL.dto.OperatoerDTO;
 import cdio.server.DAL.dto.ProduktBatchDTO;
 import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.server.DAL.dto.RaavareBatchDTO;
-import cdio.server.DAL.dto.RaavareDTO;
 import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.dto.ReceptKompDTO;
+import cdio.shared.RaavareDTO;
 
 public class TextReader {
 	
