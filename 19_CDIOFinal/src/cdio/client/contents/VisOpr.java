@@ -31,8 +31,8 @@ public class VisOpr extends Composite {
 			}
 
 			@Override
-			public void onSuccess(List<UserDTO> result) {
-				FlexTable ft = new FlexTable();
+			public void onSuccess(List<UserDTO> result) { //Formatering af cellerne når man viser brugere i systemet
+				FlexTable ft = new FlexTable(); 
 				ft.setText(0, 0, "ID");
 				ft.setText(0, 1, "Navn");
 				ft.setText(0, 2, "Initialer");
