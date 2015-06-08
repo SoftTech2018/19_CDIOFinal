@@ -3,10 +3,13 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.ServiceAsync;
+import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
@@ -25,7 +28,7 @@ public class RetOpr extends Composite {
 	private int eventRow, openEventRow;
 	private FlexTable ft;
 	private String uNavn, uIni, uCpr, uPass;
-	private boolean uAdmin, uFarm, uVeark, uOpr;
+	private boolean uAdmin, uFarm, uVeark, uOpr, passValid, nameValid;
 	private TextBox oNavn, oIni, oCpr, oPass;
 	private CheckBox oAdmin, oFarm, oVaerk, oOpr;
 	private ServiceAsync service;
@@ -136,6 +139,7 @@ public class RetOpr extends Composite {
 			// Lav nye widgets der kan redigeres og erstat de oprindelige med disse
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
+			oNavn.addKeyUpHandler(new NameCheck());
 			oNavn.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 1, oNavn);
 			
@@ -151,6 +155,7 @@ public class RetOpr extends Composite {
 			
 			oPass = new TextBox();
 			oPass.setText(uPass);
+			oPass.addKeyUpHandler(new PassWordCheck());
 			oPass.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 4, oPass);
 			
@@ -262,6 +267,48 @@ public class RetOpr extends Composite {
 			ft.setWidget(eventRow, 9, ret);
 			
 			ft.setText(eventRow, 10, "");
+			openEventRow =0;
+		}
+	}
+	
+	private class PassWordCheck implements KeyUpHandler{
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox password = (TextBox) event.getSource();
+			if (!FieldVerifier.isValidPassword(password.getText())) {
+				password.setStyleName("TextBox-RetError");
+				passValid = false;
+			}
+			else {
+				password.setStyleName("TextBox-Ret");
+				passValid = true;
+			}
+
+			if (passValid && true)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+		}
+	}
+	
+	private class NameCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox name = (TextBox) event.getSource();
+			if (!FieldVerifier.isValidName(name.getText())) {
+				name.setStyleName("TextBox-RetError");
+				nameValid = false;
+			}
+			else {
+				name.setStyleName("TextBox-Ret");
+				nameValid = true;
+			}
+
+			if (passValid && nameValid)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 		
 	}
