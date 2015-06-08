@@ -13,9 +13,9 @@ import cdio.server.ASE.Procedure;
 import cdio.server.ASE.ProcedureController;
 import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
+import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.DALException;
-import cdio.server.DAL.DAO;
-import cdio.server.DAL.IDAO;
+import cdio.server.DAL.IControllerDAO;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
@@ -53,7 +53,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		try {
 			Connector con = new Connector();
-			IDAO dao = new DAO();
+			IControllerDAO dao = new ControllerDAO();
 			ITransmitter trans = new Transmitter();
 			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
 			Thread menuThread = new Thread((Runnable) menuCon);

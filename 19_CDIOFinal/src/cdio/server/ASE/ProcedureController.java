@@ -8,21 +8,20 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import cdio.server.DAL.DALException;
-import cdio.server.DAL.DTO;
-import cdio.server.DAL.IDAO;
+import cdio.server.DAL.IControllerDAO;
 
 public class ProcedureController implements Runnable, IProcedureController {
 
 	private State state;
 	private IProcedure menu;
 	private ITransmitter trans;
-	private IDAO dao;
+	private IControllerDAO dao;
 	private int opr_nr,vare_nr;
 	private double afvejning,tara;
 	private int port;
 	private String host;
 
-	public ProcedureController(IProcedure menu, IDAO dao, String host, int port, ITransmitter trans) {
+	public ProcedureController(IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
 		this.menu = menu;
 		this.trans = trans;
 		this.dao = dao;
@@ -75,7 +74,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				return "State: START"; 
 			}
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null,name,nameInput;
 				int inputInt = 0;
 				try{
@@ -138,7 +137,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				return "State: SETUP";
 			}
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, product, prodInput;
 				int inputInt = 0;
 				try{
@@ -198,7 +197,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 			}
 
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
 					menu.show("Pasat beholder og bekraft.");
@@ -247,7 +246,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				return "State: ADD_PRODUCT";
 			}
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK",raavare,raavareInput;
 				int inputInt = 0;
 				try{
@@ -319,7 +318,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				return "State: REMOVE_CONTAINER";
 			}
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
 					menu.show("Fjern beholder og bekraft.");
@@ -365,7 +364,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 			}
 
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
 					menu.show("Foretag ny vejning?");
@@ -399,11 +398,11 @@ public class ProcedureController implements Runnable, IProcedureController {
 			}
 
 			@Override
-			State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc) {
+			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				return STOP;
 			}
 		};
-		abstract State changeState(IProcedure menu, IDAO dao, ITransmitter trans, ProcedureController mc);
+		abstract State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc);
 		abstract String desc();		
 	}
 
