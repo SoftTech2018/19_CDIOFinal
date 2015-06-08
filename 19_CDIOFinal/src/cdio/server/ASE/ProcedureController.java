@@ -79,7 +79,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				int inputInt = 0;
 				try{
 					menu.show("Indtast operatornummer:");
-					input = trans.RM20("Tast bruger ID (10-16):","","");
+					input = trans.RM20("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -151,7 +151,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
-					product = fileAccess.getProductName(inputInt);
+					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(inputInt).getReceptId()).getReceptNavn();
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
 					prodInput = trans.RM20("Bekraft produkt:",product," ?");
 					if (prodInput.toLowerCase().equals("q")){
@@ -186,7 +186,12 @@ public class ProcedureController implements Runnable, IProcedureController {
 						System.exit(1);
 					}
 					return SETUP;
+				} catch (DALException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return SETUP;
 				}
+				
 				
 			}
 		},
