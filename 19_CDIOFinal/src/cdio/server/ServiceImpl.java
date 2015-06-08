@@ -207,7 +207,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public UserDTO createUser(String token, UserDTO user) throws Exception {
-		
-		return user;
+		if (th.validateToken(token) != null){
+			System.out.println("BRUGER RETURNERET!!!!");
+			return user;						
+		}
+		else 
+			throw new Exception("Adgang nægtet");
 	}
 }

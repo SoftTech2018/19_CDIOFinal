@@ -36,9 +36,10 @@ public class OpretOpr extends Composite {
 	
 	private void run(){
 		vPane.clear();
+		error = new Label("");
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
-		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
+		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");	
 		ft.setText(0, 0, "Opret Operatør");
 		
 		ft.setText(1, 0, "Bruger ID:");
@@ -54,7 +55,7 @@ public class OpretOpr extends Composite {
 		ft.setText(3, 0, "Initialer:");
 		ini = new TextBox();
 		ini.setStyleName("TextBox");
-		ft.setWidget(1, 1, ini);
+		ft.setWidget(3, 1, ini);
 		
 		ft.setText(4, 0, "Cpr nr:");
 		cpr = new TextBox();

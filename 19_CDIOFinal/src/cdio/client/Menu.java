@@ -126,19 +126,12 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new OpretOpr(con.getToken(), con.getService()));
+				con.setContent(new OpretOpr(con.getToken(), con.getService()));				
 			}
 		});
 		ft.setWidget(3, 0, opret);
 
 		Anchor slet = new Anchor("Slet operatør");
-		slet.addClickHandler(new ClickHandler(){
-
-			@Override
-			public void onClick(ClickEvent event) {
-				con.setContent(new SletOpr()); //kommentar
-			}
-		});
 		ft.setWidget(4, 0, slet);
 
 		return ft;
