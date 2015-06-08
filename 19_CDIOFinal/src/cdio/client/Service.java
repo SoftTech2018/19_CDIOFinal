@@ -6,6 +6,8 @@ import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
 
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -26,4 +28,6 @@ public interface Service extends RemoteService {
 	UserDTO updateUser(String token, UserDTO user) throws Exception;
 	
 	List<RaavareDTO> getRaavareList(String token) throws Exception;
+	
+	UserDTO createUser(String token, UserDTO user) throws Exception;
 }

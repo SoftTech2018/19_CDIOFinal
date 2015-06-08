@@ -23,4 +23,7 @@ public interface ServiceAsync {
 	void updateUser(String token, UserDTO user, AsyncCallback<UserDTO> asyncCallback);
 	
 	void getRaavareList(String token, AsyncCallback<List<RaavareDTO>> asyncCallback);
+
+	void createUser(String token, UserDTO user,
+			AsyncCallback<UserDTO> asyncCallback);
 }

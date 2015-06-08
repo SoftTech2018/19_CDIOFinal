@@ -204,4 +204,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		throw new Exception("Adgang nægtet");
 		
 	}
+
+	@Override
+	public UserDTO createUser(String token, UserDTO user) throws Exception {
+		// TODO Auto-generated method stub
+		return user;
+	}
 }
