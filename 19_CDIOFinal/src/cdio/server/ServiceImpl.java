@@ -33,7 +33,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
-		runASE();
+		//runASE();
 	}
 	
 	public void runASE(){
@@ -168,13 +168,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			List<UserDTO> oprList = new ArrayList<UserDTO>();
-			oprList.add(new UserDTO("1", "abc"));
+			oprList.add(new UserDTO("1", "Ebbe B. Berthold", "ini", "031091-2223", "password", 
+					   true, true, true, true));
 		
 		return oprList;
 		}
 		throw new Exception("Adgang nægtet");
-		
-		
 		
 	}
 }

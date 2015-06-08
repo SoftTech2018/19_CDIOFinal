@@ -15,6 +15,18 @@ public class UserDTO implements Serializable{
 		this.userId = Integer.parseInt(userId);
 		this.password = password;
 	}
+	public UserDTO(String userId, String name, String ini, String cpr, String password, 
+				   boolean admin, boolean farmaceut, boolean vaerkfoerer, boolean operatoer) {
+		this.userId = Integer.parseInt(userId);
+		this.name = name;
+		this.ini = ini;
+		this.cpr = cpr;
+		this.password = password;
+		this.admin = admin;
+		this.farmaceut = farmaceut;
+		this.vaerkfoerer = vaerkfoerer;
+		this.operatoer = operatoer;
+	}
 	public int getUserId() {
 		return userId;
 	}
