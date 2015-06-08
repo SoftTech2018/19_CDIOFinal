@@ -30,6 +30,7 @@ public class Transmitter implements ITransmitter {
 	public String RM20(String txt1, String txt2, String txt3) throws IOException{
 		out.println("RM20 8" + " \"" + txt1 + "\" \"" + txt2 + "\" \"" + txt3 + "\"" );
 		String reply = in.readLine();
+		System.out.println(reply);
 		String error = "ES";
 		String cancel = "q";
 		if (reply.equalsIgnoreCase("RM20 B")){
