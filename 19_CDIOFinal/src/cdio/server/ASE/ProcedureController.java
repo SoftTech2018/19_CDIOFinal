@@ -89,7 +89,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
-					name = dao.getOperatoer(inputInt).getOprNavn();
+					name = dao.getOprDAO().getOperatoer(inputInt).getNavn();
 					menu.show("Bruger valgt: "+name+". Er dette korrekt?");		
 					nameInput = trans.RM20("Bekraft bruger:",name," ?");
 					if (nameInput.toLowerCase().equals("q")){
