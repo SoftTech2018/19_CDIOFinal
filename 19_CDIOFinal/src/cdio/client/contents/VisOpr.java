@@ -9,6 +9,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VisOpr extends Composite {
@@ -43,15 +44,24 @@ public class VisOpr extends Composite {
 				ft.setText(0, 7, "Operatør");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				ft.getFlexCellFormatter().setWidth(0, 0, "25px");
-				ft.getFlexCellFormatter().setWidth(0, 1, "175px");
-				ft.getFlexCellFormatter().setWidth(0, 2, "50px");
-				ft.getFlexCellFormatter().setWidth(0, 3, "100px");
+				ft.getFlexCellFormatter().setWidth(0, 1, "140px");
+				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
+				ft.getFlexCellFormatter().setWidth(0, 3, "85px");
 				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
-				ft.getFlexCellFormatter().setWidth(0, 5, "100px");
-				ft.getFlexCellFormatter().setWidth(0, 6, "100px");
-				ft.getFlexCellFormatter().setWidth(0, 7, "100px");
-				
+				ft.getFlexCellFormatter().setWidth(0, 5, "75px");
+				ft.getFlexCellFormatter().setWidth(0, 6, "75px");
+				ft.getFlexCellFormatter().setWidth(0, 7, "60px");
+				ft.getCellFormatter().setHorizontalAlignment(0, 4, HasHorizontalAlignment.ALIGN_CENTER);
+				ft.getCellFormatter().setHorizontalAlignment(0, 5, HasHorizontalAlignment.ALIGN_CENTER);
+				ft.getCellFormatter().setHorizontalAlignment(0, 6, HasHorizontalAlignment.ALIGN_CENTER);
+				ft.getCellFormatter().setHorizontalAlignment(0, 7, HasHorizontalAlignment.ALIGN_CENTER);
+
 				for (int i = 0; i < result.size(); i++) {
+					ft.getCellFormatter().setHorizontalAlignment(i+1, 4, HasHorizontalAlignment.ALIGN_CENTER);
+					ft.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
+					ft.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
+					ft.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
+					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));
 					ft.setText(i+1, 1, result.get(i).getName());
 					ft.setText(i+1, 2, result.get(i).getIni());
