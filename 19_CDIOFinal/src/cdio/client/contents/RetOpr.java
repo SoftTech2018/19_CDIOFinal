@@ -27,7 +27,7 @@ public class RetOpr extends Composite {
 	private int eventRow, openEventRow;
 	private FlexTable ft;
 	private String uNavn, uIni, uCpr, uPass;
-	private boolean uAdmin, uFarm, uVeark, uOpr, passValid, nameValid;
+	private boolean uAdmin, uFarm, uVeark, uOpr, passValid, nameValid, iniValid, cprValid, roleValid;
 	private TextBox oNavn, oIni, oCpr, oPass;
 	private CheckBox oAdmin, oFarm, oVaerk, oOpr;
 	private ServiceAsync service;
@@ -144,11 +144,13 @@ public class RetOpr extends Composite {
 			
 			oIni = new TextBox();
 			oIni.setText(uIni);
+			oIni.addKeyUpHandler(new IniCheck());
 			oIni.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 2, oIni);
 			
 			oCpr = new TextBox();
 			oCpr.setText(uCpr);
+			oCpr.addKeyUpHandler(new CprCheck());
 			oCpr.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 3, oCpr);
 			
@@ -309,6 +311,65 @@ public class RetOpr extends Composite {
 			else
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
-		
+	}
+	
+	private class CprCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox cpr = (TextBox) event.getSource();
+			if (!FieldVerifier.isValidCpr(cpr.getText())) {
+				cpr.setStyleName("TextBox-RetError");
+				cprValid = false;
+			}
+			else {
+				cpr.setStyleName("TextBox-Ret");
+				cprValid = true;
+			}
+
+			if (passValid && nameValid && cprValid && iniValid && roleValid)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+		}
+	}
+	
+	private class IniCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox ini = (TextBox) event.getSource();
+			if (!FieldVerifier.isValidInitial(ini.getText())) {
+				ini.setStyleName("TextBox-RetError");
+				iniValid = false;
+			}
+			else {
+				ini.setStyleName("TextBox-Ret");
+				iniValid = true;
+			}
+
+			if (passValid && nameValid && cprValid && iniValid && roleValid)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+		}
+	}
+	
+	private class RolleCheck implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			if (((CheckBox) ft.getWidget(eventRow, 5)).getValue() || ((CheckBox) ft.getWidget(eventRow, 6)).getValue() || ((CheckBox) ft.getWidget(eventRow, 7)).getValue() || ((CheckBox) ft.getWidget(eventRow, 8)).getValue()) {
+				roleValid = true;
+			}
+			else {
+				roleValid = false;
+			}
+
+			if (passValid && nameValid && cprValid && iniValid && roleValid)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+		}
 	}
 }
