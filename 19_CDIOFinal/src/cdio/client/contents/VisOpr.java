@@ -41,6 +41,7 @@ public class VisOpr extends Composite {
 				ft.setText(0, 6, "Farmaceut");
 				ft.setText(0, 7, "Værkfører");
 				ft.setText(0, 8, "Operatør");
+				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));

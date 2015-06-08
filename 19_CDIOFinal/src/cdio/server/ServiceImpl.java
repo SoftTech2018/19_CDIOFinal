@@ -164,9 +164,17 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<UserDTO> getOprList(String token) throws Exception {
-		List<UserDTO> oprList = new ArrayList<UserDTO>();
-		oprList.add(new UserDTO("1", "abc"));
+		if (TEST_DELAY)
+			Thread.sleep(2000);
+		if (th.validateToken(token) != null){
+			List<UserDTO> oprList = new ArrayList<UserDTO>();
+			oprList.add(new UserDTO("1", "abc"));
 		
 		return oprList;
+		}
+		throw new Exception("Adgang nægtet");
+		
+		
+		
 	}
 }
