@@ -4,6 +4,7 @@ import cdio.client.contents.OpretOpr;
 import cdio.client.contents.RetOpr;
 import cdio.client.contents.SletOpr;
 import cdio.client.contents.VisOpr;
+import cdio.client.contents.VisRaavarer;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -151,6 +152,13 @@ public class Menu extends Composite {
 
 		Anchor vis = new Anchor("Vis råvarer");
 		ft.setWidget(1, 0, vis);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new VisRaavarer(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor ret = new Anchor("Ret råvarer");
 		ft.setWidget(2, 0, ret);
