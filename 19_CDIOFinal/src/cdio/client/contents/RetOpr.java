@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -62,8 +63,8 @@ public class RetOpr extends Composite {
 				ft.setText(0, 4, "Password");
 				ft.setText(0, 5, "Admin");
 				ft.setText(0, 6, "Farmaceut");
-				ft.setText(0, 7, "Værkfører");
-				ft.setText(0, 8, "Operatør");
+				ft.setText(0, 7, "VÃ¦rkfÃ¸rer");
+				ft.setText(0, 8, "OperatÃ¸r");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				
 				for (int i=0; i<result.size(); i++){
@@ -89,7 +90,7 @@ public class RetOpr extends Composite {
 					opr.setEnabled(false);
 					ft.setWidget(i+1, 8, opr);
 					
-					Anchor ret = new Anchor("Ret");
+					Button ret = new Button("Ret");
 					ret.addClickHandler(new RetClick());
 					ft.setWidget(i+1, 9, ret);
 				}
@@ -106,13 +107,13 @@ public class RetOpr extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (openEventRow != 0){
-				ft.getWidget(openEventRow, 10).fireEvent(new ClickEvent(){});
+				((Button) ft.getWidget(openEventRow, 10)).click();
 			}
 			
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			openEventRow = eventRow;
 			
-			//Gem de oprindelige værdier
+			//Gem de oprindelige vÃ¦rdier
 			uNavn = ft.getText(eventRow, 1);
 			uIni = ft.getText(eventRow, 2);
 			uCpr = ft.getText(eventRow, 3);
@@ -163,11 +164,11 @@ public class RetOpr extends Composite {
 			oOpr.setValue(uOpr);
 			ft.setWidget(eventRow, 8, oOpr);
 			
-			Anchor ok = new Anchor("ok");
+			Button ok = new Button("Ok");
 			ok.addClickHandler(new OkClick());
 			ft.setWidget(eventRow, 9, ok);
 			
-			Anchor cancel = new Anchor("cancel");
+			Button cancel = new Button("cancel");
 			cancel.addClickHandler(new CancelClick());
 			ft.setWidget(eventRow, 10, cancel);
 		}
@@ -219,7 +220,7 @@ public class RetOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// Sætter text/widgets tilbage til oprindelige status
+			// SÃ¦tter text/widgets tilbage til oprindelige status
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
 			ft.setText(eventRow, 1, uNavn);
 			ft.setText(eventRow, 2, uIni);
@@ -242,12 +243,11 @@ public class RetOpr extends Composite {
 			opr.setEnabled(false);
 			ft.setWidget(eventRow, 8, opr);
 			
-			Anchor ret = new Anchor("Ret");
+			Button ret = new Button("Ret");
 			ret.addClickHandler(new RetClick());
 			ft.setWidget(eventRow, 9, ret);
 			
 			ft.setText(eventRow, 10, "");
-			openEventRow = 0;
 		}
 		
 	}

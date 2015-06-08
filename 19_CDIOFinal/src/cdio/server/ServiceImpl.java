@@ -170,6 +170,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			List<UserDTO> oprList = new ArrayList<UserDTO>();
 			oprList.add(new UserDTO("1", "Ebbe B. Berthold", "EBB", "031091-2223", "password", 
 					   true, true, true, true));
+			oprList.add(new UserDTO("2", "Jon Tvermose Nielsen", "JTN", "031091-2223", "password", 
+					   true, true, true, true));
+			oprList.add(new UserDTO("3", "Jacob W. Jepsen", "JWJ", "031091-2223", "password", 
+					   true, true, true, true));
 		
 		return oprList;
 		}
@@ -178,9 +182,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public void updateUser(String token, UserDTO user) throws Exception {
+	public UserDTO updateUser(String token, UserDTO user) throws Exception {
 		if (th.validateToken(token) != null){
 			// Opdater brugeren i Databasen
+			return user;
 		} else {
 			throw new Exception("Adgang nægtet");
 		}

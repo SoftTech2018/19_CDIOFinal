@@ -22,5 +22,5 @@ public interface Service extends RemoteService {
 	
 	List<UserDTO> getOprList(String token) throws Exception;
 	
-	void updateUser(String token, UserDTO user) throws Exception;
+	UserDTO updateUser(String token, UserDTO user) throws Exception;
 }
