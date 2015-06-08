@@ -2,6 +2,8 @@ package cdio.server;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import cdio.client.Service;
 import cdio.server.ASE.IProcedure;
@@ -158,5 +160,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			return "Jon"; // TESTKODE
 		}
 		throw new Exception("Adgang nægtet.");
+	}
+
+	@Override
+	public List<UserDTO> getOprList(String token) throws Exception {
+		List<UserDTO> oprList = new ArrayList<UserDTO>();
+		oprList.add(new UserDTO("1", "abc"));
+		
+		return oprList;
 	}
 }

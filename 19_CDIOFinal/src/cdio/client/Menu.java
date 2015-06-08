@@ -105,7 +105,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new VisOpr());
+				con.setContent(new VisOpr(con.getToken(), con.getService()));
 			}
 		});
 		ft.setWidget(1, 0, vis);

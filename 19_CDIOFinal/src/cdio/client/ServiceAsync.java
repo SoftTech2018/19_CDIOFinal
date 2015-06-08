@@ -1,5 +1,7 @@
 package cdio.client;
 
+import java.util.List;
+
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -14,4 +16,6 @@ public interface ServiceAsync {
 	void getRole(String token, AsyncCallback<String> asyncCallback);
 
 	void getUsername(String token, AsyncCallback<String> asyncCallback);
+
+	void getOprList(String token, AsyncCallback<List<UserDTO>> asyncCallback);
 }
