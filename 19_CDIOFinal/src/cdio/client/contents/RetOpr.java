@@ -35,7 +35,11 @@ public class RetOpr extends Composite {
 		this.token = token;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
-		
+		run();
+	}
+	
+	public void run(){	
+		vPane.clear();
 		error = new Label("Loading...");
 		vPane.add(error);
 		service.getOprList(token, new AsyncCallback<List<UserDTO>>(){
@@ -58,8 +62,8 @@ public class RetOpr extends Composite {
 				ft.setText(0, 4, "Password");
 				ft.setText(0, 5, "Admin");
 				ft.setText(0, 6, "Farmaceut");
-				ft.setText(0, 7, "VÃ¦rkfÃ¸rer");
-				ft.setText(0, 8, "OperatÃ¸r");
+				ft.setText(0, 7, "Værkfører");
+				ft.setText(0, 8, "Operatør");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				
 				for (int i=0; i<result.size(); i++){
@@ -108,7 +112,7 @@ public class RetOpr extends Composite {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			openEventRow = eventRow;
 			
-			//Gem de oprindelige vÃ¦rdier
+			//Gem de oprindelige værdier
 			uNavn = ft.getText(eventRow, 1);
 			uIni = ft.getText(eventRow, 2);
 			uCpr = ft.getText(eventRow, 3);
@@ -183,7 +187,7 @@ public class RetOpr extends Composite {
 					((CheckBox) ft.getWidget(eventRow, 7)).getValue(), 
 					((CheckBox) ft.getWidget(eventRow, 8)).getValue());
 			
-			service.updateUser(token, user, new AsyncCallback(){
+			service.updateUser(token, user, new AsyncCallback<UserDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -192,7 +196,7 @@ public class RetOpr extends Composite {
 				}
 
 				@Override
-				public void onSuccess(Object result) {					
+				public void onSuccess(UserDTO result) {					
 					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
 					uIni = ((TextBox) ft.getWidget(eventRow, 2)).getText();
 					uCpr = ((TextBox) ft.getWidget(eventRow, 3)).getText();
@@ -202,9 +206,9 @@ public class RetOpr extends Composite {
 					uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
 					uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
 					
-					ft.getWidget(eventRow, 10).fireEvent(new ClickEvent(){});
 					openEventRow = 0;
-					Window.alert("Bruger " + uNavn + " blev opdateret.");
+					Window.alert("Bruger " + result.getName() + " blev opdateret.");
+					run(); // Reload siden
 				}
 				
 			});
@@ -215,7 +219,7 @@ public class RetOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			// SÃ¦tter text/widgets tilbage til oprindelige status
+			// Sætter text/widgets tilbage til oprindelige status
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
 			ft.setText(eventRow, 1, uNavn);
 			ft.setText(eventRow, 2, uIni);
