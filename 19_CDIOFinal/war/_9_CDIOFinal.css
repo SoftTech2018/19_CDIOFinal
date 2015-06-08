@@ -158,7 +158,19 @@ html {
 	width: 40px;	
 }
 
+.Button-Ret{
+	height: 20px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	width: 45px;	
+}
+
 .TextLabel-Logud{
 	font-size: 11px;
 	color: #555555;
+}
+
+.FlexTable-Content{
+	width: 100%;
 }

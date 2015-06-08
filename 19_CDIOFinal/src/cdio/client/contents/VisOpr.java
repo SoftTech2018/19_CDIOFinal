@@ -32,7 +32,8 @@ public class VisOpr extends Composite {
 
 			@Override
 			public void onSuccess(List<UserDTO> result) { //Formatering af cellerne når man viser brugere i systemet
-				FlexTable ft = new FlexTable(); 
+				FlexTable ft = new FlexTable();
+				ft.setStyleName("FlexTable-Content");
 				ft.setText(0, 0, "ID");
 				ft.setText(0, 1, "Navn");
 				ft.setText(0, 2, "Initialer");
@@ -43,14 +44,15 @@ public class VisOpr extends Composite {
 				ft.setText(0, 6, "Værkfører");
 				ft.setText(0, 7, "Operatør");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "25px");
-				ft.getFlexCellFormatter().setWidth(0, 1, "140px");
+				ft.getFlexCellFormatter().setWidth(0, 0, "30px");
+				ft.getFlexCellFormatter().setWidth(0, 1, "150px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
 				ft.getFlexCellFormatter().setWidth(0, 3, "85px");
-				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
-				ft.getFlexCellFormatter().setWidth(0, 5, "75px");
+				ft.getFlexCellFormatter().setWidth(0, 4, "85px");
+				ft.getFlexCellFormatter().setWidth(0, 5, "55px");
 				ft.getFlexCellFormatter().setWidth(0, 6, "75px");
-				ft.getFlexCellFormatter().setWidth(0, 7, "60px");
+				ft.getFlexCellFormatter().setWidth(0, 7, "75px");
+				ft.getFlexCellFormatter().setWidth(0, 8, "75px");
 				ft.getCellFormatter().setHorizontalAlignment(0, 4, HasHorizontalAlignment.ALIGN_CENTER);
 				ft.getCellFormatter().setHorizontalAlignment(0, 5, HasHorizontalAlignment.ALIGN_CENTER);
 				ft.getCellFormatter().setHorizontalAlignment(0, 6, HasHorizontalAlignment.ALIGN_CENTER);
