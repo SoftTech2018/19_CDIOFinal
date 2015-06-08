@@ -2,8 +2,12 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ProduktBatchDTO;
+import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
+
+
 
 
 
@@ -30,4 +34,8 @@ public interface Service extends RemoteService {
 	List<RaavareDTO> getRaavareList(String token) throws Exception;
 	
 	UserDTO createUser(String token, UserDTO user) throws Exception;
+	
+	List<ProduktBatchDTO> getPBList(String token) throws Exception;
+	
+	List<ProduktBatchKompDTO> getPBKList(String token) throws Exception;
 }

@@ -2,6 +2,8 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ProduktBatchDTO;
+import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
@@ -25,4 +27,9 @@ public interface ServiceAsync {
 	void getRaavareList(String token, AsyncCallback<List<RaavareDTO>> asyncCallback);
 
 	void createUser(String token, UserDTO user,	AsyncCallback<UserDTO> asyncCallback);
+	
+	void getPBList(String token, AsyncCallback<List<ProduktBatchDTO>> asyncCallback);
+
+	void getPBKList(String token,AsyncCallback<List<ProduktBatchKompDTO>> asyncCallback);
+	
 }

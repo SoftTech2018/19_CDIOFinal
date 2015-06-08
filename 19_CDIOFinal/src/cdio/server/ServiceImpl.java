@@ -16,6 +16,8 @@ import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.IControllerDAO;
+import cdio.server.DAL.dto.ProduktBatchDTO;
+import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
@@ -213,5 +215,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		else 
 			throw new Exception("Adgang nægtet");
+	}
+	
+	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
+		
+		return null;
+	}
+
+	@Override
+	public List<ProduktBatchKompDTO> getPBKList(String token) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
