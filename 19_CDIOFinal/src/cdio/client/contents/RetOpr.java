@@ -7,6 +7,7 @@ import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -20,10 +21,18 @@ public class RetOpr extends Composite {
 	
 	private Label error;
 	private VerticalPanel vPane;
-	private int eventRow;
+	private int eventRow, openEventRow;
 	private FlexTable ft;
+	private String uNavn, uIni, uCpr, uPass;
+	private boolean uAdmin, uFarm, uVeark, uOpr;
+	private TextBox oNavn, oIni, oCpr, oPass;
+	private CheckBox oAdmin, oFarm, oVaerk, oOpr;
+	private ServiceAsync service;
+	private String token;
 	
 	public RetOpr(String token, final ServiceAsync service){
+		this.service = service;
+		this.token = token;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		
@@ -33,11 +42,13 @@ public class RetOpr extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				error.setText(caught.getMessage());				
+				error.setText(caught.getMessage());	
+				error.setStyleName("TextLabel-ErrorMessage");
 			}
 
 			@Override
 			public void onSuccess(List<UserDTO> result) {
+				error.setText("");
 				ft = new FlexTable();
 				ft.setStyleName("FlexTable-Content");
 				ft.setText(0, 0, "ID");
@@ -78,7 +89,7 @@ public class RetOpr extends Composite {
 					ret.addClickHandler(new RetClick());
 					ft.setWidget(i+1, 9, ret);
 				}
-				
+				vPane.add(ft);
 			}
 			
 		});
@@ -90,48 +101,150 @@ public class RetOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			if (openEventRow != 0){
+				ft.getWidget(openEventRow, 10).fireEvent(new ClickEvent(){});
+			}
+			
 			eventRow = ft.getCellForEvent(event).getRowIndex();
-			TextBox navn = new TextBox();
-			navn.setText(ft.getText(eventRow, 1));
-			ft.setWidget(eventRow, 1, navn);
+			openEventRow = eventRow;
 			
-			TextBox ini = new TextBox();
-			ini.setText(ft.getText(eventRow, 2));
-			ft.setWidget(eventRow, 2, ini);
+			//Gem de oprindelige værdier
+			uNavn = ft.getText(eventRow, 1);
+			uIni = ft.getText(eventRow, 2);
+			uCpr = ft.getText(eventRow, 3);
+			uPass = ft.getText(eventRow, 4);
+			uAdmin = ((CheckBox) ft.getWidget(eventRow, 5)).getValue();
+			uFarm = ((CheckBox) ft.getWidget(eventRow, 6)).getValue();
+			uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
+			uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
 			
-			TextBox cpr = new TextBox();
-			cpr.setText(ft.getText(eventRow, 3));
-			ft.setWidget(eventRow, 3, cpr);
+			// Lav nye widgets der kan redigeres og erstat de oprindelige med disse
+			oNavn = new TextBox();
+			oNavn.setText(uNavn);
+			oNavn.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 1, oNavn);
 			
-			TextBox password = new TextBox();
-			password.setText(ft.getText(eventRow, 4));
-			ft.setWidget(eventRow, 4, password);
+			oIni = new TextBox();
+			oIni.setText(uIni);
+			oIni.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 2, oIni);
 			
-			CheckBox adm = new CheckBox();
-			adm.setEnabled(true);
-			adm.setValue(((CheckBox) ft.getWidget(eventRow, 5)).getValue());
-			ft.setWidget(eventRow, 5, adm);
+			oCpr = new TextBox();
+			oCpr.setText(uCpr);
+			oCpr.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 3, oCpr);
 			
-			CheckBox farm = new CheckBox();
-			farm.setEnabled(true);
-			farm.setValue(((CheckBox) ft.getWidget(eventRow, 6)).getValue());
-			ft.setWidget(eventRow, 6, farm);
+			oPass = new TextBox();
+			oPass.setText(uPass);
+			oPass.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 4, oPass);
 			
-			CheckBox vaerk = new CheckBox();
-			vaerk.setEnabled(true);
-			vaerk.setValue(((CheckBox) ft.getWidget(eventRow, 7)).getValue());
-			ft.setWidget(eventRow, 7, vaerk);
+			oAdmin = new CheckBox();
+			oAdmin.setEnabled(true);
+			oAdmin.setValue(uAdmin);
+			ft.setWidget(eventRow, 5, oAdmin);
 			
-			CheckBox opr = new CheckBox();
-			opr.setEnabled(true);
-			opr.setValue(((CheckBox) ft.getWidget(eventRow, 8)).getValue());
-			ft.setWidget(eventRow, 8, opr);
+			oFarm = new CheckBox();
+			oFarm.setEnabled(true);
+			oFarm.setValue(uFarm);
+			ft.setWidget(eventRow, 6, oFarm);
+			
+			oVaerk = new CheckBox();
+			oVaerk.setEnabled(true);
+			oVaerk.setValue(uVeark);
+			ft.setWidget(eventRow, 7, oVaerk);
+			
+			oOpr = new CheckBox();
+			oOpr.setEnabled(true);
+			oOpr.setValue(uOpr);
+			ft.setWidget(eventRow, 8, oOpr);
 			
 			Anchor ok = new Anchor("ok");
+			ok.addClickHandler(new OkClick());
 			ft.setWidget(eventRow, 9, ok);
 			
 			Anchor cancel = new Anchor("cancel");
+			cancel.addClickHandler(new CancelClick());
 			ft.setWidget(eventRow, 10, cancel);
 		}
+	}
+	
+	private class OkClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			UserDTO user = new UserDTO(ft.getText(eventRow, 0), 
+					((TextBox) ft.getWidget(eventRow, 1)).getText(), 
+					((TextBox) ft.getWidget(eventRow, 2)).getText(), 
+					((TextBox) ft.getWidget(eventRow, 3)).getText(), 
+					((TextBox) ft.getWidget(eventRow, 4)).getText(),
+					((CheckBox) ft.getWidget(eventRow, 5)).getValue(), 
+					((CheckBox) ft.getWidget(eventRow, 6)).getValue(), 
+					((CheckBox) ft.getWidget(eventRow, 7)).getValue(), 
+					((CheckBox) ft.getWidget(eventRow, 8)).getValue());
+			
+			service.updateUser(token, user, new AsyncCallback(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");
+				}
+
+				@Override
+				public void onSuccess(Object result) {					
+					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
+					uIni = ((TextBox) ft.getWidget(eventRow, 2)).getText();
+					uCpr = ((TextBox) ft.getWidget(eventRow, 3)).getText();
+					uPass = ((TextBox) ft.getWidget(eventRow, 4)).getText();
+					uAdmin = ((CheckBox) ft.getWidget(eventRow, 5)).getValue();
+					uFarm = ((CheckBox) ft.getWidget(eventRow, 6)).getValue();
+					uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
+					uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
+					
+					ft.getWidget(eventRow, 10).fireEvent(new ClickEvent(){});
+					openEventRow = 0;
+					Window.alert("Bruger " + uNavn + " blev opdateret.");
+				}
+				
+			});
+		}
+	}
+	
+	private class CancelClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			// Sætter text/widgets tilbage til oprindelige status
+			int eventRow = ft.getCellForEvent(event).getRowIndex();
+			ft.setText(eventRow, 1, uNavn);
+			ft.setText(eventRow, 2, uIni);
+			ft.setText(eventRow, 3, uCpr);
+			ft.setText(eventRow, 4, uPass);
+			CheckBox adm = new CheckBox();
+			adm.setValue(uAdmin);
+			adm.setEnabled(false);
+			ft.setWidget(eventRow, 5, adm);
+			CheckBox farm = new CheckBox();
+			farm.setValue(uFarm);
+			farm.setEnabled(false);
+			ft.setWidget(eventRow, 6, farm);
+			CheckBox vaerk = new CheckBox();
+			vaerk.setValue(uVeark);
+			vaerk.setEnabled(false);
+			ft.setWidget(eventRow, 7, vaerk);
+			CheckBox opr = new CheckBox();
+			opr.setValue(uOpr);
+			opr.setEnabled(false);
+			ft.setWidget(eventRow, 8, opr);
+			
+			Anchor ret = new Anchor("Ret");
+			ret.addClickHandler(new RetClick());
+			ft.setWidget(eventRow, 9, ret);
+			
+			ft.setText(eventRow, 10, "");
+			openEventRow = 0;
+		}
+		
 	}
 }

@@ -12,6 +12,23 @@ html {
 	width: 200px;
 }
 
+.TextBox-Ret{
+	font-size: 10pt;
+	width: 90%;
+	maring-left: auto;
+	margin-right: auto;
+	height: 12px;
+}
+
+.TextBox-RetError{
+	font-size: 10pt;
+	width: 90%;
+	maring-left: auto;
+	margin-right: auto;
+	height: 12px;
+	border-color: red;
+}
+
 .TextLabel-ErrorMessage {
 	font-size: 10pt;
 	font-weight: bold;
