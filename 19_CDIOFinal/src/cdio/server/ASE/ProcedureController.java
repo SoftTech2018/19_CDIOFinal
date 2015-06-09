@@ -160,6 +160,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 			@Override
 			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, product, prodInput;
+				List<ProduktBatchKompDTO> pbKompListe;
 				int inputInt = 0;
 				try{
 					menu.show("Indtast varenummer:");
@@ -172,6 +173,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					mc.setProdBatchID(Integer.parseUnsignedInt(input));
+					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
+						trans.P111("Nr eksisterer; tast nyt.");
+						return SETUP;
+					}
 					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
 					prodInput = trans.RM20("Bekraft produkt:",product," ?");
