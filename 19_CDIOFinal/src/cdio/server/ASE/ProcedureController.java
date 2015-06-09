@@ -25,7 +25,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private String host;
 	private List<ReceptKompDTO> receptKompListe;
 	private ReceptKompDTO receptKomp;
-	
+	private PrintWriter out;
+	private BufferedReader in;
 
 	public ProcedureController(IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
 		this.menu = menu;
@@ -48,7 +49,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			trans.connected(in, out);
-			trans.RM20("123456789012345678901234567890", "", "");
+			this.out=out;
+			this.in=in;
 			start();
 		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException fejl");
@@ -66,6 +68,18 @@ public class ProcedureController implements Runnable, IProcedureController {
 	public void start(){
 		menu.show("Overvagning af vagtbetjening");
 		do{
+			try {
+				String test = trans.RM20("123456789012345678901234567890", "", "");
+				System.out.println("Test: "+test);
+				if(test.equalsIgnoreCase("es")){
+					System.out.println("rdln1: "+in.readLine());
+				} else if (test.equalsIgnoreCase("l")){
+//					System.out.println("rdln2"+in.readLine());					
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			menu.show("");
 			menu.show(state.desc());
 			this.state = this.state.changeState(menu,dao,trans,this);		
@@ -115,6 +129,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				} catch (NumberFormatException e) {
 					try {
 						menu.show("Forkert input type. Prov igen.");
+//						trans.RM20cancel();
 						trans.RM20("Forkert input type. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("IOException fejl");

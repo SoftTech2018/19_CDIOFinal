@@ -43,6 +43,8 @@ public class Transmitter implements ITransmitter {
 				return input.substring(8,(input.length()-1)); // Skal muligvis være 6				
 			}
 			return error;
+		} else if (reply.equalsIgnoreCase("RM20 L")){
+			return "L";
 		} else {
 			return error;
 		}
