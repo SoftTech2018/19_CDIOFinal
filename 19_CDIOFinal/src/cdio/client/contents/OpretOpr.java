@@ -40,7 +40,7 @@ public class OpretOpr extends Composite {
 	
 	private void run(){
 		// Reset til 'blank' position
-		idValid = false;
+		idValid = true; // Benyttes ikke
 		navnValid = false;
 		passValid = false;
 		cprValid = false;
@@ -54,11 +54,11 @@ public class OpretOpr extends Composite {
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");	
 		ft.setText(0, 0, "Opret Operatør");
 		
-		ft.setText(1, 0, "Bruger ID:");
-		id = new TextBox();
-		id.addKeyUpHandler(new IdCheck());
-		id.setStyleName("TextBox-Opret");
-		ft.setWidget(1, 1, id);
+//		ft.setText(1, 0, "Bruger ID:");
+//		id = new TextBox();
+//		id.addKeyUpHandler(new IdCheck());
+//		id.setStyleName("TextBox-Opret");
+//		ft.setWidget(1, 1, id);
 		
 		ft.setText(2, 0, "Navn:");
 		navn = new TextBox();
@@ -118,7 +118,7 @@ public class OpretOpr extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			ok.setEnabled(false);
-			UserDTO user = new UserDTO(id.getText(),
+			UserDTO user = new UserDTO("0",
 					navn.getText(),
 					ini.getText(),
 					cpr.getText(),
@@ -128,7 +128,7 @@ public class OpretOpr extends Composite {
 					vaerk.getValue(),
 					opr.getValue());
 			
-			service.createUser(token, user, new AsyncCallback<UserDTO>(){
+			service.createUser(token, user, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -138,10 +138,11 @@ public class OpretOpr extends Composite {
 				}
 
 				@Override
-				public void onSuccess(UserDTO result) {
-					Window.alert("Bruger " + result.getName() + " blev oprettet.");
+				public void onSuccess(Void result) {
+					Window.alert("Bruger " + navn.getText() + " blev oprettet.");
 					run();
 				}
+
 			});
 		}
 	}
@@ -188,26 +189,26 @@ public class OpretOpr extends Composite {
 		}
 	}
 	
-	private class IdCheck implements KeyUpHandler{
-
-		@Override
-		public void onKeyUp(KeyUpEvent event) {
-			TextBox id = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidUserId(id.getText())) {
-				id.setStyleName("TextBox-OpretError");
-				idValid = false;
-			}
-			else {
-				id.setStyleName("TextBox-Opret");
-				idValid = true;
-			}
-
-			if (passValid && navnValid && cprValid && iniValid && idValid  && roleValid)
-				ok.setEnabled(true);
-			else
-				ok.setEnabled(false);
-		}
-	}
+//	private class IdCheck implements KeyUpHandler{
+//
+//		@Override
+//		public void onKeyUp(KeyUpEvent event) {
+//			TextBox id = (TextBox) event.getSource();
+//			if (!FieldVerifier.isValidUserId(id.getText())) {
+//				id.setStyleName("TextBox-OpretError");
+//				idValid = false;
+//			}
+//			else {
+//				id.setStyleName("TextBox-Opret");
+//				idValid = true;
+//			}
+//
+//			if (passValid && navnValid && cprValid && iniValid && idValid  && roleValid)
+//				ok.setEnabled(true);
+//			else
+//				ok.setEnabled(false);
+//		}
+//	}
 	
 	private class IniCheck implements KeyUpHandler{
 

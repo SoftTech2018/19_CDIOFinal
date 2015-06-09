@@ -79,6 +79,17 @@ public class ControllerDAO implements IControllerDAO {
 	public List<UserDTO> getOprList() throws DALException {
 		return oprDAO.getOperatoerList();
 	}
+
+	@Override
+	public UserDTO updateUser(UserDTO user) throws DALException {
+		oprDAO.updateOperatoer(user);
+		return oprDAO.getOperatoer(user.getUserId());
+	}
+
+	@Override
+	public void createUser(UserDTO user) throws DALException {
+		oprDAO.createOperatoer(user);
+	}
 	
 }
 	

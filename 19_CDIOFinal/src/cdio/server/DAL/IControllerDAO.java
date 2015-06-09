@@ -30,6 +30,10 @@ public interface IControllerDAO {
 	public UserDTO getUser(int parseInt) throws DALException;
 
 	public List<UserDTO> getOprList() throws DALException;
+
+	public UserDTO updateUser(UserDTO user) throws DALException;
+
+	public void createUser(UserDTO user) throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

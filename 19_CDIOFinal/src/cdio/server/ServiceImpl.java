@@ -29,32 +29,32 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
-	
+
 	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
 
 	private TokenHandler th;
 	private IControllerDAO dao;
-	
+
 	public ServiceImpl(){
 		th = new TokenHandler();
 		runASE();
 	}
-	
+
 	public void runASE(){
 		int port;
 		String host;
-		
-//		if (args.length == 2){
-//			port = Integer.parseInt(args[1]);
-//			host = args[0];
-//		}
-//		else {
-			port = 8000;
-			host = "localhost";			
-//		}
-		
+
+		//		if (args.length == 2){
+		//			port = Integer.parseInt(args[1]);
+		//			host = args[0];
+		//		}
+		//		else {
+		port = 8000;
+		host = "localhost";			
+		//		}
+
 		IProcedure menu = new Procedure();
-		
+
 		try {
 			Connector con = new Connector();
 			dao = new ControllerDAO();
@@ -62,7 +62,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
 			Thread menuThread = new Thread((Runnable) menuCon);
 			menuThread.start();
-			
+
 		} catch (FileNotFoundException e) {
 			System.out.println("Noget i filbehandlingen gik grueligt galt :-( Kontakt udvikleren.");
 			e.printStackTrace();
@@ -96,19 +96,19 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 	}
-	
+
 	@Override
 	public String login(UserDTO user) throws Exception {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
-		
+
 		String userID = escapeHtml(Integer.toString(user.getUserId()));
 		String password = escapeHtml(user.getPassword());
-		
+
 		// Inputvalidering på serveren
 		if (!FieldVerifier.isValidUserId(userID) || !FieldVerifier.isValidPassword(password))
 			throw new Exception("Ugyldigt bruger id og/eller password.");
-		
+
 		UserDTO db_user;
 		try {
 			db_user = dao.getUser(Integer.parseInt(userID));
@@ -116,7 +116,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new Exception("Forkert bruger ID.");
 		}
 		String token;		
-		
+
 		if (db_user.getPassword().equals(password)){
 			if (db_user.isAdmin() || db_user.isFarmaceut() || db_user.isVaerkfoerer()){
 				token = th.createToken(Integer.toString(db_user.getUserId()));
@@ -133,7 +133,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String getRole(String token) throws Exception {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
-		
+
 		if (th.validateToken(token) != null){
 			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
 			if (user.isAdmin())
@@ -142,8 +142,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				return "FARMACEUT";
 			if (user.isVaerkfoerer())
 				return "VAERKFOERER";
-//			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
-//				return "OPERATOER";
+			//			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
+			//				return "OPERATOER";
 			throw new Exception("Bruger har ingen adgang.");
 		}
 		throw new Exception("Adgang nægtet.");
@@ -153,7 +153,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public String getUsername(String token) throws Exception {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
-		
+
 		if (th.validateToken(token) != null){
 			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
 			return user.getName();
@@ -169,42 +169,39 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			return dao.getOprList();
 		}
 		throw new Exception("Adgang nægtet");
-		
+
 	}
 
 	@Override
 	public UserDTO updateUser(String token, UserDTO user) throws Exception {
-//		if (th.validateToken(token) != null){
-//			// Opdater brugeren i Databasen
-//			return user;
-//		} else {
+		if (th.validateToken(token) != null)
+			return dao.updateUser(user);
+		else 
 			throw new Exception("Adgang nægtet");
-//		}
 	}
-	
+
 	public List<RaavareDTO> getRaavareList(String token) throws Exception {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			List<RaavareDTO> raavareList = new ArrayList<RaavareDTO>();
 			raavareList.add(new RaavareDTO(1, "Pizza", "Ebbes Pizzaria"));
-		
-		return raavareList;
+
+			return raavareList;
 		}
 		throw new Exception("Adgang nægtet");
-		
+
 	}
 
 	@Override
-	public UserDTO createUser(String token, UserDTO user) throws Exception {
+	public void createUser(String token, UserDTO user) throws Exception {
 		if (th.validateToken(token) != null){
-			System.out.println("BRUGER RETURNERET!!!!");
-			return user;						
+			dao.createUser(user);						
 		}
 		else 
 			throw new Exception("Adgang nægtet");
 	}
-	
+
 	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
 		List<ProduktBatchDTO> ProduktBatchList = new ArrayList<ProduktBatchDTO>();
 		ProduktBatchList.add(new ProduktBatchDTO(1, 0, 2));

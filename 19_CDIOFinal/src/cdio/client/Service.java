@@ -35,7 +35,7 @@ public interface Service extends RemoteService {
 	
 	List<RaavareDTO> getRaavareList(String token) throws Exception;
 	
-	UserDTO createUser(String token, UserDTO user) throws Exception;
+	void createUser(String token, UserDTO user) throws Exception;
 	
 	List<ProduktBatchDTO> getPBList(String token) throws Exception;
 	
