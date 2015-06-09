@@ -203,6 +203,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
 		List<ProduktBatchDTO> ProduktBatchList = new ArrayList<ProduktBatchDTO>();
 		ProduktBatchList.add(new ProduktBatchDTO(1, 0, 2));
+		ProduktBatchList.add(new ProduktBatchDTO(2, 0, 2));
+		ProduktBatchList.add(new ProduktBatchDTO(3, 0, 2));
 		return ProduktBatchList;
 	}
 
@@ -210,6 +212,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public List<ProduktBatchKompDTO> getPBKList(String token) throws Exception {
 		List<ProduktBatchKompDTO> ProduktBatchKompList = new ArrayList<ProduktBatchKompDTO>();
 		ProduktBatchKompList.add(new ProduktBatchKompDTO(1, 3, 10.5, 5.3, 001));
+		ProduktBatchKompList.add(new ProduktBatchKompDTO(2, 3, 10.5, 5.3, 001));
+		ProduktBatchKompList.add(new ProduktBatchKompDTO(3, 3, 10.5, 5.3, 001));
 		return ProduktBatchKompList;
 	}
 
