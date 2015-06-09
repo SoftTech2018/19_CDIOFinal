@@ -221,4 +221,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new Exception("Adgang nægtet");
 		
 	}
+	
+	public void updateRaavare(String token, RaavareDTO raavare) throws Exception{
+		if (th.validateToken(token) != null){
+			dao.updateRaavare(raavare);
+		} else {
+			throw new Exception("Adgang nægtet");
+		}
+	}
 }

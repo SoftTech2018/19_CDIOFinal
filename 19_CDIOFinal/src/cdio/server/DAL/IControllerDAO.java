@@ -41,6 +41,8 @@ public interface IControllerDAO {
 
 	public void deleteUser(int userId) throws DALException;
 	
+	public void updateRaavare(RaavareDTO raavare) throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;

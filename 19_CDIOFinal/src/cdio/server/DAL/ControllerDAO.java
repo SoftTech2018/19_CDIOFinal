@@ -107,5 +107,9 @@ public class ControllerDAO implements IControllerDAO {
 		oprDAO.updateOperatoer(user);
 	}
 	
+	public void updateRaavare(RaavareDTO raavare) throws DALException{
+		raavareDAO.updateRaavare(raavare);
+	}
+	
 }
 	

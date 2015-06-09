@@ -99,7 +99,7 @@ public class RetRaavare  extends Composite {
 			
 			idValid = FieldVerifier.isValidUserId(uID);
 			nameValid = FieldVerifier.isValidName(uNavn);
-			leverandoerValid = true; //Nødvendigt
+			leverandoerValid = true; //unødvendigt
 			
 			//Her laves nye widgets der kan redigeres i og erstatter de oprindelige med disse
 			oID = new TextBox();
@@ -110,6 +110,43 @@ public class RetRaavare  extends Composite {
 			
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
+			oNavn.addKeyUpHandler(new NameCheck());
+			oNavn.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 1, oNavn);
+			
+			oLeverandoer = new TextBox();
+			oLeverandoer.setText(uLeverandoer);
+			oLeverandoer.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 2, oLeverandoer);
+			
+			Button ok = new Button("Ok");
+			ok.setStyleName("Button-Ret");
+			ok.addClickHandler(new OkClick());
+			ft.setWidget(eventRow, 3, ok);
+			
+			Button cancel = new Button("Cancel");
+			cancel.setStyleName("Button-Ret");
+			cancel.addClickHandler(new CancelClick());
+			ft.setWidget(eventRow, 4, cancel);
+		}
+		
+	}
+	
+	private class OkClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ft.getText(eventRow, 1), ft.getText(eventRow, 3));
+			//service. her skal der laves metode til create raavare
+		}
+		
+	}
+	
+	private class CancelClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			
 		}
 		
 	}
@@ -118,7 +155,28 @@ public class RetRaavare  extends Composite {
 		
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			
+			//mangler implementering
+		}
+	}
+	
+	private class NameCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox name = (TextBox) event.getSource();
+			if (!FieldVerifier.isValidName(name.getText())) {
+				name.setStyleName("TextBox-RetError");
+				nameValid = false;
+			}
+			else {
+				name.setStyleName("TextBox-Ret");
+				nameValid = true;
+			}
+
+			if (idValid && nameValid && leverandoerValid)
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 	}
 
