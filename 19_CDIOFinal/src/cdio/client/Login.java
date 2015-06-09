@@ -27,12 +27,18 @@ public class Login extends Composite {
 	private VerticalPanel vPane;
 	private Button send;
 	private boolean passValid, idValid;
+	private ServiceAsync service;
 
 	public Login(final ServiceAsync service){
+		this.service = service;
 		vPane = new VerticalPanel();
 		vPane.setStyleName("Content-Login");
 		initWidget(vPane);
+		run();
+	}
 		
+	public void run(){
+		vPane.clear();
 		// Opretter de nødvendige elementer
 		Label userTxt = new Label("Bruger ID:");
 		Label passTxt = new Label("Adgangskode:");
@@ -83,11 +89,14 @@ public class Login extends Composite {
 				UserDTO user = new UserDTO(userName.getText(), password.getText());
 				password.setText("");
 				password.setFocus(true);
+				send.setEnabled(false);
+				send.setText("Loading");
 				service.login(user, new AsyncCallback<String>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
 						errorMsg.setText(caught.getMessage()); // Fejlbesked
+						send.setText("Send");
 					}
 
 					@Override
