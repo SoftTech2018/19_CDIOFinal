@@ -1,6 +1,8 @@
 package cdio.shared;
 
-public class ProduktBatchKompDTO 
+import java.io.Serializable;
+
+public class ProduktBatchKompDTO implements Serializable 
 {
 	int pbId; 	  // produktbatchets id
 	int rbId;        // i omraadet 1-99999999

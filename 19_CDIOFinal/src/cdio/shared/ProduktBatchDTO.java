@@ -1,6 +1,8 @@
 package cdio.shared;
 
-public class ProduktBatchDTO 
+import java.io.Serializable;
+
+public class ProduktBatchDTO implements Serializable
 {
 	int pbId;                     // i omraadet 1-99999999
 	int status;					// 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
