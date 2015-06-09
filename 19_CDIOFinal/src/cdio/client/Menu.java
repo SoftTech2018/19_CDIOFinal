@@ -141,7 +141,7 @@ public class Menu extends Composite {
 
 		Anchor slet = new Anchor("Slet operatør");
 		ft.setWidget(4, 0, slet);
-		vis.addClickHandler(new ClickHandler(){
+		slet.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -170,7 +170,7 @@ public class Menu extends Composite {
 
 		Anchor ret = new Anchor("Ret råvarer");
 		ft.setWidget(2, 0, ret);
-		vis.addClickHandler(new ClickHandler(){
+		ret.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -180,7 +180,7 @@ public class Menu extends Composite {
 
 		Anchor opret = new Anchor("Opret råvare");
 		ft.setWidget(3, 0, opret);
-		vis.addClickHandler(new ClickHandler(){
+		opret.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -190,7 +190,7 @@ public class Menu extends Composite {
 
 		Anchor visRecept = new Anchor("Vis recept");
 		ft.setWidget(4, 0, visRecept);
-		vis.addClickHandler(new ClickHandler(){
+		visRecept.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -200,7 +200,7 @@ public class Menu extends Composite {
 
 		Anchor opretRecept = new Anchor("Opret recept");
 		ft.setWidget(5, 0, opretRecept);
-		vis.addClickHandler(new ClickHandler(){
+		opretRecept.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
