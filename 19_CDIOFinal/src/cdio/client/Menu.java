@@ -217,9 +217,9 @@ public class Menu extends Composite {
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		ft.setText(0, 0, "Værkfører");
 
-		Anchor vis = new Anchor("Vis råvarebatch");
-		ft.setWidget(1, 0, vis);
-		vis.addClickHandler(new ClickHandler(){
+		Anchor visRB = new Anchor("Vis råvarebatch");
+		ft.setWidget(1, 0, visRB);
+		visRB.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -227,9 +227,9 @@ public class Menu extends Composite {
 			}
 		});
 
-		Anchor opret = new Anchor("Opret råvarebatch");
-		ft.setWidget(2, 0, opret);
-		vis.addClickHandler(new ClickHandler(){
+		Anchor opretRB = new Anchor("Opret råvarebatch");
+		ft.setWidget(2, 0, opretRB);
+		opretRB.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -237,9 +237,9 @@ public class Menu extends Composite {
 			}
 		});
 
-		Anchor visP = new Anchor("Vis produktbatch");
-		ft.setWidget(3, 0, visP);
-		vis.addClickHandler(new ClickHandler(){
+		Anchor visPB = new Anchor("Vis produktbatch");
+		ft.setWidget(3, 0, visPB);
+		visPB.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
@@ -247,9 +247,9 @@ public class Menu extends Composite {
 			}
 		});
 
-		Anchor opretP = new Anchor("Opret produktbatch");
-		ft.setWidget(4, 0, opretP);
-		vis.addClickHandler(new ClickHandler(){
+		Anchor opretPB = new Anchor("Opret produktbatch");
+		ft.setWidget(4, 0, opretPB);
+		opretPB.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
