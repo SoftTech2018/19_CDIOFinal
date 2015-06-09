@@ -47,7 +47,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 		try (Socket	socket = new Socket(host, port);
 				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
-			trans.connected(in, out);			
+			trans.connected(in, out);
+			trans.RM20("123456789012345678901234567890", "", "");
 			start();
 		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException fejl");
