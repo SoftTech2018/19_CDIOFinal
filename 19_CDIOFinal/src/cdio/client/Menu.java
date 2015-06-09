@@ -109,7 +109,7 @@ public class Menu extends Composite {
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		ft.setText(0, 0, "Admin");
 
-		Anchor vis = new Anchor("Vis operatører");
+		Anchor vis = new Anchor("Vis brugere");
 		vis.addClickHandler(new ClickHandler(){
 
 			@Override
@@ -119,7 +119,7 @@ public class Menu extends Composite {
 		});
 		ft.setWidget(1, 0, vis);
 
-		Anchor ret = new Anchor("Ret operatører");
+		Anchor ret = new Anchor("Ret bruger");
 		ret.addClickHandler(new ClickHandler(){
 
 			@Override
@@ -129,7 +129,7 @@ public class Menu extends Composite {
 		});
 		ft.setWidget(2, 0, ret);
 
-		Anchor opret = new Anchor("Opret operatør");
+		Anchor opret = new Anchor("Opret bruger");
 		opret.addClickHandler(new ClickHandler(){
 
 			@Override
@@ -139,7 +139,7 @@ public class Menu extends Composite {
 		});
 		ft.setWidget(3, 0, opret);
 
-		Anchor slet = new Anchor("Slet operatør");
+		Anchor slet = new Anchor("Slet bruger");
 		ft.setWidget(4, 0, slet);
 		slet.addClickHandler(new ClickHandler(){
 

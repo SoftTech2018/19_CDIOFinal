@@ -87,8 +87,6 @@ public class Login extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				UserDTO user = new UserDTO(userName.getText(), password.getText());
-				password.setText("");
-				password.setFocus(true);
 				send.setEnabled(false);
 				send.setText("Loading");
 				service.login(user, new AsyncCallback<String>(){
@@ -97,6 +95,16 @@ public class Login extends Composite {
 					public void onFailure(Throwable caught) {
 						errorMsg.setText(caught.getMessage()); // Fejlbesked
 						send.setText("Send");
+						password.setText("");
+						if (caught.getMessage().equalsIgnoreCase("Forkert bruger ID.")){
+							userName.setStyleName("TextBox-Error");
+							userName.setFocus(true);
+							idValid = false;
+						} else {
+							password.setFocus(true);
+							password.setStyleName("TextBox-Error");
+							passValid = false;
+						}
 					}
 
 					@Override
