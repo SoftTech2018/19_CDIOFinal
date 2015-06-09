@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -137,7 +138,26 @@ public class RetRaavare  extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ft.getText(eventRow, 1), ft.getText(eventRow, 3));
-//			service.updateRaavare(token, raavare, asyncCallback);
+			service.updateRaavare(token, raavare, new AsyncCallback<Void>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+					uID = ((TextBox) ft.getWidget(eventRow, 1)).getText();
+					uNavn = ((TextBox) ft.getWidget(eventRow, 2)).getText();
+					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 3)).getText();
+					
+					openEventRow = 0;
+					Window.alert("Raavare" + " blev opdateret");
+					run(); //Reload siden
+				}
+				
+			});
 		}
 		
 	}
@@ -146,7 +166,19 @@ public class RetRaavare  extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			int eventRow = ft.getCellForEvent(event).getRowIndex();
 			
+			ft.setText(eventRow, 0, uID);
+			ft.setText(eventRow, 1, uNavn);
+			ft.setText(eventRow, 2, uLeverandoer);
+			
+			Button ret = new Button("Ret");
+			ret.setStyleName("Button-Ret");
+			ret.addClickHandler(new RetClick());
+			ft.setWidget(eventRow, 3, ret);
+			
+			ft.setText(eventRow, 4, "");
+			openEventRow =0;
 		}
 		
 	}

@@ -2,7 +2,6 @@ package cdio.server.DAL;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -12,6 +11,7 @@ import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
 import cdio.shared.RaavareDTO;
+import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
 
 public interface IControllerDAO {

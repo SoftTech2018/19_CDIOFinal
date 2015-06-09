@@ -10,7 +10,6 @@ import cdio.server.DAL.dao.RaavareBatchDAO;
 import cdio.server.DAL.dao.RaavareDAO;
 import cdio.server.DAL.dao.ReceptDAO;
 import cdio.server.DAL.dao.ReceptKompDAO;
-import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -20,6 +19,7 @@ import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
 import cdio.shared.RaavareDTO;
+import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
 
 

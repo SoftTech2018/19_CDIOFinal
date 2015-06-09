@@ -1,4 +1,4 @@
-package cdio.server.DAL.dto;
+package cdio.shared;
 
 import java.io.Serializable;
 

@@ -9,10 +9,10 @@ import java.util.List;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dto.IngrediensDTO;
-import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.dto.ReceptViewDTO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.shared.DALException;
+import cdio.shared.ReceptDTO;
 
 public class ReceptDAO implements IReceptDAO {
 

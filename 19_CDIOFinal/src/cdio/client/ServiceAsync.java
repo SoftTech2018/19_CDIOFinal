@@ -2,10 +2,10 @@ package cdio.client;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.ReceptDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
+import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

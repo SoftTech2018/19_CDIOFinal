@@ -2,8 +2,8 @@ package cdio.server.DAL.idao;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.ReceptDTO;
 import cdio.shared.DALException;
+import cdio.shared.ReceptDTO;
 
 
 public interface IReceptDAO {
