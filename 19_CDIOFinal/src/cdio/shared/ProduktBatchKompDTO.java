@@ -19,6 +19,9 @@ public class ProduktBatchKompDTO implements Serializable
 		this.netto = netto;
 		this.oprId = oprId;
 	}
+	public ProduktBatchKompDTO(){
+		
+	}
 	
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }
