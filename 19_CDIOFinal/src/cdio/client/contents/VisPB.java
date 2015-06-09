@@ -10,6 +10,7 @@ import cdio.shared.RaavareDTO;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -53,25 +54,27 @@ public class VisPB extends Composite {
 				
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
-					ft.setText(i+1, 1, result.get(i).getReceptId());
-					ft.setText(i+1, 2, result.get(i).getStatus());
+					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
+					ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
 					
 					Button pbkomp = new Button("Komponenter");
 					pbkomp.setStyleName("Button-Ret");
 					pbkomp.addClickHandler(new kompClick());
 					ft.setWidget(i+1, 3, pbkomp);
 					
-			}
+				}
 
+				vPane.add(ft);
+			}
 			
-}
-});
-}
+		});
+		
+	}
 
 	private class kompClick implements ClickHandler {
 
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onClick(final ClickEvent event) {
 			
 			final FlexTable ft2 = new FlexTable();
 			
@@ -98,9 +101,14 @@ public class VisPB extends Composite {
 					ft2.getFlexCellFormatter().setWidth(0, 2, "75px");
 					ft2.getFlexCellFormatter().setWidth(0, 3, "75px");
 			
-			for (int i = 0; i < array.length; i++) {
-				
-			}
+					for (int i = 0; i < result.size(); i++) {
+						ft2.setText(i+1, 0, Integer.toString(result.get(i).getRbId()));
+						ft2.setText(i+1, 1, Double.toString(result.get(i).getTara()));
+						ft2.setText(i+1, 2, Double.toString(result.get(i).getNetto()));
+						ft2.setText(i+1, 3, Integer.toString(result.get(i).getOprId()));
+					}
+				Anchor skjul = new Anchor("Skjul");
+				ft2.setWidget(0, 4, skjul);
 				}
 				
 			});

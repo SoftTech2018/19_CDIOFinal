@@ -218,13 +218,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 	
 	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
-		
-		return null;
+		List<ProduktBatchDTO> ProduktBatchList = new ArrayList<ProduktBatchDTO>();
+		ProduktBatchList.add(new ProduktBatchDTO(1, 0, 2));
+		return ProduktBatchList;
 	}
 
 	@Override
 	public List<ProduktBatchKompDTO> getPBKList(String token) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProduktBatchKompDTO> ProduktBatchKompList = new ArrayList<ProduktBatchKompDTO>();
+		ProduktBatchKompList.add(new ProduktBatchKompDTO(1, 3, 10.5, 5.3, 001));
+		return ProduktBatchKompList;
 	}
 }

@@ -1,10 +1,18 @@
 package cdio.client;
 
 import cdio.client.contents.OpretOpr;
+import cdio.client.contents.OpretPB;
+import cdio.client.contents.OpretRB;
+import cdio.client.contents.OpretRaavare;
+import cdio.client.contents.OpretRecept;
 import cdio.client.contents.RetOpr;
+import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
 import cdio.client.contents.VisOpr;
+import cdio.client.contents.VisPB;
+import cdio.client.contents.VisRB;
 import cdio.client.contents.VisRaavarer;
+import cdio.client.contents.VisRecept;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -133,6 +141,13 @@ public class Menu extends Composite {
 
 		Anchor slet = new Anchor("Slet operatør");
 		ft.setWidget(4, 0, slet);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new SletOpr(con.getToken(), con.getService()));
+			}
+		});
 
 		return ft;
 	}
@@ -155,15 +170,43 @@ public class Menu extends Composite {
 
 		Anchor ret = new Anchor("Ret råvarer");
 		ft.setWidget(2, 0, ret);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new RetRaavare(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor opret = new Anchor("Opret råvare");
 		ft.setWidget(3, 0, opret);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new OpretRaavare(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor visRecept = new Anchor("Vis recept");
 		ft.setWidget(4, 0, visRecept);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new VisRecept(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor opretRecept = new Anchor("Opret recept");
 		ft.setWidget(5, 0, opretRecept);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new OpretRecept(con.getToken(), con.getService()));
+			}
+		});
 
 		return ft;
 	}
@@ -176,15 +219,43 @@ public class Menu extends Composite {
 
 		Anchor vis = new Anchor("Vis råvarebatch");
 		ft.setWidget(1, 0, vis);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new VisRB(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor opret = new Anchor("Opret råvarebatch");
 		ft.setWidget(2, 0, opret);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new OpretRB(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor visP = new Anchor("Vis produktbatch");
 		ft.setWidget(3, 0, visP);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new VisPB(con.getToken(), con.getService()));
+			}
+		});
 
 		Anchor opretP = new Anchor("Opret produktbatch");
 		ft.setWidget(4, 0, opretP);
+		vis.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+			con.setContent(new OpretPB(con.getToken(), con.getService()));
+			}
+		});
 
 		return ft;
 	}
