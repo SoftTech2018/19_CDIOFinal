@@ -8,6 +8,7 @@ import cdio.shared.RaavareDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -103,13 +104,23 @@ public class RetRaavare  extends Composite {
 			//Her laves nye widgets der kan redigeres i og erstatter de oprindelige med disse
 			oID = new TextBox();
 			oID.setText(uID);
-			oID.addClickHandler(new IDCheck());
+			oID.addKeyUpHandler(new IDCheck());
+			oID.setStyleName("TextBox-Ret");
+			ft.setWidget(eventRow, 0, oID);
+			
+			oNavn = new TextBox();
+			oNavn.setText(uNavn);
 		}
 		
 	}
 	
-	private class IDCheck implements KeyUpHandler(){
+	private class IDCheck implements KeyUpHandler{
 		
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			
+		}
 	}
+
 
 }
