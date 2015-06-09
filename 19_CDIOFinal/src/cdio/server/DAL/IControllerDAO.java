@@ -9,6 +9,7 @@ import cdio.server.DAL.idao.IRaavareBatchDAO;
 import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
+import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
 public interface IControllerDAO {
@@ -34,6 +35,8 @@ public interface IControllerDAO {
 	public UserDTO updateUser(UserDTO user) throws DALException;
 
 	public void createUser(UserDTO user) throws DALException;
+	
+	public List<RaavareDTO> getRaavareList() throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

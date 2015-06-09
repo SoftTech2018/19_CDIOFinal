@@ -184,10 +184,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
-			List<RaavareDTO> raavareList = new ArrayList<RaavareDTO>();
-			raavareList.add(new RaavareDTO(1, "Pizza", "Ebbes Pizzaria"));
-
-			return raavareList;
+			return dao.getRaavareList();
 		}
 		throw new Exception("Adgang nægtet");
 

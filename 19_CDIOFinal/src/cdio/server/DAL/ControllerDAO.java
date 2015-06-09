@@ -17,6 +17,7 @@ import cdio.server.DAL.idao.IRaavareBatchDAO;
 import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
+import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 
 
@@ -89,6 +90,10 @@ public class ControllerDAO implements IControllerDAO {
 	@Override
 	public void createUser(UserDTO user) throws DALException {
 		oprDAO.createOperatoer(user);
+	}
+	
+	public List<RaavareDTO> getRaavareList() throws DALException {
+		return raavareDAO.getRaavareList();
 	}
 	
 }
