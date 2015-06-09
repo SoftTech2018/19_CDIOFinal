@@ -34,10 +34,17 @@ public class FieldVerifier {
 	 * @return true if valid, false if invalid
 	 */
 	public static boolean isValidName(String name) {
-		if (name == null) {
-			return false;
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
 		}
-		return name.length() > 3;
+		if (name.length() == 0) {
+			return false;			
+		}
+		// max 30 karakterer
+		return name.length() <= 30;
 	}
 	
 	public static boolean isValidUserId(String id){
@@ -72,6 +79,21 @@ public class FieldVerifier {
 	}
 	
 	public static boolean isValidCpr(String cpr){
+		for (int i=0; i < cpr.length(); i++){
+			String sString = cpr.substring(i, i+1);
+			if (sString.matches("[a-z]")){
+				return false;
+			} else if (sString.matches("[!]")){
+				
+				return false;
+			}
+		}
+		if (cpr.length() < 11 || cpr.length() > 11){
+			return false;
+		}
+		if (!(cpr.charAt(6)=='-')){
+			return false;
+		}
 		return true;
 	}
 }
