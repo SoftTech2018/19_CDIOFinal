@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.Connector;
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.idao.IProduktBatchDAO;
+import cdio.shared.DALException;
 import cdio.shared.ProduktBatchDTO;
 
 public class ProduktBatchDAO implements IProduktBatchDAO {

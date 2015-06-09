@@ -2,7 +2,7 @@ package cdio.server.DAL.idao;
 
 import java.util.List;
 
-import cdio.server.DAL.DALException;
+import cdio.shared.DALException;
 import cdio.shared.ProduktBatchKompDTO;
 
 public interface IProduktBatchKompDAO {

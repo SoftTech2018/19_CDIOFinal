@@ -2,8 +2,8 @@ package cdio.server.DAL.idao;
 
 import java.util.List;
 
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.dto.RaavareBatchDTO;
+import cdio.shared.DALException;
 
 public interface IRaavareBatchDAO {
 	RaavareBatchDTO getRaavareBatch(int rbId) throws DALException;

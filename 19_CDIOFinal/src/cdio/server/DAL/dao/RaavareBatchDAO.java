@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.Connector;
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dto.RaavareBatchDTO;
 import cdio.server.DAL.idao.IRaavareBatchDAO;
+import cdio.shared.DALException;
 
 public class RaavareBatchDAO implements IRaavareBatchDAO {
 	

@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.Connector;
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dto.IngrediensDTO;
 import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.dto.ReceptViewDTO;
 import cdio.server.DAL.idao.IReceptDAO;
+import cdio.shared.DALException;
 
 public class ReceptDAO implements IReceptDAO {
 

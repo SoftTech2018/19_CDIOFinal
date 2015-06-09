@@ -17,6 +17,7 @@ import cdio.server.DAL.idao.IRaavareBatchDAO;
 import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
+import cdio.shared.DALException;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
 

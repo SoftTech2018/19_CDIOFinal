@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.Connector;
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dto.ProdBatchInfo;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
+import cdio.shared.DALException;
 import cdio.shared.ProduktBatchKompDTO;
 
 public class ProduktBatchKompDAO implements IProduktBatchKompDAO {

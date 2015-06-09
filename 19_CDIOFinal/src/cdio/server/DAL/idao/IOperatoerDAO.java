@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import cdio.server.DAL.DALException;
+import cdio.shared.DALException;
 import cdio.shared.UserDTO;
 
 public interface IOperatoerDAO {

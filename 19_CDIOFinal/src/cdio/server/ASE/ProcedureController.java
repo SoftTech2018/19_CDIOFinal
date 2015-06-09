@@ -8,9 +8,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import cdio.server.DAL.DALException;
 import cdio.server.DAL.IControllerDAO;
 import cdio.server.DAL.dto.ReceptKompDTO;
+import cdio.shared.DALException;
 import cdio.shared.ProduktBatchKompDTO;
 
 public class ProcedureController implements Runnable, IProcedureController {
