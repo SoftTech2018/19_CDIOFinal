@@ -10,8 +10,8 @@ import cdio.server.DAL.Connector;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dto.ProdBatchInfo;
-import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
+import cdio.shared.ProduktBatchKompDTO;
 
 public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 	

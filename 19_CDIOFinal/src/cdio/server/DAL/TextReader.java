@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.dto.OperatoerDTO;
-import cdio.server.DAL.dto.ProduktBatchDTO;
-import cdio.server.DAL.dto.ProduktBatchKompDTO;
 import cdio.server.DAL.dto.RaavareBatchDTO;
 import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.dto.ReceptKompDTO;
+import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 
 public class TextReader {

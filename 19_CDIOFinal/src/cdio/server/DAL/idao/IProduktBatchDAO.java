@@ -3,7 +3,7 @@ package cdio.server.DAL.idao;
 import java.util.List;
 
 import cdio.server.DAL.DALException;
-import cdio.server.DAL.dto.ProduktBatchDTO;
+import cdio.shared.ProduktBatchDTO;
 
 public interface IProduktBatchDAO {
 	ProduktBatchDTO getProduktBatch(int pbId) throws DALException;

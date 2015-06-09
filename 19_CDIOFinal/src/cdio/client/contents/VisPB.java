@@ -3,8 +3,8 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.ServiceAsync;
-import cdio.server.DAL.dto.ProduktBatchDTO;
-import cdio.server.DAL.dto.ProduktBatchKompDTO;
+import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
