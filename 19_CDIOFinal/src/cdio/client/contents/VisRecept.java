@@ -36,7 +36,7 @@ public class VisRecept extends Composite {
 
 
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "30px");
+				ft.getFlexCellFormatter().setWidth(0, 0, "150px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "150px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
 				ft.getFlexCellFormatter().setWidth(0, 3, "85px");
