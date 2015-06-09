@@ -10,6 +10,8 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -135,6 +137,14 @@ public class RetOpr extends Composite {
 			uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
 			uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
 			
+			passValid = FieldVerifier.isValidPassword(uPass);
+			nameValid = FieldVerifier.isValidName(uNavn);
+			iniValid = FieldVerifier.isValidInitial(uIni);
+			cprValid = FieldVerifier.isValidCpr(uCpr);
+			if (uAdmin || uFarm || uVeark || uOpr)
+				roleValid = true;
+
+			
 			// Lav nye widgets der kan redigeres og erstat de oprindelige med disse
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
@@ -163,21 +173,25 @@ public class RetOpr extends Composite {
 			oAdmin = new CheckBox();
 			oAdmin.setEnabled(true);
 			oAdmin.setValue(uAdmin);
+			oAdmin.addValueChangeHandler(new RolleCheck());
 			ft.setWidget(eventRow, 5, oAdmin);
 			
 			oFarm = new CheckBox();
 			oFarm.setEnabled(true);
 			oFarm.setValue(uFarm);
+			oFarm.addValueChangeHandler(new RolleCheck());
 			ft.setWidget(eventRow, 6, oFarm);
 			
 			oVaerk = new CheckBox();
 			oVaerk.setEnabled(true);
 			oVaerk.setValue(uVeark);
+			oVaerk.addValueChangeHandler(new RolleCheck());
 			ft.setWidget(eventRow, 7, oVaerk);
 			
 			oOpr = new CheckBox();
 			oOpr.setEnabled(true);
 			oOpr.setValue(uOpr);
+			oOpr.addValueChangeHandler(new RolleCheck());
 			ft.setWidget(eventRow, 8, oOpr);
 			
 			Button ok = new Button("Ok");
@@ -285,7 +299,7 @@ public class RetOpr extends Composite {
 				passValid = true;
 			}
 
-			if (passValid && true)
+			if (passValid && nameValid && cprValid && iniValid && roleValid)
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
 			else
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
@@ -306,7 +320,7 @@ public class RetOpr extends Composite {
 				nameValid = true;
 			}
 
-			if (passValid && nameValid)
+			if (passValid && nameValid && cprValid && iniValid && roleValid)
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
 			else
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
@@ -355,10 +369,10 @@ public class RetOpr extends Composite {
 		}
 	}
 	
-	private class RolleCheck implements ClickHandler{
+	private class RolleCheck implements ValueChangeHandler{
 
 		@Override
-		public void onClick(ClickEvent event) {
+		public void onValueChange(ValueChangeEvent event) {
 			if (((CheckBox) ft.getWidget(eventRow, 5)).getValue() || ((CheckBox) ft.getWidget(eventRow, 6)).getValue() || ((CheckBox) ft.getWidget(eventRow, 7)).getValue() || ((CheckBox) ft.getWidget(eventRow, 8)).getValue()) {
 				roleValid = true;
 			}
