@@ -34,4 +34,6 @@ public interface ServiceAsync {
 
 	void deleteUser(String token, int userId, AsyncCallback<Void> asyncCallback);
 	
+	void updateRaavare(String token, RaavareDTO raavare, AsyncCallback<Void> asyncCallback);
+	
 }

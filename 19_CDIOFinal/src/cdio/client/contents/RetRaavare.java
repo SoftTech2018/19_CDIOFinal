@@ -137,7 +137,7 @@ public class RetRaavare  extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ft.getText(eventRow, 1), ft.getText(eventRow, 3));
-			//service. her skal der laves metode til create raavare
+//			service.updateRaavare(token, raavare, asyncCallback);
 		}
 		
 	}
