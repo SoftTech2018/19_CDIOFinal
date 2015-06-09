@@ -39,8 +39,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 	@Override
 	public void run() {
-		connect(host, port);
-		
+		connect(host, port);		
 	}
 
 	@Override
@@ -169,6 +168,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						menu.show("Produkt bekraftet.");
 						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
+						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
 						return CLEAR;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
@@ -364,6 +364,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						menu.show("Operator ID: "+mc.getOprID()+", Vare ID: "+mc.getVareID()+", Tara vagt: "+mc.getTara()+", Afvejning: "+mc.getAfvejning());
 						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						if(mc.getReceptKompListe().isEmpty()){
+							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(3);
 							return START;
 						} else {
 							return CLEAR;
