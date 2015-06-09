@@ -14,6 +14,9 @@ public class ProduktBatchDTO implements Serializable
 		this.status = status;
 		this.receptId = receptId;
 	}
+	public ProduktBatchDTO(){
+		
+	}
 	
 	public int getPbId() { return pbId; }
 	public void setPbId(int pbId) { this.pbId = pbId; }
