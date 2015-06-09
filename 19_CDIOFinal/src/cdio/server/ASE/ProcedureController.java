@@ -160,7 +160,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 			@Override
 			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, product, prodInput;
-				int inputInt = 0;
 				try{
 					menu.show("Indtast varenummer:");
 					input = trans.RM20("Tast produktbatch nr.:","","");
