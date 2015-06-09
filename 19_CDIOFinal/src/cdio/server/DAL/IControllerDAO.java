@@ -1,7 +1,5 @@
 package cdio.server.DAL;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import cdio.server.DAL.idao.IOperatoerDAO;
@@ -11,6 +9,7 @@ import cdio.server.DAL.idao.IRaavareBatchDAO;
 import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
+import cdio.shared.UserDTO;
 
 public interface IControllerDAO {
 	
@@ -27,6 +26,10 @@ public interface IControllerDAO {
 	public IRaavareBatchDAO getRbDAO();
 	
 	public IRaavareDAO getRaavareDAO();
+
+	public UserDTO getUser(int parseInt) throws DALException;
+
+	public List<UserDTO> getOprList() throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

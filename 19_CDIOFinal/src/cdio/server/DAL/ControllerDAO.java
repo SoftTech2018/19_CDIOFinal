@@ -1,6 +1,7 @@
 package cdio.server.DAL;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import cdio.server.DAL.dao.OperatoerDAO;
 import cdio.server.DAL.dao.ProduktBatchDAO;
@@ -16,6 +17,7 @@ import cdio.server.DAL.idao.IRaavareBatchDAO;
 import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
+import cdio.shared.UserDTO;
 
 
 public class ControllerDAO implements IControllerDAO {
@@ -66,6 +68,16 @@ public class ControllerDAO implements IControllerDAO {
 	
 	public IRaavareDAO getRaavareDAO(){
 		return raavareDAO;
+	}
+
+	@Override
+	public UserDTO getUser(int id) throws DALException {
+		return oprDAO.getOperatoer(id);
+	}
+
+	@Override
+	public List<UserDTO> getOprList() throws DALException {
+		return oprDAO.getOperatoerList();
 	}
 	
 }

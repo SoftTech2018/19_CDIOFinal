@@ -9,8 +9,8 @@ import java.util.List;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.DALException;
 import cdio.server.DAL.TextReader;
-import cdio.server.DAL.dto.OperatoerDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
+import cdio.shared.UserDTO;
 
 
 public class OperatoerDAO implements IOperatoerDAO {
@@ -24,46 +24,46 @@ public class OperatoerDAO implements IOperatoerDAO {
 		this.setProcedure();
 	}
 	
-	public OperatoerDTO getOperatoer(int oprId) throws DALException {
+	public UserDTO getOperatoer(int oprId) throws DALException {
 		ResultSet rs = Connector.doQuery(txt.getOperatoer(oprId));
 	    try {
-	    	if (!rs.first()) throw new DALException("Operatoeren " + oprId + " findes ikke");
-	    	return new OperatoerDTO (rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer"));
+	    	if (!rs.first()) throw new DALException("Bruger " + oprId + " findes ikke");
+	    	return new UserDTO (Integer.toString(rs.getInt("opr_id")), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
 	
-	public void createOperatoer(OperatoerDTO opr) throws DALException {		
+	public void createOperatoer(UserDTO opr) throws DALException {		
 			Connector.doUpdate(txt.createOperatoer(opr));
 	}
 	
-	public void updateOperatoer(OperatoerDTO opr) throws DALException {
+	public void updateOperatoer(UserDTO opr) throws DALException {
 		Connector.doUpdate(txt.updateOperatoer(opr));
 		Connector.doUpdate(txt.updateOprRolle(opr));
 	}
 	
-	public List<OperatoerDTO> getOperatoerList() throws DALException {
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+	public List<UserDTO> getOperatoerList() throws DALException {
+		List<UserDTO> list = new ArrayList<UserDTO>();
 		ResultSet rs = Connector.doQuery(txt.getCommand(4));
 		try
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer")));
+				list.add(new UserDTO(Integer.toString(rs.getInt("opr_id")), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
 	
-	public List<OperatoerDTO> getListViewOpr() throws DALException {
-		List<OperatoerDTO> list = new ArrayList<OperatoerDTO>();
+	public List<UserDTO> getListViewOpr() throws DALException {
+		List<UserDTO> list = new ArrayList<UserDTO>();
 		ResultSet rs = Connector.doQuery(txt.getCommand(43));
 		try
 		{
 			while (rs.next()) 
 			{
-				list.add(new OperatoerDTO(rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getString("ini"), null, null, rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer")));
+				list.add(new UserDTO(Integer.toString(rs.getInt("opr_id")), rs.getString("opr_navn"), rs.getString("ini"), null, null, rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer")));
 			}
 		}
 		catch (SQLException e) { throw new DALException(e); }

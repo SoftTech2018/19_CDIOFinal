@@ -33,10 +33,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
 
 	private TokenHandler th;
+	private IControllerDAO dao;
 	
 	public ServiceImpl(){
 		th = new TokenHandler();
-//		runASE();
+		runASE();
 	}
 	
 	public void runASE(){
@@ -56,7 +57,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		try {
 			Connector con = new Connector();
-			IControllerDAO dao = new ControllerDAO();
+			dao = new ControllerDAO();
 			ITransmitter trans = new Transmitter();
 			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
 			Thread menuThread = new Thread((Runnable) menuCon);
@@ -106,15 +107,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		// Inputvalidering på serveren
 		if (!FieldVerifier.isValidUserId(userID) || !FieldVerifier.isValidPassword(password))
-			throw new Exception("Adgang nægtet.");
+			throw new Exception("Ugyldigt bruger id og/eller password.");
 		
 		UserDTO db_user;
-//		try {
-			db_user = new UserDTO("1", "test"); //dal.getUser(userID);
-			db_user.setAdmin(true); // TESTKODE SKAL SLETTES	
-//		} catch (DALException e){
-//			throw new Exception("Forkert bruger ID.");
-//		}
+		try {
+			db_user = dao.getUser(Integer.parseInt(userID));
+		} catch (DALException e){
+			throw new Exception("Forkert bruger ID.");
+		}
 		String token;		
 		
 		if (db_user.getPassword().equals(password)){
@@ -123,9 +123,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} else {
 				throw new Exception("Du har ikke adgang til at logge ind.");
 			}
-//			dal.log(userID, true);
 		} else {
-//			dal.log(userID, false);
 			throw new Exception("Forkert password.");
 		}
 		return token; 
@@ -137,17 +135,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			Thread.sleep(2000);
 		
 		if (th.validateToken(token) != null){
-			return "ADMIN"; // TESTKODE SKAL SLETTES
-//			UserDTO user = dal.getUser(th.getUserID(token));
-//			if (user.isAdmin())
-//				return "ADMIN";
-//			if (user.isFarmaceut())
-//				return "FARMACEUT";
-//			if (user.isVaerkfoerer())
-//				return "VAERKFOERER";
-////			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
-////				return "OPERATOER";
-//			throw new Exception("Bruger har ingen adgang.");
+			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
+			if (user.isAdmin())
+				return "ADMIN";
+			if (user.isFarmaceut())
+				return "FARMACEUT";
+			if (user.isVaerkfoerer())
+				return "VAERKFOERER";
+//			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
+//				return "OPERATOER";
+			throw new Exception("Bruger har ingen adgang.");
 		}
 		throw new Exception("Adgang nægtet.");
 	}
@@ -158,9 +155,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			Thread.sleep(2000);
 		
 		if (th.validateToken(token) != null){
-//			UserDTO user = dal.getUser(Integer.parseInt(th.getUserID(token)));
-//			return user.getName();
-			return "Jon"; // TESTKODE
+			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
+			return user.getName();
 		}
 		throw new Exception("Adgang nægtet.");
 	}
@@ -170,15 +166,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
-			List<UserDTO> oprList = new ArrayList<UserDTO>();
-			oprList.add(new UserDTO("1", "Ebbe B. Berthold", "EBB", "031091-2223", "password", 
-					   true, true, true, true));
-			oprList.add(new UserDTO("2", "Jon Tvermose Nielsen", "JTN", "031091-2223", "password", 
-					   true, true, true, true));
-			oprList.add(new UserDTO("3", "Jacob W. Jepsen", "JWJ", "031091-2223", "password", 
-					   true, true, true, true));
-		
-		return oprList;
+			return dao.getOprList();
 		}
 		throw new Exception("Adgang nægtet");
 		

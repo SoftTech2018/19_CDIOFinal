@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cdio.server.DAL.dto.OperatoerDTO;
 import cdio.server.DAL.dto.RaavareBatchDTO;
 import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
+import cdio.shared.UserDTO;
 
 public class TextReader {
 	
@@ -63,26 +63,26 @@ public class TextReader {
 		return output;
 	}
 	
-	public String createOperatoer(OperatoerDTO opr){
+	public String createOperatoer(UserDTO opr){
 		String output = sqlCommands[2];
-		output = output.replaceFirst(illegalString + "1", opr.getNavn());
+		output = output.replaceFirst(illegalString + "1", opr.getName());
 		output = output.replaceFirst(illegalString + "2", opr.getIni());
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
 		output = output.replaceFirst(illegalString + "4", opr.getPassword());
 		output = output.replaceFirst(illegalString + "5", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "6", Boolean.toString(opr.isFarmaceut()));
-		output = output.replaceFirst(illegalString + "7", Boolean.toString(opr.isVarkforer()));
+		output = output.replaceFirst(illegalString + "7", Boolean.toString(opr.isVaerkfoerer()));
 		output = output.replaceFirst(illegalString + "8", Boolean.toString(opr.isOperatoer()));
 		return output;
 	}
 	
-	public String updateOperatoer(OperatoerDTO opr){
+	public String updateOperatoer(UserDTO opr){
 		String output = sqlCommands[3];
-		output = output.replaceFirst(illegalString + "1", opr.getNavn());
+		output = output.replaceFirst(illegalString + "1", opr.getName());
 		output = output.replaceFirst(illegalString + "2", opr.getIni());
 		output = output.replaceFirst(illegalString + "3", opr.getCpr());
 		output = output.replaceFirst(illegalString + "4", opr.getPassword());
-		output = output.replaceFirst(illegalString + "5", Integer.toString(opr.getOprId()));
+		output = output.replaceFirst(illegalString + "5", Integer.toString(opr.getUserId()));
 		return output;
 	}
 	
@@ -248,13 +248,13 @@ public class TextReader {
 		return output;
 	}
 
-	public String updateOprRolle(OperatoerDTO opr) {
+	public String updateOprRolle(UserDTO opr) {
 		String output = sqlCommands[42];
 		output = output.replaceFirst(illegalString + "1", Boolean.toString(opr.isAdmin()));
 		output = output.replaceFirst(illegalString + "2", Boolean.toString(opr.isFarmaceut()));
-		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isVarkforer()));
+		output = output.replaceFirst(illegalString + "3", Boolean.toString(opr.isVaerkfoerer()));
 		output = output.replaceFirst(illegalString + "4", Boolean.toString(opr.isOperatoer()));
-		output = output.replaceFirst(illegalString + "5", Integer.toString(opr.getOprId()));
+		output = output.replaceFirst(illegalString + "5", Integer.toString(opr.getUserId()));
 		return output;
 		
 	}

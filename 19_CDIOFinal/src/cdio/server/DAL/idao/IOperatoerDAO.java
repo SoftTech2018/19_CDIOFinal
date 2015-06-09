@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 import cdio.server.DAL.DALException;
-import cdio.server.DAL.dto.OperatoerDTO;
+import cdio.shared.UserDTO;
 
 public interface IOperatoerDAO {
-	public OperatoerDTO getOperatoer(int oprId) throws DALException;
-	public List<OperatoerDTO> getOperatoerList() throws DALException;
-	public List<OperatoerDTO> getListViewOpr() throws DALException;
-	void createOperatoer(OperatoerDTO opr) throws DALException;
-	void updateOperatoer(OperatoerDTO opr) throws DALException;
+	public UserDTO getOperatoer(int oprId) throws DALException;
+	public List<UserDTO> getOperatoerList() throws DALException;
+	public List<UserDTO> getListViewOpr() throws DALException;
+	void createOperatoer(UserDTO opr) throws DALException;
+	void updateOperatoer(UserDTO opr) throws DALException;
 	public ResultSet getView() throws DALException;
 	public void callProcedure() throws DALException;
 	public void setFunction() throws DALException;
