@@ -211,4 +211,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		ProduktBatchKompList.add(new ProduktBatchKompDTO(1, 3, 10.5, 5.3, 001));
 		return ProduktBatchKompList;
 	}
+
+	@Override
+	public void deleteUser(String token, int userId) throws Exception {
+		if (th.validateToken(token) != null){
+			dao.deleteUser(userId);					
+		}
+		else 
+			throw new Exception("Adgang nægtet");
+		
+	}
 }

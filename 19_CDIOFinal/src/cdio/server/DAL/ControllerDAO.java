@@ -95,6 +95,16 @@ public class ControllerDAO implements IControllerDAO {
 	public List<RaavareDTO> getRaavareList() throws DALException {
 		return raavareDAO.getRaavareList();
 	}
+
+	@Override
+	public void deleteUser(int userId) throws DALException {
+		UserDTO user = oprDAO.getOperatoer(userId);
+		user.setAdmin(false);
+		user.setFarmaceut(false);
+		user.setVaerkfoerer(false);
+		user.setOperatoer(false);
+		oprDAO.updateOperatoer(user);
+	}
 	
 }
 	

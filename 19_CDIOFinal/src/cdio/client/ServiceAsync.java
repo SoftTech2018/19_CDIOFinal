@@ -31,5 +31,7 @@ public interface ServiceAsync {
 	void getPBList(String token, AsyncCallback<List<ProduktBatchDTO>> asyncCallback);
 
 	void getPBKList(String token,AsyncCallback<List<ProduktBatchKompDTO>> asyncCallback);
+
+	void deleteUser(String token, int userId, AsyncCallback<Void> asyncCallback);
 	
 }

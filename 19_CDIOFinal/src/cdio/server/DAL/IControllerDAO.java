@@ -37,6 +37,8 @@ public interface IControllerDAO {
 	public void createUser(UserDTO user) throws DALException;
 	
 	public List<RaavareDTO> getRaavareList() throws DALException;
+
+	public void deleteUser(int userId) throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

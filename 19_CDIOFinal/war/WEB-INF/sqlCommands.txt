@@ -39,7 +39,7 @@ DROP TRIGGER oprTrig
 DROP PROCEDURE setView
 DROP FUNCTION oprID
 SELECT oprID(#1)
-UPDATE roller set admin = #1, farmaceut = #2, varkforer = #3, operatoer = #4, WHERE opr_id = #5
+UPDATE roller set admin = #1, farmaceut = #2, varkforer = #3, operatoer = #4 WHERE opr_id = #5
 SELECT * FROM view_oprlist
 CREATE OR REPLACE VIEW view_oprlist AS SELECT operatoer.opr_id, operatoer.opr_navn, operatoer.ini, roller.admin, roller.operatoer, roller.farmaceut FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id WHERE roller.admin+roller.operatoer+roller.farmaceut>0
 DROP PROCEDURE IF EXISTS createOPR;
