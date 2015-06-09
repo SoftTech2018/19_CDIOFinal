@@ -193,7 +193,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						menu.show("Forkert produkt. Prov igen.");
 						trans.RM20("Forkert produkt. Prov igen.", "OK", "?");
 						return SETUP;
-					}					
+					}
 				} catch (NumberFormatException e) {
 					try {
 						menu.show("Forkert input type. Prov igen.");
@@ -216,9 +216,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return SETUP;
-				}
-				
-				
+				}				
 			}
 		},
 		CLEAR {
@@ -239,7 +237,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("");
 						return START;
 					}
-//					trans.T(); Simulator svarer ikke korrekt på tarering
+					trans.T(); //Simulator svarer ikke korrekt på tarering
 					menu.show("Pasat beholder og bekraft.");
 					input = trans.RM20("Pasat beholder, bekraft:","OK","?");
 					menu.show(input);
@@ -251,8 +249,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 					if (input.toUpperCase().equals(answer)) {
 						menu.show("Beholder pasat");
-//						mc.setTara(Double.parseDouble(trans.T())); Simulator svarer ikke korrekt på tarering
-						mc.setTara(Double.parseDouble("0.555"));
+						mc.setTara(Double.parseDouble(trans.T())); //Simulator svarer ikke korrekt på tarering
+//						mc.setTara(Double.parseDouble("0.555"));
 						menu.show("Vagt tareret: "+mc.getTara());
 						mc.setReceptKomp(mc.getReceptKompListe().remove(0));
 						mc.setRaavareID(mc.getReceptKomp().getRaavareId());
