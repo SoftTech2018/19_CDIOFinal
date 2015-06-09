@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ReceptDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
@@ -36,4 +37,6 @@ public interface ServiceAsync {
 	
 	void updateRaavare(String token, RaavareDTO raavare, AsyncCallback<Void> asyncCallback);
 	
+	void getReceptList(String token, AsyncCallback<List<ReceptDTO>> asyncCallback);
+
 }

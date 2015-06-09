@@ -2,6 +2,7 @@ package cdio.server.DAL;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ReceptDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -42,6 +43,8 @@ public interface IControllerDAO {
 	public void deleteUser(int userId) throws DALException;
 	
 	public void updateRaavare(RaavareDTO raavare) throws DALException;
+	
+	public List<ReceptDTO> getReceptList() throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

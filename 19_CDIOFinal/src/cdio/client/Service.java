@@ -2,10 +2,12 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ReceptDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.UserDTO;
+
 
 
 
@@ -46,4 +48,6 @@ public interface Service extends RemoteService {
 	void deleteUser(String token, int userId) throws Exception;
 	
 	public void updateRaavare(String token, RaavareDTO raavare) throws Exception;
+	
+	List<ReceptDTO> getReceptList(String token) throws Exception;
 }

@@ -15,6 +15,7 @@ import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
+import cdio.server.DAL.dto.ReceptDTO;
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ProduktBatchDTO;
@@ -228,5 +229,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		} else {
 			throw new Exception("Adgang nægtet");
 		}
+	}
+	
+	
+	public List<ReceptDTO> getReceptList(String token) throws Exception{
+		if(TEST_DELAY)
+			Thread.sleep(2000);
+		if(th.validateToken(token) != null){
+		 return dao.getReceptList();
+		}
+		throw new Exception("Adgang nægtet");
 	}
 }
