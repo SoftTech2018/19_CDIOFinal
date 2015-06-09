@@ -15,6 +15,8 @@ public interface ITransmitter {
 	 * @throws IOException 
 	 */
 	public abstract String RM20(String txt1, String txt2, String txt3) throws IOException;
+	
+	public abstract void RM20cancel() throws IOException;
 
 	/**
 	 * Viser en tekst på vægten

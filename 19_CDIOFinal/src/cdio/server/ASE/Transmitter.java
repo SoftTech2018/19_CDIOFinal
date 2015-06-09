@@ -30,18 +30,28 @@ public class Transmitter implements ITransmitter {
 	public String RM20(String txt1, String txt2, String txt3) throws IOException{
 		out.println("RM20 8" + " \"" + txt1 + "\" \"" + txt2 + "\" \"" + txt3 + "\"" );
 		String reply = in.readLine();
-		System.out.println(reply);
+		System.out.println("RM20 svar: "+reply);
 		String error = "ES";
-		String cancel = "q";
+		String cancel = "q";			
+		
 		if (reply.equalsIgnoreCase("RM20 B")){
 			String input = in.readLine();
 			if (input.equalsIgnoreCase("RM20 C")){
 				return cancel;
 			}
-			return input.substring(8,(input.length()-1)); // Skal muligvis være 6
+			if (input.substring(0, 6).equalsIgnoreCase("RM20 A")){
+				return input.substring(8,(input.length()-1)); // Skal muligvis være 6				
+			}
+			return error;
 		} else {
 			return error;
 		}
+	}
+	
+	public void RM20cancel() throws IOException{
+		out.println("RM20 0");
+		String reply = in.readLine();
+		System.out.println("RM20 cancel: "+reply);
 	}
 	
 	/* (non-Javadoc)
