@@ -15,6 +15,7 @@ import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
+import cdio.server.DAL.dto.RaavareBatchDTO;
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ProduktBatchDTO;
@@ -244,5 +245,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		 return dao.getReceptList();
 		}
 		throw new Exception("Adgang nægtet");
+	}
+
+	@Override
+	public List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception {
+		List<RaavareBatchDTO> RaavareBatchList = new ArrayList<RaavareBatchDTO>();
+		RaavareBatchList.add(new RaavareBatchDTO(1, 2, 0.5));
+		return RaavareBatchList;
 	}
 }
