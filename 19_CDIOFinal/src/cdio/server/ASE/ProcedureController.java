@@ -193,7 +193,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						menu.show("Produkt bekraftet.");
 						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
-						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
+						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
@@ -320,34 +320,34 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						return WEIGH;
 //					}
 					
-					menu.show("Afvej vare og bekraft.");
-					input = trans.RM20("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+", bekraft:","OK","?");
-					menu.show(input);
-					if(input.toLowerCase().equals("q")){
-						menu.show("Proceduren afbrudt af brugeren");
-						trans.P111("");
-						return START;
-					}
+//					menu.show("Afvej vare og bekraft.");
+//					input = trans.RM20("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+":","OK","?");
+//					menu.show(input);
+//					if(input.toLowerCase().equals("q")){
+//						menu.show("Proceduren afbrudt af brugeren");
+//						trans.P111("");
+//						return START;
+//					}
 					trans.P111("");
-					if (input.toUpperCase().equals(answer)) {
+//					if (input.toUpperCase().equals(answer)) {
 						menu.show("Afvej og kvitter med dor-knap");
-						trans.P111("Afvej "+mc.getReceptKomp().getNomNetto()+"g");
+						trans.P111("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+" : "+mc.getReceptKomp().getNomNetto()+"kg");
 						trans.startST(true);
 						mc.setAfvejning(Double.parseDouble(trans.listenST()));
 						trans.startST(false);
 						menu.show(mc.getAfvejning()+" afvejet.");
 						trans.P111("");
-						if(mc.getAfvejning()>=(mc.getAfvejning()-mc.getReceptKomp().getTolerance()) && mc.getAfvejning()<=(mc.getAfvejning()+mc.getReceptKomp().getTolerance())){
-							return REMOVE_CONTAINER;
-						} else {
+						if(mc.getAfvejning()<(mc.getAfvejning()-mc.getReceptKomp().getTolerance()) || mc.getAfvejning()>(mc.getAfvejning()+mc.getReceptKomp().getTolerance())){
 							trans.P111("Afvejet uden for tolerancen");
 							return WEIGH;
+						} else {
+							return REMOVE_CONTAINER;
 						}
-					} else {
-						menu.show("Vare ej afvejet. Prov igen.");
-						trans.RM20("Vare ej afvejet. Prov igen.", "OK", "?");
-						return WEIGH;
-					}
+//					} else {
+//						menu.show("Vare ej afvejet. Prov igen.");
+//						trans.RM20("Ikke afvejet. Prov igen.", "OK", "?");
+//						return WEIGH;
+//					}
 
 				} catch (NumberFormatException | IOException e) {
 					try {
@@ -390,7 +390,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						if(mc.getReceptKompListe().isEmpty()){
-							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(3);
+							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
+							System.out.println("set status");
 							return START;
 						} else {
 							return CLEAR;
