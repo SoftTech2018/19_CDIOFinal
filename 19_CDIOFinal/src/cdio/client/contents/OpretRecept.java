@@ -1,5 +1,7 @@
 package cdio.client.contents;
 
+import java.util.jar.Attributes.Name;
+
 import sun.print.resources.serviceui;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
@@ -40,6 +42,7 @@ public class OpretRecept extends Composite {
 		navnValid = false;
 		vPane.clear();
 
+		error = new Label("");
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -64,6 +67,7 @@ public class OpretRecept extends Composite {
 		ft.setWidget(10, 1, opret);
 
 		vPane.add(ft);
+		vPane.add(error);
 
 	}
 
@@ -122,6 +126,11 @@ public class OpretRecept extends Composite {
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
+			TextBox id = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidUserId(id.getText())){
+			id.setStyleName("TextBox-OpretError");
+			receptidValid = false;
+		}
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
 			else opret.setEnabled(false);

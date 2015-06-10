@@ -268,8 +268,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	public void createRecept(String token, ReceptDTO recept) throws Exception {
 		if (th.validateToken(token) != null){
-			dao.createRecept(recept);
+			try{
+			dao.createRecept(recept);}
+		catch(Exception DALException){
+			throw new Exception("ReceptId findes allerede!");
+			}
+		
+				
+			}
 		}
 	}
 
-}
+

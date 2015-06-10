@@ -9,3 +9,4 @@ public class DALException extends Exception implements Serializable
 	public DALException(Exception e) { super(e); }
 	public DALException(){};
 }
+
