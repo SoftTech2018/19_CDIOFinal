@@ -202,10 +202,10 @@ public class OpretPB extends Composite {
 						ft4.setText(0, 7, "Terminal");
 
 						ft4.setText(1, 0, "1");
-						ft4.setText(1, 1, Double.toString(p.getMaengde()));
-						ft4.setText(1, 2, Double.toString(p.getTolerance()));
-						ft4.setText(1, 3, Double.toString(p.getTara()));
-						ft4.setText(1, 4, Double.toString(p.getNetto()));
+						ft4.setText(1, 1, Double.toString(p.getMaengde()).replace(".", ","));
+						ft4.setText(1, 2, Double.toString(p.getTolerance())+ "%");
+						ft4.setText(1, 3, Double.toString(p.getTara()).replace(".", ","));
+						ft4.setText(1, 4, Double.toString(p.getNetto()).replace(".", ","));
 						ft4.setText(1, 5, Integer.toString(p.getBatch()));
 						ft4.setText(1, 6, p.getOpr());
 						ft4.setText(1, 7, p.getTerminal());
@@ -240,9 +240,9 @@ public class OpretPB extends Composite {
 					ft5.getColumnFormatter().setWidth(7, "75px");
 					
 					ft5.setText(0, 0, "Sum Tara:");
-					ft5.setText(0, 3, Double.toString(taraSum));
+					ft5.setText(0, 3, Double.toString(taraSum).replace(".", ","));
 					ft5.setText(1, 0, "Sum Netto:");
-					ft5.setText(1, 4, Double.toString(nettoSum));
+					ft5.setText(1, 4, Double.toString(nettoSum).replace(".", ","));
 					ft.setWidget(row, 0, ft5);
 					row++;
 					

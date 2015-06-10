@@ -215,3 +215,57 @@ html {
 	padding: 5px;
 }
 	
+.Hide{
+	display: none;
+}
+
+.Button-Blue{
+	background: linear-gradient(to right, #200772 , #4671D5, #95B0ED);
+	width: 100px;
+}
+
+.Button-Red{
+	background: linear-gradient(to right, #FF0000 , #FFB1B1);
+	width: 100px;
+}
+
+.Button-Green{
+	background: linear-gradient(to right, #2FAF00, #B5E0A5);
+	width: 100px;
+}
+
+.Header-Green {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #2FAF00, #B5E0A5);
+	height: 120px;
+	padding: 30px;
+	width: 1024px;
+}
+
+.Footer-Green {
+	background: linear-gradient(to right, #B5E0A5, #2FAF00);
+	clear: both;
+	padding: 15px;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	float: bottom;
+	width: 1024px;
+}
+
+.Header-Red {
+	border-radius: 25px 120px 0px 0px; 
+	background: linear-gradient(to right, #FF0000 , #FFB1B1);
+	height: 120px;
+	padding: 30px;
+	width: 1024px;
+}
+
+.Footer-Red {
+	background: linear-gradient(to right, #FFB1B1, #FF0000);
+	clear: both;
+	padding: 15px;
+	border-radius: 0px 0px 25px 100px;
+	height: 50px;
+	float: bottom;
+	width: 1024px;
+}
