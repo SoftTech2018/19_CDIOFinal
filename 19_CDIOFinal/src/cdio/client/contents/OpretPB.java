@@ -208,7 +208,7 @@ public class OpretPB extends Composite {
 						ft4.setText(1, 4, Double.toString(p.getNetto()));
 						ft4.setText(1, 5, Integer.toString(p.getBatch()));
 						ft4.setText(1, 6, p.getOpr());
-						ft4.setText(1, 7, Integer.toString(p.getTerminal()));
+						ft4.setText(1, 7, p.getTerminal());
 						ft.setWidget(row, 0, ft4);;
 						row++;
 						
