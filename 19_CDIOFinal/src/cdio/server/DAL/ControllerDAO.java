@@ -138,6 +138,13 @@ public class ControllerDAO implements IControllerDAO {
 	public void createRecept(ReceptDTO recept) throws DALException {
 		receptDAO.createRecept(recept);
 	}
+
+	@Override
+	public ProduktBatchDTO getProduktBatch(int pbID) throws DALException {
+		return pbDAO.getProduktBatch(pbID);
+	}
+	
+	
 	
 	
 }

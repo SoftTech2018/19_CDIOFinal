@@ -173,8 +173,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 					mc.setProdBatchID(Integer.parseUnsignedInt(input));
 					try{
-						dao.getPbDAO().getProduktBatch(mc.prod_batch_id);
-						
+						dao.getProduktBatch(mc.prod_batch_id);
+//						dao.getPbDAO().getProduktBatch(mc.prod_batch_id);
 					} catch (DALException e){
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;

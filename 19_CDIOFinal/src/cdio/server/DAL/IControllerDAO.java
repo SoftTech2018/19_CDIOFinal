@@ -49,7 +49,9 @@ public interface IControllerDAO {
 
 	public ProduktBatchDTO createPB(ProduktBatchDTO pb) throws DALException;
 	
-	void createRecept(ReceptDTO recept) throws DALException; 
+	void createRecept(ReceptDTO recept) throws DALException;
+	
+	ProduktBatchDTO getProduktBatch(int pbID) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;
