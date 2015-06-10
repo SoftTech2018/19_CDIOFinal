@@ -199,7 +199,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
-						dao.getProduktBatch(mc.getProdBatchID()).setStatus(1);
+						dao.updatePbStatus(mc.getProdBatchID(), 1);
 //						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
@@ -400,7 +400,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						if(mc.getReceptKompListe().isEmpty()){
 //							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
-							dao.getProduktBatch(mc.getProdBatchID()).setStatus(2);
+							dao.updatePbStatus(mc.prod_batch_id, 2);
 							System.out.println("set status");
 							return START;
 						} else {

@@ -64,6 +64,8 @@ public interface IControllerDAO {
 	public String getSpecificRaavare(int raavare) throws DALException;
 	
 	public void createProduktBatchKomp(ProduktBatchKompDTO pbk) throws DALException;
+	
+	public void updatePbStatus(int pbID, int status) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;

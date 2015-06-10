@@ -171,6 +171,10 @@ public class ControllerDAO implements IControllerDAO {
 		pbkompDAO.createProduktBatchKomp(pbk);
 	}
 	
+	public void updatePbStatus(int pbID, int status) throws DALException{
+		pbDAO.updateStatus(pbID, status);
+	}
+	
 	
 }
 	
