@@ -3,7 +3,7 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.ServiceAsync;
-import cdio.server.DAL.dto.RaavareBatchDTO;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

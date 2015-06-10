@@ -2,12 +2,13 @@ package cdio.client;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.RaavareBatchDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
+
 
 
 
