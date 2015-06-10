@@ -122,16 +122,16 @@ public class OpretPB extends Composite {
 			FlexTable ft = new FlexTable();
 			
 			ft.setText(0, 0, "Udskrevet");
-			Calendar cal = Calendar.getInstance();
-			cal.setTimeInMillis(System.currentTimeMillis());
-			int day = cal.get(Calendar.DAY_OF_MONTH);
-			String _day = String.format("%02d", day);
-			int month = cal.get(Calendar.MONTH) +1;
-			String _month = String.format("%02d", month);
-			int year = cal.get(Calendar.YEAR);
-			String _year = Integer.toString(year);
-			String time = _day+"-"+_month+"-"+_year;
-			ft.setText(0, 1, time);
+//			Calendar cal = Calendar.getInstance();
+//			cal.setTimeInMillis(System.currentTimeMillis());
+//			int day = cal.get(Calendar.DAY_OF_MONTH);
+//			String _day = String.format("%02d", day);
+//			int month = cal.get(Calendar.MONTH) +1;
+//			String _month = String.format("%02d", month);
+//			int year = cal.get(Calendar.YEAR);
+//			String _year = Integer.toString(year);
+//			String time = _day+"-"+_month+"-"+_year;
+//			ft.setText(0, 1, time);
 			
 			ft.setText(1, 0, "Produkt Batch nr.");
 			ft.setText(1, 1, Integer.toString(pb.getPbId()));
