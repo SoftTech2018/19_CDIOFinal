@@ -260,10 +260,10 @@ public class TextReader {
 		
 	}
 	
-	public String updatePbStatus(ProduktBatchDTO produktbatch){
+	public String updatePbStatus(int pbID, int status){
 		String output = sqlCommands[57];
-		output = output.replaceFirst(illegalString + "1", Integer.toString(produktbatch.getStatus()));
-		output = output.replaceFirst(illegalString + "2", Integer.toString(produktbatch.getPbId()));
+		output = output.replaceFirst(illegalString + "1", Integer.toString(status));
+		output = output.replaceFirst(illegalString + "2", Integer.toString(pbID));
 		return output;
 	}
 

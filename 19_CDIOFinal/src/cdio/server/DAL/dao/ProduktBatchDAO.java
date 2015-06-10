@@ -52,8 +52,8 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		Connector.doUpdate(txt.updateProduktBatch(produktbatch));
 	}
 	
-	public void updateStatus(ProduktBatchDTO produktbatch) throws DALException {
-		Connector.doUpdate(txt.updatePbStatus(produktbatch));
+	public void updateStatus(int pbID, int status) throws DALException {
+		Connector.doUpdate(txt.updatePbStatus(pbID, status));
 	}
 
 }
