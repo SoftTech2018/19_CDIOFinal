@@ -1,8 +1,10 @@
 package cdio.client.contents;
 
+import java.util.Calendar;
 import java.util.List;
 
 import cdio.client.ServiceAsync;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ReceptDTO;
 
@@ -101,13 +103,59 @@ public class OpretPB extends Composite {
 
 				@Override
 				public void onSuccess(ProduktBatchDTO result) {
-					Window.alert("ProduktBatch " + result.getPbId() + " oprettet. Dato: " + result.getDato());
-					run();
+					vPane.clear();
+					vPane.add(new PrintPB(result));
 				}
 				
 			});
 			
 		}
 		
+	}
+	
+	private class PrintPB extends Composite{
+		
+		private VerticalPanel pbvPane;
+		public PrintPB(ProduktBatchDTO pb){
+			pbvPane = new VerticalPanel();
+			initWidget(pbvPane);
+			FlexTable ft = new FlexTable();
+			
+			ft.setText(0, 0, "Udskrevet");
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(System.currentTimeMillis());
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+			String _day = String.format("%02d", day);
+			int month = cal.get(Calendar.MONTH) +1;
+			String _month = String.format("%02d", month);
+			int year = cal.get(Calendar.YEAR);
+			String _year = Integer.toString(year);
+			String time = _day+"-"+_month+"-"+_year;
+			ft.setText(0, 1, time);
+			
+			ft.setText(1, 0, "Produkt Batch nr.");
+			ft.setText(1, 1, Integer.toString(pb.getPbId()));
+			
+			ft.setText(2, 0, "Recept nr.");
+			ft.setText(2, 1, Integer.toString(pb.getReceptId()));
+			ft.setText(3, 0, "");
+			
+			ft.setText(4, 0, "Loadin...");
+			service.getPbView(token, pb.getReceptId(), new AsyncCallback<List<PbViewDTO>>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");
+				}
+
+				@Override
+				public void onSuccess(List<PbViewDTO> result) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
 	}
 }

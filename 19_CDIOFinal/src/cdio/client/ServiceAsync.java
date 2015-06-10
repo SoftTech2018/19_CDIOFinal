@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
@@ -44,5 +45,8 @@ public interface ServiceAsync {
 
 	void createPB(String token, ProduktBatchDTO pb,
 			AsyncCallback<ProduktBatchDTO> asyncCallback);
+
+	void getPbView(String token, int receptId,
+			AsyncCallback<List<PbViewDTO>> asyncCallback);
 
 }

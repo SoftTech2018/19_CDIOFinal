@@ -17,6 +17,7 @@ import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
@@ -257,5 +258,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception {
 		return dao.createPB(pb);
+	}
+
+	@Override
+	public List<PbViewDTO> getPbView(String token, int receptId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
