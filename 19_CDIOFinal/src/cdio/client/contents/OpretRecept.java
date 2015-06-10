@@ -54,7 +54,7 @@ public class OpretRecept extends Composite {
 		navn.setStyleName("TextBox-Opret");
 		ft.setWidget(2, 1, navn);
 
-		ft.setText(3, 0, "Receptid:");
+		ft.setText(3, 0, "Receptnummer:");
 		receptid = new TextBox();
 		receptid.addKeyUpHandler(new IdCheck()); 
 		receptid.setStyleName("Textbox-Opret");

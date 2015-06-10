@@ -271,7 +271,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try{
 			dao.createRecept(recept);}
 		catch(Exception DALException){
-			throw new Exception("ReceptId findes allerede!");
+			throw new Exception("Receptnummer findes allerede!");
 			}
 		
 				
