@@ -43,7 +43,7 @@ public interface ServiceAsync {
 
 	void getRaavareBatchList(String token, AsyncCallback<List<RaavareBatchDTO>> asyncCallback);
 
-	void createPB(String token, ProduktBatchDTO pb, String dato,
+	void createPB(String token, ProduktBatchDTO pb,
 			AsyncCallback<ProduktBatchDTO> asyncCallback);
 
 	void getPbView(String token, int receptId,
