@@ -265,4 +265,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void createRecept(String token, ReceptDTO recept) throws Exception {
+		if (th.validateToken(token) != null){
+			dao.createRecept(recept);
+		}
+	}
+
 }
