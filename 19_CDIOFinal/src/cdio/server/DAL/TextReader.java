@@ -94,10 +94,9 @@ public class TextReader {
 	
 	public String createProductBatch(ProduktBatchDTO produktbatch){
 		String output = sqlCommands[7];
-		output = output.replaceFirst(illegalString + "1", Integer.toString(produktbatch.getPbId()));
-		output = output.replaceFirst(illegalString + "2", Integer.toString(produktbatch.getStatus()));
-		output = output.replaceFirst(illegalString + "3", Integer.toString(produktbatch.getReceptId()));
-		output = output.replaceFirst(illegalString + "4", produktbatch.getDato());
+		output = output.replaceFirst(illegalString + "1", Integer.toString(produktbatch.getStatus()));
+		output = output.replaceFirst(illegalString + "2", Integer.toString(produktbatch.getReceptId()));
+		output = output.replaceFirst(illegalString + "3", produktbatch.getDato());
 		return output;
 	}
 	

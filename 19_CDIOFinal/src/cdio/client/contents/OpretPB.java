@@ -1,6 +1,5 @@
 package cdio.client.contents;
 
-import java.util.Calendar;
 import java.util.List;
 
 import cdio.client.ServiceAsync;
@@ -91,7 +90,13 @@ public class OpretPB extends Composite {
 			ok.setText("Loading");
 			ProduktBatchDTO pb = new ProduktBatchDTO();
 			pb.setPbId(0);
-			pb.setReceptId(receptNr.getTabIndex()-1);
+			int receptId = -1;
+			String recept = receptNr.getItemText(receptNr.getSelectedIndex());
+			for (int i=0; i<recept.length(); i++){
+				if (recept.charAt(i) == ':')
+					receptId = Integer.parseInt(recept.substring(0, i-1));
+			}
+			pb.setReceptId(receptId);
 			pb.setStatus(0);
 			service.createPB(token, pb, new AsyncCallback<ProduktBatchDTO>(){
 
@@ -116,22 +121,16 @@ public class OpretPB extends Composite {
 	private class PrintPB extends Composite{
 		
 		private VerticalPanel pbvPane;
+		private FlexTable ft;
+		
 		public PrintPB(ProduktBatchDTO pb){
 			pbvPane = new VerticalPanel();
 			initWidget(pbvPane);
-			FlexTable ft = new FlexTable();
+			ft = new FlexTable();
+			pbvPane.add(ft);
 			
 			ft.setText(0, 0, "Udskrevet");
-//			Calendar cal = Calendar.getInstance();
-//			cal.setTimeInMillis(System.currentTimeMillis());
-//			int day = cal.get(Calendar.DAY_OF_MONTH);
-//			String _day = String.format("%02d", day);
-//			int month = cal.get(Calendar.MONTH) +1;
-//			String _month = String.format("%02d", month);
-//			int year = cal.get(Calendar.YEAR);
-//			String _year = Integer.toString(year);
-//			String time = _day+"-"+_month+"-"+_year;
-//			ft.setText(0, 1, time);
+			ft.setText(0, 1, pb.getDato());
 			
 			ft.setText(1, 0, "Produkt Batch nr.");
 			ft.setText(1, 1, Integer.toString(pb.getPbId()));
@@ -151,10 +150,48 @@ public class OpretPB extends Composite {
 
 				@Override
 				public void onSuccess(List<PbViewDTO> result) {
-					// TODO Auto-generated method stub
+					int row;
+					for (row = 5; row-5<result.size(); row++){
+						FlexTable ft2 = new FlexTable();
+						PbViewDTO p = result.get(row-5);
+						ft2.setText(0, 0, "Råvare nr.");
+						ft2.setText(0, 1, p.getRaavareNavn());
+						ft2.setText(1, 0, "Råvare navn:");
+						ft2.setText(1, 1, Integer.toString(p.getRaavareId()));
+						
+						ft2.setText(2, 0, "Del");
+						ft2.setText(2, 1, "Mængde");
+						ft2.setText(2, 2, "Tolerance");
+						ft2.setText(2, 3, "Tara");
+						ft2.setText(2, 4, "Netto (kg)");
+						ft2.setText(2, 5, "Batch");
+						ft2.setText(2, 6, "Opr.");
+						ft2.setText(2, 7, "Terminal)");
+						
+						ft2.setText(3, 0, "1");
+						ft2.setText(3, 1, Double.toString(p.getMaengde()));
+						ft2.setText(3, 2, Double.toString(p.getTolerance()));
+						ft2.setText(3, 3, Double.toString(p.getTara()));
+						ft2.setText(3, 4, Double.toString(p.getNetto()));
+						ft2.setText(3, 5, Integer.toString(p.getBatch()));
+						ft2.setText(3, 6, Integer.toString(p.getOpr()));
+						ft2.setText(3, 7, Integer.toString(p.getTerminal()));
+						
+						ft.setWidget(row, 0, ft2);
+					}
+					double taraSum = 0;
+					double nettoSum = 0;
+					for (int i=0; i<result.size(); i++){
+						taraSum = taraSum + result.get(i).getTara();
+						nettoSum = nettoSum + result.get(i).getNetto();
+					}
+					ft.setText(row+1, 0, "Sum Tara:");
+					ft.setText(row+1, 1, Double.toString(taraSum));
+					ft.setText(row+2, 0, "Sum Netto:");
+					ft.setText(row+2, 1, Double.toString(nettoSum));
 					
+					ft.setText(row+3,  0, "Produktion Status:");
 				}
-				
 			});
 		}
 	}
