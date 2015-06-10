@@ -26,77 +26,85 @@ public class VisPB extends Composite {
 	private String token;
 	private ServiceAsync service;
 	//	private ToggleButton pbkomp;
-	private Button pbkomp, pbkompnew, skjul;
+	private Button pbkomp, pbkompnew, skjul, print, tilbage;
 
 	public VisPB(String token, final ServiceAsync service) {
 		this.token = token;
 		this.service = service;
-		
+
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		ft = new FlexTable();
+
 		
-		vPane.add(ft);
 		
-		service.getPBList(token, new AsyncCallback<List<ProduktBatchDTO>>() {
+	}
+		private void run() {
+			vPane.clear();
+			vPane.add(ft);
+			service.getPBList(token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
-			@Override
-			public void onFailure(Throwable caught) {
-				ft.setText(0, 0, caught.getMessage());
-			}
+				@Override
+				public void onFailure(Throwable caught) {
+					ft.setText(0, 0, caught.getMessage());
+				}
 
-			@Override
-			public void onSuccess(List<ProduktBatchDTO> result) {
-				ft.setText(0, 0, "PB ID");
-				ft.setText(0, 1, "Recept ID");
-				ft.setText(0, 2, "Status");
-				ft.setText(0, 3, "Oprettet");
-				
-				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
-				ft.getFlexCellFormatter().setWidth(0, 1, "75px");
-				ft.getFlexCellFormatter().setWidth(0, 2, "75px");
-				ft.getFlexCellFormatter().setWidth(0, 3, "50px");
-				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
-				
+				@Override
+				public void onSuccess(List<ProduktBatchDTO> result) {
+					ft.setText(0, 0, "PB ID");
+					ft.setText(0, 1, "Recept ID");
+					ft.setText(0, 2, "Status");
+					ft.setText(0, 3, "Oprettet");
+
+					ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
+					ft.getFlexCellFormatter().setWidth(0, 0, "50px");
+					ft.getFlexCellFormatter().setWidth(0, 1, "75px");
+					ft.getFlexCellFormatter().setWidth(0, 2, "55px");
+					ft.getFlexCellFormatter().setWidth(0, 3, "65px");
+					ft.getFlexCellFormatter().setWidth(0, 4, "50px");
 
 
-				for (int i = 0; i < result.size(); i++) {
-					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
-					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
-					ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
-					ft.setText(i+1, 3, result.get(i).getDato());
-					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
-					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
-					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
-					ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
-					ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
 
-					//pbkomp = new ToggleButton("Vis Komponenter", "Skjul Komponenter");
-					pbkomp = new Button("Komponenter");
-					pbkomp.setStyleName("Button-Komponenter"); 
-					pbkomp.addClickHandler(new KompClick());
-					ft.setWidget(i+1, 4, pbkomp);
+					for (int i = 0; i < result.size(); i++) {
+						ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
+						ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
+						ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
+						ft.setText(i+1, 3, result.get(i).getDato());
+						ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
+						ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
+						ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
+						ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
+						ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
+
+						print = new Button("Udprint");
+						print.setStyleName("Button-Ret"); 
+//						print.addClickHandler(new Udprint());
+						ft.setWidget(i+1, 4, print);
+
+						pbkomp = new Button("Komponenter");
+						pbkomp.setStyleName("Button-Komponenter"); 
+						pbkomp.addClickHandler(new KompClick());
+						ft.setWidget(i+1, 5, pbkomp);
+
+					}
 
 				}
 
-			}
+			});
 
-		});
-
-	}
-
+		}
+	
 	private class KompClick implements ClickHandler {
-		
+
 		int eventRow;
-		
-		
+
+
 		@Override
 		public void onClick(ClickEvent event) {
-			//if(pbkomp.isDown()){
+
 			eventRow = ft.getCellForEvent(event).getRowIndex();
-//			ft.setWidget(eventRow, 3, pbkompnew);
-			//			vPane.add(ft2);
+			//			ft.setWidget(eventRow, 3, pbkompnew);
+
 			service.getPBKList(token, new AsyncCallback<List<ProduktBatchKompDTO>>(){
 
 				@Override
@@ -113,15 +121,15 @@ public class VisPB extends Composite {
 					skjul.setStyleName("Button-Komponenter");
 					skjul.addClickHandler(new SkjulClick());
 					ft2.setWidget(0, 0, skjul); //Her sættes Skjul-knappen i flextable 2
-					
+
 					//ft2.setWidget(0, 0, ft.getWidget(eventRow, 3)); //
-					ft.setWidget(eventRow, 4, ft2);//her sættes ft2 i den korrekte referede række
-					
+					ft.setWidget(eventRow, 5, ft2);//her sættes ft2 i den korrekte referede række
+
 					ft2.setText(0, 1, "Råvarebatch");
 					ft2.setText(0, 2, "Tara");
 					ft2.setText(0, 3, "Netto");
 					ft2.setText(0, 4, "Operatør ID");
-					
+
 					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
 					ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
 					ft2.getFlexCellFormatter().setWidth(0, 1, "100px");
@@ -142,22 +150,40 @@ public class VisPB extends Composite {
 
 
 		}
-		
+
 	}
 	private class SkjulClick implements ClickHandler {
 		int eventRow;
-		
-		
+
+
 		@Override
 		public void onClick(ClickEvent event) {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			pbkompnew = new Button("Komponenter");
 			pbkompnew.setStyleName("Button-Komponenter");
 			pbkompnew.addClickHandler(new KompClick());
-			
-			ft.setWidget(eventRow, 4, pbkompnew);
-			
+
+			ft.setWidget(eventRow, 5, pbkompnew);
+
 		}
-		
+
 	}
+
+//	private class Udprint implements ClickHandler {
+//		int eventRow;
+//		FlexTable ft3 = new FlexTable();
+//
+//		@Override
+//		public void onClick(ClickEvent event) {
+//			eventRow = ft.getCellForEvent(event).getRowIndex();
+//			vPane.clear();
+//			vPane.add(ft3);
+//			
+//
+//			tilbage = new Button("Tilbage");
+//			tilbage.setStyleName("Button-Ret");
+//			tilbage.addClickHandler(new ClickHandler());
+//		}
+
+//	}
 }
