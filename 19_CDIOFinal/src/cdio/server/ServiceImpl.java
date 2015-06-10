@@ -253,4 +253,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		RaavareBatchList.add(new RaavareBatchDTO(1, 2, 0.5));
 		return RaavareBatchList;
 	}
+
+	@Override
+	public ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception {
+		return dao.createPB(pb);
+	}
 }

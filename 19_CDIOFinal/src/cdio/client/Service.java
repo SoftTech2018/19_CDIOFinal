@@ -21,6 +21,7 @@ import cdio.shared.UserDTO;
 
 
 
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -56,4 +57,6 @@ public interface Service extends RemoteService {
 	List<ReceptDTO> getReceptList(String token) throws Exception;
 	
 	List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception;
+	
+	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb) throws Exception;
 }

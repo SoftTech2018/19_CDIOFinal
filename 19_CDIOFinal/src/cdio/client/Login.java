@@ -94,7 +94,7 @@ public class Login extends Composite {
 					@Override
 					public void onFailure(Throwable caught) {
 						errorMsg.setText(caught.getMessage()); // Fejlbesked
-						send.setText("Send");
+						send.setText("Login");
 						password.setText("");
 						if (caught.getMessage().equalsIgnoreCase("Forkert bruger ID.")){
 							userName.setStyleName("TextBox-Error");

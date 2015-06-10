@@ -4,9 +4,10 @@ import java.io.Serializable;
 
 public class ProduktBatchDTO implements Serializable
 {
-	int pbId;                     // i omraadet 1-99999999
-	int status;					// 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
-	int receptId;
+	private int pbId;                     // i omraadet 1-99999999
+	private int status;					// 0: ikke paabegyndt, 1: under produktion, 2: afsluttet
+	private int receptId;
+	private String dato;
 	
 	public ProduktBatchDTO(int pbId, int status, int receptId)
 	{
