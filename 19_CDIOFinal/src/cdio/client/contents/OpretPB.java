@@ -93,7 +93,7 @@ public class OpretPB extends Composite {
 			pb.setPbId(0);
 			pb.setReceptId(receptNr.getTabIndex()-1);
 			pb.setStatus(0);
-			service.createPB(token, pb, "dato", new AsyncCallback<ProduktBatchDTO>(){
+			service.createPB(token, pb, new AsyncCallback<ProduktBatchDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
