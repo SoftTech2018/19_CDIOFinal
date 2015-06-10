@@ -191,3 +191,10 @@ html {
 .FlexTable-Content{
 	width: 100%;
 }
+
+.Button-Komponenter{
+	height: 20px;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
+	width: 80px;

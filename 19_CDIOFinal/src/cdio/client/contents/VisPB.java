@@ -50,28 +50,33 @@ public class VisPB extends Composite {
 				ft.setText(0, 0, "PB ID");
 				ft.setText(0, 1, "Recept ID");
 				ft.setText(0, 2, "Status");
+				ft.setText(0, 3, "Oprettet");
 				
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "75px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "75px");
 				ft.getFlexCellFormatter().setWidth(0, 3, "50px");
+				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
+				
 
 
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
 					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
 					ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
+					ft.setText(i+1, 3, result.get(i).getDato());
 					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
 
 					//pbkomp = new ToggleButton("Vis Komponenter", "Skjul Komponenter");
 					pbkomp = new Button("Komponenter");
-					//pbkomp.setStyleName("Button-Ret"); **Der skal laves en ny CSS formatering til togglebutton**
+					pbkomp.setStyleName("Button-Komponenter"); 
 					pbkomp.addClickHandler(new KompClick());
-					ft.setWidget(i+1, 3, pbkomp);
+					ft.setWidget(i+1, 4, pbkomp);
 
 				}
 
@@ -105,11 +110,12 @@ public class VisPB extends Composite {
 				public void onSuccess(List<ProduktBatchKompDTO> result) {
 					FlexTable ft2 = new FlexTable();
 					skjul = new Button("Skjul");
+					skjul.setStyleName("Button-Komponenter");
 					skjul.addClickHandler(new SkjulClick());
 					ft2.setWidget(0, 0, skjul); //Her sættes Skjul-knappen i flextable 2
 					
 					//ft2.setWidget(0, 0, ft.getWidget(eventRow, 3)); //
-					ft.setWidget(eventRow, 3, ft2);//her sættes ft2 i den korrekte referede række
+					ft.setWidget(eventRow, 4, ft2);//her sættes ft2 i den korrekte referede række
 					
 					ft2.setText(0, 1, "Råvarebatch");
 					ft2.setText(0, 2, "Tara");
@@ -146,9 +152,10 @@ public class VisPB extends Composite {
 		public void onClick(ClickEvent event) {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			pbkompnew = new Button("Komponenter");
+			pbkompnew.setStyleName("Button-Komponenter");
 			pbkompnew.addClickHandler(new KompClick());
 			
-			ft.setWidget(eventRow, 3, pbkompnew);
+			ft.setWidget(eventRow, 4, pbkompnew);
 			
 		}
 		
