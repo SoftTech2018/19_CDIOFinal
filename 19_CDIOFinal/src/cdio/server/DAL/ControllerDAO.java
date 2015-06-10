@@ -149,7 +149,7 @@ public class ControllerDAO implements IControllerDAO {
 	@Override
 	public boolean getProduktBatchKompListIsEmpty(int pbId)
 			throws DALException {
-		return pbkompDAO.getProduktBatchKompList().isEmpty();
+		return pbkompDAO.getProduktBatchKompList(pbId).isEmpty();
 	}
 	
 	public String getReceptName(int pbID) throws DALException{
