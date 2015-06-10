@@ -50,13 +50,13 @@ public class OpretRecept extends Composite {
 
 		ft.setText(2, 0, "Receptnavn:");
 		navn = new TextBox();
-		navn.addKeyUpHandler(new NameCheck()); //Skal oprettes! 
+		navn.addKeyUpHandler(new NameCheck()); 
 		navn.setStyleName("TextBox-Opret");
 		ft.setWidget(2, 1, navn);
 
 		ft.setText(3, 0, "Receptid:");
 		receptid = new TextBox();
-		receptid.addKeyUpHandler(new IdCheck()); //Skal oprettes!
+		receptid.addKeyUpHandler(new IdCheck()); 
 		receptid.setStyleName("Textbox-Opret");
 		ft.setWidget(3, 1, receptid);
 
@@ -130,7 +130,11 @@ public class OpretRecept extends Composite {
 			if(!FieldVerifier.isValidUserId(id.getText())){
 			id.setStyleName("TextBox-OpretError");
 			receptidValid = false;
+		} else{
+			id.setStyleName("TextBox-Opret");
+			receptidValid = true;
 		}
+			
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
 			else opret.setEnabled(false);
