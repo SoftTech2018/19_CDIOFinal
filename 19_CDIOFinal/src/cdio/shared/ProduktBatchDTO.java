@@ -26,5 +26,7 @@ public class ProduktBatchDTO implements Serializable
 	public int getReceptId() { return receptId; }
 	public void setReceptId(int receptId) { this.receptId = receptId; }
 	public String toString() { return pbId + "\t" + status + "\t" + receptId; }
+	public void setDato(String time) { this.dato = time;}
+	public String getDato() { return dato; }
 }
 

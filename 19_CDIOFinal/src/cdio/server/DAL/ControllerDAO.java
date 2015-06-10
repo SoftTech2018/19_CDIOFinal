@@ -1,6 +1,7 @@
 package cdio.server.DAL;
 
 import java.io.FileNotFoundException;
+import java.util.Calendar;
 import java.util.List;
 
 import cdio.server.DAL.dao.OperatoerDAO;
@@ -119,7 +120,17 @@ public class ControllerDAO implements IControllerDAO {
 
 	@Override
 	public ProduktBatchDTO createPB(ProduktBatchDTO pb) throws DALException {
-		// TODO Auto-generated method stub
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(System.currentTimeMillis());
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		String _day = String.format("%02d", day);
+		int month = cal.get(Calendar.MONTH) +1;
+		String _month = String.format("%02d", month);
+		int year = cal.get(Calendar.YEAR);
+		String _year = Integer.toString(year);
+		String time = _day+"-"+_month+"-"+_year;
+		pb.setDato(time);
+		pbDAO.createProduktBatch(pb);
 		return pb;
 	}
 	

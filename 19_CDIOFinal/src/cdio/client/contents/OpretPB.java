@@ -8,6 +8,7 @@ import cdio.shared.ReceptDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -94,14 +95,14 @@ public class OpretPB extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					// TODO Auto-generated method stub
-					
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");					
 				}
 
 				@Override
 				public void onSuccess(ProduktBatchDTO result) {
-					// TODO Auto-generated method stub
-					
+					Window.alert("ProduktBatch " + result.getPbId() + " oprettet. Dato: " + result.getDato());
+					run();
 				}
 				
 			});
