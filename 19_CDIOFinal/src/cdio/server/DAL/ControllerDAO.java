@@ -20,6 +20,7 @@ import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
@@ -143,8 +144,12 @@ public class ControllerDAO implements IControllerDAO {
 	public ProduktBatchDTO getProduktBatch(int pbID) throws DALException {
 		return pbDAO.getProduktBatch(pbID);
 	}
-	
-	
+
+	@Override
+	public boolean getProduktBatchKompListIsEmpty(int pbId)
+			throws DALException {
+		return pbkompDAO.getProduktBatchKompList().isEmpty();
+	}
 	
 	
 }

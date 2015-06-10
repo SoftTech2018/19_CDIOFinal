@@ -179,7 +179,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
 					}
-					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
+					if(!dao.getProduktBatchKompListIsEmpty(mc.prod_batch_id)){
+//					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
 						trans.P111("Nr er brugt; tast nyt.");
 						return SETUP;
 					}
