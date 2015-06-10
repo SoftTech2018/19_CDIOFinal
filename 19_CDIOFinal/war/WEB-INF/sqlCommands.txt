@@ -4,7 +4,7 @@ UPDATE operatoer SET opr_navn = '#1', ini = '#2', cpr = '#3', password = '#4' WH
 SELECT * FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id
 SELECT * FROM produktbatch WHERE pb_id = #1
 SELECT * FROM produktbatch
-INSERT INTO produktbatch (pb_id, status, recept_id) VALUES ( #1, #2, #3)
+INSERT INTO produktbatch (pb_id, status, recept_id, dato) VALUES ( #1, #2, #3, #4)
 UPDATE produktbatch SET status = #1, recept_id = #2 WHERE pb_id = #3
 SELECT * FROM produktbatchkomponent WHERE pb_id = #1 and rb_id = #2
 SELECT * FROM produktbatchkomponent where pb_id = #1
