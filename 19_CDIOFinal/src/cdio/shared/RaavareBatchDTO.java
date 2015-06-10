@@ -1,6 +1,8 @@
 package cdio.shared;
 
-public class RaavareBatchDTO
+import java.io.Serializable;
+
+public class RaavareBatchDTO implements Serializable
 {
 	int rbId;                     // i omraadet 1-99999999
 	int raavareId;             // i omraadet 1-99999999
@@ -11,6 +13,9 @@ public class RaavareBatchDTO
 		this.rbId = rbId;
 		this.raavareId = raavareId;
 		this.maengde = maengde;
+	}
+	public RaavareBatchDTO () {
+		
 	}
 	
 	public int getRbId() { return rbId; }

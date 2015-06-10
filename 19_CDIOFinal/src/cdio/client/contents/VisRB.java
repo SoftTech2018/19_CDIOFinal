@@ -14,38 +14,38 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class VisRB extends Composite {
 
 	private VerticalPanel vPane;
-
+	private FlexTable ft;
 
 	public VisRB(String token, final ServiceAsync service) {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
+		ft = new FlexTable();
 
 
 		service.getRaavareBatchList(token, new AsyncCallback<List<RaavareBatchDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
+				ft.setText(0, 0, caught.getMessage());
 			}
 
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
-				FlexTable ft = new FlexTable();
+				
 				ft.setText(0, 0, "RB ID");
 				ft.setText(0, 1, "Raavare ID");
 				ft.setText(0, 2, "Mængde");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "75px");
-				ft.getFlexCellFormatter().setWidth(0, 1, "110px");
-				ft.getFlexCellFormatter().setWidth(0, 2, "110px");
-
-
+				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
+				ft.getFlexCellFormatter().setWidth(0, 1, "85px");
+				ft.getFlexCellFormatter().setWidth(0, 2, "80px");
+			
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getRbId()));
 					ft.setText(i+1, 1, Integer.toString(result.get(i).getRaavareId()));
 					ft.setText(i+1, 2, Double.toString(result.get(i).getMaengde()));	
 				}
+				vPane.add(ft);
 			}
 		});
 	}
