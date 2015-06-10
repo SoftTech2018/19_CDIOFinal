@@ -89,7 +89,7 @@ public class RetRaavare  extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			if (openEventRow != 0){
-				((Button) ft.getWidget(openEventRow, 10)).click();
+				((Button) ft.getWidget(openEventRow, 4)).click();
 			}
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			openEventRow = eventRow;
@@ -137,7 +137,7 @@ public class RetRaavare  extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ft.getText(eventRow, 1), ft.getText(eventRow, 3));
+			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(((TextBox) ft.getWidget(eventRow, 0)).getText()), ((TextBox)ft.getWidget(eventRow, 1)).getText(), ((TextBox)ft.getWidget(eventRow, 2)).getText());
 			service.updateRaavare(token, raavare, new AsyncCallback<Void>(){
 
 				@Override
@@ -148,9 +148,9 @@ public class RetRaavare  extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
-					uID = ((TextBox) ft.getWidget(eventRow, 1)).getText();
-					uNavn = ((TextBox) ft.getWidget(eventRow, 2)).getText();
-					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 3)).getText();
+					uID = ((TextBox) ft.getWidget(eventRow, 0)).getText();
+					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
+					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 2)).getText();
 					
 					openEventRow = 0;
 					Window.alert("Raavare" + " blev opdateret");
