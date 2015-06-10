@@ -2,6 +2,7 @@ package cdio.server.DAL;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -57,6 +58,8 @@ public interface IControllerDAO {
 	boolean getProduktBatchKompListIsEmpty(int pbId) throws DALException;
 	
 	public String getReceptName(int pbID) throws DALException;
+	
+	public List<ReceptKompDTO> setReceptKompListe(int rkList) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;

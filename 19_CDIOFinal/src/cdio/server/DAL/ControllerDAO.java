@@ -11,6 +11,7 @@ import cdio.server.DAL.dao.RaavareBatchDAO;
 import cdio.server.DAL.dao.RaavareDAO;
 import cdio.server.DAL.dao.ReceptDAO;
 import cdio.server.DAL.dao.ReceptKompDAO;
+import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -153,6 +154,10 @@ public class ControllerDAO implements IControllerDAO {
 	
 	public String getReceptName(int pbID) throws DALException{
 		return receptDAO.getRecept(pbDAO.getProduktBatch(pbID).getReceptId()).getReceptNavn();
+	}
+
+	public List<ReceptKompDTO> setReceptKompListe(int rkList) throws DALException {
+		return receptKompDAO.getReceptKompList(rkList);
 	}
 	
 	

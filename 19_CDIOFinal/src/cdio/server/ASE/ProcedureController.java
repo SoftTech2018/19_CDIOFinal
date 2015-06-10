@@ -195,8 +195,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					if(prodInput.equals(product)){
 						menu.show("Produkt bekraftet.");
-						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
-						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
+						mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
+//						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
+						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
+//						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
 						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
