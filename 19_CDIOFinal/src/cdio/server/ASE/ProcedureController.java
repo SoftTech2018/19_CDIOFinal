@@ -108,7 +108,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
-					name = dao.getOprDAO().getOperatoer(inputInt).getName();
+					name = dao.getUser(inputInt).getName();
+//					name = dao.getOprDAO().getOperatoer(inputInt).getName();
 					menu.show("Bruger valgt: "+name+". Er dette korrekt?");		
 					nameInput = trans.RM20("Bekraft bruger:",name," ?");
 					if (nameInput.toLowerCase().equals("q")){
@@ -173,6 +174,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					mc.setProdBatchID(Integer.parseUnsignedInt(input));
 					try{
 						dao.getPbDAO().getProduktBatch(mc.prod_batch_id);
+						
 					} catch (DALException e){
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
