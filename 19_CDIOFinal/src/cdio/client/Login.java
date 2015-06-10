@@ -48,6 +48,7 @@ public class Login extends Composite {
 		password.setText("02324it!"); // TESTKODE SKAL SLETTES
 		send = new Button("Login");
 		send.setEnabled(false);
+		send.setEnabled(true); // TESTKODE SKAL SLETTES
 		Label header = new Label("Distribueret Afvejningssystem");
 		errorMsg = new Label("");
 		Label footer = new Label("Copyright © Gruppe 19");
