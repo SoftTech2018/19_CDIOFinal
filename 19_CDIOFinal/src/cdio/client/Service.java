@@ -2,17 +2,11 @@ package cdio.client;
 
 import java.util.List;
 
-import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
-import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.UserDTO;
-
-
-
-
 
 
 
@@ -58,9 +52,6 @@ public interface Service extends RemoteService {
 	
 	List<ReceptDTO> getReceptList(String token) throws Exception;
 	
-	List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception;
+	void createRecept(String token, ReceptDTO recept) throws Exception;
 	
-	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb) throws Exception;
-	
-	List<PbViewDTO> getPbView(String token, int receptId) throws Exception;
 }

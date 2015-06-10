@@ -134,6 +134,10 @@ public class ControllerDAO implements IControllerDAO {
 		return pb;
 	}
 	
+	@Override
+	public void createRecept(ReceptDTO recept) throws DALException {
+		receptDAO.createRecept(recept);
+	}
 	
 	
 }

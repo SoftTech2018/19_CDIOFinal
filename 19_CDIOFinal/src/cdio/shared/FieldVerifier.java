@@ -96,4 +96,19 @@ public class FieldVerifier {
 		}
 		return true;
 	}
+	
+	public static boolean isValidReceptName(String name) {
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+		}
+		if (name.length() <= 1) {
+			return false;			
+		}
+		// max 30 karakterer
+		return name.length() <= 22;
+	}
+	
 }

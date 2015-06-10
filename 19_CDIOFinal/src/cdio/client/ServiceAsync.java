@@ -48,5 +48,7 @@ public interface ServiceAsync {
 
 	void getPbView(String token, int receptId,
 			AsyncCallback<List<PbViewDTO>> asyncCallback);
+	
+	void createRecept(String token, ReceptDTO recept, AsyncCallback<Void> asyncCallback);
 
 }
