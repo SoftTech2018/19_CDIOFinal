@@ -60,6 +60,10 @@ public interface IControllerDAO {
 	public String getReceptName(int pbID) throws DALException;
 	
 	public List<ReceptKompDTO> setReceptKompListe(int rkList) throws DALException;
+	
+	public String getSpecificRaavare(int raavare) throws DALException;
+	
+	public void createProduktBatchKomp(ProduktBatchKompDTO pbk) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;

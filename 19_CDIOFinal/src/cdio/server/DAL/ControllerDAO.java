@@ -159,6 +159,17 @@ public class ControllerDAO implements IControllerDAO {
 	public List<ReceptKompDTO> setReceptKompListe(int rkList) throws DALException {
 		return receptKompDAO.getReceptKompList(rkList);
 	}
+
+	@Override
+	public String getSpecificRaavare(int raavare) throws DALException {
+		return raavareDAO.getRaavare(raavare).getRaavareNavn();
+	}
+
+	@Override
+	public void createProduktBatchKomp(ProduktBatchKompDTO pbk)
+			throws DALException {
+		pbkompDAO.createProduktBatchKomp(pbk);
+	}
 	
 	
 }

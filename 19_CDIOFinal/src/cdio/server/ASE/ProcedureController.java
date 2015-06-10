@@ -199,7 +199,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
-						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
+						dao.getProduktBatch(mc.getProdBatchID()).setStatus(1);
+//						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
@@ -337,7 +338,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 //					if (input.toUpperCase().equals(answer)) {
 						menu.show("Afvej og kvitter med dor-knap");
-						trans.P111("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+" : "+mc.getReceptKomp().getNomNetto()+"kg");
+//						trans.P111("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+" : "+mc.getReceptKomp().getNomNetto()+"kg");
+						trans.P111("Afvej "+dao.getSpecificRaavare(mc.getRaavareID())+" : "+mc.getReceptKomp().getNomNetto()+"kg");
 						trans.startST(true);
 						mc.setAfvejning(Double.parseDouble(trans.listenST()));
 						trans.startST(false);
@@ -394,9 +396,11 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						menu.show("Beholdning opdateret:");
 //						menu.show("Vare ID: "+mc.getVareID()+", Afvejning: "+mc.getAfvejning());
 
-						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
+//						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
+						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						if(mc.getReceptKompListe().isEmpty()){
-							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
+//							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
+							dao.getProduktBatch(mc.getProdBatchID()).setStatus(2);
 							System.out.println("set status");
 							return START;
 						} else {
