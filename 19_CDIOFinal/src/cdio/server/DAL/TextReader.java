@@ -260,8 +260,12 @@ public class TextReader {
 		
 	}
 	
-	
-	
+	public String updatePbStatus(ProduktBatchDTO produktbatch){
+		String output = sqlCommands[57];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(produktbatch.getStatus()));
+		output = output.replaceFirst(illegalString + "2", Integer.toString(produktbatch.getPbId()));
+		return output;
+	}
 
 	public String getReceptView(String recept) {
 		String output = sqlCommands[50];
