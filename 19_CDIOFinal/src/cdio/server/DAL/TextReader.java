@@ -96,7 +96,7 @@ public class TextReader {
 		String output = sqlCommands[7];
 		output = output.replaceFirst(illegalString + "1", Integer.toString(produktbatch.getStatus()));
 		output = output.replaceFirst(illegalString + "2", Integer.toString(produktbatch.getReceptId()));
-		output = output.replaceFirst(illegalString + "3", produktbatch.getDato());
+		output = output.replaceFirst(illegalString + "3", "'" + produktbatch.getDato() + "'");
 		return output;
 	}
 	
