@@ -187,7 +187,19 @@ public class RetRaavare  extends Composite {
 		
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			//mangler implementering
+			TextBox id = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidUserId(id.getText())){
+				id.setStyleName("TextBox-RetError");
+				idValid = false;
+			} else {
+				id.setStyleName("TextBox-Ret");
+				idValid = true;
+			}
+			
+			if (idValid && nameValid && leverandoerValid)
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
 		}
 	}
 	
@@ -206,9 +218,9 @@ public class RetRaavare  extends Composite {
 			}
 
 			if (idValid && nameValid && leverandoerValid)
-				((Button) ft.getWidget(eventRow, 9)).setEnabled(true);
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
 			else
-				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
 		}
 	}
 
