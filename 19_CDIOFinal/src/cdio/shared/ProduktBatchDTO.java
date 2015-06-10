@@ -9,7 +9,7 @@ public class ProduktBatchDTO implements Serializable
 	private int receptId;
 	private String dato;
 	
-	public ProduktBatchDTO(int pbId, int status, int receptId)
+	public ProduktBatchDTO(int pbId, int status, int receptId, String dato)
 	{
 		this.pbId = pbId;
 		this.status = status;
