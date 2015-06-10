@@ -103,11 +103,11 @@ public class RetRaavare  extends Composite {
 			leverandoerValid = true; //unødvendigt
 			
 			//Her laves nye widgets der kan redigeres i og erstatter de oprindelige med disse
-			oID = new TextBox();
-			oID.setText(uID);
-			oID.addKeyUpHandler(new IDCheck());
-			oID.setStyleName("TextBox-Ret");
-			ft.setWidget(eventRow, 0, oID);
+//			oID = new TextBox();
+//			oID.setText(uID);
+//			oID.addKeyUpHandler(new IDCheck());
+//			oID.setStyleName("TextBox-Ret");
+//			ft.setWidget(eventRow, 0, oID);
 			
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
