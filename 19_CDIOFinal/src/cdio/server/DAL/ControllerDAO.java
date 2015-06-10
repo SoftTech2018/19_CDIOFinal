@@ -151,6 +151,10 @@ public class ControllerDAO implements IControllerDAO {
 		return pbkompDAO.getProduktBatchKompList().isEmpty();
 	}
 	
+	public String getReceptName(int pbID) throws DALException{
+		return receptDAO.getRecept(pbDAO.getProduktBatch(pbID).getReceptId()).getReceptNavn();
+	}
+	
 	
 }
 	

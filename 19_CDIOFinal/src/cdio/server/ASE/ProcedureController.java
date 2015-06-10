@@ -184,7 +184,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("Nr er brugt; tast nyt.");
 						return SETUP;
 					}
-					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
+					product = dao.getReceptName(mc.getProdBatchID());
+//					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
 					prodInput = trans.RM20("Bekraft produkt:",product," ?");
 					if (prodInput.toLowerCase().equals("q")){

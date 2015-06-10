@@ -55,6 +55,8 @@ public interface IControllerDAO {
 	ProduktBatchDTO getProduktBatch(int pbID) throws DALException;
 	
 	boolean getProduktBatchKompListIsEmpty(int pbId) throws DALException;
+	
+	public String getReceptName(int pbID) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;
