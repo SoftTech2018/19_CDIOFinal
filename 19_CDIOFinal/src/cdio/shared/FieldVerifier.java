@@ -46,7 +46,7 @@ public class FieldVerifier {
 		// max 30 karakterer
 		return name.length() <= 30;
 	}
-	
+
 	public static boolean isValidUserId(String id){
 		try {
 			int i = Integer.parseInt(id);
@@ -58,7 +58,7 @@ public class FieldVerifier {
 			return false;
 		}
 	}
-	
+
 	public static boolean isValidPassword(String pass){
 		if (pass == null)
 			return false;
@@ -70,21 +70,21 @@ public class FieldVerifier {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public static boolean isValidInitial(String ini){
 		return true;
 	}
-	
+
 	public static boolean isValidCpr(String cpr){
 		for (int i=0; i < cpr.length(); i++){
 			String sString = cpr.substring(i, i+1);
 			if (sString.matches("[a-z]")){
 				return false;
 			} else if (sString.matches("[!]")){
-				
+
 				return false;
 			}
 		}
@@ -96,19 +96,26 @@ public class FieldVerifier {
 		}
 		return true;
 	}
-	
+
 	public static boolean isValidReceptName(String name) {
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-		}
-		if (name.length() <= 1) {
-			return false;			
+			for (int j=0; i<name.length(); i++){
+				char x = name.charAt(i);
+				if (x == '&' || x == '<' || x == '>'){
+					return false;
+				}	
+
+			}
+			if (name.length() <= 1) {
+				return false;			
+			}
+
 		}
 		// max 30 karakterer
 		return name.length() <= 22;
 	}
-	
 }
