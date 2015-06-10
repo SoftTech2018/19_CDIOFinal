@@ -140,7 +140,7 @@ public class OpretPB extends Composite {
 			ft.setText(2, 1, Integer.toString(pb.getReceptId()));
 			ft.setText(3, 0, "");
 			
-			ft.setText(4, 0, "Loadin...");
+			ft.setText(4, 0, "Loading...");
 			service.getPbView(token, pb.getReceptId(), new AsyncCallback<List<PbViewDTO>>(){
 
 				@Override
