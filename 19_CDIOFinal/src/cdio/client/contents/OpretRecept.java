@@ -19,15 +19,13 @@ public class OpretRecept extends Composite {
 
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private TextBox receptid, navn;
-	private Button opret;
+	private TextBox receptid, navn, raavareid, nomNetto, tolerance;
+	private Button opret, tilfoej, ok;
 	private Label error;
-	private boolean receptidValid, navnValid;
+	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid;
 	private ServiceAsync service;
 	private String token;
 
-	//receptid: området 199999999 heltal 
-	//navn: 2-20 karakterer
 
 	public OpretRecept(String token, ServiceAsync service) {
 		this.service = service;
@@ -40,6 +38,11 @@ public class OpretRecept extends Composite {
 	private void run(){
 		receptidValid = true;
 		navnValid = false;
+		nettoValid = false;
+		tolValid = false;
+		raavareidValid=false;
+		kompValid=false;
+		
 		vPane.clear();
 
 		error = new Label("");
@@ -65,9 +68,15 @@ public class OpretRecept extends Composite {
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
+		
+		tilfoej = new Button("Ny komponent");
+		tilfoej.setStyleName("Recept-Komponenter");
+		tilfoej.addClickHandler(new kompClick());
+		ft.setWidget(4, 0, tilfoej);
 
 		vPane.add(ft);
 		vPane.add(error);
+		
 
 	}
 
@@ -113,6 +122,7 @@ public class OpretRecept extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				navnValid = true;
+				
 			} 
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
@@ -140,6 +150,38 @@ public class OpretRecept extends Composite {
 			else opret.setEnabled(false);
 		}
 		
+	}
+	
+	private class kompClick implements ClickHandler{
+
+		@Override
+		public void onClick(ClickEvent event) {
+			FlexTable ft2 = new FlexTable();
+			ok = new Button("Tilføj");
+			ft2.setText(1, 0, "RåvareID");
+			raavareid = new TextBox();
+			ft2.setWidget(1, 1, raavareid);
+			
+			ft2.setText(2, 0, "Nominel Netto");
+			nomNetto = new TextBox();
+			ft2.setWidget(2, 1, nomNetto);
+			
+			
+			ft2.setText(3, 0, "Tolerance");
+			tolerance = new TextBox();
+			ft2.setWidget(3, 1, tolerance);
+			
+			ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
+			ft2.getFlexCellFormatter().setWidth(0, 1, "100px");
+			ft2.getFlexCellFormatter().setWidth(0, 2, "70px");
+			ft2.getFlexCellFormatter().setWidth(0, 3, "70px");
+			ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
+			vPane.add(ft2);			
+			
+			
+			
+			
+		}
 		
 		
 		
