@@ -4,32 +4,26 @@ import java.io.Serializable;
 
 public class PbViewDTO implements Serializable{
 	
-	private String raavareNavn;
-	private int opr, terminal, batch, raavareId, status;
+	private String raavareNavn, oprIni;
+	private int terminal, batch, raavareId;
 	private double maengde, tara, netto, tolerance;
 	
 	public PbViewDTO(){
 		
 	}
 	
-	public PbViewDTO(String raavareNavn, int opr, int terminal, int batch, double maengde, double tara, double netto, double tolerance){
+	public PbViewDTO(String raavareNavn, int id, String opr, int terminal, int batch, double maengde, double tara, double netto, double tolerance){
 		this.raavareNavn = raavareNavn;
-		this.opr = opr;
+		this.oprIni = opr;
 		this.terminal = terminal;
 		this.batch = batch;
 		this.maengde = maengde;
 		this.tara = tara;
 		this.netto = netto;
 		this.tolerance = tolerance;
+		this.raavareId = id;
 	}
-	
-	public int getStatus(){
-		return status;
-	}
-	
-	public void setStatus(int id){
-		status = id;
-	}
+
 	
 	public int getRaavareId(){
 		return raavareId;
@@ -47,12 +41,12 @@ public class PbViewDTO implements Serializable{
 		this.raavareNavn = raavareNavn;
 	}
 
-	public int getOpr() {
-		return opr;
+	public String getOpr() {
+		return oprIni;
 	}
 
-	public void setOpr(int opr) {
-		this.opr = opr;
+	public void setOpr(String opr) {
+		this.oprIni = opr;
 	}
 
 	public int getTerminal() {

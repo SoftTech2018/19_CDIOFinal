@@ -208,4 +208,10 @@ html {
 	width: 150px;
 	}	
 
+.FlexTable-PB{
+	width: 100%;
+	border-style: dashed;
+	border-width: 1px;
+	padding: 5px;
+}
 	

@@ -262,8 +262,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<PbViewDTO> getPbView(String token, int receptId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		List<PbViewDTO> list = new ArrayList<PbViewDTO>();
+		list.add(new PbViewDTO("Råvarenavn", 1, "JTN", 1, 1, 0.243, 0.12, 0.234, 0.1));
+		list.add(new PbViewDTO("Råvarenavn2", 2, "EB", 1, 1, 0.243, 0.12, 0.234, 0.1));
+		list.add(new PbViewDTO("Råvarenavn3", 3, "AG", 1, 1, 0.743, 1.12, 0.54, 0.1));
+		return list;
 	}
 	
 	public void createRecept(String token, ReceptDTO recept) throws Exception {
