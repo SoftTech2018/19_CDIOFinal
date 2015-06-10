@@ -171,8 +171,14 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					mc.setProdBatchID(Integer.parseUnsignedInt(input));
+					try{
+						dao.getPbDAO().getProduktBatch(mc.prod_batch_id);
+					} catch (DALException e){
+						trans.P111("Ukendt nr; tast nyt.");
+						return SETUP;
+					}
 					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
-						trans.P111("Nr eksisterer; tast nyt.");
+						trans.P111("Nr er brugt; tast nyt.");
 						return SETUP;
 					}
 					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
@@ -213,7 +219,12 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					return SETUP;
 				} catch (DALException e) {
-					// TODO Auto-generated catch block
+					try {
+						trans.P111("");
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 					return SETUP;
 				}				
@@ -376,9 +387,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						fileAccess.updProductInventory(mc.getVareID(), mc.getAfvejning());
 //						menu.show("Beholdning opdateret:");
 //						menu.show("Vare ID: "+mc.getVareID()+", Afvejning: "+mc.getAfvejning());
-//						fileAccess.writeLog(mc.getOprID(), mc.getVareID(), mc.getTara(), mc.getAfvejning());
-//						menu.show("Log skrevet:");
-//						menu.show("Operator ID: "+mc.getOprID()+", Vare ID: "+mc.getVareID()+", Tara vagt: "+mc.getTara()+", Afvejning: "+mc.getAfvejning());
+
 						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						if(mc.getReceptKompListe().isEmpty()){
 							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(3);
