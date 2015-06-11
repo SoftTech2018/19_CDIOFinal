@@ -19,7 +19,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRaavare extends Composite {
-	
+
 	private ServiceAsync service;
 	private String token;
 	private VerticalPanel vPane;
@@ -36,26 +36,28 @@ public class OpretRaavare extends Composite {
 		initWidget(vPane);
 		run();
 	}
-	
+
 	public void run(){
-		
+
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		ft.setText(0, 0, "Opret Råvare");
-		
+
 		ft.setText(1, 0, "Råvare ID:");
 		id = new TextBox();
 		id.addKeyUpHandler(new IdCheck()); 
 		id.setStyleName("TextBox-Opret");
 		ft.setWidget(1, 1, id);
+		
+		
 
 		ft.setText(2, 0, "Råvare navn:");
 		navn = new TextBox();
 		navn.addKeyUpHandler(new NameCheck()); 
 		navn.setStyleName("Textbox-Opret");
 		ft.setWidget(2, 1, navn);
-		
+
 		ft.setText(3, 0, "Leverandør:");
 		leverandør = new TextBox();
 		leverandør.addKeyUpHandler(new LevCheck()); 
@@ -66,17 +68,12 @@ public class OpretRaavare extends Composite {
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
-		
-//		tilfoej = new Button("Ny komponent");
-//		tilfoej.setStyleName("Recept-Komponenter");
-//		tilfoej.addClickHandler(new kompClick());
-//		ft.setWidget(4, 0, tilfoej);
-		
+
 		vPane.add(ft);
-		
+
 	}
-	
-	
+
+
 	private class OpretClick implements ClickHandler{
 
 		@Override
@@ -88,14 +85,15 @@ public class OpretRaavare extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-				opret.setEnabled(true);	
-				error.setText(caught.getMessage());
-				error.setStyleName("TextBox-ErrorMessage");
+					opret.setEnabled(true);	
+					error.setText(caught.getMessage());
+					error.setStyleName("TextBox-ErrorMessage");
 				}
 
 				@Override
 				public void onSuccess(Void result) {
-					Window.alert("Recept " + navn.getText() + " blev oprettet!");
+					Window.alert("Råvare " + navn.getText() + " blev oprettet!");
+					vPane.clear();
 					run();
 				}
 
@@ -109,24 +107,40 @@ public class OpretRaavare extends Composite {
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
-			TextBox id = (TextBox) event.getSource();
+			final TextBox id = (TextBox) event.getSource();
+			ft.setText(1, 2, "");
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
-			id.setStyleName("TextBox-OpretError");
-			idValid = false;
-		} else{
-			id.setStyleName("TextBox-Opret");
-			idValid = true;
-		}
-			
+				id.setStyleName("TextBox-OpretError");
+				idValid = false;
+			} else{
+				service.getRaavareID(token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
+
+					@Override
+					public void onFailure(Throwable caught) {
+						id.setStyleName("TextBox-Opret");
+						idValid = true;
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
+						id.setStyleName("TextBox-OpretError");
+						idValid = false;
+					}
+					
+				});
+				
+			}
+
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
 			}
 		}
-		
+
 	}
-	
+
 	private class NameCheck implements KeyUpHandler{
 
 		@Override
@@ -139,7 +153,7 @@ public class OpretRaavare extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				navnValid = true;
-				
+
 			} 
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
@@ -149,7 +163,7 @@ public class OpretRaavare extends Composite {
 		}
 
 	}
-	
+
 	private class LevCheck implements KeyUpHandler{
 
 		@Override
@@ -162,19 +176,19 @@ public class OpretRaavare extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				levValid = true;
-				
+
 			} 
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
 			}
-					
+
 		}
 
 	}
-	
 
-	
+
+
 
 }
