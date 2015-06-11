@@ -62,7 +62,7 @@ public class VisPB extends Composite {
 					ft.getFlexCellFormatter().setWidth(0, 0, "50px");
 					ft.getFlexCellFormatter().setWidth(0, 1, "75px");
 					ft.getFlexCellFormatter().setWidth(0, 2, "55px");
-					ft.getFlexCellFormatter().setWidth(0, 3, "65px");
+					ft.getFlexCellFormatter().setWidth(0, 3, "80px");
 					ft.getFlexCellFormatter().setWidth(0, 4, "50px");
 
 
