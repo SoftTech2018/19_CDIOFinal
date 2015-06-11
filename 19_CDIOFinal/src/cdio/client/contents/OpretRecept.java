@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
@@ -25,7 +26,7 @@ public class OpretRecept extends Composite {
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid;
 	private ServiceAsync service;
 	private String token;
-
+	private String[] split;
 
 	public OpretRecept(String token, ServiceAsync service) {
 		this.service = service;
@@ -42,7 +43,7 @@ public class OpretRecept extends Composite {
 		tolValid = false;
 		raavareidValid=false;
 		kompValid=false;
-		
+
 		vPane.clear();
 
 		error = new Label("");
@@ -53,6 +54,8 @@ public class OpretRecept extends Composite {
 
 		ft.setText(2, 0, "Receptnavn:");
 		navn = new TextBox();
+
+
 		navn.addKeyUpHandler(new NameCheck()); 
 		navn.setStyleName("TextBox-Opret");
 		ft.setWidget(2, 1, navn);
@@ -68,7 +71,7 @@ public class OpretRecept extends Composite {
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
-		
+
 		tilfoej = new Button("Ny komponent");
 		tilfoej.setStyleName("Recept-Komponenter");
 		tilfoej.addClickHandler(new kompClick());
@@ -76,7 +79,7 @@ public class OpretRecept extends Composite {
 
 		vPane.add(ft);
 		vPane.add(error);
-		
+
 
 	}
 
@@ -93,9 +96,9 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-				opret.setEnabled(true);	
-				error.setText(caught.getMessage());
-				error.setStyleName("TextBox-ErrorMessage");
+					opret.setEnabled(true);	
+					error.setText(caught.getMessage());
+					error.setStyleName("TextBox-ErrorMessage");
 				}
 
 				@Override
@@ -122,7 +125,7 @@ public class OpretRecept extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				navnValid = true;
-				
+
 			} 
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
@@ -138,20 +141,20 @@ public class OpretRecept extends Composite {
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
-			id.setStyleName("TextBox-OpretError");
-			receptidValid = false;
-		} else{
-			id.setStyleName("TextBox-Opret");
-			receptidValid = true;
-		}
-			
+				id.setStyleName("TextBox-OpretError");
+				receptidValid = false;
+			} else{
+				id.setStyleName("TextBox-Opret");
+				receptidValid = true;
+			}
+
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
 			else opret.setEnabled(false);
 		}
-		
+
 	}
-	
+
 	private class kompClick implements ClickHandler{
 
 		@Override
@@ -160,32 +163,94 @@ public class OpretRecept extends Composite {
 			ok = new Button("Tilføj");
 			ft2.setText(1, 0, "RåvareID");
 			raavareid = new TextBox();
+			raavareid.addKeyUpHandler(new rIdCheck()); 
 			ft2.setWidget(1, 1, raavareid);
-			
+
 			ft2.setText(2, 0, "Nominel Netto");
 			nomNetto = new TextBox();
+			nomNetto.addKeyUpHandler(new nettoCheck());
+
+
+
+
 			ft2.setWidget(2, 1, nomNetto);
-			
-			
+
+
 			ft2.setText(3, 0, "Tolerance");
 			tolerance = new TextBox();
+			tolerance.addKeyUpHandler(new tolCheck());
 			ft2.setWidget(3, 1, tolerance);
-			
+
 			ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
 			ft2.getFlexCellFormatter().setWidth(0, 1, "100px");
 			ft2.getFlexCellFormatter().setWidth(0, 2, "70px");
 			ft2.getFlexCellFormatter().setWidth(0, 3, "70px");
 			ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
 			vPane.add(ft2);			
-			
-			
-			
-			
+
+
+
+
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
-}
+
+	private class rIdCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox id = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidUserId(id.getText())){
+				id.setStyleName("TextBox-OpretError");
+				raavareidValid = false;
+
+			} else{
+				id.setStyleName("TextBox-Opret");
+				raavareidValid = true;
+			}
+
+			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
+				opret.setEnabled(true);
+			else opret.setEnabled(false);
+		}
+	}
+	private class nettoCheck implements KeyUpHandler{
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox id = (TextBox) event.getSource();
+				
+			if(!FieldVerifier.isValidNetto(id.getText())){
+
+				id.setStyleName("TextBox-OpretError");
+				nettoValid = false;
+					
+			} else{
+				id.setStyleName("TextBox-Opret");
+				nettoValid = true;
+			}
+			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
+				opret.setEnabled(true);
+			else opret.setEnabled(false);
+		}
+	}
+
+	private class tolCheck implements KeyUpHandler{
+
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox id = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidUserId(id.getText())){
+				id.setStyleName("TextBox-OpretError");
+				receptidValid = false;
+			} else{
+				id.setStyleName("TextBox-Opret");
+				receptidValid = true;
+			}
+				if(navnValid && receptidValid)
+				opret.setEnabled(true);
+			else opret.setEnabled(false);
+		}
+
+		}
+	}
+

@@ -1,5 +1,7 @@
 package cdio.shared;
 
+import com.google.gwt.i18n.client.NumberFormat;
+
 /**
  * <p>
  * FieldVerifier validates that the name the user enters is valid.
@@ -97,6 +99,34 @@ public class FieldVerifier {
 		return true;
 	}
 
+	public static boolean isValidNetto(String netto){
+		String ny = netto.replaceAll(",",".");
+		String[] sString = ny.split("\\.");
+		if(sString[1].length()>4){
+			return false;
+		}
+			
+		try{
+			
+			Double input =	Double.parseDouble(ny); 
+			if(input < 0.5){
+				return false;
+			}
+			if(input >= 21 ){
+				return false;
+			}		
+		} catch (NumberFormatException e){
+			return false;
+		}
+		
+		return true;		
+	}
+
+
+	
+	
+	
+
 	public static boolean isValidReceptName(String name) {
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
@@ -115,7 +145,7 @@ public class FieldVerifier {
 			}
 
 		}
-		// max 30 karakterer
+		// max 22 karakterer
 		return name.length() <= 22;
 	}
 }
