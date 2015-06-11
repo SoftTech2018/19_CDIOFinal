@@ -210,6 +210,10 @@ public class ControllerDAO implements IControllerDAO {
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException {
 		return pbDAO.getPbViewList(pb_id);
 	}
+	
+	public boolean deleteRecept(int id) throws DALException {
+		
+	}
 
 }
 	
