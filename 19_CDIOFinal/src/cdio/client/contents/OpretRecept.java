@@ -218,15 +218,15 @@ public class OpretRecept extends Composite {
 	}
 	private class nettoCheck implements KeyUpHandler{
 		public void onKeyUp(KeyUpEvent event) {
-			TextBox id = (TextBox) event.getSource();
+			TextBox tb = (TextBox) event.getSource();
 				
-			if(!FieldVerifier.isValidNetto(id.getText())){
+			if(!FieldVerifier.isValidNetto(tb.getText())){
 
-				id.setStyleName("TextBox-OpretError");
+				tb.setStyleName("TextBox-OpretError");
 				nettoValid = false;
 					
 			} else{
-				id.setStyleName("TextBox-Opret");
+				tb.setStyleName("TextBox-Opret");
 				nettoValid = true;
 			}
 			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
@@ -238,15 +238,15 @@ public class OpretRecept extends Composite {
 	private class tolCheck implements KeyUpHandler{
 
 		public void onKeyUp(KeyUpEvent event) {
-			TextBox id = (TextBox) event.getSource();
-			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-OpretError");
-				receptidValid = false;
+			TextBox ab = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidTol(ab.getText())){
+			ab.setStyleName("TextBox-OpretError");
+				tolValid= false;
 			} else{
-				id.setStyleName("TextBox-Opret");
-				receptidValid = true;
+				ab.setStyleName("TextBox-Opret");
+				tolValid = true;
 			}
-				if(navnValid && receptidValid)
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
 				opret.setEnabled(true);
 			else opret.setEnabled(false);
 		}

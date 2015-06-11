@@ -100,31 +100,59 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidNetto(String netto){
-		String ny = netto.replaceAll(",",".");
-		String[] sString = ny.split("\\.");
-		if(sString[1].length()>4){
-			return false;
-		}
+		String ny = netto;
+		for(int i=0; i<netto.length(); i++){
+			if(netto.charAt(i)==','){
+			ny = netto.replace(",", ".");
 			
-		try{
-			
+			}
+		}		
+		try{		
 			Double input =	Double.parseDouble(ny); 
+
 			if(input < 0.5){
 				return false;
 			}
-			if(input >= 21 ){
+			if(input >= 20.0 ){
 				return false;
 			}		
 		} catch (NumberFormatException e){
 			return false;
 		}
-		
+		String[] sString = ny.split("\\.");
+		if(sString[1].length()>4){
+			return false;
+		}
+		return true;		
+	}
+	
+	public static boolean isValidTol(String tol){
+		String ny = tol;
+		for(int i=0; i<tol.length(); i++){
+			if(tol.charAt(i)==','){
+			ny = tol.replace(",", ".");
+			
+			}
+		}		
+		try{		
+			Double input =	Double.parseDouble(ny); 
+
+			if(input < 0.1){
+				return false;
+			}
+			if(input >= 10.0 ){
+				return false;
+			}		
+		} catch (NumberFormatException e){
+			return false;
+		}
+		String[] sString = ny.split("\\.");
+		if(sString[1].length()>2){
+			return false;
+		}
 		return true;		
 	}
 
-
-	
-	
 	
 
 	public static boolean isValidReceptName(String name) {
