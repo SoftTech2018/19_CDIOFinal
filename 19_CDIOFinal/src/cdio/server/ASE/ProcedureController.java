@@ -99,7 +99,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				int inputInt = 0;
 				try{
 					menu.show("Indtast operatornummer:");
-					input = trans.RM20("Tast bruger ID:","","");
+					input = trans.RM20int("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -163,7 +163,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				String input = null, product, prodInput;
 				try{
 					menu.show("Indtast varenummer:");
-					input = trans.RM20("Tast produktbatch nr.:","","");
+					input = trans.RM20int("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -345,8 +345,21 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.startST(false);
 						menu.show(mc.getAfvejning()+" afvejet.");
 						trans.P111("");
-						if(mc.getAfvejning()<(mc.getAfvejning()-mc.getReceptKomp().getTolerance()) || mc.getAfvejning()>(mc.getAfvejning()+mc.getReceptKomp().getTolerance())){
+						
+						double min = mc.getReceptKomp().getNomNetto()-mc.getReceptKomp().getTolerance();
+						double max = mc.getReceptKomp().getNomNetto()+mc.getReceptKomp().getTolerance();
+						System.out.println(mc.getAfvejning());
+						System.out.println(min);
+						System.out.println(max);
+						if(mc.getAfvejning()<min || mc.getAfvejning()>max){
+							System.out.println("tolerance");
 							trans.P111("Afvejet uden for tolerancen");
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							return WEIGH;
 						} else {
 							return REMOVE_CONTAINER;

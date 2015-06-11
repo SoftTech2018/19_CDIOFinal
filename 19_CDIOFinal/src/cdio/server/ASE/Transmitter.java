@@ -50,6 +50,30 @@ public class Transmitter implements ITransmitter {
 		}
 	}
 	
+	@Override
+	public String RM20int(String txt1, String txt2, String txt3) throws IOException{
+		out.println("RM20 3" + " \"" + txt1 + "\" \"" + txt2 + "\" \"" + txt3 + "\"" );
+		String reply = in.readLine();
+		System.out.println("RM20 svar: "+reply);
+		String error = "ES";
+		String cancel = "q";			
+		
+		if (reply.equalsIgnoreCase("RM20 B")){
+			String input = in.readLine();
+			if (input.equalsIgnoreCase("RM20 C")){
+				return cancel;
+			}
+			if (input.substring(0, 6).equalsIgnoreCase("RM20 A")){
+				return input.substring(8,(input.length()-1)); // Skal muligvis være 6				
+			}
+			return error;
+		} else if (reply.equalsIgnoreCase("RM20 L")){
+			return "L";
+		} else {
+			return error;
+		}
+	}
+	
 	public void RM20cancel() throws IOException{
 		out.println("RM20 0");
 		String reply = in.readLine();
