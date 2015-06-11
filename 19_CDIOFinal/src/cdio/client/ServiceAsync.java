@@ -52,7 +52,7 @@ public interface ServiceAsync {
 	void createRecept(String token, ReceptDTO recept, AsyncCallback<Void> asyncCallback);
 
 	
-	void getRaavare(String token,  int raavareid, AsyncCallback<Void> asyncCallback);
+	void getRaavareID(String token,  int raavareid, AsyncCallback<Void> asyncCallback);
 	
 	
 	

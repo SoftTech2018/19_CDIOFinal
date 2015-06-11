@@ -66,7 +66,7 @@ public interface Service extends RemoteService {
 	
 	List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception;
 
-	void getRaavare(String token, int raavareid) throws Exception;
+	void getRaavareID(String token, int raavareid) throws Exception;
 
 	
 	

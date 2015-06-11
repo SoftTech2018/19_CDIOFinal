@@ -294,16 +294,22 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 	
 	
-	public void checkRaavareId(String token, int raavare) throws Exception {
+
+	@Override
+	public void getRaavareID(String token, int raavareid) throws Exception {
 		if(th.validateToken(token) !=null){
-			try{ dao.getRaavareID(raavare);
+			try{ dao.getRaavareID(raavareid);
 
 			}
 			catch(Exception DALException){
 				throw new Exception("Råvareid ukendt!");
 			}		
 		}
+
+		
 	}
+
+
 }
 
 
