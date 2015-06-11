@@ -103,8 +103,8 @@ public class FieldVerifier {
 		String ny = netto;
 		for(int i=0; i<netto.length(); i++){
 			if(netto.charAt(i)==','){
-			ny = netto.replace(",", ".");
-			
+				ny = netto.replace(",", ".");
+
 			}
 		}		
 		try{		
@@ -125,13 +125,13 @@ public class FieldVerifier {
 		}
 		return true;		
 	}
-	
+
 	public static boolean isValidTol(String tol){
 		String ny = tol;
 		for(int i=0; i<tol.length(); i++){
 			if(tol.charAt(i)==','){
-			ny = tol.replace(",", ".");
-			
+				ny = tol.replace(",", ".");
+
 			}
 		}		
 		try{		
@@ -153,7 +153,7 @@ public class FieldVerifier {
 		return true;		
 	}
 
-	
+
 
 	public static boolean isValidReceptName(String name) {
 		for (int i=0; i < name.length(); i++){
@@ -176,42 +176,46 @@ public class FieldVerifier {
 		// max 22 karakterer
 		return name.length() <= 22;
 	}
-	
+
 	public static boolean isValidRaavareId(String id){
 		try {
 			int i = Integer.parseInt(id);
 			if(i<=0 || i>99999999){
 				throw new NumberFormatException();
 			}
-			
+
 			return true;
 		} catch (NumberFormatException e){
 			return false;
 		}
 	}
-	
+
 	public static boolean isValidRaavareName(String name) {
+		if (name.length() <= 1) {
+			return false;			
+		}
+		if (name.length() > 22){
+			return false;
+		}
 		for (int i=0; i < name.length(); i++){
+			
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-			for (int j=0; i<name.length(); i++){
-				char x = name.charAt(i);
-				if (x == '&' || x == '<' || x == '>'){
-					return false;
-				}	
-
+//			for (int j=0; i<name.length(); i++){
+//				char x = name.charAt(i);
+//				if (x == '&' || x == '<' || x == '>'){
+//					return false;
+//				}
+//			}
+			if(sString.charAt(0)=='&' || sString.charAt(0)=='&' || sString.charAt(0)=='&'){
+				return false;
 			}
-			if (name.length() <= 1) {
-				return false;			
-			}
-
-		}
-		// max 22 karakterer
-		return name.length() <= 22;
+		}		
+		return true;
 	}
-	
+
 	public static boolean isValidLeverandorName(String name) {
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);

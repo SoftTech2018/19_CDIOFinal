@@ -27,7 +27,7 @@ public class OpretRaavare extends Composite {
 	private TextBox id, navn, leverandør;
 	private Button opret;
 	private Label error;
-	private boolean idValid, navnValid, levValid;
+	private boolean idValid=false, navnValid=false, levValid=false;
 
 	public OpretRaavare(String token, ServiceAsync service) {
 		this.service=service;
