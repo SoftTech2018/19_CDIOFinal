@@ -91,10 +91,32 @@ public class VisOpr extends Composite {
 					
 					vPane.add(ft);
 				}
+				
+//				FlexTable ft2 = new FlexTable();
+//				
+//				ft2.setStyleName("FlexTable-Header");
+//				ft2.setText(0, 0, "Antal brugere i systemet: ");
+//				ft2.setText(1, 0, "Operatørere");
+//				ft2.setText(1, 1, "Værkførere");
+//				ft2.setText(1, 2, "Farmaceuter");
+//				ft2.setText(1, 3, "Admins");
+//				
+//				for (int i = 0; i < result.size(); i++) {
+//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 4, HasHorizontalAlignment.ALIGN_CENTER);
+//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
+//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
+//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
+//					
+//					ft2.setText(i+2, 0, result.get(i));
+//					ft2.setText(i+2, 1, result.get(i).getName());
+//					ft2.setText(i+2, 2, result.get(i).getIni());
+//					ft2.setText(i+2, 3, result.get(i).getCpr());
+//
 			}
 		});
 	}
-}
+	}
+
 
 
 

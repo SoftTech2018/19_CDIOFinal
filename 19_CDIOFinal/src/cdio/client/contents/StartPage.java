@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
 public class StartPage extends Composite {
 	
@@ -18,6 +19,7 @@ public class StartPage extends Composite {
 		initWidget(vPane);
 		
 		FlexTable ft = new FlexTable();
+		FlexTable ft2 = new FlexTable();
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		ft.setText(0, 0, "Vælg farveskema:");
 		
@@ -55,7 +57,16 @@ public class StartPage extends Composite {
 		ft.setWidget(0, 1, blue);
 		ft.setWidget(0, 2, red);
 		ft.setWidget(0, 3, green);
+		
+		String vt = "Velkommen til det Distribueret Afvejningssystem. "
+				+ "Ude i menuen til venstre er det muligt at vælge, "
+				+ "hvilken funktion du vil benytte i system. "
+				+ "Lige ovenfor kan du vælge hvilken farve hjemmesiden skal have. "
+				+ "God fornøjelse med systemet!";
+		ft2.setText(0, 0, vt);
+		
 		vPane.add(ft);
+		vPane.add(ft2);
 		
 		
 	}
