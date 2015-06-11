@@ -135,6 +135,7 @@ public class ControllerDAO implements IControllerDAO {
 		String time = _day+"-"+_month+"-"+_year;
 		pb.setDato(time);
 		pbDAO.createProduktBatch(pb);
+		pb.setPbId(pbDAO.getLatestPbId());
 		return pb;
 	}
 	

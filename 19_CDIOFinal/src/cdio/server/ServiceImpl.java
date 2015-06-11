@@ -265,6 +265,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<PbViewDTO> getPbView(String token, int pb_id) throws Exception {
+		Thread.sleep(500);
 		List<PbViewDTO> list = dao.getPbViewList(pb_id);
 		return list;
 	}

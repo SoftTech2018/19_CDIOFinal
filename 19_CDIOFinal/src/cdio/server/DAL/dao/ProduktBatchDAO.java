@@ -64,10 +64,35 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		ResultSet rs = Connector.doQuery(txt.getPbView(pb_id));
 		try {
 			while (rs.next()) {
-				list.add(new PbViewDTO(rs.getString("raavare_navn"), rs.getInt("raavare_id"), rs.getString("ini"), rs.getInt("rb_id"), rs.getDouble("nom_netto"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getDouble("tolerance"), rs.getString("terminal")));
+				String navn = rs.getString("raavare_navn");
+				int id = rs.getInt("raavare_id");
+				String ini = rs.getString("ini");
+				if (ini == null)
+					ini = "";
+				int batch = rs.getInt("rb_id");
+				double maengde = rs.getDouble("nom_netto");
+				double tara = rs.getDouble("tara");
+				double netto = rs.getDouble("netto");
+				double tolerance = rs.getDouble("tolerance");
+				String terminal = rs.getString("terminal");
+				if (terminal == null)
+					terminal = "";
+				list.add(new PbViewDTO(navn, id, ini, batch, maengde, tara, netto, tolerance, terminal));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
-
+	
+	@Override
+	public int getLatestPbId() throws DALException{
+		ResultSet rs = Connector.doQuery("SELECT LAST_INSERT_ID();");
+		int pb_id = -1;
+		try {
+			if (rs.next())
+				pb_id = rs.getInt("LAST_INSERT_ID()");				
+		} catch (SQLException e) {
+			throw new DALException(e);
+		}
+		return pb_id;
+	}
 }
