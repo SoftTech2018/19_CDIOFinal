@@ -115,6 +115,7 @@ public class OpretRecept extends Composite {
 				@Override
 				public void onSuccess(Void result) {
 
+
 					
 				}
 
@@ -123,24 +124,23 @@ public class OpretRecept extends Composite {
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
-
+			
 			service.createRecept(token, recept, new AsyncCallback<Void>(){
-
+				
 				@Override
 				public void onFailure(Throwable caught) {
 					opret.setEnabled(true);	
 					error.setText(caught.getMessage());
 					error.setStyleName("TextBox-ErrorMessage");
 				}
-
+				
 				@Override
 				public void onSuccess(Void result) {
 					Window.alert("Recept " + navn.getText() + " blev oprettet!");
 					run();
 				}
-
+				
 			} );
-
 
 		}
 
