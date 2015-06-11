@@ -60,6 +60,8 @@ public interface Service extends RemoteService {
 	
 	void createRecept(String token, ReceptDTO recept) throws Exception;
 	
+	void createRaavare(String token, RaavareDTO raavare) throws Exception;
+	
 	List<PbViewDTO> getPbView(String token, int receptId) throws Exception;
 	
 	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception;

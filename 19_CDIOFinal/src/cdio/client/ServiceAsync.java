@@ -54,6 +54,8 @@ public interface ServiceAsync {
 	
 	void getRaavareID(String token,  int raavareid, AsyncCallback<Void> asyncCallback);
 	
+	void createRaavare(String token, RaavareDTO raavare ,AsyncCallback<Void> asyncCallback);
+	
 	
 	
 }
