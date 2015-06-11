@@ -189,8 +189,6 @@ public class OpretRecept extends Composite {
 			vPane.add(ft2);			
 
 
-
-
 		}
 
 

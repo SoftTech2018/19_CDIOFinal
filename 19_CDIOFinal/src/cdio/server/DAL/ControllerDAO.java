@@ -167,6 +167,10 @@ public class ControllerDAO implements IControllerDAO {
 	public String getSpecificRaavare(int raavare) throws DALException {
 		return raavareDAO.getRaavare(raavare).getRaavareNavn();
 	}
+	
+	public int getRaavareID(int id) throws DALException {
+		return raavareDAO.getRaavare(id).getRaavareId();
+	}
 
 	@Override
 	public void createProduktBatchKomp(ProduktBatchKompDTO pbk)
