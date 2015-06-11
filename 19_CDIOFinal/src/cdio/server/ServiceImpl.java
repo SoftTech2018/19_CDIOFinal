@@ -250,9 +250,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception {
-		List<RaavareBatchDTO> RaavareBatchList = new ArrayList<RaavareBatchDTO>();
-		RaavareBatchList.add(new RaavareBatchDTO(1, 2, 0.5));
-		return RaavareBatchList;
+		if(TEST_DELAY)
+			Thread.sleep(2000);
+		if(th.validateToken(token) != null){
+		 return dao.getRaavareBatchList();
+		}
+		throw new Exception("Adgang nægtet");
 	}
 
 	@Override
