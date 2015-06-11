@@ -76,6 +76,8 @@ public interface IControllerDAO {
 	public List<RaavareBatchDTO> getRaavareBatchList() throws DALException;
 	
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException;
+	
+	public void createRaavare(RaavareDTO raavare) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;
