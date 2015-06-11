@@ -269,3 +269,15 @@ html {
 	float: bottom;
 	width: 1024px;
 }
+
+@media print {
+	.Header { 
+	display: none;
+	}
+	.Footer {
+	display: none;
+	}
+	.Menu {
+	display: none;
+	}
+}
