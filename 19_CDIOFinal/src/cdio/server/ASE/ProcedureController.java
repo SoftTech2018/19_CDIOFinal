@@ -345,9 +345,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.startST(false);
 						menu.show(mc.getAfvejning()+" afvejet.");
 						trans.P111("");
-						
-						double min = mc.getReceptKomp().getNomNetto()-mc.getReceptKomp().getTolerance();
-						double max = mc.getReceptKomp().getNomNetto()+mc.getReceptKomp().getTolerance();
+						double tolerance = mc.getReceptKomp().getNomNetto()*mc.getReceptKomp().getTolerance();
+						double min = mc.getReceptKomp().getNomNetto()-tolerance;
+						double max = mc.getReceptKomp().getNomNetto()+tolerance;
 						System.out.println(mc.getAfvejning());
 						System.out.println(min);
 						System.out.println(max);
