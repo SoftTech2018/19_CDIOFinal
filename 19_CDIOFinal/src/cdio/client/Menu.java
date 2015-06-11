@@ -8,6 +8,7 @@ import cdio.client.contents.OpretRecept;
 import cdio.client.contents.RetOpr;
 import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
+import cdio.client.contents.StartPage;
 import cdio.client.contents.VisOpr;
 import cdio.client.contents.VisPB;
 import cdio.client.contents.VisRB;
@@ -53,9 +54,10 @@ public class Menu extends Composite {
 			}
 
 			@Override
-			public void onSuccess(String result) {
+			public void onSuccess(String result) {	
 				vPane.clear(); // Fjerner den gamle menu
-				username = result;				
+				username = result;	
+				
 				FlexTable ftMenu = new FlexTable();
 				ftMenu.setStyleName("FlexTable-Menu");
 				int i = 0;
@@ -78,6 +80,17 @@ public class Menu extends Composite {
 				userFt.setStyleName("FlexTable-Userinfo");
 
 				ftMenu.setWidget(i, 0, userFt);
+				i++;
+				
+				Anchor start = new Anchor("Startside");
+				start.addClickHandler(new ClickHandler(){
+
+					@Override
+					public void onClick(ClickEvent event) {
+						con.setContent(new StartPage(con));
+					}
+				});
+				ftMenu.setWidget(i, 0, start);
 				i++;
 
 				// Identificer hvilke menuer brugeren skal vises for
