@@ -176,4 +176,60 @@ public class FieldVerifier {
 		// max 22 karakterer
 		return name.length() <= 22;
 	}
+	
+	public static boolean isValidRaavareId(String id){
+		try {
+			int i = Integer.parseInt(id);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
+	
+	public static boolean isValidRaavareName(String name) {
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+			for (int j=0; i<name.length(); i++){
+				char x = name.charAt(i);
+				if (x == '&' || x == '<' || x == '>'){
+					return false;
+				}	
+
+			}
+			if (name.length() <= 1) {
+				return false;			
+			}
+
+		}
+		// max 22 karakterer
+		return name.length() <= 22;
+	}
+	
+	public static boolean isValidLeverandorName(String name) {
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+			for (int j=0; i<name.length(); i++){
+				char x = name.charAt(i);
+				if (x == '&' || x == '<' || x == '>'){
+					return false;
+				}	
+
+			}
+			if (name.length() <= 1) {
+				return false;			
+			}
+
+		}
+		// max 22 karakterer
+		return name.length() <= 22;
+	}
 }

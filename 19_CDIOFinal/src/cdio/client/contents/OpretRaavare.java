@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
+import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,10 +24,10 @@ public class OpretRaavare extends Composite {
 	private String token;
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private TextBox id, navn, leverandør, nomNetto, tolerance;
-	private Button opret, tilfoej, ok;
+	private TextBox id, navn, leverandør;
+	private Button opret;
 	private Label error;
-	private boolean idValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid, levValid;
+	private boolean idValid, navnValid, levValid;
 
 	public OpretRaavare(String token, ServiceAsync service) {
 		this.service=service;
@@ -81,11 +82,9 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			ReceptDTO recept = new ReceptDTO(
-					Integer.parseInt(id.getText()), 
-					navn.getText());
+			RaavareDTO raavare = new RaavareDTO(Integer.parseUnsignedInt(id.getText()),navn.getText(),leverandør.getText());
 
-			service.createRecept(token, recept, new AsyncCallback<Void>(){
+			service.createRaavare(token, raavare, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -111,7 +110,7 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
-			if(!FieldVerifier.isValidUserId(id.getText())){
+			if(!FieldVerifier.isValidRaavareId(id.getText())){
 			id.setStyleName("TextBox-OpretError");
 			idValid = false;
 		} else{
@@ -133,7 +132,7 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox name = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidReceptName(name.getText())){
+			if (!FieldVerifier.isValidRaavareName(name.getText())){
 				name.setStyleName("TextBox-OpretError");
 				navnValid = false;
 			}
@@ -156,7 +155,7 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox name = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidReceptName(name.getText())){
+			if (!FieldVerifier.isValidLeverandorName(name.getText())){
 				name.setStyleName("TextBox-OpretError");
 				levValid = false;
 			}
@@ -175,40 +174,7 @@ public class OpretRaavare extends Composite {
 
 	}
 	
-	private class kompClick implements ClickHandler{
 
-		@Override
-		public void onClick(ClickEvent event) {
-			FlexTable ft2 = new FlexTable();
-			ok = new Button("Tilføj");
-			ft2.setText(1, 0, "RåvareID");
-			id = new TextBox();
-			ft2.setWidget(1, 1, id);
-			
-			ft2.setText(2, 0, "Nominel Netto");
-			nomNetto = new TextBox();
-			ft2.setWidget(2, 1, nomNetto);
-			
-			
-			ft2.setText(3, 0, "Tolerance");
-			tolerance = new TextBox();
-			ft2.setWidget(3, 1, tolerance);
-			
-			ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
-			ft2.getFlexCellFormatter().setWidth(0, 1, "100px");
-			ft2.getFlexCellFormatter().setWidth(0, 2, "70px");
-			ft2.getFlexCellFormatter().setWidth(0, 3, "70px");
-			ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
-			vPane.add(ft2);			
-			
-			
-			
-			
-		}
-		
-		
-		
-	}
 	
 
 }
