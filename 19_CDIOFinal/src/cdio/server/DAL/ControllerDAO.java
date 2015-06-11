@@ -144,6 +144,12 @@ public class ControllerDAO implements IControllerDAO {
 		receptDAO.createRecept(recept);
 	}
 	
+	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException{
+		receptKompDAO.createReceptKomp(receptkomp);
+	}
+	
+	
+	
 	@Override
 	public void createRaavare(RaavareDTO raavare) throws DALException {
 		raavareDAO.createRaavare(raavare);

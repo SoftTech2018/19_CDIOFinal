@@ -15,6 +15,7 @@ import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
+import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.PbViewDTO;
@@ -308,6 +309,23 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 		
 	}
+
+	
+	@Override
+	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception {
+		if(th.validateToken(token) != null){
+			try{ dao.createReceptKomp(receptkomp);
+			}
+			catch(Exception DalException){
+				throw new Exception("Adgang nægtet!");
+			}
+		}
+	}
+	
+	
+
+	
+	
 
 
 }

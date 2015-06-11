@@ -23,7 +23,7 @@ public class OpretRecept extends Composite {
 	private TextBox receptid, navn, raavareid, nomNetto, tolerance;
 	private Button opret, tilfoej, ok;
 	private Label error;
-	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid;
+	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid, netEle, tolEle, ravEle;
 	private ServiceAsync service;
 	private String token;
 	private String[] split;
@@ -43,7 +43,10 @@ public class OpretRecept extends Composite {
 		tolValid = false;
 		raavareidValid=false;
 		kompValid=false;
-
+		netEle = false;
+		tolEle = false;
+		ravEle = false;
+		
 		vPane.clear();
 
 		error = new Label("");
@@ -84,6 +87,9 @@ public class OpretRecept extends Composite {
 	}
 
 	private class OpretClick implements ClickHandler{
+		
+
+		
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -165,11 +171,19 @@ public class OpretRecept extends Composite {
 			raavareid = new TextBox();
 			raavareid.addKeyUpHandler(new rIdCheck()); 
 			ft2.setWidget(1, 1, raavareid);
-
+			String rid = raavareid.getText();
+			if (rid != null){
+				ravEle = true;}
+			
+			
+			
 			ft2.setText(2, 0, "Nominel Netto");
 			nomNetto = new TextBox();
 			nomNetto.addKeyUpHandler(new nettoCheck());
-
+			String nNet = nomNetto.getText();
+			if(nNet != null){
+				netEle = true;
+			}
 
 
 
@@ -179,6 +193,12 @@ public class OpretRecept extends Composite {
 			ft2.setText(3, 0, "Tolerance");
 			tolerance = new TextBox();
 			tolerance.addKeyUpHandler(new tolCheck());
+			String tol = tolerance.getText();
+			if(tol != null){
+				tolEle = true; 
+			}
+			
+			
 			ft2.setWidget(3, 1, tolerance);
 
 			ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
@@ -225,7 +245,7 @@ public class OpretRecept extends Composite {
 
 				});
 
-				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid){
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle){
 					opret.setEnabled(true);
 				}
 				else opret.setEnabled(false);
@@ -246,7 +266,7 @@ public class OpretRecept extends Composite {
 					tb.setStyleName("TextBox-Opret");
 					nettoValid = true;
 				}
-				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
 					opret.setEnabled(true);
 				else opret.setEnabled(false);
 			}
@@ -263,7 +283,7 @@ public class OpretRecept extends Composite {
 					ab.setStyleName("TextBox-Opret");
 					tolValid = true;
 				}
-				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
 					opret.setEnabled(true);
 				else opret.setEnabled(false);
 			}

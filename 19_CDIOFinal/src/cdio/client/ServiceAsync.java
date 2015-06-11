@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
@@ -55,6 +56,8 @@ public interface ServiceAsync {
 	void getRaavareID(String token,  int raavareid, AsyncCallback<Void> asyncCallback);
 	
 	void createRaavare(String token, RaavareDTO raavare ,AsyncCallback<Void> asyncCallback);
+	
+	void createReceptKomp(String token, ReceptKompDTO receptkomp, AsyncCallback<Void> asyncCallback);
 	
 	
 	

@@ -81,6 +81,8 @@ public interface IControllerDAO {
 
 	public int getRaavareID(int raavareid) throws DALException;
 	
+	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;
