@@ -278,4 +278,9 @@ public class TextReader {
 		return output;
 	}
 
+	public String deleteRecept(int id){
+//		String output = sqlCommands[1];
+		String output = "Hej";
+		return output;
+	}
 }

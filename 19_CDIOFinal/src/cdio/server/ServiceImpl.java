@@ -325,7 +325,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public void deleteRecept(String token, int id) throws Exception {
 		if(th.validateToken(token) != null){
-			
+			try {
+				dao.deleteUser(id);
+			} catch (Exception DALException){
+				throw new Exception("Recepten kan ikke slettes da den er brugt");
+			}
 		}
 	}
 	
