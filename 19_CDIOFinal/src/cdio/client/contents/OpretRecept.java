@@ -196,7 +196,6 @@ public class OpretRecept extends Composite {
 	}
 
 	private class rIdCheck implements KeyUpHandler{
-
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
@@ -209,46 +208,65 @@ public class OpretRecept extends Composite {
 				raavareidValid = true;
 			}
 
-			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
-				opret.setEnabled(true);
-			else opret.setEnabled(false);
-		}
+			if(raavareidValid){
+				service.getRaavareID(token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
-	}
-	private class nettoCheck implements KeyUpHandler{
-		public void onKeyUp(KeyUpEvent event) {
-			TextBox tb = (TextBox) event.getSource();
-				
-			if(!FieldVerifier.isValidNetto(tb.getText())){
+					@Override
+					public void onFailure(Throwable caught) {
+						raavareidValid = false;
+						error.setText(caught.getMessage());
+						error.setStyleName("TextBox-ErrorMessage");
+					}
 
-				tb.setStyleName("TextBox-OpretError");
-				nettoValid = false;
-					
-			} else{
-				tb.setStyleName("TextBox-Opret");
-				nettoValid = true;
+					@Override
+					public void onSuccess(Void result) {
+						raavareidValid = true;
+					}
+
+				});
+
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid){
+					opret.setEnabled(true);
+				}
+				else opret.setEnabled(false);
 			}
-			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
-				opret.setEnabled(true);
-			else opret.setEnabled(false);
+
 		}
 	}
+		private class nettoCheck implements KeyUpHandler{
+			public void onKeyUp(KeyUpEvent event) {
+				TextBox tb = (TextBox) event.getSource();
 
-	private class tolCheck implements KeyUpHandler{
+				if(!FieldVerifier.isValidNetto(tb.getText())){
 
-		public void onKeyUp(KeyUpEvent event) {
-			TextBox ab = (TextBox) event.getSource();
-			if(!FieldVerifier.isValidTol(ab.getText())){
-			ab.setStyleName("TextBox-OpretError");
-				tolValid= false;
-			} else{
-				ab.setStyleName("TextBox-Opret");
-				tolValid = true;
-			}
+					tb.setStyleName("TextBox-OpretError");
+					nettoValid = false;
+
+				} else{
+					tb.setStyleName("TextBox-Opret");
+					nettoValid = true;
+				}
 				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
-				opret.setEnabled(true);
-			else opret.setEnabled(false);
+					opret.setEnabled(true);
+				else opret.setEnabled(false);
+			}
 		}
+
+		private class tolCheck implements KeyUpHandler{
+
+			public void onKeyUp(KeyUpEvent event) {
+				TextBox ab = (TextBox) event.getSource();
+				if(!FieldVerifier.isValidTol(ab.getText())){
+					ab.setStyleName("TextBox-OpretError");
+					tolValid= false;
+				} else{
+					ab.setStyleName("TextBox-Opret");
+					tolValid = true;
+				}
+				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid)
+					opret.setEnabled(true);
+				else opret.setEnabled(false);
+			}
 
 		}
 	}
