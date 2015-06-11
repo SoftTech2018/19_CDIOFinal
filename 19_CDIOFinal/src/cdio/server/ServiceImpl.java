@@ -53,7 +53,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		//		}
 		//		else {
 		port = 8000;
-//		host = "169.254.2.3";
+		//		host = "169.254.2.3";
 		host = "localhost";
 		//		}
 
@@ -165,6 +165,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		throw new Exception("Adgang nægtet.");
 	}
 
+
+
 	@Override
 	public List<UserDTO> getOprList(String token) throws Exception {
 		if (TEST_DELAY)
@@ -227,9 +229,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		else 
 			throw new Exception("Adgang nægtet");
-		
+
 	}
-	
+
 	public void updateRaavare(String token, RaavareDTO raavare) throws Exception{
 		if (th.validateToken(token) != null){
 			dao.updateRaavare(raavare);
@@ -237,13 +239,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new Exception("Adgang nægtet");
 		}
 	}
-	
-	
+
+
 	public List<ReceptDTO> getReceptList(String token) throws Exception{
 		if(TEST_DELAY)
 			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
-		 return dao.getReceptList();
+			return dao.getReceptList();
 		}
 		throw new Exception("Adgang nægtet");
 	}
@@ -253,7 +255,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if(TEST_DELAY)
 			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
-		 return dao.getRaavareBatchList();
+			return dao.getRaavareBatchList();
 		}
 		throw new Exception("Adgang nægtet");
 	}
@@ -269,18 +271,39 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		List<PbViewDTO> list = dao.getPbViewList(pb_id);
 		return list;
 	}
-	
+
 	public void createRecept(String token, ReceptDTO recept) throws Exception {
 		if (th.validateToken(token) != null){
 			try{
-			dao.createRecept(recept);}
-		catch(Exception DALException){
-			throw new Exception("Receptnummer findes allerede!");
-			}
-		
-				
+				dao.createRecept(recept);}
+			catch(Exception DALException){
+				throw new Exception("Receptnummer findes allerede!");
 			}
 		}
 	}
+	
+	public void createRaavare(String token, RaavareDTO raavare) throws Exception{
+		if(th.validateToken(token) != null){
+			try{
+				dao.createRaavare(raavare);
+			}
+			catch(Exception DALException){
+				throw new Exception("Råvareid findes allerede!");
+			}
+		}
+	}
+	
+	
+	public void checkRaavareId(String token, int raavare) throws Exception {
+		if(th.validateToken(token) !=null){
+			try{ dao.getRaavareID(raavare);
+
+			}
+			catch(Exception DALException){
+				throw new Exception("Råvareid ukendt!");
+			}		
+		}
+	}
+}
 
 

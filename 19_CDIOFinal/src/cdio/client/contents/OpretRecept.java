@@ -213,6 +213,7 @@ public class OpretRecept extends Composite {
 				opret.setEnabled(true);
 			else opret.setEnabled(false);
 		}
+
 	}
 	private class nettoCheck implements KeyUpHandler{
 		public void onKeyUp(KeyUpEvent event) {

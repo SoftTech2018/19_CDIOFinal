@@ -79,6 +79,7 @@ public interface IControllerDAO {
 	
 	public void createRaavare(RaavareDTO raavare) throws DALException;
 
+	public int getRaavareID(int raavareid) throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
