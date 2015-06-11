@@ -83,7 +83,7 @@ public interface IControllerDAO {
 	
 	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException;
 	
-	public boolean deleteRecept(int id) throws DALException;
+	public void deleteRecept(int id) throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
