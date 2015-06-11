@@ -2,8 +2,8 @@ package cdio.server.DAL.idao;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.DALException;
+import cdio.shared.ReceptKompDTO;
 
 public interface IReceptKompDAO {
 	ReceptKompDTO getReceptKomp(int receptId, int raavareId) throws DALException;

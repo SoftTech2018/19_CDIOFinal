@@ -8,9 +8,9 @@ import java.util.List;
 
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.TextReader;
-import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
+import cdio.shared.ReceptKompDTO;
 
 public class ReceptKompDAO implements IReceptKompDAO {
 	

@@ -11,7 +11,6 @@ import cdio.server.DAL.dao.RaavareBatchDAO;
 import cdio.server.DAL.dao.RaavareDAO;
 import cdio.server.DAL.dao.ReceptDAO;
 import cdio.server.DAL.dao.ReceptKompDAO;
-import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.server.DAL.idao.IOperatoerDAO;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
@@ -26,6 +25,7 @@ import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 import cdio.shared.UserDTO;
 
 
@@ -148,8 +148,6 @@ public class ControllerDAO implements IControllerDAO {
 		receptKompDAO.createReceptKomp(receptkomp);
 	}
 	
-	
-	
 	@Override
 	public void createRaavare(RaavareDTO raavare) throws DALException {
 		raavareDAO.createRaavare(raavare);
@@ -212,5 +210,6 @@ public class ControllerDAO implements IControllerDAO {
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException {
 		return pbDAO.getPbViewList(pb_id);
 	}
+
 }
 	

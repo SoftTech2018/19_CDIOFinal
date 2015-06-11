@@ -1,11 +1,18 @@
-package cdio.server.DAL.dto;
+package cdio.shared;
 
-public class ReceptKompDTO
+import java.io.Serializable;
+
+public class ReceptKompDTO implements Serializable
 {
 	int receptId;                  // auto genereres fra 1..n   
 	int raavareId;             // i omraadet 1-99999999
 	double nomNetto;            // skal vaere positiv og passende stor
 	double tolerance;           // skal vaere positiv og passende stor
+	
+	
+	public ReceptKompDTO(){
+		
+	}
 	
 	public ReceptKompDTO(int receptId, int raavareId, double nomNetto, double tolerance)
 	{

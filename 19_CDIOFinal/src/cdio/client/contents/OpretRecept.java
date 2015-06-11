@@ -6,6 +6,7 @@ import sun.print.resources.serviceui;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -46,7 +47,7 @@ public class OpretRecept extends Composite {
 		netEle = false;
 		tolEle = false;
 		ravEle = false;
-		
+
 		vPane.clear();
 
 		error = new Label("");
@@ -87,13 +88,38 @@ public class OpretRecept extends Composite {
 	}
 
 	private class OpretClick implements ClickHandler{
-		
 
-		
+
+
 
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
+
+			ReceptKompDTO receptKomp = new ReceptKompDTO(
+					Integer.parseInt(receptid.getText()),
+					Integer.parseInt(raavareid.getText()),
+					Double.parseDouble(nomNetto.getText()),
+					Double.parseDouble(tolerance.getText()));
+
+			service.createReceptKomp(token, receptKomp, new AsyncCallback<Void>(){
+
+				@Override
+				public void onFailure(Throwable caught) {
+					opret.setEnabled(true);
+					error.setText(caught.getMessage());
+					error.setStyleName("TextBox-ErrorMessage");
+
+				}
+
+				@Override
+				public void onSuccess(Void result) {
+
+					
+				}
+
+			});
+			
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
@@ -114,6 +140,7 @@ public class OpretRecept extends Composite {
 				}
 
 			} );
+
 
 		}
 
@@ -174,9 +201,9 @@ public class OpretRecept extends Composite {
 			String rid = raavareid.getText();
 			if (rid != null){
 				ravEle = true;}
-			
-			
-			
+
+
+
 			ft2.setText(2, 0, "Nominel Netto");
 			nomNetto = new TextBox();
 			nomNetto.addKeyUpHandler(new nettoCheck());
@@ -197,8 +224,8 @@ public class OpretRecept extends Composite {
 			if(tol != null){
 				tolEle = true; 
 			}
-			
-			
+
+
 			ft2.setWidget(3, 1, tolerance);
 
 			ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
@@ -253,41 +280,41 @@ public class OpretRecept extends Composite {
 
 		}
 	}
-		private class nettoCheck implements KeyUpHandler{
-			public void onKeyUp(KeyUpEvent event) {
-				TextBox tb = (TextBox) event.getSource();
+	private class nettoCheck implements KeyUpHandler{
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox tb = (TextBox) event.getSource();
 
-				if(!FieldVerifier.isValidNetto(tb.getText())){
+			if(!FieldVerifier.isValidNetto(tb.getText())){
 
-					tb.setStyleName("TextBox-OpretError");
-					nettoValid = false;
+				tb.setStyleName("TextBox-OpretError");
+				nettoValid = false;
 
-				} else{
-					tb.setStyleName("TextBox-Opret");
-					nettoValid = true;
-				}
-				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
-					opret.setEnabled(true);
-				else opret.setEnabled(false);
+			} else{
+				tb.setStyleName("TextBox-Opret");
+				nettoValid = true;
 			}
-		}
-
-		private class tolCheck implements KeyUpHandler{
-
-			public void onKeyUp(KeyUpEvent event) {
-				TextBox ab = (TextBox) event.getSource();
-				if(!FieldVerifier.isValidTol(ab.getText())){
-					ab.setStyleName("TextBox-OpretError");
-					tolValid= false;
-				} else{
-					ab.setStyleName("TextBox-Opret");
-					tolValid = true;
-				}
-				if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
-					opret.setEnabled(true);
-				else opret.setEnabled(false);
-			}
-
+			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
+				opret.setEnabled(true);
+			else opret.setEnabled(false);
 		}
 	}
+
+	private class tolCheck implements KeyUpHandler{
+
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox ab = (TextBox) event.getSource();
+			if(!FieldVerifier.isValidTol(ab.getText())){
+				ab.setStyleName("TextBox-OpretError");
+				tolValid= false;
+			} else{
+				ab.setStyleName("TextBox-Opret");
+				tolValid = true;
+			}
+			if(navnValid && receptidValid && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
+				opret.setEnabled(true);
+			else opret.setEnabled(false);
+		}
+
+	}
+}
 

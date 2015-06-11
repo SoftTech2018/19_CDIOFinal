@@ -2,14 +2,15 @@ package cdio.client;
 
 import java.util.List;
 
-import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 import cdio.shared.UserDTO;
+
 
 
 

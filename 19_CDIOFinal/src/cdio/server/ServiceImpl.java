@@ -15,7 +15,6 @@ import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
-import cdio.server.DAL.dto.ReceptKompDTO;
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.PbViewDTO;
@@ -24,6 +23,7 @@ import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
+import cdio.shared.ReceptKompDTO;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -316,7 +316,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if(th.validateToken(token) != null){
 			try{ dao.createReceptKomp(receptkomp);
 			}
-			catch(Exception DalException){
+			catch(Exception DALException){
 				throw new Exception("Adgang nægtet!");
 			}
 		}
