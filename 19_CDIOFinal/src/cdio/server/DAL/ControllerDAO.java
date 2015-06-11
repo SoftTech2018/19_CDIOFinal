@@ -175,6 +175,9 @@ public class ControllerDAO implements IControllerDAO {
 		pbDAO.updateStatus(pbID, status);
 	}
 	
-	
+	@Override
+	public List<ProduktBatchDTO> getProduktBatchList() throws DALException {
+		return pbDAO.getProduktBatchList();
+	}
 }
 	

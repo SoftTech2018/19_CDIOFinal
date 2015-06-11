@@ -66,6 +66,8 @@ public interface IControllerDAO {
 	public void createProduktBatchKomp(ProduktBatchKompDTO pbk) throws DALException;
 	
 	public void updatePbStatus(int pbID, int status) throws DALException;
+	
+	public List<ProduktBatchDTO> getProduktBatchList() throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;

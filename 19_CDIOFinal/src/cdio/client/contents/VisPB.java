@@ -35,6 +35,7 @@ public class VisPB extends Composite {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		ft = new FlexTable();
+		run();
 
 		
 		
@@ -125,23 +126,26 @@ public class VisPB extends Composite {
 					//ft2.setWidget(0, 0, ft.getWidget(eventRow, 3)); //
 					ft.setWidget(eventRow, 5, ft2);//her sættes ft2 i den korrekte referede række
 
-					ft2.setText(0, 1, "Råvarebatch");
+					ft2.setText(0, 1, "Råvarebatch ID");
 					ft2.setText(0, 2, "Tara");
 					ft2.setText(0, 3, "Netto");
 					ft2.setText(0, 4, "Operatør ID");
+					ft2.setText(0, 5, "Terminal");
 
 					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
-					ft2.getFlexCellFormatter().setWidth(0, 0, "100px");
+					ft2.getFlexCellFormatter().setWidth(0, 0, "90px");
 					ft2.getFlexCellFormatter().setWidth(0, 1, "100px");
-					ft2.getFlexCellFormatter().setWidth(0, 2, "70px");
-					ft2.getFlexCellFormatter().setWidth(0, 3, "70px");
+					ft2.getFlexCellFormatter().setWidth(0, 2, "50px");
+					ft2.getFlexCellFormatter().setWidth(0, 3, "50px");
 					ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
+					ft2.getFlexCellFormatter().setWidth(0, 5, "100px");
 
 					for (int i = 0; i < result.size(); i++) {
 						ft2.setText(i+2, 1, Integer.toString(result.get(i).getRbId()));
 						ft2.setText(i+2, 2, Double.toString(result.get(i).getTara()));
 						ft2.setText(i+2, 3, Double.toString(result.get(i).getNetto()));
 						ft2.setText(i+2, 4, Integer.toString(result.get(i).getOprId()));
+//						ft2.setText(i+2, 5, result.get(i).getIP); Mangler database implementering
 					}
 
 				}

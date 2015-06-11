@@ -204,11 +204,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
-		List<ProduktBatchDTO> ProduktBatchList = new ArrayList<ProduktBatchDTO>();
-		ProduktBatchList.add(new ProduktBatchDTO(1, 0, 2, "Dato"));
-		ProduktBatchList.add(new ProduktBatchDTO(2, 0, 2, "Dato"));
-		ProduktBatchList.add(new ProduktBatchDTO(3, 0, 2, "Dato"));
-		return ProduktBatchList;
+		if (th.validateToken(token) != null){
+			return dao.getProduktBatchList();				
+		}
+		else 
+			throw new Exception("Adgang nægtet");
 	}
 
 	@Override
