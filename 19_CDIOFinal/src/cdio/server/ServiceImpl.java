@@ -212,12 +212,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public List<ProduktBatchKompDTO> getPBKList(String token) throws Exception {
-		List<ProduktBatchKompDTO> ProduktBatchKompList = new ArrayList<ProduktBatchKompDTO>();
-		ProduktBatchKompList.add(new ProduktBatchKompDTO(1, 3, 10.5, 5.3, 001));
-		ProduktBatchKompList.add(new ProduktBatchKompDTO(2, 3, 10.5, 5.3, 001));
-		ProduktBatchKompList.add(new ProduktBatchKompDTO(3, 3, 10.5, 5.3, 001));
-		return ProduktBatchKompList;
+	public List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws Exception {
+		if (th.validateToken(token) != null){
+			return dao.getPBKList(pbID);						
+		}
+		else 
+			throw new Exception("Adgang nægtet");
 	}
 
 	@Override

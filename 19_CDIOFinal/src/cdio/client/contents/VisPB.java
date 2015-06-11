@@ -27,6 +27,7 @@ public class VisPB extends Composite {
 	private ServiceAsync service;
 	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
+	
 
 	public VisPB(String token, final ServiceAsync service) {
 		this.token = token;
@@ -92,7 +93,6 @@ public class VisPB extends Composite {
 				}
 
 			});
-
 		}
 	
 	private class KompClick implements ClickHandler {
@@ -106,7 +106,7 @@ public class VisPB extends Composite {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			//			ft.setWidget(eventRow, 3, pbkompnew);
 
-			service.getPBKList(token, new AsyncCallback<List<ProduktBatchKompDTO>>(){
+			service.getPBKList(token, Integer.parseInt(ft.getText(eventRow, 0)),  new AsyncCallback<List<ProduktBatchKompDTO>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

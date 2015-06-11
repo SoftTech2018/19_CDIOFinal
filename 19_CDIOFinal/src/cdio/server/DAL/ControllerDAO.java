@@ -179,5 +179,10 @@ public class ControllerDAO implements IControllerDAO {
 	public List<ProduktBatchDTO> getProduktBatchList() throws DALException {
 		return pbDAO.getProduktBatchList();
 	}
+
+	@Override
+	public List<ProduktBatchKompDTO> getPBKList(int pbID) throws DALException {
+		return pbkompDAO.getProduktBatchKompList(pbID);
+	}
 }
 	

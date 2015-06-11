@@ -33,7 +33,7 @@ public interface ServiceAsync {
 	
 	void getPBList(String token, AsyncCallback<List<ProduktBatchDTO>> asyncCallback);
 
-	void getPBKList(String token,AsyncCallback<List<ProduktBatchKompDTO>> asyncCallback);
+	void getPBKList(String token,int pdID, AsyncCallback<List<ProduktBatchKompDTO>> asyncCallback);
 
 	void deleteUser(String token, int userId, AsyncCallback<Void> asyncCallback);
 	
@@ -51,4 +51,5 @@ public interface ServiceAsync {
 	
 	void createRecept(String token, ReceptDTO recept, AsyncCallback<Void> asyncCallback);
 
+	
 }
