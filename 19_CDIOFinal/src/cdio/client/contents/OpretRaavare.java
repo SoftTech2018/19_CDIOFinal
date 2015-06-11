@@ -82,7 +82,7 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			RaavareDTO raavare = new RaavareDTO(Integer.parseUnsignedInt(id.getText()),navn.getText(),leverandør.getText());
+			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandør.getText());
 
 			service.createRaavare(token, raavare, new AsyncCallback<Void>(){
 
