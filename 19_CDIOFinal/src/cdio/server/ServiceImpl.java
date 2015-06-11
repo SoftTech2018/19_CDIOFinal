@@ -325,7 +325,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public void deleteRecept(String token, int id) throws Exception {
 		if(th.validateToken(token) != null){
-			dao
+			
 		}
 	}
 	

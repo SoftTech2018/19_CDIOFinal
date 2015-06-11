@@ -212,7 +212,7 @@ public class ControllerDAO implements IControllerDAO {
 	}
 	
 	public boolean deleteRecept(int id) throws DALException {
-		
+		return true;
 	}
 
 }
