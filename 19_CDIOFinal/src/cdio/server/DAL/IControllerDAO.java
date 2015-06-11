@@ -11,6 +11,7 @@ import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
@@ -73,6 +74,8 @@ public interface IControllerDAO {
 	public List<ProduktBatchKompDTO> getPBKList(int pbID) throws DALException;
 
 	public List<RaavareBatchDTO> getRaavareBatchList() throws DALException;
+	
+	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException;
 
 	
 //	DTO getOperatoer(int oprId) throws DALException;

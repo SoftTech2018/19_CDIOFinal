@@ -20,6 +20,7 @@ import cdio.server.DAL.idao.IRaavareDAO;
 import cdio.server.DAL.idao.IReceptDAO;
 import cdio.server.DAL.idao.IReceptKompDAO;
 import cdio.shared.DALException;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareBatchDTO;
@@ -188,8 +189,12 @@ public class ControllerDAO implements IControllerDAO {
 
 	@Override
 	public List<RaavareBatchDTO> getRaavareBatchList() throws DALException {
-		
 		return rbDAO.getRaavareBatchList();
+	}
+
+	@Override
+	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException {
+		return pbDAO.getPbViewList(pb_id);
 	}
 }
 	

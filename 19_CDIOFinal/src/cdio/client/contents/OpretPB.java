@@ -154,7 +154,7 @@ public class OpretPB extends Composite {
 			
 			ft.setText(1, 0, "");
 
-			service.getPbView(token, pb.getReceptId(), new AsyncCallback<List<PbViewDTO>>(){
+			service.getPbView(token, pb.getPbId(), new AsyncCallback<List<PbViewDTO>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

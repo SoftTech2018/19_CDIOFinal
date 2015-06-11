@@ -10,6 +10,7 @@ import cdio.server.DAL.Connector;
 import cdio.server.DAL.TextReader;
 import cdio.server.DAL.idao.IProduktBatchDAO;
 import cdio.shared.DALException;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 
 public class ProduktBatchDAO implements IProduktBatchDAO {
@@ -52,8 +53,21 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		Connector.doUpdate(txt.updateProduktBatch(produktbatch));
 	}
 	
+	@Override
 	public void updateStatus(int pbID, int status) throws DALException {
 		Connector.doUpdate(txt.updatePbStatus(pbID, status));
+	}
+	
+	@Override
+	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException{
+		List<PbViewDTO> list = new ArrayList<PbViewDTO>();
+		ResultSet rs = Connector.doQuery(txt.getPbView(pb_id));
+		try {
+			while (rs.next()) {
+				list.add(new PbViewDTO(rs.getString("raavare_navn"), rs.getInt("raavare_id"), rs.getString("ini"), rs.getInt("rb_id"), rs.getDouble("nom_netto"), rs.getDouble("tara"), rs.getDouble("netto"), rs.getDouble("tolerance"), rs.getString("terminal")));
+			}
+		} catch (SQLException e) { throw new DALException(e); }
+		return list;
 	}
 
 }

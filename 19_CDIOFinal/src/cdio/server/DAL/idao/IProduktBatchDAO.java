@@ -3,6 +3,7 @@ package cdio.server.DAL.idao;
 import java.util.List;
 
 import cdio.shared.DALException;
+import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 
 public interface IProduktBatchDAO {
@@ -11,4 +12,5 @@ public interface IProduktBatchDAO {
 	void createProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
 	void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException;
 	public void updateStatus(int pbID, int status) throws DALException;
+	List<PbViewDTO> getPbViewList(int pb_id) throws DALException;
 }

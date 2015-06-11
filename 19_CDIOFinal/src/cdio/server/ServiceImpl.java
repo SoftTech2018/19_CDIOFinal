@@ -264,11 +264,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public List<PbViewDTO> getPbView(String token, int receptId) throws Exception {
-		List<PbViewDTO> list = new ArrayList<PbViewDTO>();
-		list.add(new PbViewDTO("Råvarenavn", 1, "JTN", 1, 0.243, 0.12, 0.234, 0.1, "Simulator"));
-		list.add(new PbViewDTO("Råvarenavn2", 2, "EB", 1, 0.243, 0.12, 0.234, 0.1, "169.254.2.3"));
-		list.add(new PbViewDTO("Råvarenavn3", 3, "AG", 1, 0.743, 1.12, 0.54, 0.1, "169.254.2.4"));
+	public List<PbViewDTO> getPbView(String token, int pb_id) throws Exception {
+		List<PbViewDTO> list = dao.getPbViewList(pb_id);
 		return list;
 	}
 	
