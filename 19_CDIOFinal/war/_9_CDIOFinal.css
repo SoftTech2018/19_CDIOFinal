@@ -280,4 +280,7 @@ html {
 	.Menu {
 	display: none;
 	}
+	.Button-Ret {
+	display: none;
+	}
 }

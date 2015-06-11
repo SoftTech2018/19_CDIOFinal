@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.ToggleButton;
@@ -27,7 +28,7 @@ public class VisPB extends Composite {
 	private ServiceAsync service;
 	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
-	
+
 
 	public VisPB(String token, final ServiceAsync service) {
 		this.token = token;
@@ -38,63 +39,63 @@ public class VisPB extends Composite {
 		ft = new FlexTable();
 		run();
 
-		
-		
+
+
 	}
-		private void run() {
-			vPane.clear();
-			vPane.add(ft);
-			service.getPBList(token, new AsyncCallback<List<ProduktBatchDTO>>() {
+	private void run() {
+		vPane.clear();
+		vPane.add(ft);
+		service.getPBList(token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
-				@Override
-				public void onFailure(Throwable caught) {
-					ft.setText(0, 0, caught.getMessage());
-				}
+			@Override
+			public void onFailure(Throwable caught) {
+				ft.setText(0, 0, caught.getMessage());
+			}
 
-				@Override
-				public void onSuccess(List<ProduktBatchDTO> result) {
-					ft.setText(0, 0, "PB ID");
-					ft.setText(0, 1, "Recept ID");
-					ft.setText(0, 2, "Status");
-					ft.setText(0, 3, "Oprettet");
+			@Override
+			public void onSuccess(List<ProduktBatchDTO> result) {
+				ft.setText(0, 0, "PB ID");
+				ft.setText(0, 1, "Recept ID");
+				ft.setText(0, 2, "Status");
+				ft.setText(0, 3, "Oprettet");
 
-					ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-					ft.getFlexCellFormatter().setWidth(0, 0, "50px");
-					ft.getFlexCellFormatter().setWidth(0, 1, "75px");
-					ft.getFlexCellFormatter().setWidth(0, 2, "55px");
-					ft.getFlexCellFormatter().setWidth(0, 3, "80px");
-					ft.getFlexCellFormatter().setWidth(0, 4, "50px");
+				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
+				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
+				ft.getFlexCellFormatter().setWidth(0, 1, "75px");
+				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
+				ft.getFlexCellFormatter().setWidth(0, 3, "80px");
+				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
 
 
 
-					for (int i = 0; i < result.size(); i++) {
-						ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
-						ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
-						ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
-						ft.setText(i+1, 3, result.get(i).getDato());
-						ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
-						ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
-						ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
-						ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
-						ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
+				for (int i = 0; i < result.size(); i++) {
+					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
+					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
+					ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
+					ft.setText(i+1, 3, result.get(i).getDato());
+					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
 
-						print = new Button("Udprint");
-						print.setStyleName("Button-Ret"); 
-//						print.addClickHandler(new Udprint());
-						ft.setWidget(i+1, 4, print);
+					print = new Button("Udprint");
+					print.setStyleName("Button-Ret"); 
+					print.addClickHandler(new Udprint());
+					ft.setWidget(i+1, 4, print);
 
-						pbkomp = new Button("Komponenter");
-						pbkomp.setStyleName("Button-Komponenter"); 
-						pbkomp.addClickHandler(new KompClick());
-						ft.setWidget(i+1, 5, pbkomp);
-
-					}
+					pbkomp = new Button("Komponenter");
+					pbkomp.setStyleName("Button-Komponenter"); 
+					pbkomp.addClickHandler(new KompClick());
+					ft.setWidget(i+1, 5, pbkomp);
 
 				}
 
-			});
-		}
-	
+			}
+
+		});
+	}
+
 	private class KompClick implements ClickHandler {
 
 		int eventRow;
@@ -145,7 +146,7 @@ public class VisPB extends Composite {
 						ft2.setText(i+2, 2, Double.toString(result.get(i).getTara()));
 						ft2.setText(i+2, 3, Double.toString(result.get(i).getNetto()));
 						ft2.setText(i+2, 4, Integer.toString(result.get(i).getOprId()));
-//						ft2.setText(i+2, 5, result.get(i).getIP); Mangler database implementering
+						//						ft2.setText(i+2, 5, result.get(i).getIP); Mangler database implementering
 					}
 
 				}
@@ -173,21 +174,41 @@ public class VisPB extends Composite {
 
 	}
 
-//	private class Udprint implements ClickHandler {
-//		int eventRow;
-//		FlexTable ft3 = new FlexTable();
-//
-//		@Override
-//		public void onClick(ClickEvent event) {
-//			eventRow = ft.getCellForEvent(event).getRowIndex();
-//			vPane.clear();
-//			vPane.add(ft3);
-//			
-//
-//			tilbage = new Button("Tilbage");
-//			tilbage.setStyleName("Button-Ret");
-//			tilbage.addClickHandler(new ClickHandler());
-//		}
+	private class Udprint implements ClickHandler {
+		int eventRow;
 
-//	}
+
+		@Override
+		public void onClick(ClickEvent event) {
+			eventRow = ft.getCellForEvent(event).getRowIndex();
+//			System.out.println("test1");
+
+			ProduktBatchDTO pb = new ProduktBatchDTO();
+			pb.setPbId(Integer.parseInt( ft.getText(eventRow, 0)));
+			pb.setReceptId(Integer.parseInt( ft.getText(eventRow, 1)));
+			pb.setDato(ft.getText(eventRow, 3));
+
+			tilbage = new Button("Tilbage");
+			tilbage.setStyleName("Button-Ret");
+			tilbage.addClickHandler(new ClickHandler(){
+
+				@Override
+				public void onClick(ClickEvent event) {
+					run();
+
+				}
+
+			});
+			vPane.clear();
+			vPane.add(tilbage);
+			HTML gap = new HTML();
+			gap.setHTML("<br><br>");
+			vPane.add(gap);
+			vPane.add(new PrintPB(pb, token, service));
+
+
+
+		}
+
+	}
 }
