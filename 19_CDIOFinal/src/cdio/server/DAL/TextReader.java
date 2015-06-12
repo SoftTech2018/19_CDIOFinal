@@ -283,4 +283,10 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
 		return output;
 	}
+
+	public String getPbView2(int pb_id) {
+		String output = sqlCommands[64];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(pb_id));
+		return output;
+	}
 }

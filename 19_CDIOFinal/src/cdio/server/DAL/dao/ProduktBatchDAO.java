@@ -60,25 +60,38 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 
 	@Override
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException{
+		ProduktBatchDTO pb = getProduktBatch(pb_id);
 		List<PbViewDTO> list = new ArrayList<PbViewDTO>();
-		ResultSet rs = Connector.doQuery(txt.getPbView(pb_id));
 		try {
+		
+		if (pb.getStatus() == 0){
+			// Hvis produktbatchkomponent er tom
+			ResultSet rs = Connector.doQuery(txt.getPbView2(pb_id));
 			while (rs.next()) {
-				String navn = rs.getString("raavare_navn");
-				int id = rs.getInt("raavare_id");
+				String ini =  "";
+				String terminal = "";
+				list.add(new PbViewDTO(rs.getString("raavare_navn"), rs.getInt("raavare_id"),
+						ini, rs.getInt("rb_id"), rs.getDouble("nom_netto"), 
+						rs.getDouble("tara"), rs.getDouble("netto"), rs.getDouble("tolerance"),
+						terminal));
+			}
+		} else {
+			// Hvis produktbatchkomponent ikke er tom
+			ResultSet rs = Connector.doQuery(txt.getPbView(pb_id));
+			while (rs.next()) {
 				String ini = rs.getString("ini");
 				if (ini == null)
 					ini = "";
-				int batch = rs.getInt("rb_id");
-				double maengde = rs.getDouble("nom_netto");
-				double tara = rs.getDouble("tara");
-				double netto = rs.getDouble("netto");
-				double tolerance = rs.getDouble("tolerance");
 				String terminal = rs.getString("terminal");
 				if (terminal == null)
 					terminal = "";
-				list.add(new PbViewDTO(navn, id, ini, batch, maengde, tara, netto, tolerance, terminal));
+				list.add(new PbViewDTO(rs.getString("raavare_navn"), rs.getInt("raavare_id"),
+						ini, rs.getInt("rb_id"), rs.getDouble("nom_netto"), 
+						rs.getDouble("tara"), rs.getDouble("netto"), rs.getDouble("tolerance"),
+						terminal));
 			}
+		}
+		
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
