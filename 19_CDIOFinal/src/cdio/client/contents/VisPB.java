@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
@@ -24,16 +25,11 @@ public class VisPB extends Composite {
 
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private String token;
-	private ServiceAsync service;
 	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
 
 
-	public VisPB(String token, final ServiceAsync service) {
-		this.token = token;
-		this.service = service;
-
+	public VisPB() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		ft = new FlexTable();
@@ -45,7 +41,7 @@ public class VisPB extends Composite {
 	private void run() {
 		vPane.clear();
 		vPane.add(ft);
-		service.getPBList(token, new AsyncCallback<List<ProduktBatchDTO>>() {
+		Controller.service.getPBList(Controller.token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -107,7 +103,7 @@ public class VisPB extends Composite {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			//			ft.setWidget(eventRow, 3, pbkompnew);
 
-			service.getPBKList(token, Integer.parseInt(ft.getText(eventRow, 0)),  new AsyncCallback<List<ProduktBatchKompDTO>>(){
+			Controller.service.getPBKList(Controller.token, Integer.parseInt(ft.getText(eventRow, 0)),  new AsyncCallback<List<ProduktBatchKompDTO>>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -204,7 +200,7 @@ public class VisPB extends Composite {
 			HTML gap = new HTML();
 			gap.setHTML("<br><br>");
 			vPane.add(gap);
-			vPane.add(new PrintPB(pb, token, service));
+			vPane.add(new PrintPB(pb));
 
 
 

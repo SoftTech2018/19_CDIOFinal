@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.ReceptDTO;
 
@@ -15,11 +16,11 @@ public class VisRecept extends Composite {
 
 	private VerticalPanel vPane;
 
-	public VisRecept(String token, ServiceAsync service) {
+	public VisRecept() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 
-		service.getReceptList(token, new AsyncCallback<List<ReceptDTO>>(){
+		Controller.service.getReceptList(Controller.token, new AsyncCallback<List<ReceptDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

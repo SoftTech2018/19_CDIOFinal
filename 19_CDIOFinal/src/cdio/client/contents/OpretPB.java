@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
@@ -24,17 +25,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretPB extends Composite {
 
-	private String token;
-	private ServiceAsync service;
 	private VerticalPanel vPane;
 	private Label error;
 	private FlexTable ft;
 	private Button ok;
 	private ListBox receptNr;
 
-	public OpretPB(String token, final ServiceAsync service){
-		this.token = token;
-		this.service = service;
+	public OpretPB(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -55,7 +52,7 @@ public class OpretPB extends Composite {
 		receptNr = new ListBox();
 		receptNr.setVisibleItemCount(1); // Laver det til en dropdown-menu
 		ft.setWidget(1, 1, receptNr);
-		service.getReceptList(token, new AsyncCallback<List<ReceptDTO>>(){
+		Controller.service.getReceptList(Controller.token, new AsyncCallback<List<ReceptDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -104,7 +101,7 @@ public class OpretPB extends Composite {
 				ok.setText("Loading");
 				pb.setReceptId(receptId);
 				pb.setStatus(0);
-				service.createPB(token, pb, new AsyncCallback<ProduktBatchDTO>(){
+				Controller.service.createPB(Controller.token, pb, new AsyncCallback<ProduktBatchDTO>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -115,7 +112,7 @@ public class OpretPB extends Composite {
 					@Override
 					public void onSuccess(ProduktBatchDTO result) {
 						vPane.clear();
-						vPane.add(new PrintPB(result, token, service));
+						vPane.add(new PrintPB(result));
 					}
 				});
 			}

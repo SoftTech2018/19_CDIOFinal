@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.UserDTO;
 
@@ -18,15 +19,11 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SletOpr extends Composite {
 	
-	private String token;
-	private ServiceAsync service;
 	private VerticalPanel vPane;
 	private Label error;
 	private FlexTable ft;
 
-	public SletOpr(String token, ServiceAsync service) {
-		this.token = token;
-		this.service = service;
+	public SletOpr() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -37,7 +34,7 @@ public class SletOpr extends Composite {
 		error = new Label("Loading...");
 		vPane.add(error);
 		
-		service.getOprList(token, new AsyncCallback<List<UserDTO>>(){
+		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -114,7 +111,7 @@ public class SletOpr extends Composite {
 		public void onClick(ClickEvent event) {
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
 			final int userId = Integer.parseInt(ft.getText(eventRow, 0));
-			service.deleteUser(token, userId, new AsyncCallback<Void>(){
+			Controller.service.deleteUser(Controller.token, userId, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

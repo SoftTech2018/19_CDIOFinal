@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.UserDTO;
 
@@ -16,13 +17,11 @@ public class VisOpr extends Composite {
 	
 	private VerticalPanel vPane;
 	
-	public VisOpr(String token, final ServiceAsync service) {
+	public VisOpr() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		
-		
-		
-		service.getOprList(token, new AsyncCallback<List<UserDTO>>() {
+		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.RaavareDTO;
 
@@ -15,11 +16,11 @@ public class VisRaavarer extends Composite {
 	
 		private VerticalPanel vPane;
 		
-		public VisRaavarer(String token, final ServiceAsync service) {
+		public VisRaavarer() {
 			vPane = new VerticalPanel();
 			initWidget(vPane);
 			
-			service.getRaavareList(token, new AsyncCallback<List<RaavareDTO>>() {
+			Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {

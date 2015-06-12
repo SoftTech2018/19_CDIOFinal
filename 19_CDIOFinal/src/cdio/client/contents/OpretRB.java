@@ -6,7 +6,7 @@ import com.google.gwt.user.client.ui.Composite;
 
 public class OpretRB extends Composite {
 
-	public OpretRB(String token, ServiceAsync service) {
+	public OpretRB() {
 		// TODO Auto-generated constructor stub
 	}
 

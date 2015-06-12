@@ -3,6 +3,7 @@ package cdio.client.contents;
 import java.util.jar.Attributes.Name;
 
 import sun.print.resources.serviceui;
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ReceptDTO;
@@ -25,13 +26,9 @@ public class OpretRecept extends Composite {
 	private Button opret, tilfoej, ok;
 	private Label error;
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, kompValid, netEle, tolEle, ravEle;
-	private ServiceAsync service;
-	private String token;
 	private String[] split;
 
-	public OpretRecept(String token, ServiceAsync service) {
-		this.service = service;
-		this.token = token;
+	public OpretRecept() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -102,7 +99,7 @@ public class OpretRecept extends Composite {
 					Double.parseDouble(nomNetto.getText()),
 					Double.parseDouble(tolerance.getText()));
 
-			service.createReceptKomp(token, receptKomp, new AsyncCallback<Void>(){
+			Controller.service.createReceptKomp(Controller.token, receptKomp, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -125,7 +122,7 @@ public class OpretRecept extends Composite {
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
 			
-			service.createRecept(token, recept, new AsyncCallback<Void>(){
+			Controller.service.createRecept(Controller.token, recept, new AsyncCallback<Void>(){
 				
 				@Override
 				public void onFailure(Throwable caught) {
@@ -256,7 +253,7 @@ public class OpretRecept extends Composite {
 			}
 
 			if(raavareidValid){
-				service.getRaavareID(token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
+				Controller.service.getRaavareID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {

@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
@@ -16,13 +17,12 @@ public class VisRB extends Composite {
 	private VerticalPanel vPane;
 	private FlexTable ft;
 
-	public VisRB(String token, final ServiceAsync service) {
+	public VisRB() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		ft = new FlexTable();
 
-
-		service.getRaavareBatchList(token, new AsyncCallback<List<RaavareBatchDTO>>() {
+		Controller.service.getRaavareBatchList(Controller.token, new AsyncCallback<List<RaavareBatchDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {

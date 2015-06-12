@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
@@ -28,7 +29,7 @@ public class PrintPB extends Composite{
 	 * @param token 
 	 * @param service
 	 */
-	public PrintPB(final ProduktBatchDTO pb, String token, ServiceAsync service){
+	public PrintPB(final ProduktBatchDTO pb){
 		pbvPane = new VerticalPanel();
 		initWidget(pbvPane);
 		ft = new FlexTable();
@@ -53,7 +54,7 @@ public class PrintPB extends Composite{
 		
 		ft.setText(1, 0, "");
 
-		service.getPbView(token, pb.getPbId(), new AsyncCallback<List<PbViewDTO>>(){
+		Controller.service.getPbView(Controller.token, pb.getPbId(), new AsyncCallback<List<PbViewDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

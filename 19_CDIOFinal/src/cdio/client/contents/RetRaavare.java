@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
@@ -23,16 +24,13 @@ public class RetRaavare  extends Composite {
 	
 	private Label error;
 	private VerticalPanel vPane;
-	private ServiceAsync service;
-	private String token, uID, uNavn, uLeverandoer;
+	private String uID, uNavn, uLeverandoer;
 	private FlexTable ft;
 	private int eventRow, openEventRow;
 	private boolean idValid, nameValid, leverandoerValid;
 	private TextBox oID, oNavn, oLeverandoer;
 
-	public RetRaavare(String token, ServiceAsync service) {
-		this.service = service;
-		this.token = token;
+	public RetRaavare() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -42,7 +40,7 @@ public class RetRaavare  extends Composite {
 		vPane.clear();
 		error = new Label("Loading...");
 		vPane.add(error);
-		service.getRaavareList(token, new AsyncCallback<List<RaavareDTO>>(){
+		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
 		
 			public void onFailure(Throwable caught) {
@@ -138,7 +136,7 @@ public class RetRaavare  extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(((TextBox) ft.getWidget(eventRow, 0)).getText()), ((TextBox)ft.getWidget(eventRow, 1)).getText(), ((TextBox)ft.getWidget(eventRow, 2)).getText());
-			service.updateRaavare(token, raavare, new AsyncCallback<Void>(){
+			Controller.service.updateRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

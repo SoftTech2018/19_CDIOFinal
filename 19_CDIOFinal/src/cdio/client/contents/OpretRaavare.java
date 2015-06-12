@@ -1,5 +1,6 @@
 package cdio.client.contents;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
@@ -20,8 +21,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRaavare extends Composite {
 
-	private ServiceAsync service;
-	private String token;
 	private VerticalPanel vPane;
 	private FlexTable ft;
 	private TextBox id, navn, leverandør;
@@ -29,9 +28,7 @@ public class OpretRaavare extends Composite {
 	private Label error;
 	private boolean idValid=false, navnValid=false, levValid=false;
 
-	public OpretRaavare(String token, ServiceAsync service) {
-		this.service=service;
-		this.token=token;
+	public OpretRaavare() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -49,8 +46,6 @@ public class OpretRaavare extends Composite {
 		id.addKeyUpHandler(new IdCheck()); 
 		id.setStyleName("TextBox-Opret");
 		ft.setWidget(1, 1, id);
-		
-		
 
 		ft.setText(2, 0, "Råvare navn:");
 		navn = new TextBox();
@@ -81,7 +76,7 @@ public class OpretRaavare extends Composite {
 			opret.setEnabled(false);
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandør.getText());
 
-			service.createRaavare(token, raavare, new AsyncCallback<Void>(){
+			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
@@ -113,7 +108,7 @@ public class OpretRaavare extends Composite {
 				id.setStyleName("TextBox-OpretError");
 				idValid = false;
 			} else{
-				service.getRaavareID(token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
+				Controller.service.getRaavareID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {

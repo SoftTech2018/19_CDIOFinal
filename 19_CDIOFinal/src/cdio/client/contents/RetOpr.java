@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import java.util.List;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
@@ -32,12 +33,8 @@ public class RetOpr extends Composite {
 	private boolean uAdmin, uFarm, uVeark, uOpr, passValid, nameValid, iniValid, cprValid, roleValid;
 	private TextBox oNavn, oIni, oCpr, oPass;
 	private CheckBox oAdmin, oFarm, oVaerk, oOpr;
-	private ServiceAsync service;
-	private String token;
 	
-	public RetOpr(String token, final ServiceAsync service){
-		this.service = service;
-		this.token = token;
+	public RetOpr(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -47,7 +44,7 @@ public class RetOpr extends Composite {
 		vPane.clear();
 		error = new Label("Loading...");
 		vPane.add(error);
-		service.getOprList(token, new AsyncCallback<List<UserDTO>>(){
+		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -220,7 +217,7 @@ public class RetOpr extends Composite {
 					((CheckBox) ft.getWidget(eventRow, 7)).getValue(), 
 					((CheckBox) ft.getWidget(eventRow, 8)).getValue());
 			
-			service.updateUser(token, user, new AsyncCallback<UserDTO>(){
+			Controller.service.updateUser(Controller.token, user, new AsyncCallback<UserDTO>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

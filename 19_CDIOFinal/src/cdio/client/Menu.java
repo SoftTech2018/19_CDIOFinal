@@ -128,7 +128,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new VisOpr(con.getToken(), con.getService()));
+				con.setContent(new VisOpr());
 			}
 		});
 		ft.setWidget(1, 0, vis);
@@ -138,7 +138,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new RetOpr(con.getToken(), con.getService()));
+				con.setContent(new RetOpr());
 			}
 		});
 		ft.setWidget(2, 0, ret);
@@ -148,7 +148,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new OpretOpr(con.getToken(), con.getService()));				
+				con.setContent(new OpretOpr());				
 			}
 		});
 		ft.setWidget(3, 0, opret);
@@ -159,7 +159,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new SletOpr(con.getToken(), con.getService()));
+			con.setContent(new SletOpr());
 			}
 		});
 
@@ -178,7 +178,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRaavarer(con.getToken(), con.getService()));
+			con.setContent(new VisRaavarer());
 			}
 		});
 
@@ -188,7 +188,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new RetRaavare(con.getToken(), con.getService()));
+			con.setContent(new RetRaavare());
 			}
 		});
 
@@ -198,7 +198,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRaavare(con.getToken(), con.getService()));
+			con.setContent(new OpretRaavare());
 			}
 		});
 
@@ -208,7 +208,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRecept(con.getToken(), con.getService()));
+			con.setContent(new VisRecept());
 			}
 		});
 
@@ -218,7 +218,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRecept(con.getToken(), con.getService()));
+			con.setContent(new OpretRecept());
 			}
 		});
 		
@@ -228,7 +228,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				con.setContent(new SletRecept(con.getToken(), con.getService()));
+				con.setContent(new SletRecept());
 			}
 		});
 
@@ -247,7 +247,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRB(con.getToken(), con.getService()));
+			con.setContent(new VisRB());
 			}
 		});
 
@@ -257,7 +257,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRB(con.getToken(), con.getService()));
+			con.setContent(new OpretRB());
 			}
 		});
 
@@ -267,7 +267,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisPB(con.getToken(), con.getService()));
+			con.setContent(new VisPB());
 			}
 		});
 
@@ -277,7 +277,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretPB(con.getToken(), con.getService()));
+			con.setContent(new OpretPB());
 			}
 		});
 

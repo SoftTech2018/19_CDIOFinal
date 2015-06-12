@@ -1,5 +1,6 @@
 package cdio.client.contents;
 
+import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.ProduktBatchDTO;
@@ -18,8 +19,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SletRecept extends Composite {
 
-	private String token;
-	private ServiceAsync service;
 	private VerticalPanel vPane;
 	private Label error;
 	private FlexTable ft;
@@ -27,9 +26,7 @@ public class SletRecept extends Composite {
 	private Label desc;
 	private Button btn;
 
-	public SletRecept(String token, final ServiceAsync service){
-		this.token = token;
-		this.service = service;
+	public SletRecept(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -56,7 +53,7 @@ public class SletRecept extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				service.deleteRecept(token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
+				Controller.service.deleteRecept(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {

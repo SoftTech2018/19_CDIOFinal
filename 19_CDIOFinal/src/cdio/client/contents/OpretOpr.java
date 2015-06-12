@@ -1,6 +1,6 @@
 package cdio.client.contents;
 
-import cdio.client.ServiceAsync;
+import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
@@ -20,8 +20,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretOpr extends Composite {
 	
-	private String token;
-	private ServiceAsync service;
 	private VerticalPanel vPane;
 	private Label error;
 	private FlexTable ft;
@@ -30,9 +28,7 @@ public class OpretOpr extends Composite {
 	private Button ok;
 	private boolean idValid, navnValid, passValid, cprValid, iniValid, roleValid;
 	
-	public OpretOpr(String token, final ServiceAsync service){
-		this.token = token;
-		this.service = service;
+	public OpretOpr(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
@@ -128,7 +124,7 @@ public class OpretOpr extends Composite {
 					vaerk.getValue(),
 					opr.getValue());
 			
-			service.createUser(token, user, new AsyncCallback<Void>(){
+			Controller.service.createUser(Controller.token, user, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

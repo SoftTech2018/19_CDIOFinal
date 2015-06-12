@@ -11,8 +11,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Controller extends Composite {
 
-	private String token;
-	private ServiceAsync service;
+	public static String token;
+	public static ServiceAsync service;
 	private VerticalPanel vPane;
 	private HorizontalPanel hPane;
 	private Menu menu;
@@ -21,8 +21,8 @@ public class Controller extends Composite {
 	private Footer footer;
 
 	public Controller(String token, final ServiceAsync service) {
-		this.token = token;
-		this.service = service;
+		Controller.token = token;
+		Controller.service = service;
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		hPane = new HorizontalPanel();
@@ -78,7 +78,7 @@ public class Controller extends Composite {
 
 	// Fjerner alle widgets og laver en ny login-session.
 	public void logud(){
-		this.token = null;
+		Controller.token = null;
 		vPane.clear();
 		RootPanel.get().clear();
 		RootPanel.get().add(new Login(service));
@@ -102,6 +102,10 @@ public class Controller extends Composite {
 			header.setStyleName("Header");
 			footer.setStyleName("Footer");
 		}
+	}
+	
+	public static void refreshToken(){
+		
 	}
 
 }
