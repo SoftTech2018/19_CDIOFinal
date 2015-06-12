@@ -67,6 +67,7 @@ public class OpretPB extends Composite {
 					ReceptDTO r = result.get(i);
 					receptNr.addItem(r.getReceptId() + " : " + r.getReceptNavn());
 				}
+				Controller.refreshToken();
 			}
 
 		});
@@ -113,6 +114,7 @@ public class OpretPB extends Composite {
 					public void onSuccess(ProduktBatchDTO result) {
 						vPane.clear();
 						vPane.add(new PrintPB(result));
+						Controller.refreshToken();
 					}
 				});
 			}

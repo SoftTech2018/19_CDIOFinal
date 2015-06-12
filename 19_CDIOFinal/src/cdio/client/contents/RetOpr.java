@@ -110,6 +110,7 @@ public class RetOpr extends Composite {
 					ft.setWidget(i+1, 9, ret);
 				}
 				vPane.add(ft);
+				Controller.refreshToken();
 			}	
 		});
 	}
@@ -239,6 +240,7 @@ public class RetOpr extends Composite {
 					openEventRow = 0;
 					Window.alert("Bruger " + result.getName() + " blev opdateret.");
 					run(); // Reload siden
+					Controller.refreshToken();
 				}
 				
 			});

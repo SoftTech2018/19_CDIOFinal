@@ -137,6 +137,7 @@ public class OpretOpr extends Composite {
 				public void onSuccess(Void result) {
 					Window.alert("Bruger " + navn.getText() + " blev oprettet.");
 					run();
+					Controller.refreshToken();
 				}
 
 			});
