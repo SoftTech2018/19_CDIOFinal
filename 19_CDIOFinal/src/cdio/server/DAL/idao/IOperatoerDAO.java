@@ -18,5 +18,8 @@ public interface IOperatoerDAO {
 	public void setFunction() throws DALException;
 	public String getFunction(int id) throws DALException, SQLException;
 	public void dropAll() throws DALException;
-	
+	public int getAdminCount() throws DALException;
+	public int getFarmaceutCount() throws DALException;
+	public int getVaerkfoererCount() throws DALException;
+	public int getOperatoerCount() throws DALException;
 }

@@ -57,3 +57,7 @@ CREATE OR REPLACE VIEW view_planlagt AS SELECT recept.recept_id, recept.recept_n
 UPDATE produktbatch SET status = #1 WHERE pb_id = #2;
 SELECT DISTINCT raavare.raavare_navn, raavare.raavare_id, operatoer.ini, produktbatchkomponent.rb_id, receptkomponent.nom_netto, produktbatchkomponent.tara, produktbatchkomponent.netto, receptkomponent.tolerance, produktbatchkomponent.terminal FROM produktbatch INNER JOIN recept ON produktbatch.recept_id = recept.recept_id INNER JOIN receptkomponent ON recept.recept_id = receptkomponent.recept_id INNER JOIN raavare ON raavare.raavare_id = receptkomponent.raavare_id LEFT JOIN produktbatchkomponent ON produktbatchkomponent.pb_id = produktbatch.pb_id LEFT JOIN operatoer ON operatoer.opr_id = produktbatchkomponent.opr_id WHERE produktbatch.pb_id = #1
 SELECT * FROM produktbatch WHERE recept_id = #1 AND (status = 1 OR status = 2)
+SELECT COUNT(admin) FROM roller WHERE admin = 1;
+SELECT COUNT(farmaceut) FROM roller WHERE farmaceut = 1;
+SELECT COUNT(varkforer) FROM roller WHERE varkforer = 1;
+SELECT COUNT(operatoer) FROM roller WHERE operatoer = 1; 

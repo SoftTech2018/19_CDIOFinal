@@ -80,4 +80,6 @@ public interface Service extends RemoteService {
 	
 	String refreshToken(String token) throws Exception;
 	
+	List<Integer> getUserCount(String token) throws Exception;
+	
 }

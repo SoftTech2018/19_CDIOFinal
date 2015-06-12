@@ -62,4 +62,6 @@ public interface ServiceAsync {
 
 	void refreshToken(String token, AsyncCallback<String> asyncCallback);
 	
+	void getUserCount(String token, AsyncCallback<List<Integer>> asyncCallback);
+	
 }

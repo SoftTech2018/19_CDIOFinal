@@ -14,26 +14,28 @@ import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VisOpr extends Composite {
-	
+
 	private VerticalPanel vPane;
-	
+
 	public VisOpr() {
 		vPane = new VerticalPanel();
 		initWidget(vPane);
-		
+
+
 		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void onSuccess(List<UserDTO> result) { //Formatering af cellerne når man viser brugere i systemet
 				Controller.refreshToken();
-				
+
 				FlexTable ft = new FlexTable();
+				vPane.add(ft);
 				ft.setStyleName("FlexTable-Content");
 				ft.setText(0, 0, "ID");
 				ft.setText(0, 1, "Navn");
@@ -64,59 +66,85 @@ public class VisOpr extends Composite {
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
-					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+//					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));
 					ft.setText(i+1, 1, result.get(i).getName());
 					ft.setText(i+1, 2, result.get(i).getIni());
 					ft.setText(i+1, 3, result.get(i).getCpr());
-					
+
 					CheckBox adm = new CheckBox();
 					adm.setValue(result.get(i).isAdmin());
 					adm.setEnabled(false);
 					ft.setWidget(i+1, 4, adm);
-					
+
 					CheckBox farm = new CheckBox();
 					farm.setValue(result.get(i).isFarmaceut());
 					farm.setEnabled(false);
 					ft.setWidget(i+1, 5, farm);
-					
+
 					CheckBox vaerk = new CheckBox();
 					vaerk.setValue(result.get(i).isVaerkfoerer());
 					vaerk.setEnabled(false);
 					ft.setWidget(i+1, 6, vaerk);
-					
+
 					CheckBox opr = new CheckBox();
 					opr.setValue(result.get(i).isOperatoer());
 					opr.setEnabled(false);
 					ft.setWidget(i+1, 7, opr);
-					
-					vPane.add(ft);
+
+
 				}
-				
-//				FlexTable ft2 = new FlexTable();
-//				
-//				ft2.setStyleName("FlexTable-Header");
-//				ft2.setText(0, 0, "Antal brugere i systemet: ");
-//				ft2.setText(1, 0, "Operatørere");
-//				ft2.setText(1, 1, "Værkførere");
-//				ft2.setText(1, 2, "Farmaceuter");
-//				ft2.setText(1, 3, "Admins");
-//				
-//				for (int i = 0; i < result.size(); i++) {
-//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 4, HasHorizontalAlignment.ALIGN_CENTER);
-//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
-//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
-//					ft2.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
-//					
-//					ft2.setText(i+2, 0, result.get(i));
-//					ft2.setText(i+2, 1, result.get(i).getName());
-//					ft2.setText(i+2, 2, result.get(i).getIni());
-//					ft2.setText(i+2, 3, result.get(i).getCpr());
-//
+				Controller.service.getUserCount(Controller.token, new AsyncCallback<List<Integer>>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						FlexTable ft2 = new FlexTable();
+						ft2.setText(0, 0, caught.getMessage());
+						vPane.add(ft2);
+						
+
+					}
+
+					@Override
+					public void onSuccess(List<Integer> result) {
+						FlexTable ft2 = new FlexTable();
+						vPane.add(ft2);
+//						vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+						
+						ft2.setStyleName("FlexTable-Header");
+						ft2.setText(0, 0, "Antal brugere i systemet: ");
+						ft2.setText(1, 0, "Admins: ");
+						ft2.setText(1, 1, "Farmaceuter: ");
+						ft2.setText(1, 2, "Værkførere: ");
+						ft2.setText(1, 3, "Operatørere: ");
+
+						
+							ft2.getCellFormatter().setHorizontalAlignment(1, 4, HasHorizontalAlignment.ALIGN_CENTER);
+							ft2.getCellFormatter().setHorizontalAlignment(1, 5, HasHorizontalAlignment.ALIGN_CENTER);
+							ft2.getCellFormatter().setHorizontalAlignment(1, 6, HasHorizontalAlignment.ALIGN_CENTER);
+							ft2.getCellFormatter().setHorizontalAlignment(1, 7, HasHorizontalAlignment.ALIGN_CENTER);
+
+							ft2.setText(2, 0, Integer.toString(result.get(0)));
+							ft2.setText(2, 1, Integer.toString(result.get(1)));
+							ft2.setText(2, 2, Integer.toString(result.get(2)));
+							ft2.setText(2, 3, Integer.toString(result.get(3)));
+
+						
+
+					}
+
+				});
 			}
 		});
+
+
+
 	}
-	}
+
+
+
+}
+
 
 
 

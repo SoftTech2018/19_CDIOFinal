@@ -345,6 +345,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		throw new Exception("Adgang nægtet.");
 	}
+
+	@Override
+	public List<Integer> getUserCount(String token) throws Exception {
+		if(th.validateToken(token) != null){
+			return dao.getUserCount();
+		}
+		throw new Exception("Adgang nægtet.");
+	}
 	
 	
 

@@ -85,6 +85,8 @@ public interface IControllerDAO {
 	
 	public void checkReceptID(int id) throws DALException;
 	
+	public List<Integer> getUserCount() throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;

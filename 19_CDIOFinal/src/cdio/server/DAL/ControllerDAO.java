@@ -1,6 +1,7 @@
 package cdio.server.DAL;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -215,5 +216,16 @@ public class ControllerDAO implements IControllerDAO {
 		pbDAO.checkReceptID(id);
 	}
 
+	@Override
+	public List<Integer> getUserCount() throws DALException {
+		List<Integer> list = new ArrayList<Integer>();
+		list.add(oprDAO.getAdminCount());
+		list.add(oprDAO.getFarmaceutCount());
+		list.add(oprDAO.getVaerkfoererCount());
+		list.add(oprDAO.getOperatoerCount());
+		return list;
+	}
+
+	
 }
 	
