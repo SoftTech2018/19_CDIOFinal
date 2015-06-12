@@ -332,7 +332,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				check = true;
 			}
 		}
-		if (!check){
+		if (check){
 			throw new Exception("Recepten er i brug");
 		}
 	}

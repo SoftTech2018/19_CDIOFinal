@@ -63,7 +63,7 @@ public class SletRecept extends Composite {
 
 					@Override
 					public void onSuccess(Void result) {
-						
+						Window.alert("Recepten blev slettet");
 					}
 
 				});
