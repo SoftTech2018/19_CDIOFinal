@@ -115,6 +115,8 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		try {
 			if (!rs.next()){
 				throw new DALException();
+			} else {
+				Connector.doUpdate(txt.deleteRecept(id));
 			}
 		} catch (SQLException e) {throw new DALException(e); }
 	}

@@ -289,4 +289,11 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "1", Integer.toString(pb_id));
 		return output;
 	}
+	
+	public String deleteRecept(int id){
+		String output = sqlCommands[65];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
+		return output;
+	}
+
 }
