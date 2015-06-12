@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -107,27 +108,36 @@ public class VisOpr extends Composite {
 
 					@Override
 					public void onSuccess(List<Integer> result) {
+						FlexTable ft3 = new FlexTable();
 						FlexTable ft2 = new FlexTable();
+						HTML gap = new HTML();
+						gap.setHTML("<br><br>");
+						
+						vPane.add(gap);
+						vPane.add(ft3);
 						vPane.add(ft2);
+						
 //						vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
 						
-						ft2.setStyleName("FlexTable-Header");
-						ft2.setText(0, 0, "Antal brugere i systemet: ");
+						ft3.getCellFormatter().addStyleName(0, 0, "FlexTable-Header");
+						ft3.setText(0, 0, "Antal brugere i systemet: ");
 						ft2.setText(1, 0, "Admins: ");
-						ft2.setText(1, 1, "Farmaceuter: ");
-						ft2.setText(1, 2, "Værkførere: ");
-						ft2.setText(1, 3, "Operatørere: ");
+						ft2.setText(2, 0, "Farmaceuter: ");
+						ft2.setText(3, 0, "Værkførere: ");
+						ft2.setText(4, 0, "Operatørere: ");
 
 						
-							ft2.getCellFormatter().setHorizontalAlignment(1, 4, HasHorizontalAlignment.ALIGN_CENTER);
-							ft2.getCellFormatter().setHorizontalAlignment(1, 5, HasHorizontalAlignment.ALIGN_CENTER);
-							ft2.getCellFormatter().setHorizontalAlignment(1, 6, HasHorizontalAlignment.ALIGN_CENTER);
-							ft2.getCellFormatter().setHorizontalAlignment(1, 7, HasHorizontalAlignment.ALIGN_CENTER);
-
-							ft2.setText(2, 0, Integer.toString(result.get(0)));
-							ft2.setText(2, 1, Integer.toString(result.get(1)));
-							ft2.setText(2, 2, Integer.toString(result.get(2)));
-							ft2.setText(2, 3, Integer.toString(result.get(3)));
+//							ft2.getCellFormatter().setHorizontalAlignment(1, 4, HasHorizontalAlignment.ALIGN_CENTER);
+//							ft2.getCellFormatter().setHorizontalAlignment(1, 5, HasHorizontalAlignment.ALIGN_CENTER);
+//							ft2.getCellFormatter().setHorizontalAlignment(1, 6, HasHorizontalAlignment.ALIGN_CENTER);
+//							ft2.getCellFormatter().setHorizontalAlignment(1, 7, HasHorizontalAlignment.ALIGN_CENTER);
+							
+							ft2.getCellFormatter().setWidth(1, 0, "80px");
+							ft2.getCellFormatter().setWidth(1, 1, "25px");
+							ft2.setText(1, 1, Integer.toString(result.get(0))); //Admins
+							ft2.setText(2, 1, Integer.toString(result.get(1))); //Farmaceuter
+							ft2.setText(3, 1, Integer.toString(result.get(2)));	//Værkførere
+							ft2.setText(4, 1, Integer.toString(result.get(3))); //Operatører
 
 						
 
