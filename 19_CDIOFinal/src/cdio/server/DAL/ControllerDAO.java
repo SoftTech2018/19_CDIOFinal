@@ -169,7 +169,7 @@ public class ControllerDAO implements IControllerDAO {
 		return receptDAO.getRecept(pbDAO.getProduktBatch(pbID).getReceptId()).getReceptNavn();
 	}
 
-	public List<ReceptKompDTO> setReceptKompListe(int rkList) throws DALException {
+	public List<ReceptKompDTO> getReceptKompListe(int rkList) throws DALException {
 		return receptKompDAO.getReceptKompList(rkList);
 	}
 
