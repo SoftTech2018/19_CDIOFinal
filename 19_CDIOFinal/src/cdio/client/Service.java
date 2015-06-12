@@ -27,6 +27,7 @@ import cdio.shared.UserDTO;
 
 
 
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -76,5 +77,7 @@ public interface Service extends RemoteService {
 	void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception;
 	
 	void deleteRecept(String token, int id) throws Exception;
+	
+	String refreshToken(String token) throws Exception;
 	
 }

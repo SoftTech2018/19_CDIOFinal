@@ -18,6 +18,7 @@ import cdio.client.contents.VisRecept;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -33,6 +34,7 @@ public class Menu extends Composite {
 	private Controller con;
 	private String username;
 	private Label error;
+	private Label time;
 
 	// Tom menu
 	public Menu(Controller controller) {
@@ -71,13 +73,16 @@ public class Menu extends Composite {
 				Label userName = new Label(username);
 				userName.setStyleName("TextLabel-Logud");
 				userFt.setWidget(0, 1, userName);
+				time = new Label("");
+				userFt.setWidget(1, 1, time);
+				
 				Button logud = new Button("Log ud");
 				logud.setStyleName("Button-Logud");
 				logud.addClickHandler(new Logud()); // Clickhandler
-				userFt.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_RIGHT);
+				userFt.getCellFormatter().setHorizontalAlignment(2, 1, HasHorizontalAlignment.ALIGN_RIGHT);
 				userFt.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
 				
-				userFt.setWidget(1, 1, logud);	
+				userFt.setWidget(2, 1, logud);	
 				userFt.setStyleName("FlexTable-Userinfo");
 
 				ftMenu.setWidget(i, 0, userFt);
@@ -282,6 +287,19 @@ public class Menu extends Composite {
 		});
 
 		return ft;
+	}
+	
+	public void timer(){
+		Timer t = new Timer(){
+
+			@Override
+			public void run() {
+				time.setText(Integer.toString(Controller.minutes));
+				Controller.minutes--;
+			}
+			
+		};
+		t.schedule(60000); // Opdater hvert minut
 	}
 
 	// Clickhandler til logud-knappen

@@ -332,6 +332,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 	}
+
+	@Override
+	public String refreshToken(String token) throws Exception {
+		String refresh = null;
+		if((refresh = th.validateToken(token)) != null){
+			return refresh;
+		}
+		throw new Exception("Adgang nægtet.");
+	}
 	
 	
 

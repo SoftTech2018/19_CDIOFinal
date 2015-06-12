@@ -13,6 +13,7 @@ public class Controller extends Composite {
 
 	public static String token;
 	public static ServiceAsync service;
+	public static int minutes;
 	private VerticalPanel vPane;
 	private HorizontalPanel hPane;
 	private Menu menu;
@@ -105,7 +106,20 @@ public class Controller extends Composite {
 	}
 	
 	public static void refreshToken(){
-		
+		service.refreshToken(token, new AsyncCallback<String>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Controller.token = result;
+				Controller.minutes = 30;
+			}
+		});
 	}
 
 }
