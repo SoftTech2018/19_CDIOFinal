@@ -65,6 +65,7 @@ public class SletRecept extends Composite {
 					public void onSuccess(Void result) {
 						Window.alert("Recepten blev slettet");
 						id.setText("");
+						Controller.refreshToken();
 					}
 
 				});
