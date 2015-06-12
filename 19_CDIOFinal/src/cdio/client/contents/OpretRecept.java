@@ -77,7 +77,12 @@ public class OpretRecept extends Composite {
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);		
 		
-
+		ft3 = new FlexTable();
+		tilfoej = new Button("Ny komponent");
+		tilfoej.setStyleName("Recept-Komponenter");
+		tilfoej.addClickHandler(new kompClick());
+		ft3.setWidget(0, 1, tilfoej);
+		
 		FlexTable ft2 = new FlexTable();
 		ok = new Button("Tilføj");
 		ft2.setText(1, 0, "RåvareID");
@@ -109,10 +114,7 @@ public class OpretRecept extends Composite {
 		}
 		ft2.setWidget(3, 1, tolerance);
 		
-		tilfoej = new Button("Ny komponent");
-		tilfoej.setStyleName("Recept-Komponenter");
-		tilfoej.addClickHandler(new kompClick());
-		ft2.setWidget(0, 1, tilfoej);
+		
 
 		ft2.getFlexCellFormatter().setWidth(0, 0, "200px");
 		ft2.getFlexCellFormatter().setWidth(0, 1, "200px");
@@ -121,11 +123,11 @@ public class OpretRecept extends Composite {
 		ft2.getFlexCellFormatter().setWidth(0, 4, "200px");
 		
 		
-//		vPane.add(ft);		
-//		vPane1.add(ft2);
+		vPane.add(ft);		
+		vPane1.add(ft2);
 		hp.add(error);
-		hp.add(ft);
-		hp.add(ft2);
+		hp.add(vPane);
+		hp.add(vPane1);
 		
 	}
 
@@ -274,7 +276,7 @@ public class OpretRecept extends Composite {
 			ft2.getFlexCellFormatter().setWidth(0, 3, "70px");
 			ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
 			
-			
+			vPane1.add(ft2);
 			
 			
 
