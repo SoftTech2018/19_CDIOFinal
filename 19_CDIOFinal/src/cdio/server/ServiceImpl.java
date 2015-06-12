@@ -355,12 +355,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public void deleteProduktBatch(int id) throws Exception {
-		
+	public void deleteProduktBatch(String token, int id) throws Exception {
+		if(th.validateToken(token) != null){
+			
+		}
 	}
-	
-	
-
 	
 	
 
