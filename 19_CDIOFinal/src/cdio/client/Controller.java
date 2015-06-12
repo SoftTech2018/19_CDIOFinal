@@ -14,6 +14,7 @@ public class Controller extends Composite {
 	public static String token;
 	public static ServiceAsync service;
 	public static int minutes;
+	public static int seconds;
 	private VerticalPanel vPane;
 	private HorizontalPanel hPane;
 	private Menu menu;
@@ -59,6 +60,9 @@ public class Controller extends Composite {
 			@Override
 			public void onSuccess(String result) {
 				menu.changeMenu(result); // Lav en specifik menu baseret på brugerens rolle
+				minutes = 30;
+				seconds = 0;
+				menu.timer();
 			}
 		});
 	}
@@ -118,6 +122,7 @@ public class Controller extends Composite {
 			public void onSuccess(String result) {
 				Controller.token = result;
 				Controller.minutes = 30;
+				Controller.seconds = 0;
 			}
 		});
 	}

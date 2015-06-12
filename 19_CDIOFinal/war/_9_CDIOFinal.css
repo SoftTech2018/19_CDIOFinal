@@ -284,3 +284,9 @@ html {
 	display: none;
 	}
 }
+
+.Time-Error{
+	font-size: 11px;
+	color: #FF0000;
+	font-weight: bold;
+}

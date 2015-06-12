@@ -19,6 +19,7 @@ import cdio.client.contents.VisRecept;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -35,6 +36,7 @@ public class Menu extends Composite {
 	private String username;
 	private Label error;
 	private Label time;
+	private Button logud;
 
 	// Tom menu
 	public Menu(Controller controller) {
@@ -60,7 +62,7 @@ public class Menu extends Composite {
 			public void onSuccess(String result) {	
 				vPane.clear(); // Fjerner den gamle menu
 				username = result;	
-				
+
 				FlexTable ftMenu = new FlexTable();
 				ftMenu.setStyleName("FlexTable-Menu");
 				int i = 0;
@@ -73,21 +75,27 @@ public class Menu extends Composite {
 				Label userName = new Label(username);
 				userName.setStyleName("TextLabel-Logud");
 				userFt.setWidget(0, 1, userName);
-				time = new Label("");
-				userFt.setWidget(1, 1, time);
 				
-				Button logud = new Button("Log ud");
+				Label session = new Label("Session:");
+				session.setStyleName("TextLabel-Logud");
+				userFt.setWidget(1, 0, session);
+				time = new Label("");
+				time.setStyleName("TextLabel-Logud");
+				userFt.setWidget(1, 1, time);
+
+				logud = new Button("Log ud");
 				logud.setStyleName("Button-Logud");
 				logud.addClickHandler(new Logud()); // Clickhandler
-				userFt.getCellFormatter().setHorizontalAlignment(2, 1, HasHorizontalAlignment.ALIGN_RIGHT);
 				userFt.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
-				
+				userFt.getCellFormatter().setHorizontalAlignment(1, 1, HasHorizontalAlignment.ALIGN_RIGHT);
+				userFt.getCellFormatter().setHorizontalAlignment(2, 1, HasHorizontalAlignment.ALIGN_RIGHT);
+
 				userFt.setWidget(2, 1, logud);	
 				userFt.setStyleName("FlexTable-Userinfo");
 
 				ftMenu.setWidget(i, 0, userFt);
 				i++;
-				
+
 				Anchor start = new Anchor("Startside");
 				start.addClickHandler(new ClickHandler(){
 
@@ -118,7 +126,7 @@ public class Menu extends Composite {
 				vPane.add(ftMenu);
 			}
 		});
-		
+
 		vPane.add(error);
 	}
 
@@ -164,7 +172,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new SletOpr());
+				con.setContent(new SletOpr());
 			}
 		});
 
@@ -183,7 +191,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRaavarer());
+				con.setContent(new VisRaavarer());
 			}
 		});
 
@@ -193,7 +201,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new RetRaavare());
+				con.setContent(new RetRaavare());
 			}
 		});
 
@@ -203,7 +211,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRaavare());
+				con.setContent(new OpretRaavare());
 			}
 		});
 
@@ -213,7 +221,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRecept());
+				con.setContent(new VisRecept());
 			}
 		});
 
@@ -223,10 +231,10 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRecept());
+				con.setContent(new OpretRecept());
 			}
 		});
-		
+
 		Anchor sletRecept = new Anchor("Slet recept");
 		ft.setWidget(6, 0, sletRecept);
 		sletRecept.addClickHandler(new ClickHandler(){
@@ -252,7 +260,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisRB());
+				con.setContent(new VisRB());
 			}
 		});
 
@@ -262,7 +270,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretRB());
+				con.setContent(new OpretRB());
 			}
 		});
 
@@ -272,7 +280,7 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new VisPB());
+				con.setContent(new VisPB());
 			}
 		});
 
@@ -282,24 +290,41 @@ public class Menu extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-			con.setContent(new OpretPB());
+				con.setContent(new OpretPB());
 			}
 		});
 
 		return ft;
 	}
-	
+
 	public void timer(){
-		Timer t = new Timer(){
+		Timer sec = new Timer(){
 
 			@Override
 			public void run() {
-				time.setText(Integer.toString(Controller.minutes));
-				Controller.minutes--;
+				if (Controller.seconds < 10)
+					time.setText(Integer.toString(Controller.minutes) + ":0" + Controller.seconds);
+				else	
+					time.setText(Integer.toString(Controller.minutes) + ":" + Controller.seconds);
+				Controller.seconds--;
+				if (Controller.seconds == -1){
+					Controller.seconds = 59;
+					Controller.minutes--;
+					if (Controller.minutes < 5){
+						time.setStyleName("Time-Error");
+						if (Controller.minutes == -1){
+							Window.alert("Sessionen er udløbet.");
+							this.cancel();
+							logud.click(); // Log brugeren ud
+						}
+					} 
+					else 
+						time.setStyleName("TextLabel-Logud");
+				}
 			}
-			
+
 		};
-		t.schedule(60000); // Opdater hvert minut
+		sec.scheduleRepeating(1000); // Opdater hvert minut
 	}
 
 	// Clickhandler til logud-knappen
