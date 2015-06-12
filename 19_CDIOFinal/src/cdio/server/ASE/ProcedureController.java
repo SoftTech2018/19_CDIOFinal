@@ -185,7 +185,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
 						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);
 						mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
-						mc.receptKompListe=dao.getRKList(mc.recept_id);
+						mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
 						mc.restListe=mc.receptKompListe;
 //						for(ReceptKompDTO rk : mc.getReceptKompListe()){
 //							for(ProduktBatchKompDTO pb : mc.getpbKompListe()){
