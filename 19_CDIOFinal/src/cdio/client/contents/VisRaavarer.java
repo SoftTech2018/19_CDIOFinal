@@ -32,6 +32,8 @@ public class VisRaavarer extends Composite {
 
 				@Override
 				public void onSuccess(List<RaavareDTO> result) {
+					Controller.refreshToken();
+					
 					FlexTable ft = new FlexTable();
 					ft.setText(0, 0, "ID");
 					ft.setText(0, 1, "Navn");

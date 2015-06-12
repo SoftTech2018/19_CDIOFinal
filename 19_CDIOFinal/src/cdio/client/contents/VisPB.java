@@ -50,6 +50,8 @@ public class VisPB extends Composite {
 
 			@Override
 			public void onSuccess(List<ProduktBatchDTO> result) {
+				Controller.refreshToken();
+				
 				ft.setText(0, 0, "PB ID");
 				ft.setText(0, 1, "Recept ID");
 				ft.setText(0, 2, "Status");
