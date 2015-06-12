@@ -353,6 +353,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 		throw new Exception("Adgang nægtet.");
 	}
+
+	@Override
+	public void deleteProduktBatch(int id) throws Exception {
+		
+	}
 	
 	
 

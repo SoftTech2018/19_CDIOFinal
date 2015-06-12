@@ -82,4 +82,6 @@ public interface Service extends RemoteService {
 	
 	List<Integer> getUserCount(String token) throws Exception;
 	
+	void deleteProduktBatch(int id) throws Exception;
+	
 }
