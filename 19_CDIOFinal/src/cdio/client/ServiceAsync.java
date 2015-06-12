@@ -58,7 +58,7 @@ public interface ServiceAsync {
 	
 	void createReceptKomp(String token, ReceptKompDTO receptkomp, AsyncCallback<Void> asyncCallback);
 	
-	void deleteRecept(String token, int id, AsyncCallback<Void> asyncCallback);
+	void checkReceptID(String token, int id, AsyncCallback<Void> asyncCallback);
 
 	void refreshToken(String token, AsyncCallback<String> asyncCallback);
 	

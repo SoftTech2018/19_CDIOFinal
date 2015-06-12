@@ -76,7 +76,7 @@ public interface Service extends RemoteService {
 
 	void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception;
 	
-	void deleteRecept(String token, int id) throws Exception;
+	void checkReceptID(String token, int id) throws Exception;
 	
 	String refreshToken(String token) throws Exception;
 	

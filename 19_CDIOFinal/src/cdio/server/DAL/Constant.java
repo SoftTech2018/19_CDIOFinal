@@ -11,7 +11,7 @@ public abstract class Constant
 //		username				= "grp19", // dit brugernavn = dit studienummer 
 //		password				= "WxqW2GBF"; // dit password som du har valgt til din database
 	server					= "localhost",  // database-serveren
-	database				= "cdio_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	database				= "cdio_dbtest",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	username				= "root", // dit brugernavn = dit studienummer 
 	password				= ""; // dit password som du har valgt til din database
 	

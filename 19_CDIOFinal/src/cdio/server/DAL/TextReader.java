@@ -278,9 +278,9 @@ public class TextReader {
 		return output;
 	}
 
-	public String deleteRecept(int id){
-//		String output = sqlCommands[1];
-		String output = "Hej";
+	public String checkReceptID(int id){
+		String output = sqlCommands[59];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
 		return output;
 	}
 }

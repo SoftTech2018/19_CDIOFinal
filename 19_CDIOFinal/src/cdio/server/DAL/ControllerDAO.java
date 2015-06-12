@@ -211,8 +211,8 @@ public class ControllerDAO implements IControllerDAO {
 		return pbDAO.getPbViewList(pb_id);
 	}
 	
-	public void deleteRecept(int id) throws DALException {
-		
+	public void checkReceptID(int id) throws DALException {
+		pbDAO.checkReceptID(id);
 	}
 
 }

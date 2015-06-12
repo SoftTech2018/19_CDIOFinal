@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -53,18 +54,16 @@ public class SletRecept extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
-				Controller.service.deleteRecept(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
+				Controller.service.checkReceptID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-
+						Window.alert(caught.getMessage());
 					}
 
 					@Override
 					public void onSuccess(Void result) {
-						// TODO Auto-generated method stub
-
+						
 					}
 
 				});

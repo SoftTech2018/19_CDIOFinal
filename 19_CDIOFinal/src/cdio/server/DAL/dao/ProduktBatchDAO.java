@@ -14,9 +14,9 @@ import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 
 public class ProduktBatchDAO implements IProduktBatchDAO {
-	
+
 	private TextReader txt;
-	
+
 	public ProduktBatchDAO(TextReader txt) throws FileNotFoundException{
 		this.txt = txt;
 	}
@@ -24,11 +24,11 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 	@Override
 	public ProduktBatchDTO getProduktBatch(int pbId) throws DALException {
 		ResultSet rs = Connector.doQuery(txt.getProductBatch(pbId));		
-	    try {
-	    	if (!rs.first()) throw new DALException("Produktbatch " + pbId + " findes ikke");
-	    	return new ProduktBatchDTO (rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"));
-	    }
-	    catch (SQLException e) {throw new DALException(e); }
+		try {
+			if (!rs.first()) throw new DALException("Produktbatch " + pbId + " findes ikke");
+			return new ProduktBatchDTO (rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"));
+		}
+		catch (SQLException e) {throw new DALException(e); }
 	}
 
 	@Override
@@ -52,12 +52,12 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 	public void updateProduktBatch(ProduktBatchDTO produktbatch) throws DALException {
 		Connector.doUpdate(txt.updateProduktBatch(produktbatch));
 	}
-	
+
 	@Override
 	public void updateStatus(int pbID, int status) throws DALException {
 		Connector.doUpdate(txt.updatePbStatus(pbID, status));
 	}
-	
+
 	@Override
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException{
 		List<PbViewDTO> list = new ArrayList<PbViewDTO>();
@@ -82,7 +82,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
-	
+
 	@Override
 	public int getLatestPbId() throws DALException{
 		ResultSet rs = Connector.doQuery("SELECT LAST_INSERT_ID();");
@@ -94,5 +94,15 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 			throw new DALException(e);
 		}
 		return pb_id;
+	}
+
+	public void checkReceptID(int id) throws DALException{
+		List<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
+		ResultSet rs = Connector.doQuery(txt.checkReceptID(id));
+		try {
+			if (!rs.next()){
+				throw new DALException();
+			}
+		} catch (SQLException e) {throw new DALException(e); }
 	}
 }
