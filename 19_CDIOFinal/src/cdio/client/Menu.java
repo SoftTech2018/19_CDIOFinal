@@ -299,7 +299,6 @@ public class Menu extends Composite {
 
 	public void timer(){
 		Timer sec = new Timer(){
-
 			@Override
 			public void run() {
 				if (Controller.seconds < 10)
@@ -322,7 +321,6 @@ public class Menu extends Composite {
 						time.setStyleName("TextLabel-Logud");
 				}
 			}
-
 		};
 		sec.scheduleRepeating(1000); // Opdater hvert minut
 	}

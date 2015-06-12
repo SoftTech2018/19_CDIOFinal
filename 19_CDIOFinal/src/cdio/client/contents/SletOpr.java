@@ -100,6 +100,7 @@ public class SletOpr extends Composite {
 					ft.setWidget(i+1, 9, slet);
 				}
 				vPane.add(ft);
+				Controller.refreshToken();
 			}
 			
 		});

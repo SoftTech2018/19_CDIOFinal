@@ -99,11 +99,12 @@ public class Login extends Composite {
 						errorMsg.setText(caught.getMessage()); // Fejlbesked
 						send.setText("Login");
 						password.setText("");
-						if (caught.getMessage().equalsIgnoreCase("Forkert bruger ID.")){
+						if (caught.getMessage().equalsIgnoreCase("Forkert bruger ID.") || caught.getMessage().equalsIgnoreCase("Du har ikke adgang til at logge ind.")){
 							userName.setStyleName("TextBox-Error");
 							userName.setFocus(true);
 							idValid = false;
-						} else {
+						}
+						else {
 							password.setFocus(true);
 							password.setStyleName("TextBox-Error");
 							passValid = false;

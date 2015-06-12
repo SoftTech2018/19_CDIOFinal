@@ -114,8 +114,9 @@ public class Controller extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
+				Controller.token = null;
+				RootPanel.get().clear();
+				RootPanel.get().add(new Login(service));
 			}
 
 			@Override
