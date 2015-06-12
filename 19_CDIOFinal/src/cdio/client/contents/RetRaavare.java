@@ -153,6 +153,7 @@ public class RetRaavare  extends Composite {
 					openEventRow = 0;
 					Window.alert("Raavare" + " blev opdateret");
 					run(); //Reload siden
+					Controller.refreshToken();
 				}
 				
 			});
