@@ -12,6 +12,11 @@ html {
 	width: 200px;
 }
 
+.TextBox-Startside{
+	font-size: 16pt;
+	width: 864px;
+}
+
 .TextBox-Ret{
 	font-size: 10pt;
 	width: 90%;
