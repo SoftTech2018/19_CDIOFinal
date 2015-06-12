@@ -62,3 +62,4 @@ SELECT COUNT(farmaceut) FROM roller WHERE farmaceut = 1;
 SELECT COUNT(varkforer) FROM roller WHERE varkforer = 1;
 SELECT COUNT(operatoer) FROM roller WHERE operatoer = 1; 
 select distinct * from produktbatch left join produktbatchkomponent using (pb_id) left join recept using (recept_id) left join receptkomponent using (recept_id) left join raavare using (raavare_id) left join raavarebatch using (rb_id) where pb_id = #1
+DELETE FROM recept WHERE recept_id = #1
