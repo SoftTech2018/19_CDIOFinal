@@ -1,5 +1,9 @@
 package cdio.client.contents;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
@@ -27,6 +31,7 @@ public class OpretRaavare extends Composite {
 	private Button opret;
 	private Label error;
 	private boolean idValid=false, navnValid=false, levValid=false;
+	private ArrayList<Integer> liste = new ArrayList<>();
 
 	public OpretRaavare() {
 		vPane = new VerticalPanel();
@@ -64,8 +69,47 @@ public class OpretRaavare extends Composite {
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
 
+		
+		
 		vPane.add(ft);
+		getListe();
+	}
+	
+	private void getListe(){
+		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
+			@Override
+			public void onFailure(Throwable caught) {
+				ft.setText(1, 2, "Fejl i listekald");
+			}
+
+			@Override
+			public void onSuccess(List<RaavareDTO> result) {
+				opretListe(result);
+			}					
+		});
+	}
+	
+	private void opretListe(List<RaavareDTO> result){
+		ft.setText(0, 2, "Succes i opret listekald");
+		ft.setText(1, 2, result.get(0).getRaavareNavn());
+		liste.set(2, Integer.valueOf(1));
+		String test = String.valueOf(liste.get(2).intValue());
+		ft.setText(2, 2, test);
+		
+//		for(int i = 0; i<result.size();i++){
+//			int k=i+100;
+////			liste.add(result.get(i).getRaavareId(), 1);
+//			liste.set(i, 1);
+//			
+//			ft.setText(i+1, 2, i+" i listekald");
+//		}
+		int i = 1;
+		for(RaavareDTO rv : result){
+			liste.set(rv.getRaavareId(), 1);
+			ft.setText(i, 2, i+" i listekald");
+			i++;
+		}
 	}
 
 
@@ -107,24 +151,15 @@ public class OpretRaavare extends Composite {
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
 				idValid = false;
-			} else{
-				Controller.service.getRaavareID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
-
-					@Override
-					public void onFailure(Throwable caught) {
-						id.setStyleName("TextBox-Opret");
-						idValid = true;
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-						ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
-						id.setStyleName("TextBox-OpretError");
-						idValid = false;
-					}
-					
-				});
-				
+			} else{				
+				if(liste.get(Integer.parseInt(id.getText())).equals(1)){
+					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
+					id.setStyleName("TextBox-OpretError");
+					idValid = false;
+				} else {
+					id.setStyleName("TextBox-Opret");
+					idValid = true;
+				}
 			}
 
 			if(navnValid && idValid && levValid)
