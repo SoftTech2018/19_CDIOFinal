@@ -40,7 +40,7 @@ public class SletRecept extends Composite {
 		id = new TextBox();
 		id.addKeyUpHandler(new idCheck());
 
-		btn = new Button("Slet ID");
+		btn = new Button("Slet Recept");
 
 		ft = new FlexTable();
 
@@ -64,6 +64,7 @@ public class SletRecept extends Composite {
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Recepten blev slettet");
+						id.setText("");
 					}
 
 				});
