@@ -90,12 +90,8 @@ public class OpretRaavare extends Composite {
 				
 				liste = new int[i+1];
 				
-				int j=1;
-				
 				for(RaavareDTO rv : result){
 					liste[rv.getRaavareId()]=1;
-					ft.setText(j, 2, i+" i listekald");
-					j++;			
 				}
 			}					
 		});
