@@ -2,7 +2,6 @@ package cdio.server;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import cdio.client.Service;
@@ -24,6 +23,7 @@ import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.ReceptKompDTO;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -103,44 +103,50 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public String login(UserDTO user) throws Exception {
+	public String login(UserDTO user) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+			}
 
 		String userID = escapeHtml(Integer.toString(user.getUserId()));
 		String password = escapeHtml(user.getPassword());
 
 		// Inputvalidering på serveren
 		if (!FieldVerifier.isValidUserId(userID) || !FieldVerifier.isValidPassword(password))
-			throw new Exception("Ugyldigt bruger id og/eller password.");
+			throw new TokenException("Ugyldigt bruger id og/eller password.");
 
-		UserDTO db_user;
-		try {
-			db_user = dao.getUser(Integer.parseInt(userID));
-		} catch (DALException e){
-			throw new Exception("Forkert bruger ID.");
-		}
+		UserDTO db_user = dao.getUser(Integer.parseInt(userID));
 		String token;		
 
 		if (db_user.getPassword().equals(password)){
 			if (db_user.isAdmin() || db_user.isFarmaceut() || db_user.isVaerkfoerer()){
 				token = th.createToken(Integer.toString(db_user.getUserId()));
 			} else {
-				throw new Exception("Du har ikke adgang til at logge ind.");
+				throw new TokenException("Du har ikke adgang til at logge ind.");
 			}
 		} else {
-			throw new Exception("Forkert password.");
+			throw new TokenException("Forkert password.");
 		}
 		return token; 
 	}
 
 	@Override
-	public String getRole(String token) throws Exception {
+	public String getRole(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+			}
 
 		if (th.validateToken(token) != null){
-			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
+			UserDTO user;
+			try {
+				user = dao.getUser(Integer.parseInt(th.getUserID(token)));				
+			} catch (NumberFormatException e) {
+				throw new TokenException("Ugyldigt bruger-id.");
+			}
 			if (user.isAdmin())
 				return "ADMIN";
 			if (user.isFarmaceut())
@@ -149,9 +155,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				return "VAERKFOERER";
 			//			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
 			//				return "OPERATOER";
-			throw new Exception("Bruger har ingen adgang.");
+			throw new TokenException("Bruger har ingen adgang."); // Hvis brugeren ikke har en gyldig rolle
+		} else {
+			throw new TokenException("Adgang nægtet.");			
 		}
-		throw new Exception("Adgang nægtet.");
 	}
 
 	@Override
@@ -298,7 +305,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 	}
-	
+
 	public void createRaavare(String token, RaavareDTO raavare) throws Exception{
 		if (TEST_DELAY)
 			Thread.sleep(2000);
@@ -311,8 +318,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 	}
-	
-	
+
+
 
 	@Override
 	public void getRaavareID(String token, int raavareid) throws Exception {
@@ -327,10 +334,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}		
 		}
 
-		
+
 	}
 
-	
+
 	@Override
 	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception {
 		if (TEST_DELAY)
@@ -387,7 +394,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (TEST_DELAY)
 			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
-			
+
 		}
 	}
 }

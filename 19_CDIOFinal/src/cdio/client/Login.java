@@ -1,5 +1,7 @@
 package cdio.client;
 
+import cdio.shared.DALException;
+import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -13,11 +15,8 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-
-import cdio.shared.FieldVerifier;
 
 public class Login extends Composite {
 
@@ -74,12 +73,9 @@ public class Login extends Composite {
 		ft.setWidget(2, 0, userName);
 		ft.setWidget(3, 0, passTxt);
 		ft.setWidget(4, 0, password);
-			FlexTable ft1 = new FlexTable();
-			ft1.setWidth("100%");
-			ft1.setWidget(0, 0, errorMsg);
-			ft1.setWidget(0, 1, send);
-			ft1.getCellFormatter().setHorizontalAlignment(0, 1, HasHorizontalAlignment.ALIGN_RIGHT);
-		ft.setWidget(5, 0, ft1);
+		ft.setWidget(5, 0, send);
+		ft.setWidget(6, 0, errorMsg);
+		ft.getCellFormatter().setHorizontalAlignment(5, 0, HasHorizontalAlignment.ALIGN_RIGHT);
 		
 		// Tilføj elementerne i korrekt rækkefølge til siden
 		vPane.add(header);
@@ -99,7 +95,7 @@ public class Login extends Composite {
 						errorMsg.setText(caught.getMessage()); // Fejlbesked
 						send.setText("Login");
 						password.setText("");
-						if (caught.getMessage().equalsIgnoreCase("Forkert bruger ID.") || caught.getMessage().equalsIgnoreCase("Du har ikke adgang til at logge ind.")){
+						if (caught instanceof DALException || caught.getMessage().equalsIgnoreCase("Du har ikke adgang til at logge ind.")){
 							userName.setStyleName("TextBox-Error");
 							userName.setFocus(true);
 							idValid = false;

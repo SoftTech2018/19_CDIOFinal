@@ -28,7 +28,7 @@ public class OperatoerDAO implements IOperatoerDAO {
 		ResultSet rs = Connector.doQuery(txt.getOperatoer(oprId));
 		try {
 			if (!rs.first()) throw new DALException("Bruger " + oprId + " findes ikke");
-			return new UserDTO (Integer.toString(rs.getInt("opr_id")), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer"));
+				return new UserDTO (Integer.toString(rs.getInt("opr_id")), rs.getString("opr_navn"), rs.getString("ini"), rs.getString("cpr"), rs.getString("password"), rs.getBoolean("admin"), rs.getBoolean("farmaceut"), rs.getBoolean("varkforer"), rs.getBoolean("operatoer"));				
 		}
 		catch (SQLException e) {throw new DALException(e); }
 	}

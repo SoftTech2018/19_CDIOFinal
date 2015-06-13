@@ -1,6 +1,8 @@
 package cdio.client;
 
 import cdio.client.contents.StartPage;
+import cdio.shared.DALException;
+import cdio.shared.TokenException;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -53,8 +55,12 @@ public class Controller extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert(caught.getMessage());
-				logud();
+				if (caught instanceof TokenException){
+					Window.alert(caught.getMessage());
+					logud();
+				} else if (caught instanceof DALException){
+					Window.alert(caught.getMessage());
+				}
 			}
 
 			@Override

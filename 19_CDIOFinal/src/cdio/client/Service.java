@@ -2,6 +2,7 @@ package cdio.client;
 
 import java.util.List;
 
+import cdio.shared.DALException;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
@@ -9,26 +10,9 @@ import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.ReceptKompDTO;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -38,9 +22,9 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greet")
 public interface Service extends RemoteService {
 
-	String login(UserDTO user) throws Exception;
+	String login(UserDTO user) throws TokenException, DALException;
 	
-	String getRole(String token) throws Exception;
+	String getRole(String token) throws TokenException, DALException;
 	
 	String getUsername(String token) throws Exception;
 	
