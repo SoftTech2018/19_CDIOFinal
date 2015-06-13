@@ -176,11 +176,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			return dao.getOprList();
 		}
 		throw new Exception("Adgang nægtet");
-
 	}
 
 	@Override
 	public UserDTO updateUser(String token, UserDTO user) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null)
 			return dao.updateUser(user);
 		else 
@@ -199,6 +200,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void createUser(String token, UserDTO user) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			dao.createUser(user);						
 		}
@@ -207,6 +210,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			return dao.getProduktBatchList();				
 		}
@@ -216,6 +221,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			return dao.getPBKList(pbID);						
 		}
@@ -225,6 +232,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void deleteUser(String token, int userId) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			dao.deleteUser(userId);					
 		}
@@ -234,6 +243,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	public void updateRaavare(String token, RaavareDTO raavare) throws Exception{
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			dao.updateRaavare(raavare);
 		} else {
@@ -263,17 +274,22 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		return dao.createPB(pb);
 	}
 
 	@Override
 	public List<PbViewDTO> getPbView(String token, int pb_id) throws Exception {
-		Thread.sleep(500);
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		List<PbViewDTO> list = dao.getPbViewList(pb_id);
 		return list;
 	}
 
 	public void createRecept(String token, ReceptDTO recept) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if (th.validateToken(token) != null){
 			try{
 				dao.createRecept(recept);}
@@ -284,6 +300,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 	
 	public void createRaavare(String token, RaavareDTO raavare) throws Exception{
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
 			try{
 				dao.createRaavare(raavare);
@@ -298,6 +316,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void getRaavareID(String token, int raavareid) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) !=null){
 			try{ dao.getRaavareID(raavareid);
 
@@ -313,6 +333,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	@Override
 	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
 			try{ dao.createReceptKomp(receptkomp);
 			}
@@ -324,6 +346,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void checkReceptID(String token, int id) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		boolean check = false;
 		if(th.validateToken(token) != null){
 			try {
@@ -340,6 +364,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public String refreshToken(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
 			return th.createToken(th.getUserID(token));
 		}
@@ -348,6 +374,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public List<Integer> getUserCount(String token) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
 			return dao.getUserCount();
 		}
@@ -356,14 +384,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void deleteProduktBatch(String token, int id) throws Exception {
+		if (TEST_DELAY)
+			Thread.sleep(2000);
 		if(th.validateToken(token) != null){
 			
 		}
 	}
-	
-	
-
-
 }
-
-
