@@ -90,7 +90,7 @@ public class Controller extends Composite {
 	// Fjerner alle widgets og laver en ny login-session.
 	public void logud(){
 		Controller.token = null;
-		vPane.clear();
+		menu.cancelTimer();
 		RootPanel.get().clear();
 		RootPanel.get().add(new Login(service));
 	}

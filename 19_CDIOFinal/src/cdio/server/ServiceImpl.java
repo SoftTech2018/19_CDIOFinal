@@ -110,6 +110,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (InterruptedException e1) {
 			}
 
+		// Sikring mod SQL-injection
 		String userID = escapeHtml(Integer.toString(user.getUserId()));
 		String password = escapeHtml(user.getPassword());
 
@@ -162,159 +163,204 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public String getUsername(String token) throws Exception {
+	public String getUsername(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
 
 		if (th.validateToken(token) != null){
 			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
 			return user.getName();
 		}
-		throw new Exception("Adgang nægtet.");
+		throw new TokenException("Adgang nægtet.");
 	}
 
 
 
 	@Override
-	public List<UserDTO> getOprList(String token) throws Exception {
+	public List<UserDTO> getOprList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
-		if (th.validateToken(token) != null){
-			return dao.getOprList();
-		}
-		throw new Exception("Adgang nægtet");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
+		// Tjek om brugeren bag token har adgang til informationen
+		if (!getRole(token).equalsIgnoreCase("Admin")) 
+			throw new TokenException("Adgang nægtet");
+		
+		return dao.getOprList();
 	}
 
 	@Override
-	public UserDTO updateUser(String token, UserDTO user) throws Exception {
+	public UserDTO updateUser(String token, UserDTO user) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null)
 			return dao.updateUser(user);
 		else 
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 	}
 
-	public List<RaavareDTO> getRaavareList(String token) throws Exception {
+	public List<RaavareDTO> getRaavareList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			return dao.getRaavareList();
 		}
-		throw new Exception("Adgang nægtet");
+		throw new TokenException("Adgang nægtet");
 
 	}
 
 	@Override
-	public void createUser(String token, UserDTO user) throws Exception {
+	public void createUser(String token, UserDTO user) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			dao.createUser(user);						
 		}
 		else 
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 	}
 
-	public List<ProduktBatchDTO> getPBList(String token) throws Exception {
+	public List<ProduktBatchDTO> getPBList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			return dao.getProduktBatchList();				
 		}
 		else 
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
-	public List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws Exception {
+	public List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			return dao.getPBKList(pbID);						
 		}
 		else 
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
-	public void deleteUser(String token, int userId) throws Exception {
+	public void deleteUser(String token, int userId) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			dao.deleteUser(userId);					
 		}
 		else 
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 
 	}
 
-	public void updateRaavare(String token, RaavareDTO raavare) throws Exception{
+	public void updateRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			dao.updateRaavare(raavare);
 		} else {
-			throw new Exception("Adgang nægtet");
+			throw new TokenException("Adgang nægtet");
 		}
 	}
 
 
-	public List<ReceptDTO> getReceptList(String token) throws Exception{
+	public List<ReceptDTO> getReceptList(String token) throws TokenException, DALException{
 		if(TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			return dao.getReceptList();
 		}
-		throw new Exception("Adgang nægtet");
+		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
-	public List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception {
+	public List<RaavareBatchDTO> getRaavareBatchList(String token) throws TokenException, DALException {
 		if(TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			return dao.getRaavareBatchList();
 		}
-		throw new Exception("Adgang nægtet");
+		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
-	public ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception {
+	public ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		return dao.createPB(pb);
 	}
 
 	@Override
-	public List<PbViewDTO> getPbView(String token, int pb_id) throws Exception {
+	public List<PbViewDTO> getPbView(String token, int pb_id) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		List<PbViewDTO> list = dao.getPbViewList(pb_id);
 		return list;
 	}
 
-	public void createRecept(String token, ReceptDTO recept) throws Exception {
+	public void createRecept(String token, ReceptDTO recept) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if (th.validateToken(token) != null){
 			try{
 				dao.createRecept(recept);}
-			catch(Exception DALException){
-				throw new Exception("Receptnummer findes allerede!");
+			catch(DALException e){
+				throw new DALException("Receptnummer findes allerede!");
 			}
-		}
+		} 
 	}
 
-	public void createRaavare(String token, RaavareDTO raavare) throws Exception{
+	public void createRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			try{
 				dao.createRaavare(raavare);
 			}
-			catch(Exception DALException){
-				throw new Exception("Råvareid findes allerede!");
+			catch(DALException e){
+				throw new DALException("Råvareid findes allerede!");
 			}
 		}
 	}
@@ -322,15 +368,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 
 	@Override
-	public void getRaavareID(String token, int raavareid) throws Exception {
+	public void getRaavareID(String token, int raavareid) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) !=null){
 			try{ dao.getRaavareID(raavareid);
 
 			}
-			catch(Exception DALException){
-				throw new Exception("Råvareid ukendt!");
+			catch(DALException e){
+				throw new DALException("Råvareid ukendt!");
 			}		
 		}
 
@@ -339,9 +388,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 
 	@Override
-	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception {
+	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			try{ dao.createReceptKomp(receptkomp);
 			}
@@ -352,9 +404,12 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public void checkReceptID(String token, int id) throws Exception {
+	public void checkReceptID(String token, int id) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		boolean check = false;
 		if(th.validateToken(token) != null){
 			try {
@@ -370,29 +425,38 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 
 	@Override
-	public String refreshToken(String token) throws Exception {
+	public String refreshToken(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			return th.createToken(th.getUserID(token));
 		}
-		throw new Exception("Adgang nægtet.");
+		throw new TokenException("Adgang nægtet.");
 	}
 
 	@Override
-	public List<Integer> getUserCount(String token) throws Exception {
+	public List<Integer> getUserCount(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 			return dao.getUserCount();
 		}
-		throw new Exception("Adgang nægtet.");
+		throw new TokenException("Adgang nægtet.");
 	}
 
 	@Override
-	public void deleteProduktBatch(String token, int id) throws Exception {
+	public void deleteProduktBatch(String token, int id) throws TokenException, DALException {
 		if (TEST_DELAY)
-			Thread.sleep(2000);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
 		if(th.validateToken(token) != null){
 
 		}

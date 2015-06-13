@@ -26,46 +26,46 @@ public interface Service extends RemoteService {
 	
 	String getRole(String token) throws TokenException, DALException;
 	
-	String getUsername(String token) throws Exception;
+	String getUsername(String token) throws TokenException, DALException;
 	
-	List<UserDTO> getOprList(String token) throws Exception;
+	List<UserDTO> getOprList(String token) throws TokenException, DALException;
 	
-	UserDTO updateUser(String token, UserDTO user) throws Exception;
+	UserDTO updateUser(String token, UserDTO user) throws TokenException, DALException;
 	
-	List<RaavareDTO> getRaavareList(String token) throws Exception;
+	List<RaavareDTO> getRaavareList(String token) throws TokenException, DALException;
 	
-	void createUser(String token, UserDTO user) throws Exception;
+	void createUser(String token, UserDTO user) throws TokenException, DALException;
 	
-	List<ProduktBatchDTO> getPBList(String token) throws Exception;
+	List<ProduktBatchDTO> getPBList(String token) throws TokenException, DALException;
 	
-	List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws Exception;
+	List<ProduktBatchKompDTO> getPBKList(String token, int pbID) throws TokenException, DALException;
 	
-	void deleteUser(String token, int userId) throws Exception;
+	void deleteUser(String token, int userId) throws TokenException, DALException;
 	
-	public void updateRaavare(String token, RaavareDTO raavare) throws Exception;
+	public void updateRaavare(String token, RaavareDTO raavare) throws TokenException, DALException;
 	
-	List<ReceptDTO> getReceptList(String token) throws Exception;
+	List<ReceptDTO> getReceptList(String token) throws TokenException, DALException;
 	
-	void createRecept(String token, ReceptDTO recept) throws Exception;
+	void createRecept(String token, ReceptDTO recept) throws TokenException, DALException;
 	
-	void createRaavare(String token, RaavareDTO raavare) throws Exception;
+	void createRaavare(String token, RaavareDTO raavare) throws TokenException, DALException;
 	
-	List<PbViewDTO> getPbView(String token, int receptId) throws Exception;
+	List<PbViewDTO> getPbView(String token, int receptId) throws TokenException, DALException;
 	
-	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws Exception;
+	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws TokenException, DALException;
 	
-	List<RaavareBatchDTO> getRaavareBatchList(String token) throws Exception;
+	List<RaavareBatchDTO> getRaavareBatchList(String token) throws TokenException, DALException;
 
-	void getRaavareID(String token, int raavareid) throws Exception;
+	void getRaavareID(String token, int raavareid) throws TokenException, DALException;
 
-	void createReceptKomp(String token, ReceptKompDTO receptkomp) throws Exception;
+	void createReceptKomp(String token, ReceptKompDTO receptkomp) throws TokenException, DALException;
 	
-	void checkReceptID(String token, int id) throws Exception;
+	void checkReceptID(String token, int id) throws TokenException, DALException;
 	
-	String refreshToken(String token) throws Exception;
+	String refreshToken(String token) throws TokenException, DALException;
 	
-	List<Integer> getUserCount(String token) throws Exception;
+	List<Integer> getUserCount(String token) throws TokenException, DALException;
 	
-	void deleteProduktBatch(String token, int id) throws Exception;
+	void deleteProduktBatch(String token, int id) throws TokenException, DALException;
 	
 }

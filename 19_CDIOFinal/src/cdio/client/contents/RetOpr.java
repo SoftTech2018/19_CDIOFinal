@@ -5,6 +5,7 @@ import java.util.List;
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;

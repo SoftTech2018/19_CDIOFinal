@@ -37,6 +37,7 @@ public class Menu extends Composite {
 	private Label error;
 	private Label time;
 	private Button logud;
+	private Timer sec;
 
 	// Tom menu
 	public Menu(Controller controller) {
@@ -298,7 +299,7 @@ public class Menu extends Composite {
 	}
 
 	public void timer(){
-		Timer sec = new Timer(){
+		sec = new Timer(){
 			@Override
 			public void run() {
 				if (Controller.seconds < 10)
@@ -313,7 +314,7 @@ public class Menu extends Composite {
 						time.setStyleName("Time-Error");
 						if (Controller.minutes == -1){
 							Window.alert("Sessionen er udløbet.");
-							this.cancel();
+							cancelTimer();
 							logud.click(); // Log brugeren ud
 						}
 					} 
@@ -323,6 +324,10 @@ public class Menu extends Composite {
 			}
 		};
 		sec.scheduleRepeating(1000); // Opdater hvert minut
+	}
+	
+	public void cancelTimer(){
+		sec.cancel();
 	}
 
 	// Clickhandler til logud-knappen
