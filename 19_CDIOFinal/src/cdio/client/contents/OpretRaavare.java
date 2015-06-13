@@ -1,14 +1,10 @@
 package cdio.client.contents;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
-import cdio.shared.ReceptDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -31,7 +27,7 @@ public class OpretRaavare extends Composite {
 	private Button opret;
 	private Label error;
 	private boolean idValid=false, navnValid=false, levValid=false;
-	private ArrayList<Integer> liste = new ArrayList<>();
+	private int[] liste;
 
 	public OpretRaavare() {
 		vPane = new VerticalPanel();
@@ -85,34 +81,26 @@ public class OpretRaavare extends Composite {
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
-				opretListe(result);
+				int i = 0;
+				for(RaavareDTO rv : result){
+					if(rv.getRaavareId()>i){
+						i=rv.getRaavareId();
+					}
+				}
+				
+				liste = new int[i+1];
+				
+				int j=1;
+				
+				for(RaavareDTO rv : result){
+					liste[rv.getRaavareId()]=1;
+					ft.setText(j, 2, i+" i listekald");
+					j++;			
+				}
 			}					
 		});
 	}
 	
-	private void opretListe(List<RaavareDTO> result){
-		ft.setText(0, 2, "Succes i opret listekald");
-		ft.setText(1, 2, result.get(0).getRaavareNavn());
-		liste.set(2, Integer.valueOf(1));
-		String test = String.valueOf(liste.get(2).intValue());
-		ft.setText(2, 2, test);
-		
-//		for(int i = 0; i<result.size();i++){
-//			int k=i+100;
-////			liste.add(result.get(i).getRaavareId(), 1);
-//			liste.set(i, 1);
-//			
-//			ft.setText(i+1, 2, i+" i listekald");
-//		}
-		int i = 1;
-		for(RaavareDTO rv : result){
-			liste.set(rv.getRaavareId(), 1);
-			ft.setText(i, 2, i+" i listekald");
-			i++;
-		}
-	}
-
-
 	private class OpretClick implements ClickHandler{
 
 		@Override
@@ -152,7 +140,7 @@ public class OpretRaavare extends Composite {
 				id.setStyleName("TextBox-OpretError");
 				idValid = false;
 			} else{				
-				if(liste.get(Integer.parseInt(id.getText())).equals(1)){
+				if(liste[Integer.parseInt(id.getText())]==1){
 					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
 					id.setStyleName("TextBox-OpretError");
 					idValid = false;
