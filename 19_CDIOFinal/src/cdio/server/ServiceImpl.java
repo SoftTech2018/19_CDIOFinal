@@ -94,12 +94,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	 * 
 	 * @param html the html string to escape
 	 * @return the escaped string
+	 * @throws DALException 
 	 */
-	private String escapeHtml(String html) {
-		if (html == null) {
+	private String escapeHtml(String html) throws DALException {
+		if (html == null)
 			return null;
-		}
-		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		html = html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+		if (!FieldVerifier.illigalChars(html))
+			throw new DALException("Ulovligt input");
+		return html;
 	}
 
 	@Override
@@ -107,8 +110,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (TEST_DELAY)
 			try {
 				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-			}
+			} catch (InterruptedException e1) {}
 
 		// Sikring mod SQL-injection
 		String userID = escapeHtml(Integer.toString(user.getUserId()));
@@ -175,8 +177,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		throw new TokenException("Adgang nægtet.");
 	}
 
-
-
 	@Override
 	public List<UserDTO> getOprList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
@@ -208,6 +208,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		return dao.updateUser(user);
 	}
 
+	@Override
 	public List<RaavareDTO> getRaavareList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
 			try {
@@ -235,6 +236,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new TokenException("Adgang nægtet");
 	}
 
+	@Override
 	public List<ProduktBatchDTO> getPBList(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
 			try {
@@ -277,6 +279,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	}
 
+	@Override
 	public void updateRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
 		if (TEST_DELAY)
 			try {
@@ -290,7 +293,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 	}
 
-
+	@Override
 	public List<ReceptDTO> getReceptList(String token) throws TokenException, DALException{
 		if(TEST_DELAY)
 			try {
@@ -337,6 +340,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		return list;
 	}
 
+	@Override
 	public void createRecept(String token, ReceptDTO recept) throws TokenException, DALException {
 		if (TEST_DELAY)
 			try {
@@ -352,6 +356,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		} 
 	}
 
+	@Override
 	public void createRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
 		if (TEST_DELAY)
 			try {
@@ -368,8 +373,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 	}
 
-
-
 	@Override
 	public void getRaavareID(String token, int raavareid) throws TokenException, DALException {
 		if (TEST_DELAY)
@@ -385,10 +388,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				throw new DALException("Råvareid ukendt!");
 			}		
 		}
-
-
 	}
-
 
 	@Override
 	public void createReceptKomp(String token, ReceptKompDTO receptkomp) throws TokenException, DALException {
@@ -425,7 +425,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new DALException("Recepten er i brug");
 		}
 	}
-
 
 	@Override
 	public String refreshToken(String token) throws TokenException, DALException {

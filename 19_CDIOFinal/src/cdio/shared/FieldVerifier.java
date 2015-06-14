@@ -1,7 +1,5 @@
 package cdio.shared;
 
-import com.google.gwt.i18n.client.NumberFormat;
-
 /**
  * <p>
  * FieldVerifier validates that the name the user enters is valid.
