@@ -209,6 +209,9 @@ public class RetOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			((Button) ft.getWidget(eventRow, 9)).setText("Loading");
+			((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+			
 			UserDTO user = new UserDTO(ft.getText(eventRow, 0), 
 					((TextBox) ft.getWidget(eventRow, 1)).getText(), 
 					((TextBox) ft.getWidget(eventRow, 2)).getText(), 
@@ -223,12 +226,14 @@ public class RetOpr extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
+					((Button) ft.getWidget(eventRow, 9)).setText("Ok");
+					((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 					error.setText(caught.getMessage());
 					error.setStyleName("TextLabel-ErrorMessage");
 				}
 
 				@Override
-				public void onSuccess(UserDTO result) {					
+				public void onSuccess(UserDTO result) {		
 					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
 					uIni = ((TextBox) ft.getWidget(eventRow, 2)).getText();
 					uCpr = ((TextBox) ft.getWidget(eventRow, 3)).getText();
@@ -252,6 +257,8 @@ public class RetOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			error.setText("");
+			
 			// Sætter text/widgets tilbage til oprindelige status
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
 		

@@ -34,7 +34,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 
-	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
+	private boolean TEST_DELAY = true; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
 
 	private TokenHandler th;
 	private IControllerDAO dao;
@@ -202,7 +202,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (!getRole(token).equalsIgnoreCase("Admin")) 
 			throw new TokenException("Adgang nægtet");
 		
-		if (FieldVerifier.isValidCpr(user.getCpr()) || FieldVerifier.isValidInitial(user.getIni()) || FieldVerifier.isValidName(user.getName()) || FieldVerifier.isValidPassword(user.getPassword()) || FieldVerifier.isValidRoles(user))
+		if (!FieldVerifier.isValidCpr(user.getCpr()) || !FieldVerifier.isValidInitial(user.getIni()) || !FieldVerifier.isValidName(user.getName()) || !FieldVerifier.isValidPassword(user.getPassword()) || !FieldVerifier.isValidRoles(user))
 			throw new DALException("Ugyldigt input");
 		
 		return dao.updateUser(user);
