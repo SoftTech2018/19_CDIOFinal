@@ -103,9 +103,9 @@ public class OpretRB extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			RaavareBatchDTO raavare = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(mængde.getText()));
+			RaavareBatchDTO raavareBatch = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(mængde.getText()));
 
-			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
+			Controller.service.createRaavareBatch(Controller.token, raavareBatch, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {

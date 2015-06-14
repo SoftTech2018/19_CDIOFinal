@@ -78,6 +78,8 @@ public interface IControllerDAO {
 	public List<PbViewDTO> getPbViewList(int pb_id) throws DALException;
 	
 	public void createRaavare(RaavareDTO raavare) throws DALException;
+	
+	public void createRaavareBatch(RaavareBatchDTO raavareBatch) throws DALException;
 
 	public int getRaavareID(int raavareid) throws DALException;
 	

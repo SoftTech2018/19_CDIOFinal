@@ -231,6 +231,11 @@ public class ControllerDAO implements IControllerDAO {
 		pbDAO.deleteProduktBatch(id);
 	}
 
+	@Override
+	public void createRaavareBatch(RaavareBatchDTO raavareBatch) throws DALException {
+		rbDAO.createRaavareBatch(raavareBatch);
+	}
+
 	
 }
 	
