@@ -14,24 +14,42 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretOpr extends Composite {
 	
-	private VerticalPanel vPane;
+	private VerticalPanel vPane, vPane2;
+	private HorizontalPanel hPane;
 	private Label error;
-	private FlexTable ft;
+	private FlexTable ft, ft2;
 	private TextBox id, navn, ini, cpr, pass;
 	private CheckBox admin, farm, vaerk, opr;
 	private Button ok;
 	private boolean idValid, navnValid, passValid, cprValid, iniValid, roleValid;
+	private int count;
 	
 	public OpretOpr(){
 		vPane = new VerticalPanel();
-		initWidget(vPane);
+		vPane2 = new VerticalPanel();
+		hPane = new HorizontalPanel();
+		initWidget(hPane);
+		hPane.add(vPane);
+		hPane.add(vPane2);
+		ft2 = new FlexTable();
+		ft2.setStyleName("FlexTable-Content");
+		vPane2.add(ft2);
+		count = 0;
 		run();
+	}
+	
+	public void addUser(String name){
+		ft2.setText(0, 0, "Brugere tilføjet:");
+		ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
+		count++;
+		ft2.setText(count, 0, name);
 	}
 	
 	private void run(){
@@ -135,6 +153,7 @@ public class OpretOpr extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
+					addUser(navn.getText());
 					Window.alert("Bruger " + navn.getText() + " blev oprettet.");
 					run();
 					Controller.refreshToken();

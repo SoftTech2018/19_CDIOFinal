@@ -4,6 +4,7 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
+import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -72,6 +73,8 @@ public class SletOpr extends Composite {
 				ft.getFlexCellFormatter().setWidth(0, 10, "45px");
 				
 				for (int i=0; i<result.size(); i++){
+					// Tilføj kun de brugere der ikke er deaktiverede
+					if (FieldVerifier.isValidRoles(result.get(i))){	
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));
 					ft.setText(i+1, 1, result.get(i).getName());
 					ft.setText(i+1, 2, result.get(i).getIni());
@@ -98,6 +101,7 @@ public class SletOpr extends Composite {
 					slet.setStyleName("Button-Ret");
 					slet.addClickHandler(new SletClick());
 					ft.setWidget(i+1, 9, slet);
+					}
 				}
 				vPane.add(ft);
 				Controller.refreshToken();
@@ -112,6 +116,8 @@ public class SletOpr extends Composite {
 		public void onClick(ClickEvent event) {
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
 			final int userId = Integer.parseInt(ft.getText(eventRow, 0));
+			((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+			((Button) ft.getWidget(eventRow, 9)).setText("Loading");
 			Controller.service.deleteUser(Controller.token, userId, new AsyncCallback<Void>(){
 
 				@Override
