@@ -138,8 +138,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (TEST_DELAY)
 			try {
 				Thread.sleep(2000);
-			} catch (InterruptedException e1) {
-			}
+			} catch (InterruptedException e1) {}
 
 		if (th.validateToken(token) != null){
 			UserDTO user;
@@ -154,11 +153,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				return "FARMACEUT";
 			if (user.isVaerkfoerer())
 				return "VAERKFOERER";
-			//			if (user.isOperatoer()) // Skal en operatør kunne logge ind?
-			//				return "OPERATOER";
+			//if (user.isOperatoer()) // Skal en operatør kunne logge ind?
+			//return "OPERATOER";
 			throw new TokenException("Bruger har ingen adgang."); // Hvis brugeren ikke har en gyldig rolle
 		} else {
-			throw new TokenException("Adgang nægtet.");			
+			throw new TokenException("Ugyldig token.");			
 		}
 	}
 
@@ -199,10 +198,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 		
-		if (th.validateToken(token) != null)
-			return dao.updateUser(user);
-		else 
+		// Tjek om brugeren bag token har adgang til informationen
+		if (!getRole(token).equalsIgnoreCase("Admin")) 
 			throw new TokenException("Adgang nægtet");
+		
+		if (FieldVerifier.isValidCpr(user.getCpr()) || FieldVerifier.isValidInitial(user.getIni()) || FieldVerifier.isValidName(user.getName()) || FieldVerifier.isValidPassword(user.getPassword()) || FieldVerifier.isValidRoles(user))
+			throw new DALException("Ugyldigt input");
+		
+		return dao.updateUser(user);
 	}
 
 	public List<RaavareDTO> getRaavareList(String token) throws TokenException, DALException {

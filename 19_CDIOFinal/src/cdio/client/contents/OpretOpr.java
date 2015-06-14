@@ -253,7 +253,12 @@ public class OpretOpr extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			if (admin.getValue() || farm.getValue() || vaerk.getValue() || opr.getValue()) {
+			UserDTO user = new UserDTO();
+			user.setAdmin(admin.getValue());
+			user.setFarmaceut(farm.getValue());
+			user.setVaerkfoerer(vaerk.getValue());
+			user.setOperatoer(opr.getValue());
+			if (FieldVerifier.isValidRoles(user)) {
 				roleValid = true;
 			}
 			else {

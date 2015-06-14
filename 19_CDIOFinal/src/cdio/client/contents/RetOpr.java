@@ -172,25 +172,25 @@ public class RetOpr extends Composite {
 			oAdmin = new CheckBox();
 			oAdmin.setEnabled(true);
 			oAdmin.setValue(uAdmin);
-			oAdmin.addValueChangeHandler(new RolleCheck());
+			oAdmin.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 5, oAdmin);
 			
 			oFarm = new CheckBox();
 			oFarm.setEnabled(true);
 			oFarm.setValue(uFarm);
-			oFarm.addValueChangeHandler(new RolleCheck());
+			oFarm.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 6, oFarm);
 			
 			oVaerk = new CheckBox();
 			oVaerk.setEnabled(true);
 			oVaerk.setValue(uVeark);
-			oVaerk.addValueChangeHandler(new RolleCheck());
+			oVaerk.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 7, oVaerk);
 			
 			oOpr = new CheckBox();
 			oOpr.setEnabled(true);
 			oOpr.setValue(uOpr);
-			oOpr.addValueChangeHandler(new RolleCheck());
+			oOpr.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 8, oOpr);
 			
 			Button ok = new Button("Ok");
@@ -369,14 +369,18 @@ public class RetOpr extends Composite {
 		}
 	}
 	
-	private class RolleCheck implements ValueChangeHandler{
+	private class RolleCheck implements ClickHandler{
 
 		@Override
-		public void onValueChange(ValueChangeEvent event) {
-			if (((CheckBox) ft.getWidget(eventRow, 5)).getValue() || ((CheckBox) ft.getWidget(eventRow, 6)).getValue() || ((CheckBox) ft.getWidget(eventRow, 7)).getValue() || ((CheckBox) ft.getWidget(eventRow, 8)).getValue()) {
+		public void onClick(ClickEvent event) {
+			UserDTO user = new UserDTO();
+			user.setAdmin(((CheckBox) ft.getWidget(eventRow, 5)).getValue());
+			user.setFarmaceut(((CheckBox) ft.getWidget(eventRow, 6)).getValue());
+			user.setVaerkfoerer(((CheckBox) ft.getWidget(eventRow, 7)).getValue());
+			user.setOperatoer(((CheckBox) ft.getWidget(eventRow, 8)).getValue());
+			if (FieldVerifier.isValidRoles(user)) {
 				roleValid = true;
-			}
-			else {
+			} else {
 				roleValid = false;
 			}
 

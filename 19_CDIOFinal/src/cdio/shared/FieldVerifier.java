@@ -237,4 +237,21 @@ public class FieldVerifier {
 		// max 22 karakterer
 		return name.length() <= 22;
 	}
+
+	public static boolean isValidRoles(UserDTO user) {
+		int count = 0;
+		if(user.isAdmin())
+			count++;
+		if(user.isFarmaceut())
+			count++;
+		if(user.isVaerkfoerer())
+			count++;
+		if(user.isOperatoer())
+			count++;
+		
+		if(count != 1)
+			return false;
+		else 
+			return true;
+	}
 }
