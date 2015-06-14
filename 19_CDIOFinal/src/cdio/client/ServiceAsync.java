@@ -56,6 +56,8 @@ public interface ServiceAsync {
 	
 	void createRaavare(String token, RaavareDTO raavare ,AsyncCallback<Void> asyncCallback);
 	
+	void createRaavareBatch(String token, RaavareBatchDTO raavareBatch, AsyncCallback<Void> asyncCallback);
+	
 	void createReceptKomp(String token, ReceptKompDTO receptkomp, AsyncCallback<Void> asyncCallback);
 	
 	void checkReceptID(String token, int id, AsyncCallback<Void> asyncCallback);

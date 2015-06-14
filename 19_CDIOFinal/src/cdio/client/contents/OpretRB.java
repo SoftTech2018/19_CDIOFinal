@@ -4,6 +4,7 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,7 +24,7 @@ public class OpretRB extends Composite {
 	
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private TextBox id, navn, leverandør;
+	private TextBox rbID, raavareID, mængde;
 	private Button opret;
 	private Label error;
 	private boolean idValid=false, navnValid=false, levValid=false;
@@ -40,25 +41,25 @@ public class OpretRB extends Composite {
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-		ft.setText(0, 0, "Opret Råvare");
+		ft.setText(0, 0, "Opret Råvare Batch");
 
-		ft.setText(1, 0, "Råvare ID:");
-		id = new TextBox();
-		id.addKeyUpHandler(new IdCheck()); 
-		id.setStyleName("TextBox-Opret");
-		ft.setWidget(1, 1, id);
+		ft.setText(1, 0, "Råvare Batch ID:");
+		rbID = new TextBox();
+		rbID.addKeyUpHandler(new BatchIdCheck()); 
+		rbID.setStyleName("TextBox-Opret");
+		ft.setWidget(1, 1, rbID);
 
-		ft.setText(2, 0, "Råvare navn:");
-		navn = new TextBox();
-		navn.addKeyUpHandler(new NameCheck()); 
-		navn.setStyleName("Textbox-Opret");
-		ft.setWidget(2, 1, navn);
+		ft.setText(2, 0, "Råvare ID:");
+		raavareID = new TextBox();
+		raavareID.addKeyUpHandler(new IdCheck()); 
+		raavareID.setStyleName("Textbox-Opret");
+		ft.setWidget(2, 1, raavareID);
 
-		ft.setText(3, 0, "Leverandør:");
-		leverandør = new TextBox();
-		leverandør.addKeyUpHandler(new LevCheck()); 
-		leverandør.setStyleName("Textbox-Opret");
-		ft.setWidget(3, 1, leverandør);
+		ft.setText(3, 0, "Mængde:");
+		mængde = new TextBox();
+		mængde.addKeyUpHandler(new LevCheck()); 
+		mængde.setStyleName("Textbox-Opret");
+		ft.setWidget(3, 1, mængde);
 
 		opret = new Button("Opret");
 		opret.addClickHandler(new OpretClick());
@@ -102,7 +103,7 @@ public class OpretRB extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandør.getText());
+			RaavareBatchDTO raavare = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(mængde.getText()));
 
 			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
@@ -115,7 +116,7 @@ public class OpretRB extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
-					Window.alert("Råvare " + navn.getText() + " blev oprettet!");
+					Window.alert("Råvare Batch " + rbID.getText() + " blev oprettet!");
 					vPane.clear();
 					run();
 				}
@@ -152,7 +153,34 @@ public class OpretRB extends Composite {
 				opret.setEnabled(false);
 			}
 		}
+	}
+	
+	private class BatchIdCheck implements KeyUpHandler{
 
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			final TextBox id = (TextBox) event.getSource();
+			ft.setText(1, 2, "");
+			if(!FieldVerifier.isValidRaavareId(id.getText())){
+				id.setStyleName("TextBox-OpretError");
+				idValid = false;
+			} else{				
+				if(liste[Integer.parseInt(id.getText())]==1){
+					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
+					id.setStyleName("TextBox-OpretError");
+					idValid = false;
+				} else {
+					id.setStyleName("TextBox-Opret");
+					idValid = true;
+				}
+			}
+
+			if(navnValid && idValid && levValid)
+				opret.setEnabled(true);
+			else {
+				opret.setEnabled(false);
+			}
+		}
 	}
 
 	private class NameCheck implements KeyUpHandler{

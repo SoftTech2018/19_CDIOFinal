@@ -470,4 +470,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new DALException("Produktbatchen er påbegyndt og kan ikke slettes.");
 		}
 	}
+
+	@Override
+	public void createRaavareBatch(String token, RaavareBatchDTO raavareBatch)
+			throws TokenException, DALException {
+		// TODO Auto-generated method stub
+		
+	}
 }
