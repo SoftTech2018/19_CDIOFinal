@@ -28,7 +28,7 @@ public class OpretRB extends Composite {
 	private Button opret;
 	private Label error;
 	private boolean rbIDValid=false, raavareIDValid=false, maengdeValid=false;
-	private int[] liste;
+	private int[] raavareListe,rbListe;
 
 	public OpretRB() {
 		vPane = new VerticalPanel();
@@ -69,10 +69,11 @@ public class OpretRB extends Composite {
 		
 		
 		vPane.add(ft);
-		getListe();
+		getRaavareListe();
+		getRBListe();
 	}
 	
-	private void getListe(){
+	private void getRaavareListe(){
 		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
 			@Override
@@ -89,10 +90,36 @@ public class OpretRB extends Composite {
 					}
 				}
 				
-				liste = new int[i+1];
+				raavareListe = new int[i+1];
 				
 				for(RaavareDTO rv : result){
-					liste[rv.getRaavareId()]=1;
+					raavareListe[rv.getRaavareId()]=1;
+				}
+			}					
+		});
+	}
+	
+	private void getRBListe(){
+		Controller.service.getRaavareBatchList(Controller.token, new AsyncCallback<List<RaavareBatchDTO>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ft.setText(1, 2, "Fejl i listekald");
+			}
+
+			@Override
+			public void onSuccess(List<RaavareBatchDTO> result) {
+				int i = 0;
+				for(RaavareBatchDTO rv : result){
+					if(rv.getRaavareId()>i){
+						i=rv.getRbId();
+					}
+				}
+				
+				rbListe = new int[i+1];
+				
+				for(RaavareBatchDTO rv : result){
+					rbListe[rv.getRbId()]=1;
 				}
 			}					
 		});
@@ -137,7 +164,7 @@ public class OpretRB extends Composite {
 				id.setStyleName("TextBox-OpretError");
 				rbIDValid = false;
 			} else{				
-				if(liste[Integer.parseInt(id.getText())]==1){
+				if(rbListe[Integer.parseInt(id.getText())]==1){
 					ft.setText(1, 2, "Råvare Batch ID optaget. Vælg et andet.");
 					id.setStyleName("TextBox-OpretError");
 					rbIDValid = false;
@@ -164,14 +191,14 @@ public class OpretRB extends Composite {
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
 				raavareIDValid = false;
-			} else{				
-				if(liste[Integer.parseInt(id.getText())]==1){
-					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
-					id.setStyleName("TextBox-OpretError");
-					raavareIDValid = false;
-				} else {
+			} else{
+				if(raavareListe[Integer.parseInt(id.getText())]==1){
 					id.setStyleName("TextBox-Opret");
 					raavareIDValid = true;
+				} else {
+					ft.setText(1, 2, "Råvare ID ukendt. Vælg et andet.");
+					id.setStyleName("TextBox-OpretError");
+					raavareIDValid = false;
 				}
 			}
 
