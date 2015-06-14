@@ -36,6 +36,9 @@ public class FieldVerifier {
 	 * @return true if valid, false if invalid
 	 */
 	public static boolean isValidName(String name) {
+		if (!illigalChars(name))
+			return false;
+		
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
@@ -66,17 +69,20 @@ public class FieldVerifier {
 			return false;
 		if (pass.length()<4)
 			return false;
-		for (int i=0; i<pass.length(); i++){
-			char x = pass.charAt(i);
-			if (x == '&' || x == '<' || x == '>'){
-				return false;
-			}
-		}
+		
+		if (!illigalChars(pass))
+			return false;
 
 		return true;
 	}
 
 	public static boolean isValidInitial(String ini){
+		if (ini == null)
+			return false;
+		if (ini.length()>3)
+			return false;
+		if (!illigalChars(ini))
+			return false;
 		return true;
 	}
 
@@ -161,13 +167,8 @@ public class FieldVerifier {
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-			for (int j=0; i<name.length(); i++){
-				char x = name.charAt(i);
-				if (x == '&' || x == '<' || x == '>'){
-					return false;
-				}	
-
-			}
+			if (!illigalChars(name))
+				return false;
 			if (name.length() <= 1) {
 				return false;			
 			}
@@ -197,21 +198,12 @@ public class FieldVerifier {
 		if (name.length() > 22){
 			return false;
 		}
+		if (!illigalChars(name))
+			return false;
 		for (int i=0; i < name.length(); i++){
-			
 			String sString = name.substring(i, i+1);
-			if (sString.matches("[0-9]")){
+			if (sString.matches("[0-9]"))
 				return false;
-			}
-//			for (int j=0; i<name.length(); i++){
-//				char x = name.charAt(i);
-//				if (x == '&' || x == '<' || x == '>'){
-//					return false;
-//				}
-//			}
-			if(sString.charAt(0)=='&' || sString.charAt(0)=='&' || sString.charAt(0)=='&'){
-				return false;
-			}
 		}		
 		return true;
 	}
@@ -222,13 +214,8 @@ public class FieldVerifier {
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-			for (int j=0; i<name.length(); i++){
-				char x = name.charAt(i);
-				if (x == '&' || x == '<' || x == '>'){
-					return false;
-				}	
-
-			}
+			if (!illigalChars(name))
+				return false;
 			if (name.length() <= 1) {
 				return false;			
 			}
@@ -253,5 +240,14 @@ public class FieldVerifier {
 			return false;
 		else 
 			return true;
+	}
+	
+	public static boolean illigalChars(String string){
+		for (int i=0; i<string.length(); i++){
+			char p = string.charAt(i);
+			if (p=='#' || p=='<' || p=='>' || p=='"' || p=='&')
+				return false;
+		}
+		return true;
 	}
 }
