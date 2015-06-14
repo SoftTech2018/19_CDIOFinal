@@ -230,7 +230,7 @@ html {
 }
 
 .Button-Red{
-	background: linear-gradient(to right, #FF0000 , #FFB1B1);
+	background: linear-gradient(to right, #FF0000 , #FFD300);
 	width: 100px;
 }
 
@@ -259,14 +259,14 @@ html {
 
 .Header-Red {
 	border-radius: 25px 120px 0px 0px; 
-	background: linear-gradient(to right, #FF0000 , #FFB1B1);
+	background: linear-gradient(to right, #FF0000 , #FFD300);
 	height: 120px;
 	padding: 30px;
 	width: 1024px;
 }
 
 .Footer-Red {
-	background: linear-gradient(to right, #FFB1B1, #FF0000);
+	background: linear-gradient(to right, #FFD300, #FF0000);
 	clear: both;
 	padding: 15px;
 	border-radius: 0px 0px 25px 100px;
