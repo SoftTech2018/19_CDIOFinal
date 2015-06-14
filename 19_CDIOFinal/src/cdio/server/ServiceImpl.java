@@ -398,7 +398,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try{ dao.createReceptKomp(receptkomp);
 			}
 			catch(Exception DALException){
-				throw new Exception("Adgang nægtet!");
+				throw new DALException("Adgang nægtet!");
 			}
 		}
 	}
@@ -419,7 +419,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 		if (check){
-			throw new Exception("Recepten er i brug");
+			throw new DALException("Recepten er i brug");
 		}
 	}
 
