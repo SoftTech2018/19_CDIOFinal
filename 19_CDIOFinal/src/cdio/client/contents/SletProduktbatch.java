@@ -77,7 +77,13 @@ public class SletProduktbatch extends Composite{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
-			FieldVerifier.isValidUserId(id.getText());
+			if(!FieldVerifier.isValidUserId(id.getText())){
+				id.setStyleName("TextBox-SletProduktbatchError");
+				btn.setEnabled(false);
+			} else {
+				id.setStyleName("TextBox-SletProduktbatch");
+				btn.setEnabled(true);
+			}
 		}
 	}
 

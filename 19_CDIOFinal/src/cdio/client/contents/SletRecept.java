@@ -80,7 +80,13 @@ public class SletRecept extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
-			FieldVerifier.isValidUserId(id.getText());
+			if(!FieldVerifier.isValidUserId(id.getText())){
+				id.setStyleName("TextBox-SletReceptError");
+				btn.setEnabled(false);
+			} else {
+				id.setStyleName("TextBox-SletRecept");
+				btn.setEnabled(true);
+			}
 		}
 	}
 
