@@ -456,9 +456,16 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
-		
+		boolean check = false;
 		if(th.validateToken(token) != null){
-
+			try{
+				dao.deleteProduktBatch(id);
+			} catch (Exception DALException){
+				check = true;
+			}
+		}
+		if (check){
+			throw new DALException("Produktbatchen er påbegyndt og kan ikke slettes.");
 		}
 	}
 }

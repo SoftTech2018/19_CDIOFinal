@@ -64,3 +64,4 @@ SELECT COUNT(operatoer) FROM roller WHERE operatoer = 1;
 select distinct * from produktbatch left join produktbatchkomponent using (pb_id) left join recept using (recept_id) left join receptkomponent using (recept_id) left join raavare using (raavare_id) left join raavarebatch using (rb_id) where pb_id = #1
 DELETE FROM recept WHERE recept_id = #1
 SELECT * FROM produktbatch WHERE pb_id = #1 AND status = 0
+DELETE FROM produktbatch WHERE pb_id = #1

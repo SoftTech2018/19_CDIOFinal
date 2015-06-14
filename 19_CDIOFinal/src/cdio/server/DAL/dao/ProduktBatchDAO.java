@@ -114,6 +114,16 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 	}
 	
 	public void deleteProduktBatch(int id) throws DALException{
-		Connector.doUpdate(txt.deleteProduktBatch(id));
+		ResultSet rs = Connector.doQuery(txt.deleteProduktBatch(id));
+		try {
+			if(rs.next()){
+				Connector.doUpdate(txt.deleteProduktBatchFinal(id));
+			} else{
+				throw new DALException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
