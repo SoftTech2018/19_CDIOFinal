@@ -236,6 +236,11 @@ public class ControllerDAO implements IControllerDAO {
 		rbDAO.createRaavareBatch(raavareBatch);
 	}
 
+	@Override
+	public int getRaaID(int rbID) throws DALException {
+		return rbDAO.getRaavareBatch(rbID).getRaavareId();
+	}
+
 	
 }
 	

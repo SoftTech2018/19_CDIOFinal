@@ -181,21 +181,19 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
 					}
+					mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
+					mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
+					mc.restListe=mc.receptKompListe;
 					if(!dao.getProduktBatchKompListIsEmpty(mc.prod_batch_id)){
-//					if(!dao.getPbKompDAO().getProduktBatchKompList(mc.prod_batch_id).isEmpty()){
-						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);
-						mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
-						mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
-						mc.restListe=mc.receptKompListe;
-//						for(ReceptKompDTO rk : mc.getReceptKompListe()){
-//							for(ProduktBatchKompDTO pb : mc.getpbKompListe()){
-//								if(rk.equals(pb)){
-//									mc.restListe.
-//								}
-//							}
-//						}
-						for(ProduktBatchKompDTO pb : mc.getpbKompListe()){
-							mc.restListe.remove(pb);
+					
+						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);						
+					
+						for(ReceptKompDTO rk : mc.getReceptKompListe()){
+							for(ProduktBatchKompDTO pbk : mc.getpbKompListe()){
+								if(rk.getRaavareId()==dao.getRaaID(pbk.getRbId())){
+									mc.restListe.remove(rk);
+								}
+							}
 						}
 						if(mc.restListe.isEmpty()){
 							trans.P111("Nr er brugt; tast nyt.");
@@ -206,7 +204,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					product = dao.getReceptName(mc.getProdBatchID());
 //					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
-					prodInput = trans.RM20("Bekraft produkt:",product," ?");
+					prodInput = trans.RM20("Bekraft recept:",product," ?");
 					if (prodInput.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
 						trans.P111("");
@@ -430,8 +428,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						menu.show("Vare ID: "+mc.getVareID()+", Afvejning: "+mc.getAfvejning());
 
 //						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
-						mc.restListe.remove(0);
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
+						mc.restListe.remove(0);
 //						mc.getpbKompListe().add(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 //						if(mc.getReceptKompListe().isEmpty()){
 						if(mc.restListe.isEmpty()){	

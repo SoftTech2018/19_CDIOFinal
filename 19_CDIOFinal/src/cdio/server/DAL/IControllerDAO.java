@@ -83,6 +83,8 @@ public interface IControllerDAO {
 
 	public int getRaavareID(int raavareid) throws DALException;
 	
+	public int getRaaID(int rbID) throws DALException;
+	
 	public void createReceptKomp(ReceptKompDTO receptkomp) throws DALException;
 	
 	public void checkReceptID(int id) throws DALException;
