@@ -27,7 +27,7 @@ public class OpretRB extends Composite {
 	private TextBox rbID, raavareID, mængde;
 	private Button opret;
 	private Label error;
-	private boolean idValid=false, navnValid=false, levValid=false;
+	private boolean rbIDValid=false, raavareIDValid=false, maengdeValid=false;
 	private int[] liste;
 
 	public OpretRB() {
@@ -127,6 +127,34 @@ public class OpretRB extends Composite {
 
 	}
 
+	private class BatchIdCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			final TextBox id = (TextBox) event.getSource();
+			ft.setText(1, 2, "");
+			if(!FieldVerifier.isValidRaavareBatchId(id.getText())){
+				id.setStyleName("TextBox-OpretError");
+				rbIDValid = false;
+			} else{				
+				if(liste[Integer.parseInt(id.getText())]==1){
+					ft.setText(1, 2, "Råvare Batch ID optaget. Vælg et andet.");
+					id.setStyleName("TextBox-OpretError");
+					rbIDValid = false;
+				} else {
+					id.setStyleName("TextBox-Opret");
+					rbIDValid = true;
+				}
+			}
+
+			if(rbIDValid && raavareIDValid && maengdeValid)
+				opret.setEnabled(true);
+			else {
+				opret.setEnabled(false);
+			}
+		}
+	}
+	
 	private class IdCheck implements KeyUpHandler{
 
 		@Override
@@ -135,47 +163,19 @@ public class OpretRB extends Composite {
 			ft.setText(1, 2, "");
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
-				idValid = false;
+				raavareIDValid = false;
 			} else{				
 				if(liste[Integer.parseInt(id.getText())]==1){
 					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
 					id.setStyleName("TextBox-OpretError");
-					idValid = false;
+					raavareIDValid = false;
 				} else {
 					id.setStyleName("TextBox-Opret");
-					idValid = true;
+					raavareIDValid = true;
 				}
 			}
 
-			if(navnValid && idValid && levValid)
-				opret.setEnabled(true);
-			else {
-				opret.setEnabled(false);
-			}
-		}
-	}
-	
-	private class BatchIdCheck implements KeyUpHandler{
-
-		@Override
-		public void onKeyUp(KeyUpEvent event) {
-			final TextBox id = (TextBox) event.getSource();
-			ft.setText(1, 2, "");
-			if(!FieldVerifier.isValidRaavareId(id.getText())){
-				id.setStyleName("TextBox-OpretError");
-				idValid = false;
-			} else{				
-				if(liste[Integer.parseInt(id.getText())]==1){
-					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
-					id.setStyleName("TextBox-OpretError");
-					idValid = false;
-				} else {
-					id.setStyleName("TextBox-Opret");
-					idValid = true;
-				}
-			}
-
-			if(navnValid && idValid && levValid)
+			if(rbIDValid && raavareIDValid && maengdeValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
