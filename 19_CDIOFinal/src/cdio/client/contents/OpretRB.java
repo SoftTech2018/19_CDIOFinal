@@ -187,7 +187,7 @@ public class OpretRB extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			final TextBox id = (TextBox) event.getSource();
-			ft.setText(1, 2, "");
+			ft.setText(2, 2, "");
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
 				raavareIDValid = false;
@@ -196,7 +196,7 @@ public class OpretRB extends Composite {
 					id.setStyleName("TextBox-Opret");
 					raavareIDValid = true;
 				} else {
-					ft.setText(1, 2, "Råvare ID ukendt. Vælg et andet.");
+					ft.setText(2, 2, "Råvare ID ukendt. Vælg et andet.");
 					id.setStyleName("TextBox-OpretError");
 					raavareIDValid = false;
 				}
