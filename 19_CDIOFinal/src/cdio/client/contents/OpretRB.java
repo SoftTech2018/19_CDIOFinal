@@ -57,7 +57,7 @@ public class OpretRB extends Composite {
 
 		ft.setText(3, 0, "Mængde:");
 		mængde = new TextBox();
-		mængde.addKeyUpHandler(new LevCheck()); 
+		mængde.addKeyUpHandler(new MaengdeCheck()); 
 		mængde.setStyleName("Textbox-Opret");
 		ft.setWidget(3, 1, mængde);
 
@@ -183,21 +183,22 @@ public class OpretRB extends Composite {
 		}
 	}
 
-	private class NameCheck implements KeyUpHandler{
+	private class MaengdeCheck implements KeyUpHandler{
 
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox name = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidRaavareName(name.getText())){
+			if (!FieldVerifier.isValidMaengde(mængde.getText())){
 				name.setStyleName("TextBox-OpretError");
-				navnValid = false;
+				maengdeValid = false;
 			}
 			else{
 				name.setStyleName("TextBox-Opret");
-				navnValid = true;
+				maengdeValid = true;
 
-			} 
-			if(navnValid && idValid && levValid)
+			}
+			
+			if(rbIDValid && raavareIDValid && maengdeValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
@@ -205,32 +206,5 @@ public class OpretRB extends Composite {
 		}
 
 	}
-
-	private class LevCheck implements KeyUpHandler{
-
-		@Override
-		public void onKeyUp(KeyUpEvent event) {
-			TextBox name = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidLeverandorName(name.getText())){
-				name.setStyleName("TextBox-OpretError");
-				levValid = false;
-			}
-			else{
-				name.setStyleName("TextBox-Opret");
-				levValid = true;
-
-			} 
-			if(navnValid && idValid && levValid)
-				opret.setEnabled(true);
-			else {
-				opret.setEnabled(false);
-			}
-
-		}
-
-	}
-
-
-
 
 }

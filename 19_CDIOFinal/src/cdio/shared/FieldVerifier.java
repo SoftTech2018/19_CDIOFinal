@@ -201,6 +201,19 @@ public class FieldVerifier {
 			return false;
 		}
 	}
+	
+	public static boolean isValidMaengde(String id){
+		try {
+			int i = Integer.parseInt(id);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
 
 	public static boolean isValidRaavareName(String name) {
 		if (name.length() <= 1) {
