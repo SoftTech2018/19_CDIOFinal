@@ -472,9 +472,20 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	}
 
 	@Override
-	public void createRaavareBatch(String token, RaavareBatchDTO raavareBatch)
-			throws TokenException, DALException {
-		// TODO Auto-generated method stub
+	public void createRaavareBatch(String token, RaavareBatchDTO raavareBatch) throws TokenException, DALException {
+		if (TEST_DELAY)
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
+		if(th.validateToken(token) != null){
+			try{
+				dao.createRaavareBatch(raavareBatch);
+			}
+			catch(DALException e){
+				throw new DALException("Råvare Batch findes allerede!");
+			}
+		}
 		
 	}
 }
