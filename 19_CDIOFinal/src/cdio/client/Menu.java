@@ -8,6 +8,7 @@ import cdio.client.contents.OpretRecept;
 import cdio.client.contents.RetOpr;
 import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
+import cdio.client.contents.SletProduktbatch;
 import cdio.client.contents.SletRecept;
 import cdio.client.contents.StartPage;
 import cdio.client.contents.VisOpr;
@@ -292,6 +293,16 @@ public class Menu extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				con.setContent(new OpretPB());
+			}
+		});
+		
+		Anchor sletPB = new Anchor("Slet produktbatch");
+		ft.setWidget(5, 0, sletPB);
+		sletPB.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new SletProduktbatch());
 			}
 		});
 
