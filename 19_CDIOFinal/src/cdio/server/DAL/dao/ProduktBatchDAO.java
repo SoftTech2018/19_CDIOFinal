@@ -110,13 +110,10 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 	}
 
 	public void checkReceptID(int id) throws DALException{
-//		List<ProduktBatchDTO> list = new ArrayList<ProduktBatchDTO>();
-//		ResultSet rs = Connector.doQuery(txt.checkReceptID(id));
-		//			if (!rs.next()){
-//				throw new DALException();
-//			} else {
-//				Connector.doUpdate(txt.deleteRecept(id));
-//			}
 		Connector.doUpdate(txt.deleteRecept(id));
+	}
+	
+	public void deleteProduktBatch(int id) throws DALException{
+		Connector.doUpdate(txt.deleteProduktBatch(id));
 	}
 }

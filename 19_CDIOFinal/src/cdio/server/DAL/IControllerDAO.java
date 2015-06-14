@@ -87,6 +87,8 @@ public interface IControllerDAO {
 	
 	public List<Integer> getUserCount() throws DALException;
 	
+	public void deleteProduktBatch(int id) throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;

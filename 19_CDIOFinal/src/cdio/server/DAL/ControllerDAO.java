@@ -226,6 +226,11 @@ public class ControllerDAO implements IControllerDAO {
 		return list;
 	}
 
+	@Override
+	public void deleteProduktBatch(int id) throws DALException {
+		pbDAO.deleteProduktBatch(id);
+	}
+
 	
 }
 	

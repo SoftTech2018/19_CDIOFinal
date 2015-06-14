@@ -295,5 +295,11 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
 		return output;
 	}
+	
+	public String deleteProduktBatch(int id){
+		String output = sqlCommands[66];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
+		return output;
+	}
 
 }
