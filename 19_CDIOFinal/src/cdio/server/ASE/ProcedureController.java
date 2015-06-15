@@ -176,7 +176,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 					mc.setProdBatchID(Integer.parseUnsignedInt(input));
 					try{
 						dao.getProduktBatch(mc.prod_batch_id);
-//						dao.getPbDAO().getProduktBatch(mc.prod_batch_id);
 					} catch (DALException e){
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
@@ -428,7 +427,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						menu.show("Vare ID: "+mc.getVareID()+", Afvejning: "+mc.getAfvejning());
 
 //						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
-						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
+						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
 						mc.restListe.remove(0);
 //						mc.getpbKompListe().add(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 //						if(mc.getReceptKompListe().isEmpty()){
@@ -580,6 +579,14 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 	private void setTara(double tara){
 		this.tara=tara;
+	}
+	
+	private String getHost(){
+		return this.host;
+	}
+
+	private void setHost(String host){
+		this.host=host;
 	}
 
 }

@@ -26,7 +26,7 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 		ResultSet rs = Connector.doQuery(txt.getProduktBatchKomp(pbId, rbId));		
 	    try {
 	    	if (!rs.first()) throw new DALException("ProduktBatchKomponent " + pbId + ", " + rbId + " findes ikke");
-	    	return new ProduktBatchKompDTO (rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id"));
+	    	return new ProduktBatchKompDTO (rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id"),rs.getString("terminal"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
@@ -37,7 +37,7 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 		ResultSet rs = Connector.doQuery(txt.getProduktBatchKompList(pbId));
 		try {
 			while (rs.next()) {
-				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id")));
+				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id"),rs.getString("terminal")));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
@@ -49,7 +49,7 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 		ResultSet rs = Connector.doQuery(txt.getCommand(11));
 		try {
 			while (rs.next()) {
-				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id")));
+				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id"),rs.getString("terminal")));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
