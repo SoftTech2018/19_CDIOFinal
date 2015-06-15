@@ -89,8 +89,7 @@ public class OpretRecept extends Composite {
 		
 		ft4 = new FlexTable();
 		ft4.setWidget(12, 0, error);
-		ft4.getCellFormatter().setWidth(0, 1, "500 px");
-		ft4.setText(0, 1, "Test");
+		ft4.setText(0, 1, "");
 		ft4.setWidget(0, 2, error);
 		
 		
@@ -98,6 +97,7 @@ public class OpretRecept extends Composite {
 		vPane.add(ft);	
 		vPane.add(ft4);
 		vPane1.add(ft3);
+		
 		
 		
 		
@@ -142,7 +142,8 @@ public class OpretRecept extends Composite {
 				public void onSuccess(Void result) {
 					Window.alert("Receptkomponent oprettet!");
 					error.setStyleName("Recept-Error");
-					error.setText("Receptkomponent"+raavareid.getText() +" er oprettet.");
+					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
+				
 
 				}
 
@@ -167,7 +168,7 @@ public class OpretRecept extends Composite {
 				public void onFailure(Throwable caught) {
 					opret.setEnabled(true);	
 					error.setText(caught.getMessage());
-					error.setStyleName("TextBox-ErrorMessage");
+					error.setStyleName("Recept-Error");
 					
 				}
 
@@ -176,6 +177,7 @@ public class OpretRecept extends Composite {
 					Window.alert("Recept " + navn.getText() + " blev oprettet!");
 					receptOprettet = true;
 					error.setText("Recept er oprettet. Tilføj nye receptkomponenter!");
+					error.setStyleName("Recept-Error");
 				}
 					
 			} );
@@ -270,11 +272,6 @@ public class OpretRecept extends Composite {
 			
 			ft2.setWidget(3, 1, tolerance);
 
-			ft2.getFlexCellFormatter().setWidth(0, 0, "200px");
-			ft2.getFlexCellFormatter().setWidth(0, 1, "200px");
-			ft2.getFlexCellFormatter().setWidth(0, 2, "200px");
-			ft2.getFlexCellFormatter().setWidth(0, 3, "200px");
-			ft2.getFlexCellFormatter().setWidth(0, 4, "200px");
 			
 			vPane1.add(ft2);
 
@@ -304,7 +301,7 @@ public class OpretRecept extends Composite {
 					public void onFailure(Throwable caught) {
 						raavareidValid = false;
 						error.setText(caught.getMessage());
-						error.setStyleName("TextBox-ErrorMessage");
+						error.setStyleName("Recept-Error");
 					}
 
 					@Override
