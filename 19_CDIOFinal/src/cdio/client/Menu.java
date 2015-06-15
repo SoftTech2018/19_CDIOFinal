@@ -350,7 +350,7 @@ public class Menu extends Composite {
 				}
 			}
 		};
-		sec.scheduleRepeating(1000); // Opdater hvert minut
+		sec.scheduleRepeating(1000); // Opdater hvert sekund
 	}
 	
 	public static void cancelTimer(){

@@ -3,37 +3,30 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
-import cdio.shared.RaavareDTO;
 import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
-import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VisPB extends Composite {
 
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
 	private Label error;
 	private Button ok;
-
 
 	public VisPB() {
 		vPane = new VerticalPanel();
@@ -42,10 +35,9 @@ public class VisPB extends Composite {
 		initWidget(vPane);
 		ft = new FlexTable();
 		run();
-
 	}
+	
 	private void run() {
-		
 		Controller.service.getPBList(Controller.token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
 			@Override
@@ -87,8 +79,6 @@ public class VisPB extends Composite {
 				ft.getFlexCellFormatter().setWidth(0, 4, "130px");
 				ft.getFlexCellFormatter().setWidth(0, 5, "130px");
 
-
-
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
 					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
@@ -115,18 +105,14 @@ public class VisPB extends Composite {
 					pbkomp.setStyleName("Button-Komponenter"); 
 					pbkomp.addClickHandler(new KompClick());
 					ft.setWidget(i+1, 7, pbkomp);
-
 				}
-
 			}
-
 		});
 	}
 
 	private class KompClick implements ClickHandler {
 
-		int eventRow;
-
+		private int eventRow;
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -155,7 +141,6 @@ public class VisPB extends Composite {
 						error.setText(caught.getMessage());
 						error.setStyleName("TextBox-ErrorMessage");	
 					}
-
 				}
 
 				@Override
@@ -181,7 +166,6 @@ public class VisPB extends Composite {
 					ft2.getFlexCellFormatter().setWidth(0, 2, "35px");
 					ft2.getFlexCellFormatter().setWidth(0, 3, "45");
 					ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
-					
 
 					for (int i = 0; i < result.size(); i++) {
 						ft2.setText(i+3, 0, Integer.toString(result.get(i).getRbId()));
@@ -191,18 +175,13 @@ public class VisPB extends Composite {
 						ft2.setText(i+3, 4, result.get(i).getHost());
 						//						ft2.setText(i+2, 5, result.get(i).getIP); Mangler database implementering
 					}
-
 				}
-
 			});
-
-
 		}
-
 	}
+	
 	private class SkjulClick implements ClickHandler {
 		int eventRow;
-
 
 		@Override
 		public void onClick(ClickEvent event) {
@@ -212,25 +191,22 @@ public class VisPB extends Composite {
 			pbkompnew.addClickHandler(new KompClick());
 
 			ft.setWidget(eventRow, 7, pbkompnew);
-
 		}
-
 	}
 
 	private class Udprint implements ClickHandler {
 		int eventRow;
 
-
 		@Override
 		public void onClick(ClickEvent event) {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
-//			System.out.println("test1");
 
 			ProduktBatchDTO pb = new ProduktBatchDTO();
 			pb.setPbId(Integer.parseInt( ft.getText(eventRow, 0)));
 			pb.setReceptId(Integer.parseInt( ft.getText(eventRow, 1)));
 			pb.setDato(ft.getText(eventRow, 3));
 			pb.setBegyndt(ft.getText(eventRow, 4));
+			pb.setAfsluttet(ft.getText(eventRow, 5));
 
 			tilbage = new Button("Tilbage");
 			tilbage.setStyleName("Button-Ret");
@@ -238,10 +214,8 @@ public class VisPB extends Composite {
 
 				@Override
 				public void onClick(ClickEvent event) {
-//					tilbage.setText("Loading...");
 					tilbage.setEnabled(false);
 					run();
-
 				}
 
 			});
@@ -251,8 +225,6 @@ public class VisPB extends Composite {
 			gap.setHTML("<br><br>");
 			vPane.add(gap);
 			vPane.add(new PrintPB(pb));
-
-
 
 		}
 
