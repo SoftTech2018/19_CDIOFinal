@@ -17,6 +17,12 @@ html {
 	width: 864px;
 }
 
+
+.Recept-Error {
+	color: red;
+	font-size: 12pt;
+}
+
 .TextBox-Ret{
 	font-size: 10pt;
 	width: 90%;

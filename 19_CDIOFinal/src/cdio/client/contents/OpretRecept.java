@@ -21,12 +21,11 @@ import com.google.gwt.user.client.ui.*;
 public class OpretRecept extends Composite {
 
 	private VerticalPanel vPane, vPane1;
-	private FlexTable ft, ft3, ft2;
+	private FlexTable ft, ft3, ft2, ft4;
 	private TextBox receptid, navn, raavareid, nomNetto, tolerance;
 	private Button opret, tilfoej, gemKomp, ok, nyRecept;
 	private Label error;
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, receptOprettet, netEle, tolEle, ravEle;
-	private String[] split;
 	private HorizontalPanel hp;
 	
 	
@@ -51,7 +50,6 @@ public class OpretRecept extends Composite {
 
 		hp.clear();
 		
-		error = new Label("");
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -87,52 +85,25 @@ public class OpretRecept extends Composite {
 		ft3.setWidget(0, 1, tilfoej);
 		ft3.setText(0, 0, "Ny receptKomponent");
 
+		error = new Label("");
+		
+		ft4 = new FlexTable();
+		ft4.setWidget(12, 0, error);
+		ft4.getCellFormatter().setWidth(0, 1, "500 px");
+		ft4.setText(0, 1, "Test");
+		ft4.setWidget(0, 2, error);
 		
 		
 		
-//		ft2 = new FlexTable();
-//		ok = new Button("Tilføj");
-//		ft2.setText(1, 0, "RåvareID");
-//		raavareid = new TextBox();
-//		raavareid.addKeyUpHandler(new rIdCheck()); 
-//		ft2.setWidget(1, 1, raavareid);
-//		String rid = raavareid.getText();
-//		if (rid != null){
-//			ravEle = true;}
-//
-//
-//			
-//		ft2.setText(2, 0, "Nominel Netto");
-//		nomNetto = new TextBox();
-//		nomNetto.addKeyUpHandler(new nettoCheck());
-//		String nNet = nomNetto.getText();
-//		if(nNet != null){
-//			netEle = true;
-//		}
-//		ft2.setWidget(2, 1, nomNetto);
-//		
-//		ft2.setText(3, 0, "Tolerance");
-//		tolerance = new TextBox();
-//		tolerance.addKeyUpHandler(new tolCheck());
-//		String tol = tolerance.getText();
-//		if(tol != null){
-//			tolEle = true; 
-//		}
-//		ft2.setWidget(3, 1, tolerance);
-//		
-//		
-//
-//		ft2.getFlexCellFormatter().setWidth(0, 0, "200px");
-//		ft2.getFlexCellFormatter().setWidth(0, 1, "200px");
-//		ft2.getFlexCellFormatter().setWidth(0, 2, "200px");
-//		ft2.getFlexCellFormatter().setWidth(0, 3, "200px");
-//		ft2.getFlexCellFormatter().setWidth(0, 4, "200px");
-//		
-		
-		vPane.add(ft);		
+		vPane.add(ft);	
+		vPane.add(ft4);
 		vPane1.add(ft3);
-//		vPane1.add(ft2);
-		hp.add(error);
+		
+		
+		
+		vPane.setWidth("400 px");
+		vPane1.setWidth("400 px");
+		//hp.add(error);
 		hp.add(vPane);
 		hp.add(vPane1);
 		
@@ -143,9 +114,7 @@ public class OpretRecept extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			run();
-			
 		}
-		
 	}
 	
 	
@@ -166,12 +135,13 @@ public class OpretRecept extends Composite {
 				public void onFailure(Throwable caught) {
 					opret.setEnabled(true);
 					error.setText(caught.getMessage());
-					error.setStyleName("TextBox-ErrorMessage");
+					error.setStyleName("Recept-Error");
 				}
 
 				@Override
 				public void onSuccess(Void result) {
 					Window.alert("Receptkomponent oprettet!");
+					error.setStyleName("Recept-Error");
 					error.setText("Receptkomponent"+raavareid.getText() +" er oprettet.");
 
 				}
@@ -187,13 +157,9 @@ public class OpretRecept extends Composite {
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
 
-			
-
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
-
-
 			
 			Controller.service.createRecept(Controller.token, recept, new AsyncCallback<Void>(){
 
@@ -213,9 +179,7 @@ public class OpretRecept extends Composite {
 				}
 					
 			} );
-
 		}
-
 	}
 
 	private class NameCheck implements KeyUpHandler{
@@ -395,4 +359,3 @@ public class OpretRecept extends Composite {
 
 	}
 }
-
