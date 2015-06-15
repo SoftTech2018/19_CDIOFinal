@@ -115,9 +115,11 @@ public class Menu extends Composite {
 				case "ADMIN":			
 					ftMenu.setWidget(i, 0, adminMenu());
 					i++;
+					break;
 				case "FARMACEUT":			
 					ftMenu.setWidget(i, 0, farmMenu());
 					i++;
+					break;
 				case "VAERKFOERER":	
 					ftMenu.setWidget(i, 0, vaerkMenu());
 					i++;

@@ -170,7 +170,9 @@ public class PrintPB extends Composite{
 				ft6.setText(0,  0, "Produktion Status:");
 				ft6.setText(0, 1, status);
 				ft6.setText(1, 0, "Produktion Startet:");
+				ft6.setText(1, 1, pb.getBegyndt());
 				ft6.setText(2, 0, "Produktion Slut:");
+				ft6.setText(2, 1, pb.getAfsluttet());
 				ft.setWidget(row, 0, ft6);
 				row++;
 			}
