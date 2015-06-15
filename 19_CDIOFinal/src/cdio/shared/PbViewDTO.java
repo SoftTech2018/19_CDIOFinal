@@ -9,7 +9,6 @@ public class PbViewDTO implements Serializable{
 	private double maengde, tara, netto, tolerance;
 	
 	public PbViewDTO(){
-		
 	}
 	
 	public PbViewDTO(String raavareNavn, int id, String opr, int batch, double maengde, double tara, double netto, double tolerance, String terminal){
@@ -23,7 +22,6 @@ public class PbViewDTO implements Serializable{
 		this.raavareId = id;
 		this.terminal = terminal;
 	}
-
 	
 	public int getRaavareId(){
 		return raavareId;

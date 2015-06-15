@@ -1,42 +1,16 @@
 package cdio.shared;
 
-/**
- * <p>
- * FieldVerifier validates that the name the user enters is valid.
- * </p>
- * <p>
- * This class is in the <code>shared</code> package because we use it in both
- * the client code and on the server. On the client, we verify that the name is
- * valid before sending an RPC request so the user doesn't have to wait for a
- * network round trip to get feedback. On the server, we verify that the name is
- * correct to ensure that the input is correct regardless of where the RPC
- * originates.
- * </p>
- * <p>
- * When creating a class that is used on both the client and the server, be sure
- * that all code is translatable and does not use native JavaScript. Code that
- * is not translatable (such as code that interacts with a database or the file
- * system) cannot be compiled into client-side JavaScript. Code that uses native
- * JavaScript (such as Widgets) cannot be run on the server.
- * </p>
- */
 public class FieldVerifier {
 
 	/**
 	 * Verifies that the specified name is valid for our service.
-	 * 
-	 * In this example, we only require that the name is at least four
-	 * characters. In your application, you can use more complex checks to ensure
-	 * that usernames, passwords, email addresses, URLs, and other fields have the
-	 * proper syntax.
-	 * 
 	 * @param name the name to validate
 	 * @return true if valid, false if invalid
 	 */
 	public static boolean isValidName(String name) {
 		if (!illigalChars(name))
 			return false;
-		
+
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
@@ -50,6 +24,11 @@ public class FieldVerifier {
 		return name.length() <= 30;
 	}
 
+	/**
+	 * Tjek om bruger id er valid
+	 * @param id
+	 * @return
+	 */
 	public static boolean isValidUserId(String id){
 		try {
 			int i = Integer.parseInt(id);
@@ -62,18 +41,28 @@ public class FieldVerifier {
 		}
 	}
 
+	/**
+	 * Tjek om password er valid
+	 * @param pass
+	 * @return
+	 */
 	public static boolean isValidPassword(String pass){
 		if (pass == null)
 			return false;
 		if (pass.length()<4)
 			return false;
-		
+
 		if (!illigalChars(pass))
 			return false;
 
 		return true;
 	}
 
+	/**
+	 * Tjek om initialer er valid
+	 * @param ini
+	 * @return True hvis initial er valid
+	 */
 	public static boolean isValidInitial(String ini){
 		if (ini == null)
 			return false;
@@ -108,7 +97,6 @@ public class FieldVerifier {
 		for(int i=0; i<netto.length(); i++){
 			if(netto.charAt(i)==','){
 				ny = netto.replace(",", ".");
-
 			}
 		}		
 		try{		
@@ -135,7 +123,6 @@ public class FieldVerifier {
 		for(int i=0; i<tol.length(); i++){
 			if(tol.charAt(i)==','){
 				ny = tol.replace(",", ".");
-
 			}
 		}		
 		try{		
@@ -157,8 +144,11 @@ public class FieldVerifier {
 		return true;		
 	}
 
-
-
+	/**
+	 * Tjek om et receptnavn er valid
+	 * @param name navnet der skal tjekkes
+	 * @return True hvis navn er valid
+	 */
 	public static boolean isValidReceptName(String name) {
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
@@ -176,6 +166,11 @@ public class FieldVerifier {
 		return name.length() <= 22;
 	}
 
+	/**
+	 * Tjek om et råvare id er valid
+	 * @param id
+	 * @return
+	 */
 	public static boolean isValidRaavareId(String id){
 		try {
 			int i = Integer.parseInt(id);
@@ -188,7 +183,12 @@ public class FieldVerifier {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Tjek om et råvare batch id er valid
+	 * @param id
+	 * @return
+	 */
 	public static boolean isValidRaavareBatchId(String id){
 		try {
 			int i = Integer.parseInt(id);
@@ -201,7 +201,12 @@ public class FieldVerifier {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Tjek om mængde er valid
+	 * @param id
+	 * @return
+	 */
 	public static boolean isValidMaengde(String id){
 		try {
 			int i = Integer.parseInt(id);
@@ -249,6 +254,11 @@ public class FieldVerifier {
 		return name.length() <= 22;
 	}
 
+	/**
+	 * Tjek om en brugers rolle(r) er valid. 
+	 * @param user Brugeren der skal tjekkes
+	 * @return True hvis brugeren har netop én rolle
+	 */
 	public static boolean isValidRoles(UserDTO user) {
 		int count = 0;
 		if(user.isAdmin())
@@ -259,13 +269,18 @@ public class FieldVerifier {
 			count++;
 		if(user.isOperatoer())
 			count++;
-		
+
 		if(count != 1)
 			return false;
 		else 
 			return true;
 	}
-	
+
+	/**
+	 * Tjek om en string indeholder et eller flere ulovlige tegn
+	 * @param string
+	 * @return True hvis stringen IKKE indeholder ulovlige tegn
+	 */
 	public static boolean illigalChars(String string){
 		for (int i=0; i<string.length(); i++){
 			char p = string.charAt(i);
