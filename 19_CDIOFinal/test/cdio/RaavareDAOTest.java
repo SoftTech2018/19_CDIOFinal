@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ReceptDAOJunit {
+public class RaavareDAOTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,7 +27,27 @@ public class ReceptDAOJunit {
 	}
 
 	@Test
-	public void test() {
+	public void testRaavareDAO() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRaavare() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRaavareList() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testCreateRaavare() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testUpdateRaavare() {
 		fail("Not yet implemented");
 	}
 

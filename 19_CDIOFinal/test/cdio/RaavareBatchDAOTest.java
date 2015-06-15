@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ProduktBatchDAOJunit {
+public class RaavareBatchDAOTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,7 +27,32 @@ public class ProduktBatchDAOJunit {
 	}
 
 	@Test
-	public void test() {
+	public void testRaavareBatchDAO() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRaavareBatch() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRaavareBatchList() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetRaavareBatchListInt() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testCreateRaavareBatch() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testUpdateRaavareBatch() {
 		fail("Not yet implemented");
 	}
 
