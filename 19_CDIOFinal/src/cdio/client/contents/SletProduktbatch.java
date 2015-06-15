@@ -52,17 +52,25 @@ public class SletProduktbatch extends Composite{
 
 			@Override
 			public void onClick(ClickEvent event) {
+				btn.setText("Loading");
+				btn.setEnabled(false);
+				
 				Controller.service.deleteProduktBatch(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert(caught.getMessage());
+						id.setText("");
+						btn.setText("Slet Recept");
+						btn.setEnabled(true);
 					}
 
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Produktbatchen blev slettet");
 						id.setText("");
+						btn.setText("Slet Recept");
+						btn.setEnabled(true);
 						Controller.refreshToken();
 					}
 					
