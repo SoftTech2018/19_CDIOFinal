@@ -173,8 +173,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (th.validateToken(token) != null){
 			UserDTO user = dao.getUser(Integer.parseInt(th.getUserID(token)));
 			return user.getName();
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet.");
 	}
 
 	@Override
@@ -218,11 +219,11 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 		
-		if (!getRole(token).equalsIgnoreCase("Farmaceut")){
+		if (getRole(token).equalsIgnoreCase("Farmaceut")){
 			return dao.getRaavareList();
+		}else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet");
-
 	}
 
 	@Override
@@ -235,8 +236,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (getRole(token).equalsIgnoreCase("Admin")){
 			dao.createUser(user);						
 		}
-		else 
+		else {
 			throw new TokenException("Adgang nægtet");
+		}
 	}
 
 	@Override
@@ -249,8 +251,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			return dao.getProduktBatchList();				
 		}
-		else 
+		else {
 			throw new TokenException("Adgang nægtet");
+		}
 	}
 
 	@Override
@@ -263,8 +266,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			return dao.getPBKList(pbID);						
 		}
-		else 
+		else {
 			throw new TokenException("Adgang nægtet");
+		}
 	}
 
 	@Override
@@ -277,9 +281,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if (getRole(token).equalsIgnoreCase("Admin")){
 			dao.deleteUser(userId);					
 		}
-		else 
+		else {
 			throw new TokenException("Adgang nægtet");
-
+		}
 	}
 
 	@Override
@@ -305,8 +309,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
 			return dao.getReceptList();
+		} else {
+			throw new TokenException("Adgang nægtet");
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -319,7 +324,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			return dao.getRaavareBatchList();
 		}
+		else {
 		throw new TokenException("Adgang nægtet");
+		}
 	}
 
 	@Override
@@ -330,8 +337,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (InterruptedException e) {}
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			return dao.createPB(pb);
-		}		
-		throw new TokenException("Adgang nægtet");
+		} else {
+			throw new TokenException("Adgang nægtet");
+		}
+		
 	}
 
 	@Override
@@ -343,8 +352,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			List<PbViewDTO> list = dao.getPbViewList(pb_id);
 			return list;
-		}		
-		throw new TokenException("Adgang nægtet");
+		} else {
+			throw new TokenException("Adgang nægtet");
+		}
+		
 		
 	}
 
@@ -361,8 +372,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			catch(DALException e){
 				throw new DALException("Receptnummer findes allerede!");
 			}
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -379,8 +391,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			catch(DALException e){
 				throw new DALException("Råvareid findes allerede!");
 			}
+		} else {
+			throw new TokenException("Adgang nægtet");			
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -396,8 +409,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			catch(DALException e){
 				throw new DALException("Råvareid ukendt!");
 			}		
+		} else {
+			throw new TokenException("Adgang nægtet");
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -413,8 +427,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			catch(Exception DALException){
 				throw new DALException("Adgang nægtet!");
 			}
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -434,8 +449,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 				if (check){
 			throw new DALException("Recepten er i brug");
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet");
 	}
 
 	@Override
@@ -447,8 +463,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		if(th.validateToken(token) != null){
 			return th.createToken(th.getUserID(token));
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet.");
 	}
 
 	@Override
@@ -460,8 +477,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		if(getRole(token).equalsIgnoreCase("Admin")){
 			return dao.getUserCount();
+		} else {
+			throw new TokenException("Adgang nægtet");		
 		}
-		throw new TokenException("Adgang nægtet.");
 	}
 
 	@Override
