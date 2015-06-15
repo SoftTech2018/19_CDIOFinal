@@ -17,11 +17,12 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretOpr extends Composite {
-	
+
 	private VerticalPanel vPane, vPane2;
 	private HorizontalPanel hPane;
 	private Label error;
@@ -31,7 +32,7 @@ public class OpretOpr extends Composite {
 	private Button ok;
 	private boolean idValid, navnValid, passValid, cprValid, iniValid, roleValid;
 	private int count;
-	
+
 	public OpretOpr(){
 		vPane = new VerticalPanel();
 		vPane2 = new VerticalPanel();
@@ -45,14 +46,14 @@ public class OpretOpr extends Composite {
 		count = 0;
 		run();
 	}
-	
+
 	public void addUser(String name){
 		ft2.setText(0, 0, "Brugere tilføjet:");
 		ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		count++;
 		ft2.setText(count, 0, name);
 	}
-	
+
 	private void run(){
 		// Reset til 'blank' position
 		idValid = true; // Benyttes ikke
@@ -61,73 +62,73 @@ public class OpretOpr extends Composite {
 		cprValid = false;
 		iniValid = false;
 		vPane.clear();
-		
+
 		// Byg siden
 		error = new Label("");
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");	
 		ft.setText(0, 0, "Opret Operatør");
-		
-//		ft.setText(1, 0, "Bruger ID:");
-//		id = new TextBox();
-//		id.addKeyUpHandler(new IdCheck());
-//		id.setStyleName("TextBox-Opret");
-//		ft.setWidget(1, 1, id);
-		
+
+		//		ft.setText(1, 0, "Bruger ID:");
+		//		id = new TextBox();
+		//		id.addKeyUpHandler(new IdCheck());
+		//		id.setStyleName("TextBox-Opret");
+		//		ft.setWidget(1, 1, id);
+
 		ft.setText(2, 0, "Navn:");
 		navn = new TextBox();
 		navn.addKeyUpHandler(new NameCheck());
 		navn.setStyleName("TextBox-Opret");
 		ft.setWidget(2, 1, navn);
-		
+
 		ft.setText(3, 0, "Initialer:");
 		ini = new TextBox();
 		ini.addKeyUpHandler(new IniCheck());
 		ini.setStyleName("TextBox-Opret");
 		ft.setWidget(3, 1, ini);
-		
+
 		ft.setText(4, 0, "Cpr nr:");
 		cpr = new TextBox();
 		cpr.addKeyUpHandler(new CprCheck());
 		cpr.setStyleName("TextBox-Opret");
 		ft.setWidget(4, 1, cpr);
-		
+
 		ft.setText(5, 0, "Password:");
 		pass = new TextBox();
 		pass.addKeyUpHandler(new PassCheck());
 		pass.setStyleName("TextBox-Opret");
 		ft.setWidget(5, 1, pass);
-		
+
 		ft.setText(6, 0, "Admin:");
 		admin = new CheckBox();
 		admin.addClickHandler(new RolleCheck());
 		ft.setWidget(6, 1, admin);
-		
+
 		ft.setText(7, 0, "Farmaceut:");
 		farm = new CheckBox();
 		farm.addClickHandler(new RolleCheck());
 		ft.setWidget(7, 1, farm);
-		
+
 		ft.setText(8, 0, "Værkfører:");
 		vaerk = new CheckBox();
 		vaerk.addClickHandler(new RolleCheck());
 		ft.setWidget(8, 1, vaerk);
-		
+
 		ft.setText(9, 0, "Operatør:");
 		opr = new CheckBox();
 		opr.addClickHandler(new RolleCheck());
 		ft.setWidget(9, 1, opr);
-		
+
 		ok = new Button("Opret");
 		ok.addClickHandler(new OpretClick());
 		ok.setEnabled(false);
 		ft.setWidget(10, 1, ok);
-		
+
 		vPane.add(ft);
 		vPane.add(error);
 	}
-	
+
 	private class OpretClick implements ClickHandler{
 
 		@Override
@@ -142,14 +143,21 @@ public class OpretOpr extends Composite {
 					farm.getValue(),
 					vaerk.getValue(),
 					opr.getValue());
-			
+
 			Controller.service.createUser(Controller.token, user, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
-						Window.alert(caught.getMessage());
-						Controller.logud();
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+						ok.setEnabled(true);
 					} else {
 						ok.setEnabled(true);
 						error.setText(caught.getMessage());
@@ -168,7 +176,7 @@ public class OpretOpr extends Composite {
 			});
 		}
 	}
-	
+
 	private class PassCheck implements KeyUpHandler{
 
 		@Override
@@ -189,7 +197,7 @@ public class OpretOpr extends Composite {
 				ok.setEnabled(false);
 		}
 	}
-	
+
 	private class NameCheck implements KeyUpHandler{
 
 		@Override
@@ -210,28 +218,28 @@ public class OpretOpr extends Composite {
 				ok.setEnabled(false);
 		}
 	}
-	
-//	private class IdCheck implements KeyUpHandler{
-//
-//		@Override
-//		public void onKeyUp(KeyUpEvent event) {
-//			TextBox id = (TextBox) event.getSource();
-//			if (!FieldVerifier.isValidUserId(id.getText())) {
-//				id.setStyleName("TextBox-OpretError");
-//				idValid = false;
-//			}
-//			else {
-//				id.setStyleName("TextBox-Opret");
-//				idValid = true;
-//			}
-//
-//			if (passValid && navnValid && cprValid && iniValid && idValid  && roleValid)
-//				ok.setEnabled(true);
-//			else
-//				ok.setEnabled(false);
-//		}
-//	}
-	
+
+	//	private class IdCheck implements KeyUpHandler{
+	//
+	//		@Override
+	//		public void onKeyUp(KeyUpEvent event) {
+	//			TextBox id = (TextBox) event.getSource();
+	//			if (!FieldVerifier.isValidUserId(id.getText())) {
+	//				id.setStyleName("TextBox-OpretError");
+	//				idValid = false;
+	//			}
+	//			else {
+	//				id.setStyleName("TextBox-Opret");
+	//				idValid = true;
+	//			}
+	//
+	//			if (passValid && navnValid && cprValid && iniValid && idValid  && roleValid)
+	//				ok.setEnabled(true);
+	//			else
+	//				ok.setEnabled(false);
+	//		}
+	//	}
+
 	private class IniCheck implements KeyUpHandler{
 
 		@Override
@@ -252,7 +260,7 @@ public class OpretOpr extends Composite {
 				ok.setEnabled(false);
 		}
 	}
-	
+
 	private class CprCheck implements KeyUpHandler{
 
 		@Override
@@ -273,7 +281,7 @@ public class OpretOpr extends Composite {
 				ok.setEnabled(false);
 		}
 	}
-	
+
 	private class RolleCheck implements ClickHandler{
 
 		@Override

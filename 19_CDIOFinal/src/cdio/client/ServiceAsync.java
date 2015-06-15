@@ -67,5 +67,7 @@ public interface ServiceAsync {
 	void getUserCount(String token, AsyncCallback<List<Integer>> asyncCallback);
 	
 	void deleteProduktBatch(String token, int id, AsyncCallback<Void> asyncCallback);
+
+	void getUserId(String token, AsyncCallback<Integer> asyncCallback);
 	
 }

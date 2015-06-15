@@ -34,7 +34,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 
-	private boolean TEST_DELAY = true; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
+	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
 
 	private TokenHandler th;
 	private IControllerDAO dao;
@@ -228,17 +228,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void createUser(String token, UserDTO user) throws TokenException, DALException {
-		if (TEST_DELAY)
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {}
-		
-		if (getRole(token).equalsIgnoreCase("Admin")){
-			dao.createUser(user);						
-		}
-		else {
-			throw new TokenException("Adgang nægtet");
-		}
+		throw new TokenException("Test");
+//		if (TEST_DELAY)
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {}
+//		
+//		if (getRole(token).equalsIgnoreCase("Admin")){
+//			dao.createUser(user);						
+//		}
+//		else {
+//			throw new TokenException("Adgang nægtet");
+//		}
 	}
 
 	@Override
@@ -518,5 +519,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			}
 		}
 		
+	}
+
+	@Override
+	public Integer getUserId(String token) throws TokenException, DALException {
+		return Integer.parseInt(th.getUserID(token));
 	}
 }

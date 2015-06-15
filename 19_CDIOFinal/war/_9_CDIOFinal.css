@@ -301,3 +301,11 @@ html {
 	color: #FF0000;
 	font-weight: bold;
 }
+
+.Popup-Login{
+	width: 400px;
+	min-height: 300px;
+	padding: 25px;
+	float: center;
+	horizontal-alignment: center;
+}
