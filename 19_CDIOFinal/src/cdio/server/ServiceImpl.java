@@ -34,7 +34,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
 
-	private boolean TEST_DELAY = false; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
+	private boolean TEST_DELAY = true; // Sæt til TRUE hvis du tester. Simulerer 2 sekunders delay på hvert server svar
 
 	private TokenHandler th;
 	private IControllerDAO dao;

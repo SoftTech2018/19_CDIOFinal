@@ -30,6 +30,7 @@ public class OpretRecept extends Composite {
 	
 	
 	public OpretRecept() {
+		
 		hp = new HorizontalPanel();
 		initWidget(hp);
 		run();
@@ -83,7 +84,7 @@ public class OpretRecept extends Composite {
 		tilfoej.setStyleName("Recept-Komponenter");
 		tilfoej.addClickHandler(new kompClick());
 		ft3.setWidget(0, 1, tilfoej);
-		ft3.setText(0, 0, "Ny receptKomponent");
+		ft3.setText(0, 0, "");
 
 		error = new Label("");
 		
@@ -123,28 +124,47 @@ public class OpretRecept extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			gemKomp.setText("Loading");
+			gemKomp.setEnabled(false);
+			
+			String netto = nomNetto.getText();
+			for(int i = 0; i<netto.length(); i++){
+				if (netto.charAt(i)==','){
+					netto = netto.replace(",", ".");
+				}
+			}
+			
+			String tol = tolerance.getText();
+			for(int i=0; i < tol.length(); i++){
+				if(tol.charAt(i)==','){
+					tol = tol.replace(",", ".");
+				}
+			}
+			
 			ReceptKompDTO receptKomp = new ReceptKompDTO(
 					Integer.parseInt(receptid.getText()),
 					Integer.parseInt(raavareid.getText()),
-					Double.parseDouble(nomNetto.getText()),
-					Double.parseDouble(tolerance.getText()));
+					Double.parseDouble(netto),
+					Double.parseDouble(tol));
 			
 			Controller.service.createReceptKomp(Controller.token, receptKomp, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
-					opret.setEnabled(true);
+					gemKomp.setText("Gem Komponent");
+					gemKomp.setEnabled(true);
 					error.setText(caught.getMessage());
 					error.setStyleName("Recept-Error");
 				}
 
 				@Override
 				public void onSuccess(Void result) {
+					gemKomp.setText("Gem Komponent");
+					gemKomp.setEnabled(false);
 					Window.alert("Receptkomponent oprettet!");
 					error.setStyleName("Recept-Error");
 					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
 				
-
 				}
 
 			});
@@ -156,7 +176,9 @@ public class OpretRecept extends Composite {
 	private class OpretClick implements ClickHandler{
 		@Override
 		public void onClick(ClickEvent event) {
+			opret.setText("loading");
 			opret.setEnabled(false);
+			
 
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
@@ -166,6 +188,7 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
+					opret.setText("Opret");
 					opret.setEnabled(true);	
 					error.setText(caught.getMessage());
 					error.setStyleName("Recept-Error");
@@ -174,6 +197,8 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
+					opret.setText("Opret");
+					opret.setEnabled(true);
 					Window.alert("Recept " + navn.getText() + " blev oprettet!");
 					receptOprettet = true;
 					error.setText("Recept er oprettet. Tilføj nye receptkomponenter!");
@@ -233,7 +258,7 @@ public class OpretRecept extends Composite {
 			opret.setEnabled(false);
 			FlexTable ft2 = new FlexTable();
 			ok = new Button("Tilføj");
-			ft2.setText(1, 0, "RåvareID");
+			ft2.setText(1, 0, "Indtast råvareID");
 			raavareid = new TextBox();
 			raavareid.addKeyUpHandler(new rIdCheck()); 
 			ft2.setWidget(1, 1, raavareid);
@@ -242,7 +267,7 @@ public class OpretRecept extends Composite {
 				ravEle = true;}
 
 
-			ft2.setText(2, 0, "Nominel Netto");
+			ft2.setText(2, 0, "Indtast nettovægt mellem 0,05-20,0 kg");
 			nomNetto = new TextBox();
 			nomNetto.addKeyUpHandler(new nettoCheck());
 			String nNet = nomNetto.getText();
@@ -255,7 +280,7 @@ public class OpretRecept extends Composite {
 			ft2.setWidget(2, 1, nomNetto);
 
 
-			ft2.setText(3, 0, "Tolerance");
+			ft2.setText(3, 0, "Indtast tolerance mellem 0,1-10,0%");
 			tolerance = new TextBox();
 			tolerance.addKeyUpHandler(new tolCheck());
 			String tol = tolerance.getText();
@@ -268,7 +293,7 @@ public class OpretRecept extends Composite {
 			gemKomp.setStyleName("Recept-Komponenter");
 			gemKomp.addClickHandler(new gemKomp());
 			ft3.setWidget(0, 8, gemKomp);
-			gemKomp.setEnabled(true);
+			gemKomp.setEnabled(false);
 			
 			ft2.setWidget(3, 1, tolerance);
 
