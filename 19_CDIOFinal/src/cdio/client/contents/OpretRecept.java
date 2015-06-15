@@ -1,11 +1,13 @@
 package cdio.client.contents;
 
+import java.util.List;
 import java.util.jar.Attributes.Name;
 
 import sun.print.resources.serviceui;
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
+import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.ReceptKompDTO;
 
@@ -27,6 +29,7 @@ public class OpretRecept extends Composite {
 	private Label error;
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, receptOprettet, netEle, tolEle, ravEle;
 	private HorizontalPanel hp;
+	private int[] liste;
 	
 	
 	public OpretRecept() {
@@ -107,9 +110,36 @@ public class OpretRecept extends Composite {
 		//hp.add(error);
 		hp.add(vPane);
 		hp.add(vPane1);
-		
+	
 	}
 	
+	private void getListe(){
+		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ft.setText(1, 2, "Fejl i listekald");
+			}
+
+			@Override
+			public void onSuccess(List<RaavareDTO> result) {
+				int i = 0;
+				for(RaavareDTO rv : result){
+					if(rv.getRaavareId()>i){
+						i=rv.getRaavareId();
+					}
+				}
+				
+				liste = new int[i+1];
+				
+				for(RaavareDTO rv : result){
+					liste[rv.getRaavareId()]=1;
+				}
+			}					
+		});
+	}
+
+
 	private class nyReceptClick implements ClickHandler{
 
 		@Override
@@ -117,7 +147,6 @@ public class OpretRecept extends Composite {
 			run();
 		}
 	}
-	
 	
 	
 	private class gemKomp implements ClickHandler{
@@ -309,6 +338,7 @@ public class OpretRecept extends Composite {
 	private class rIdCheck implements KeyUpHandler{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
+			error.setText("");
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
@@ -320,21 +350,13 @@ public class OpretRecept extends Composite {
 			}
 
 			if(raavareidValid){
-				Controller.service.getRaavareID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
-
-					@Override
-					public void onFailure(Throwable caught) {
-						raavareidValid = false;
-						error.setText(caught.getMessage());
-						error.setStyleName("Recept-Error");
-					}
-
-					@Override
-					public void onSuccess(Void result) {
-						raavareidValid = true;
-					}
-
-				});
+				getListe();
+				if(liste[Integer.parseInt(id.getText())]!=1){
+					error.setText("Ukendt råvareId, prøv et andet");
+					error.setStyleName("Recept-Error");
+					id.setStyleName("TextBox-ErrorMessage");
+				raavareidValid = false;
+				}
 
 				if( receptOprettet && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle){
 					gemKomp.setEnabled(true);
