@@ -35,6 +35,8 @@ public class SletRecept extends Composite {
 
 	private void run(){
 		vPane.clear();
+		
+		
 
 		desc = new Label("Indtast ID for Recept der ønskes slettet");
 		id = new TextBox();
@@ -51,21 +53,28 @@ public class SletRecept extends Composite {
 		vPane.add(ft);
 
 		btn.addClickHandler(new ClickHandler(){
-
+			
 			@Override
 			public void onClick(ClickEvent event) {
+				btn.setText("Loading");
+				btn.setEnabled(false);
 				Controller.service.checkReceptID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
 						Window.alert(caught.getMessage());
+						id.setText("");
+						btn.setText("Slet Recept");
+						btn.setEnabled(true);
 					}
 
 					@Override
 					public void onSuccess(Void result) {
 						Window.alert("Recepten blev slettet");
 						id.setText("");
+						btn.setText("Slet Recept");
 						Controller.refreshToken();
+						btn.setEnabled(true);
 					}
 
 				});
