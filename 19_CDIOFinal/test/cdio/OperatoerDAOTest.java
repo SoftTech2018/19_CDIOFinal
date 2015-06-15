@@ -1,6 +1,8 @@
 package cdio;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
+import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -8,7 +10,15 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import cdio.server.DAL.Connector;
+import cdio.server.DAL.TextReader;
+import cdio.server.DAL.dao.OperatoerDAO;
+import cdio.server.DAL.dao.ReceptKompDAO;
+import cdio.server.DAL.idao.IOperatoerDAO;
+
 public class OperatoerDAOTest {
+	
+	IOperatoerDAO oprDAO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -20,6 +30,13 @@ public class OperatoerDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
+		try { new Connector(); } 
+		catch (InstantiationException e) { e.printStackTrace(); }
+		catch (IllegalAccessException e) { e.printStackTrace(); }
+		catch (ClassNotFoundException e) { e.printStackTrace(); }
+		catch (SQLException e) { e.printStackTrace(); }
+		TextReader txt = new TextReader();
+		oprDAO = new OperatoerDAO(txt);
 	}
 
 	@After
