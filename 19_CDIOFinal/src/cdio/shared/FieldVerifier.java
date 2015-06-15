@@ -114,10 +114,10 @@ public class FieldVerifier {
 		try{		
 			Double input =	Double.parseDouble(ny); 
 
-			if(input < 0.5){
+			if(input < 0.05){
 				return false;
 			}
-			if(input >= 20.0 ){
+			if(input >= 20.1 ){
 				return false;
 			}		
 		} catch (NumberFormatException e){

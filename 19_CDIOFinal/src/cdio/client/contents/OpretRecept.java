@@ -10,6 +10,7 @@ import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
 import cdio.shared.ReceptKompDTO;
+import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -102,15 +103,14 @@ public class OpretRecept extends Composite {
 		vPane.add(ft4);
 		vPane1.add(ft3);
 		
-		
-		
-		
+
 		vPane.setWidth("400 px");
 		vPane1.setWidth("400 px");
 		//hp.add(error);
 		hp.add(vPane);
 		hp.add(vPane1);
 	
+		getListe();
 	}
 	
 	private void getListe(){
@@ -118,8 +118,19 @@ public class OpretRecept extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				}
+					else{
 				ft.setText(1, 2, "Fejl i listekald");
-			}
+					}}
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
@@ -139,7 +150,6 @@ public class OpretRecept extends Composite {
 		});
 	}
 
-
 	private class nyReceptClick implements ClickHandler{
 
 		@Override
@@ -147,8 +157,7 @@ public class OpretRecept extends Composite {
 			run();
 		}
 	}
-	
-	
+
 	private class gemKomp implements ClickHandler{
 
 		@Override
@@ -180,11 +189,25 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
+						if (caught instanceof TokenException){
+							final PopupLogin pop = new PopupLogin();
+							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+								public void setPosition(int offsetWidth, int offsetHeight) {
+									int left = (Window.getClientWidth() - offsetWidth) / 3;
+									int top = (Window.getClientHeight() - offsetHeight) / 3;
+									pop.setPopupPosition(left, top);
+								}
+							});
+							gemKomp.setText("Gem Komponent");
+							gemKomp.setEnabled(true);
+						}
+							else{
+		
 					gemKomp.setText("Gem Komponent");
 					gemKomp.setEnabled(true);
 					error.setText(caught.getMessage());
 					error.setStyleName("Recept-Error");
-				}
+							}}
 
 				@Override
 				public void onSuccess(Void result) {
@@ -217,12 +240,29 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
+					if (caught instanceof TokenException){
+							final PopupLogin pop = new PopupLogin();
+							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+								public void setPosition(int offsetWidth, int offsetHeight) {
+									int left = (Window.getClientWidth() - offsetWidth) / 3;
+									int top = (Window.getClientHeight() - offsetHeight) / 3;
+									pop.setPopupPosition(left, top);
+								}
+							}
+							);
+					opret.setText("Opret");
+					opret.setEnabled(true);		
+					}
+					
+				else{
 					opret.setText("Opret");
 					opret.setEnabled(true);	
 					error.setText(caught.getMessage());
 					error.setStyleName("Recept-Error");
 					
 				}
+				}
+				
 
 				@Override
 				public void onSuccess(Void result) {
@@ -234,7 +274,9 @@ public class OpretRecept extends Composite {
 					error.setStyleName("Recept-Error");
 				}
 					
-			} );
+			
+			}
+		);
 		}
 	}
 
@@ -350,7 +392,6 @@ public class OpretRecept extends Composite {
 			}
 
 			if(raavareidValid){
-				getListe();
 				if(liste[Integer.parseInt(id.getText())]!=1){
 					error.setText("Ukendt råvareId, prøv et andet");
 					error.setStyleName("Recept-Error");
