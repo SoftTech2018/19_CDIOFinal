@@ -79,14 +79,6 @@ public class Controller extends Composite {
 		this.content.add(content);
 	}
 
-	public String getToken(){
-		return token;
-	}
-
-	public ServiceAsync getService(){
-		return service;
-	}
-
 	// Fjerner alle widgets og laver en ny login-session.
 	public void logud(){
 		Controller.token = null;

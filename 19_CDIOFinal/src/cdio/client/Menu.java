@@ -53,7 +53,7 @@ public class Menu extends Composite {
 	}
 
 	public void changeMenu(final String role){
-		con.getService().getUsername(con.getToken(), new AsyncCallback<String>(){
+		Controller.service.getUsername(Controller.token, new AsyncCallback<String>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
