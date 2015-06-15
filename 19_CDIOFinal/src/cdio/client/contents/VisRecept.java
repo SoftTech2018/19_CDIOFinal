@@ -3,7 +3,6 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.ReceptDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -29,7 +28,6 @@ public class VisRecept extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -39,7 +37,6 @@ public class VisRecept extends Composite {
 				ft.setStyleName("FlexTable-Content");	
 				ft.setText(0, 0, "Recept Id");
 				ft.setText(0, 1, "Recept navn");
-
 
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				ft.getFlexCellFormatter().setWidth(0, 0, "150px");
@@ -65,13 +62,9 @@ public class VisRecept extends Composite {
 					ft.setText(i+1,0,Integer.toString(result.get(i).getReceptId()));
 					ft.setText(i+1, 1, result.get(i).getReceptNavn());
 
-
 					vPane.add(ft);
 				}
-
 			}
-		
 		} );
 	}
 }	
-	

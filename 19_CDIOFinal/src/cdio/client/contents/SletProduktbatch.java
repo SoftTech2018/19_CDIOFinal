@@ -39,15 +39,12 @@ public class SletProduktbatch extends Composite{
 		desc = new Label("Indtast ID for Produktbatch der ønskes slettet");
 		id = new TextBox();
 		id.addKeyUpHandler(new idCheck());
-
 		btn = new Button("Slet Produktbatch");
 
 		ft = new FlexTable();
-
 		ft.setWidget(0, 0, desc);
 		ft.setWidget(1, 0, id);
 		ft.setWidget(2, 0, btn);
-
 		vPane.add(ft);
 
 		btn.addClickHandler(new ClickHandler(){
@@ -89,10 +86,8 @@ public class SletProduktbatch extends Composite{
 						btn.setEnabled(true);
 						Controller.refreshToken();
 					}
-
 				});
 			}
-
 		});
 	}
 
@@ -110,6 +105,4 @@ public class SletProduktbatch extends Composite{
 			}
 		}
 	}
-
-
 }

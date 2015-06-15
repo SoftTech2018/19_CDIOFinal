@@ -3,7 +3,6 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
@@ -30,7 +29,6 @@ public class VisOpr extends Composite {
 		error = new Label("Loading...");
 		vPane.add(error);
 		initWidget(vPane);
-
 
 		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>() {
 
@@ -89,7 +87,7 @@ public class VisOpr extends Composite {
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
 					ft.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
-//					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+					//					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));
 					ft.setText(i+1, 1, result.get(i).getName());
 					ft.setText(i+1, 2, result.get(i).getIni());
@@ -114,9 +112,8 @@ public class VisOpr extends Composite {
 					opr.setValue(result.get(i).isOperatoer());
 					opr.setEnabled(false);
 					ft.setWidget(i+1, 7, opr);
-
-
 				}
+
 				Controller.service.getUserCount(Controller.token, new AsyncCallback<List<Integer>>() {
 
 					@Override
@@ -136,8 +133,6 @@ public class VisOpr extends Composite {
 							error.setText(caught.getMessage());
 							error.setStyleName("TextBox-ErrorMessage");	
 						}
-						
-
 					}
 
 					@Override
@@ -146,13 +141,13 @@ public class VisOpr extends Composite {
 						FlexTable ft2 = new FlexTable();
 						HTML gap = new HTML();
 						gap.setHTML("<br><br>");
-						
+
 						vPane.add(gap);
 						vPane.add(ft3);
 						vPane.add(ft2);
-						
-//						vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-						
+
+						//						vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
+
 						ft3.getCellFormatter().addStyleName(0, 0, "FlexTable-Header");
 						ft3.setText(0, 0, "Antal brugere i systemet: ");
 						ft2.setText(1, 0, "Admins: ");
@@ -160,36 +155,20 @@ public class VisOpr extends Composite {
 						ft2.setText(3, 0, "Værkførere: ");
 						ft2.setText(4, 0, "Operatørere: ");
 
-						
-//							ft2.getCellFormatter().setHorizontalAlignment(1, 4, HasHorizontalAlignment.ALIGN_CENTER);
-//							ft2.getCellFormatter().setHorizontalAlignment(1, 5, HasHorizontalAlignment.ALIGN_CENTER);
-//							ft2.getCellFormatter().setHorizontalAlignment(1, 6, HasHorizontalAlignment.ALIGN_CENTER);
-//							ft2.getCellFormatter().setHorizontalAlignment(1, 7, HasHorizontalAlignment.ALIGN_CENTER);
-							
-							ft2.getCellFormatter().setWidth(1, 0, "80px");
-							ft2.getCellFormatter().setWidth(1, 1, "25px");
-							ft2.setText(1, 1, Integer.toString(result.get(0))); //Admins
-							ft2.setText(2, 1, Integer.toString(result.get(1))); //Farmaceuter
-							ft2.setText(3, 1, Integer.toString(result.get(2)));	//Værkførere
-							ft2.setText(4, 1, Integer.toString(result.get(3))); //Operatører
+						//							ft2.getCellFormatter().setHorizontalAlignment(1, 4, HasHorizontalAlignment.ALIGN_CENTER);
+						//							ft2.getCellFormatter().setHorizontalAlignment(1, 5, HasHorizontalAlignment.ALIGN_CENTER);
+						//							ft2.getCellFormatter().setHorizontalAlignment(1, 6, HasHorizontalAlignment.ALIGN_CENTER);
+						//							ft2.getCellFormatter().setHorizontalAlignment(1, 7, HasHorizontalAlignment.ALIGN_CENTER);
 
-						
-
+						ft2.getCellFormatter().setWidth(1, 0, "80px");
+						ft2.getCellFormatter().setWidth(1, 1, "25px");
+						ft2.setText(1, 1, Integer.toString(result.get(0))); //Admins
+						ft2.setText(2, 1, Integer.toString(result.get(1))); //Farmaceuter
+						ft2.setText(3, 1, Integer.toString(result.get(2)));	//Værkførere
+						ft2.setText(4, 1, Integer.toString(result.get(3))); //Operatører
 					}
-
 				});
 			}
 		});
-
-
-
 	}
-
-
-
 }
-
-
-
-
-

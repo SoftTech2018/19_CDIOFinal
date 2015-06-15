@@ -27,7 +27,7 @@ public class OpretOpr extends Composite {
 	private HorizontalPanel hPane;
 	private Label error;
 	private FlexTable ft, ft2;
-	private TextBox id, navn, ini, cpr, pass;
+	private TextBox navn, ini, cpr, pass;
 	private CheckBox admin, farm, vaerk, opr;
 	private Button ok;
 	private boolean idValid, navnValid, passValid, cprValid, iniValid, roleValid;
@@ -304,5 +304,4 @@ public class OpretOpr extends Composite {
 				ok.setEnabled(false);
 		}
 	}
-
 }

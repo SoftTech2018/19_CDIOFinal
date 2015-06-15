@@ -11,16 +11,16 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class StartPage extends Composite {
-	
+
 	public StartPage(final Controller con){
 		VerticalPanel vPane = new VerticalPanel();
 		initWidget(vPane);
-		
+
 		FlexTable ft = new FlexTable();
 		FlexTable ft2 = new FlexTable();
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 		ft.setText(0, 0, "Vælg farveskema:");
-		
+
 		Button blue = new Button("Blå");
 		blue.setStyleName("Button-Blue");
 		blue.addClickHandler(new ClickHandler(){
@@ -30,9 +30,8 @@ public class StartPage extends Composite {
 				con.setColor("blue");
 			}
 		});
-		
-		
-		Button red = new Button("Rød");
+
+		Button red = new Button("Filur");
 		red.setStyleName("Button-Red");
 		red.addClickHandler(new ClickHandler(){
 
@@ -41,7 +40,7 @@ public class StartPage extends Composite {
 				con.setColor("red");
 			}
 		});
-		
+
 		Button green = new Button("Grøn");
 		green.setStyleName("Button-Green");
 		green.addClickHandler(new ClickHandler(){
@@ -51,13 +50,13 @@ public class StartPage extends Composite {
 				con.setColor("green");
 			}
 		});
-		
+
 		ft.setWidget(0, 1, blue);
 		ft.setWidget(0, 2, red);
 		ft.setWidget(0, 3, green);
 		HTML gap = new HTML();
-		gap.setHTML("<br><br>");
-		
+		gap.setHTML("<br><br><br>");
+
 		String vt = "Velkommen til det Distribueret Afvejningssystem. "
 				+ "Ude i menuen til venstre er det muligt at vælge, "
 				+ "hvilken funktion du vil benytte i system. "
@@ -65,12 +64,9 @@ public class StartPage extends Composite {
 				+ "God fornøjelse med systemet!";
 		ft2.setStyleName("TextBox-Startside");
 		ft2.setText(0, 0, vt);
-		
+
 		vPane.add(ft);
 		vPane.add(gap);
 		vPane.add(ft2);
-		
-		
 	}
-
 }

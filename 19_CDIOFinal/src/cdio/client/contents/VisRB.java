@@ -3,9 +3,7 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.RaavareBatchDTO;
-import cdio.shared.RaavareDTO;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -31,7 +29,7 @@ public class VisRB extends Composite {
 
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
-				
+
 				ft.setText(0, 0, "RB ID");
 				ft.setText(0, 1, "Raavare ID");
 				ft.setText(0, 2, "Mængde");
@@ -39,7 +37,7 @@ public class VisRB extends Composite {
 				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "85px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "80px");
-			
+
 				for (int i = 0; i < result.size(); i++) {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getRbId()));
 					ft.setText(i+1, 1, Integer.toString(result.get(i).getRaavareId()));
@@ -50,6 +48,3 @@ public class VisRB extends Composite {
 		});
 	}
 }
-
-
-

@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RetOpr extends Composite {
-	
+
 	private Label error;
 	private VerticalPanel vPane;
 	private int eventRow, openEventRow;
@@ -32,13 +32,13 @@ public class RetOpr extends Composite {
 	private boolean uAdmin, uFarm, uVeark, uOpr, passValid, nameValid, iniValid, cprValid, roleValid;
 	private TextBox oNavn, oIni, oCpr, oPass;
 	private CheckBox oAdmin, oFarm, oVaerk, oOpr;
-	
+
 	public RetOpr(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
 		run();
 	}
-	
+
 	public void run(){	
 		vPane.clear();
 		error = new Label("Loading...");
@@ -90,7 +90,7 @@ public class RetOpr extends Composite {
 				ft.getFlexCellFormatter().setWidth(0, 8, "75px");
 				ft.getFlexCellFormatter().setWidth(0, 9, "45px");
 				ft.getFlexCellFormatter().setWidth(0, 10, "45px");
-				
+
 				for (int i=0; i<result.size(); i++){
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getUserId()));
 					ft.setText(i+1, 1, result.get(i).getName());
@@ -113,7 +113,7 @@ public class RetOpr extends Composite {
 					opr.setValue(result.get(i).isOperatoer());
 					opr.setEnabled(false);
 					ft.setWidget(i+1, 8, opr);
-					
+
 					Button ret = new Button("Ret");
 					ret.setStyleName("Button-Ret");
 					ret.addClickHandler(new RetClick());
@@ -134,7 +134,7 @@ public class RetOpr extends Composite {
 			}
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			openEventRow = eventRow;
-			
+
 			//Gem de oprindelige værdier
 			uNavn = ft.getText(eventRow, 1);
 			uIni = ft.getText(eventRow, 2);
@@ -144,82 +144,82 @@ public class RetOpr extends Composite {
 			uFarm = ((CheckBox) ft.getWidget(eventRow, 6)).getValue();
 			uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
 			uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
-			
+
 			passValid = FieldVerifier.isValidPassword(uPass);
 			nameValid = FieldVerifier.isValidName(uNavn);
 			iniValid = FieldVerifier.isValidInitial(uIni);
 			cprValid = FieldVerifier.isValidCpr(uCpr);
 			if (uAdmin || uFarm || uVeark || uOpr)
 				roleValid = true;
-			
+
 			// Lav nye widgets der kan redigeres og erstat de oprindelige med disse
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
 			oNavn.addKeyUpHandler(new NameCheck());
 			oNavn.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 1, oNavn);
-			
+
 			oIni = new TextBox();
 			oIni.setText(uIni);
 			oIni.addKeyUpHandler(new IniCheck());
 			oIni.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 2, oIni);
-			
+
 			oCpr = new TextBox();
 			oCpr.setText(uCpr);
 			oCpr.addKeyUpHandler(new CprCheck());
 			oCpr.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 3, oCpr);
-			
+
 			oPass = new TextBox();
 			oPass.setText(uPass);
 			oPass.addKeyUpHandler(new PassWordCheck());
 			oPass.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 4, oPass);
-			
+
 			oAdmin = new CheckBox();
 			oAdmin.setEnabled(true);
 			oAdmin.setValue(uAdmin);
 			oAdmin.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 5, oAdmin);
-			
+
 			oFarm = new CheckBox();
 			oFarm.setEnabled(true);
 			oFarm.setValue(uFarm);
 			oFarm.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 6, oFarm);
-			
+
 			oVaerk = new CheckBox();
 			oVaerk.setEnabled(true);
 			oVaerk.setValue(uVeark);
 			oVaerk.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 7, oVaerk);
-			
+
 			oOpr = new CheckBox();
 			oOpr.setEnabled(true);
 			oOpr.setValue(uOpr);
 			oOpr.addClickHandler(new RolleCheck());
 			ft.setWidget(eventRow, 8, oOpr);
-			
+
 			Button ok = new Button("Ok");
 			ok.setStyleName("Button-Ret");
 			ok.addClickHandler(new OkClick());
 			ft.setWidget(eventRow, 9, ok);
-			
+
 			Button cancel = new Button("Cancel");
 			cancel.setStyleName("Button-Ret");
 			cancel.addClickHandler(new CancelClick());
 			ft.setWidget(eventRow, 10, cancel);
 		}
 	}
-	
+
 	private class OkClick implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			((Button) ft.getWidget(eventRow, 9)).setText("Loading");
 			((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
-			
+
 			UserDTO user = new UserDTO(ft.getText(eventRow, 0), 
 					((TextBox) ft.getWidget(eventRow, 1)).getText(), 
 					((TextBox) ft.getWidget(eventRow, 2)).getText(), 
@@ -229,7 +229,7 @@ public class RetOpr extends Composite {
 					((CheckBox) ft.getWidget(eventRow, 6)).getValue(), 
 					((CheckBox) ft.getWidget(eventRow, 7)).getValue(), 
 					((CheckBox) ft.getWidget(eventRow, 8)).getValue());
-			
+
 			Controller.service.updateUser(Controller.token, user, new AsyncCallback<UserDTO>(){
 
 				@Override
@@ -261,7 +261,7 @@ public class RetOpr extends Composite {
 					uFarm = ((CheckBox) ft.getWidget(eventRow, 6)).getValue();
 					uVeark = ((CheckBox) ft.getWidget(eventRow, 7)).getValue();
 					uOpr = ((CheckBox) ft.getWidget(eventRow, 8)).getValue();
-					
+
 					openEventRow = 0;
 					Window.alert("Bruger " + result.getName() + " blev opdateret.");
 					run(); // Reload siden
@@ -270,16 +270,16 @@ public class RetOpr extends Composite {
 			});
 		}
 	}
-	
+
 	private class CancelClick implements ClickHandler{
 
 		@Override
 		public void onClick(ClickEvent event) {
 			error.setText("");
-			
+
 			// Sætter text/widgets tilbage til oprindelige status
 			int eventRow = ft.getCellForEvent(event).getRowIndex();
-		
+
 			ft.setText(eventRow, 1, uNavn);
 			ft.setText(eventRow, 2, uIni);
 			ft.setText(eventRow, 3, uCpr);
@@ -300,17 +300,17 @@ public class RetOpr extends Composite {
 			opr.setValue(uOpr);
 			opr.setEnabled(false);
 			ft.setWidget(eventRow, 8, opr);
-			
+
 			Button ret = new Button("Ret");
 			ret.setStyleName("Button-Ret");
 			ret.addClickHandler(new RetClick());
 			ft.setWidget(eventRow, 9, ret);
-			
+
 			ft.setText(eventRow, 10, "");
 			openEventRow =0;
 		}
 	}
-	
+
 	private class PassWordCheck implements KeyUpHandler{
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
@@ -330,7 +330,7 @@ public class RetOpr extends Composite {
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 	}
-	
+
 	private class NameCheck implements KeyUpHandler{
 
 		@Override
@@ -351,7 +351,7 @@ public class RetOpr extends Composite {
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 	}
-	
+
 	private class CprCheck implements KeyUpHandler{
 
 		@Override
@@ -372,7 +372,7 @@ public class RetOpr extends Composite {
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 	}
-	
+
 	private class IniCheck implements KeyUpHandler{
 
 		@Override
@@ -393,7 +393,7 @@ public class RetOpr extends Composite {
 				((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
 		}
 	}
-	
+
 	private class RolleCheck implements ClickHandler{
 
 		@Override

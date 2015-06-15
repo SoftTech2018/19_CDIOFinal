@@ -1,11 +1,8 @@
 package cdio.client.contents;
 
 import java.util.List;
-import java.util.jar.Attributes.Name;
 
-import sun.print.resources.serviceui;
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -16,10 +13,16 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRecept extends Composite {
 
@@ -31,10 +34,9 @@ public class OpretRecept extends Composite {
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, receptOprettet, netEle, tolEle, ravEle;
 	private HorizontalPanel hp;
 	private int[] liste;
-	
-	
+
 	public OpretRecept() {
-		
+
 		hp = new HorizontalPanel();
 		initWidget(hp);
 		run();
@@ -54,7 +56,7 @@ public class OpretRecept extends Composite {
 		ravEle = false;
 
 		hp.clear();
-		
+
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -91,28 +93,25 @@ public class OpretRecept extends Composite {
 		ft3.setText(0, 0, "");
 
 		error = new Label("");
-		
+
 		ft4 = new FlexTable();
 		ft4.setWidget(12, 0, error);
 		ft4.setText(0, 1, "");
 		ft4.setWidget(0, 2, error);
-		
-		
-		
+
 		vPane.add(ft);	
 		vPane.add(ft4);
 		vPane1.add(ft3);
-		
 
 		vPane.setWidth("400 px");
 		vPane1.setWidth("400 px");
 		//hp.add(error);
 		hp.add(vPane);
 		hp.add(vPane1);
-	
+
 		getListe();
 	}
-	
+
 	private void getListe(){
 		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
@@ -128,9 +127,9 @@ public class OpretRecept extends Composite {
 						}
 					});
 				}
-					else{
-				ft.setText(1, 2, "Fejl i listekald");
-					}}
+				else{
+					ft.setText(1, 2, "Fejl i listekald");
+				}}
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
@@ -140,9 +139,9 @@ public class OpretRecept extends Composite {
 						i=rv.getRaavareId();
 					}
 				}
-				
+
 				liste = new int[i+1];
-				
+
 				for(RaavareDTO rv : result){
 					liste[rv.getRaavareId()]=1;
 				}
@@ -164,50 +163,51 @@ public class OpretRecept extends Composite {
 		public void onClick(ClickEvent event) {
 			gemKomp.setText("Loading");
 			gemKomp.setEnabled(false);
-			
+
 			String netto = nomNetto.getText();
 			for(int i = 0; i<netto.length(); i++){
 				if (netto.charAt(i)==','){
 					netto = netto.replace(",", ".");
 				}
 			}
-			
+
 			String tol = tolerance.getText();
 			for(int i=0; i < tol.length(); i++){
 				if(tol.charAt(i)==','){
 					tol = tol.replace(",", ".");
 				}
 			}
-			
+
 			ReceptKompDTO receptKomp = new ReceptKompDTO(
 					Integer.parseInt(receptid.getText()),
 					Integer.parseInt(raavareid.getText()),
 					Double.parseDouble(netto),
 					Double.parseDouble(tol));
-			
+
 			Controller.service.createReceptKomp(Controller.token, receptKomp, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
-						if (caught instanceof TokenException){
-							final PopupLogin pop = new PopupLogin();
-							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
-								public void setPosition(int offsetWidth, int offsetHeight) {
-									int left = (Window.getClientWidth() - offsetWidth) / 3;
-									int top = (Window.getClientHeight() - offsetHeight) / 3;
-									pop.setPopupPosition(left, top);
-								}
-							});
-							gemKomp.setText("Gem Komponent");
-							gemKomp.setEnabled(true);
-						}
-							else{
-		
-					gemKomp.setText("Gem Komponent");
-					gemKomp.setEnabled(true);
-					error.setText(caught.getMessage());
-					error.setStyleName("Recept-Error");
-							}}
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+						gemKomp.setText("Gem Komponent");
+						gemKomp.setEnabled(true);
+					}
+					else{
+
+						gemKomp.setText("Gem Komponent");
+						gemKomp.setEnabled(true);
+						error.setText(caught.getMessage());
+						error.setStyleName("Recept-Error");
+					}
+				}
 
 				@Override
 				public void onSuccess(Void result) {
@@ -216,13 +216,9 @@ public class OpretRecept extends Composite {
 					Window.alert("Receptkomponent oprettet!");
 					error.setStyleName("Recept-Error");
 					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
-				
 				}
-
 			});
-
 		}
-		
 	}
 
 	private class OpretClick implements ClickHandler{
@@ -230,39 +226,36 @@ public class OpretRecept extends Composite {
 		public void onClick(ClickEvent event) {
 			opret.setText("loading");
 			opret.setEnabled(false);
-			
 
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
-			
+
 			Controller.service.createRecept(Controller.token, recept, new AsyncCallback<Void>(){
 
 				@Override
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
-							final PopupLogin pop = new PopupLogin();
-							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
-								public void setPosition(int offsetWidth, int offsetHeight) {
-									int left = (Window.getClientWidth() - offsetWidth) / 3;
-									int top = (Window.getClientHeight() - offsetHeight) / 3;
-									pop.setPopupPosition(left, top);
-								}
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
 							}
-							);
-					opret.setText("Opret");
-					opret.setEnabled(true);		
+						}
+								);
+						opret.setText("Opret");
+						opret.setEnabled(true);		
 					}
-					
-				else{
-					opret.setText("Opret");
-					opret.setEnabled(true);	
-					error.setText(caught.getMessage());
-					error.setStyleName("Recept-Error");
-					
+
+					else{
+						opret.setText("Opret");
+						opret.setEnabled(true);	
+						error.setText(caught.getMessage());
+						error.setStyleName("Recept-Error");
+					}
 				}
-				}
-				
 
 				@Override
 				public void onSuccess(Void result) {
@@ -273,10 +266,8 @@ public class OpretRecept extends Composite {
 					error.setText("Recept er oprettet. Tilføj nye receptkomponenter!");
 					error.setStyleName("Recept-Error");
 				}
-					
-			
 			}
-		);
+					);
 		}
 	}
 
@@ -288,18 +279,15 @@ public class OpretRecept extends Composite {
 			if (!FieldVerifier.isValidReceptName(name.getText())){
 				name.setStyleName("TextBox-OpretError");
 				navnValid = false;
-			}
-			else{
+			} else {
 				name.setStyleName("TextBox-Opret");
 				navnValid = true;
-
 			} 
 			if(navnValid && receptidValid)
 				opret.setEnabled(true);
 			else
 				opret.setEnabled(false);	
 		}
-
 	}
 
 	private class IdCheck implements KeyUpHandler{
@@ -319,7 +307,6 @@ public class OpretRecept extends Composite {
 				opret.setEnabled(true);
 			else opret.setEnabled(false);
 		}
-
 	}
 
 	private class kompClick implements ClickHandler{
@@ -337,7 +324,6 @@ public class OpretRecept extends Composite {
 			if (rid != null){
 				ravEle = true;}
 
-
 			ft2.setText(2, 0, "Indtast nettovægt mellem 0,05-20,0 kg");
 			nomNetto = new TextBox();
 			nomNetto.addKeyUpHandler(new nettoCheck());
@@ -346,10 +332,7 @@ public class OpretRecept extends Composite {
 				netEle = true;
 			}
 
-
-
 			ft2.setWidget(2, 1, nomNetto);
-
 
 			ft2.setText(3, 0, "Indtast tolerance mellem 0,1-10,0%");
 			tolerance = new TextBox();
@@ -365,16 +348,12 @@ public class OpretRecept extends Composite {
 			gemKomp.addClickHandler(new gemKomp());
 			ft3.setWidget(0, 8, gemKomp);
 			gemKomp.setEnabled(false);
-			
+
 			ft2.setWidget(3, 1, tolerance);
 
-			
 			vPane1.add(ft2);
 
 		}
-
-
-
 	}
 
 	private class rIdCheck implements KeyUpHandler{
@@ -396,7 +375,7 @@ public class OpretRecept extends Composite {
 					error.setText("Ukendt råvareId, prøv et andet");
 					error.setStyleName("Recept-Error");
 					id.setStyleName("TextBox-ErrorMessage");
-				raavareidValid = false;
+					raavareidValid = false;
 				}
 
 				if( receptOprettet && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle){
@@ -407,6 +386,7 @@ public class OpretRecept extends Composite {
 
 		}
 	}
+
 	private class nettoCheck implements KeyUpHandler{
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox tb = (TextBox) event.getSource();
@@ -441,6 +421,5 @@ public class OpretRecept extends Composite {
 				gemKomp.setEnabled(true);
 			else gemKomp.setEnabled(false);
 		}
-
 	}
 }

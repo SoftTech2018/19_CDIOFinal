@@ -1,9 +1,7 @@
 package cdio.client.contents;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
-import cdio.shared.ProduktBatchDTO;
 import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -37,8 +35,6 @@ public class SletRecept extends Composite {
 
 	private void run(){
 		vPane.clear();
-		
-		
 
 		desc = new Label("Indtast ID for Recept der ønskes slettet");
 		id = new TextBox();
@@ -55,7 +51,7 @@ public class SletRecept extends Composite {
 		vPane.add(ft);
 
 		btn.addClickHandler(new ClickHandler(){
-			
+
 			@Override
 			public void onClick(ClickEvent event) {
 				btn.setText("Loading");
@@ -92,11 +88,8 @@ public class SletRecept extends Composite {
 						Controller.refreshToken();
 						btn.setEnabled(true);
 					}
-
 				});
-
 			}
-
 		});
 	}
 
@@ -114,7 +107,4 @@ public class SletRecept extends Composite {
 			}
 		}
 	}
-
 }
-
-

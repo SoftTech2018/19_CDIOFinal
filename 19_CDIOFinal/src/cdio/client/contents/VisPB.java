@@ -36,7 +36,7 @@ public class VisPB extends Composite {
 		ft = new FlexTable();
 		run();
 	}
-	
+
 	private void run() {
 		Controller.service.getPBList(Controller.token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
@@ -86,7 +86,7 @@ public class VisPB extends Composite {
 					ft.setText(i+1, 3, result.get(i).getDato());
 					ft.setText(i+1, 4, result.get(i).getBegyndt());
 					ft.setText(i+1, 5, result.get(i).getAfsluttet());
-					
+
 					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
@@ -95,7 +95,7 @@ public class VisPB extends Composite {
 					ft.getCellFormatter().setVerticalAlignment(i+1, 5, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 6, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 7, HasVerticalAlignment.ALIGN_TOP);
-					
+
 					print = new Button("Udprint");
 					print.setStyleName("Button-Ret"); 
 					print.addClickHandler(new Udprint());
@@ -116,7 +116,7 @@ public class VisPB extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			
+
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			((Button) ft.getWidget(eventRow, 7)).setText("Loading...");
 			((Button) ft.getWidget(eventRow, 7)).setEnabled(false);
@@ -179,7 +179,7 @@ public class VisPB extends Composite {
 			});
 		}
 	}
-	
+
 	private class SkjulClick implements ClickHandler {
 		int eventRow;
 
@@ -217,16 +217,14 @@ public class VisPB extends Composite {
 					tilbage.setEnabled(false);
 					run();
 				}
-
 			});
+			
 			vPane.clear();
 			vPane.add(tilbage);
 			HTML gap = new HTML();
 			gap.setHTML("<br><br>");
 			vPane.add(gap);
 			vPane.add(new PrintPB(pb));
-
 		}
-
 	}
 }

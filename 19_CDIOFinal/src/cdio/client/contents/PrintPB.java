@@ -37,7 +37,7 @@ public class PrintPB extends Composite{
 		pbvPane.add(error);
 
 		ft.setStyleName("FlexTable-PB"); // Dashed border
-		
+
 		// Hvilken produktbatch
 		FlexTable ft2 = new FlexTable();
 		ft2.setText(0, 0, "Udskrevet");
@@ -50,7 +50,7 @@ public class PrintPB extends Composite{
 		ft2.setText(2, 1, Integer.toString(pb.getReceptId()));
 		ft2.setText(3, 0, "");
 		ft.setWidget(0, 0, ft2);
-		
+
 		ft.setText(1, 0, "");
 
 		Controller.service.getPbView(Controller.token, pb.getPbId(), new AsyncCallback<List<PbViewDTO>>(){
@@ -85,12 +85,12 @@ public class PrintPB extends Composite{
 					ft3.setText(1, 1, p.getRaavareNavn());
 					ft.setWidget(row, 0, ft3);
 					row++;
-					
+
 					HTML line = new HTML();
 					line.setHTML("<hr style=\"border: 1px dashed black;\" width=\"100%\">");
 					ft.setWidget(row, 0, line);
 					row++;
-					
+
 					FlexTable ft4 = new FlexTable();
 					ft4.setStyleName("FlexTable-Content");
 					ft4.getColumnFormatter().setWidth(0, "75px");
@@ -101,7 +101,7 @@ public class PrintPB extends Composite{
 					ft4.getColumnFormatter().setWidth(5, "75px");
 					ft4.getColumnFormatter().setWidth(6, "75px");
 					ft4.getColumnFormatter().setWidth(7, "75px");
-					
+
 					ft4.setText(0, 0, "Del");
 					ft4.setText(0, 1, "Mængde");
 					ft4.setText(0, 2, "Tolerance");
@@ -121,18 +121,18 @@ public class PrintPB extends Composite{
 					ft4.setText(1, 7, p.getTerminal());
 					ft.setWidget(row, 0, ft4);;
 					row++;
-					
+
 					ft.setText(row, 0, "");
 					row++;
 					ft.setText(row, 0, "");
 					row++;
 				}
-				
+
 				ft.setText(row, 0, "");
 				row++;	
 				ft.setText(row, 0, "");
 				row++;
-				
+
 				double taraSum = 0;
 				double nettoSum = 0;
 				for (int i=0; i<result.size(); i++){
@@ -148,19 +148,19 @@ public class PrintPB extends Composite{
 				ft5.getColumnFormatter().setWidth(5, "75px");
 				ft5.getColumnFormatter().setWidth(6, "75px");
 				ft5.getColumnFormatter().setWidth(7, "75px");
-				
+
 				ft5.setText(0, 0, "Sum Tara:");
 				ft5.setText(0, 3, Double.toString(taraSum).replace(".", ","));
 				ft5.setText(1, 0, "Sum Netto:");
 				ft5.setText(1, 4, Double.toString(nettoSum).replace(".", ","));
 				ft.setWidget(row, 0, ft5);
 				row++;
-				
+
 				ft.setText(row, 0, "");
 				row++;
 				ft.setText(row, 0, "");
 				row++;
-				
+
 				String status;
 				switch(pb.getStatus()){
 				case 0: 
@@ -175,7 +175,7 @@ public class PrintPB extends Composite{
 				default:
 					status = "Fejl i status";
 				}
-				
+
 				FlexTable ft6 = new FlexTable();
 				ft6.setText(0,  0, "Produktion Status:");
 				ft6.setText(0, 1, status);

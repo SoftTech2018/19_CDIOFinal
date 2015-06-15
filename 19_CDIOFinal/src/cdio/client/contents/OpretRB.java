@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRB extends Composite {
-	
+
 	private VerticalPanel vPane;
 	private FlexTable ft;
 	private TextBox rbID, raavareID, mængde;
@@ -37,7 +37,6 @@ public class OpretRB extends Composite {
 	}
 
 	public void run(){
-
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -66,13 +65,11 @@ public class OpretRB extends Composite {
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
 
-		
-		
 		vPane.add(ft);
 		getRaavareListe();
 		getRBListe();
 	}
-	
+
 	private void getRaavareListe(){
 		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
@@ -89,16 +86,15 @@ public class OpretRB extends Composite {
 						i=rv.getRaavareId();
 					}
 				}
-				
+
 				raavareListe = new int[i+1];
-				
 				for(RaavareDTO rv : result){
 					raavareListe[rv.getRaavareId()]=1;
 				}
 			}					
 		});
 	}
-	
+
 	private void getRBListe(){
 		Controller.service.getRaavareBatchList(Controller.token, new AsyncCallback<List<RaavareBatchDTO>>(){
 
@@ -115,16 +111,16 @@ public class OpretRB extends Composite {
 						i=rv.getRbId();
 					}
 				}
-				
+
 				rbListe = new int[i+1];
-				
+
 				for(RaavareBatchDTO rv : result){
 					rbListe[rv.getRbId()]=1;
 				}
 			}					
 		});
 	}
-	
+
 	private class OpretClick implements ClickHandler{
 
 		@Override
@@ -147,11 +143,8 @@ public class OpretRB extends Composite {
 					vPane.clear();
 					run();
 				}
-
 			} );
-
 		}
-
 	}
 
 	private class BatchIdCheck implements KeyUpHandler{
@@ -181,7 +174,7 @@ public class OpretRB extends Composite {
 			}
 		}
 	}
-	
+
 	private class IdCheck implements KeyUpHandler{
 
 		@Override
@@ -222,16 +215,13 @@ public class OpretRB extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				maengdeValid = true;
-
 			}
-			
+
 			if(rbIDValid && raavareIDValid && maengdeValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
 			}
 		}
-
 	}
-
 }
