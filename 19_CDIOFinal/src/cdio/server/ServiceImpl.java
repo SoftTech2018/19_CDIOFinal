@@ -307,7 +307,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 		
-		if(getRole(token).equalsIgnoreCase("Farmaceut")){
+		if(getRole(token).equalsIgnoreCase("Farmaceut") || getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			return dao.getReceptList();
 		} else {
 			throw new TokenException("Adgang nægtet");
