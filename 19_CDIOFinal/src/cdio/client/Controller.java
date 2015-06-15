@@ -120,9 +120,11 @@ public class Controller extends Composite {
 
 			@Override
 			public void onSuccess(String result) {
+				Menu.cancelTimer();
 				Controller.token = result;
 				Controller.minutes = 30;
 				Controller.seconds = 0;
+				Menu.timer();
 			}
 		});
 	}

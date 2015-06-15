@@ -341,9 +341,8 @@ public class Menu extends Composite {
 					if (Controller.minutes < 5){
 						time.setStyleName("Time-Error");
 						if (Controller.minutes == -1){
-							Window.alert("Sessionen er udløbet.");
 							cancelTimer();
-							logud.click(); // Log brugeren ud
+							time.setText("00:00");
 						}
 					} 
 					else 
