@@ -37,7 +37,13 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		ResultSet rs = Connector.doQuery(txt.getCommand(6));
 		try {
 			while (rs.next()) {
-				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"), rs.getString("begyndt"), rs.getString("afsluttet")));
+				String begyndt = rs.getString("begyndt");
+				if (begyndt==null)
+					begyndt ="";
+				String afsluttet = rs.getString("afsluttet");
+				if (afsluttet==null)
+					afsluttet="";
+				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"), begyndt, afsluttet));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;

@@ -57,14 +57,15 @@ public class VisPB extends Composite {
 				ft.setText(0, 0, "PB ID");
 				ft.setText(0, 1, "Recept ID");
 				ft.setText(0, 2, "Status");
-				ft.setText(0, 3, "Oprettet");
+				ft.setText(0, 3, "Påbegyndt");
+				ft.setText(0, 4, "Afsluttet");
 
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "75px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
-				ft.getFlexCellFormatter().setWidth(0, 3, "80px");
-				ft.getFlexCellFormatter().setWidth(0, 4, "50px");
+				ft.getFlexCellFormatter().setWidth(0, 3, "130px");
+				ft.getFlexCellFormatter().setWidth(0, 4, "130px");
 
 
 
@@ -72,22 +73,26 @@ public class VisPB extends Composite {
 					ft.setText(i+1, 0, Integer.toString(result.get(i).getPbId()));
 					ft.setText(i+1, 1, Integer.toString(result.get(i).getReceptId()));
 					ft.setText(i+1, 2, Integer.toString(result.get(i).getStatus()));
-					ft.setText(i+1, 3, result.get(i).getDato());
+					ft.setText(i+1, 3, result.get(i).getBegyndt());
+					ft.setText(i+1, 4, result.get(i).getAfsluttet());
+					
 					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
 					ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
-
+					ft.getCellFormatter().setVerticalAlignment(i+1, 5, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 6, HasVerticalAlignment.ALIGN_TOP);
+					
 					print = new Button("Udprint");
 					print.setStyleName("Button-Ret"); 
 					print.addClickHandler(new Udprint());
-					ft.setWidget(i+1, 4, print);
+					ft.setWidget(i+1, 5, print);
 
 					pbkomp = new Button("Komponenter");
 					pbkomp.setStyleName("Button-Komponenter"); 
 					pbkomp.addClickHandler(new KompClick());
-					ft.setWidget(i+1, 5, pbkomp);
+					ft.setWidget(i+1, 6, pbkomp);
 
 				}
 
@@ -105,8 +110,8 @@ public class VisPB extends Composite {
 		public void onClick(ClickEvent event) {
 			
 			eventRow = ft.getCellForEvent(event).getRowIndex();
-			((Button) ft.getWidget(eventRow, 5)).setText("Loading...");
-			((Button) ft.getWidget(eventRow, 5)).setEnabled(false);
+			((Button) ft.getWidget(eventRow, 6)).setText("Loading...");
+			((Button) ft.getWidget(eventRow, 6)).setEnabled(false);
 			//			ft.setWidget(eventRow, 3, pbkompnew);
 
 			Controller.service.getPBKList(Controller.token, Integer.parseInt(ft.getText(eventRow, 0)),  new AsyncCallback<List<ProduktBatchKompDTO>>(){
@@ -122,17 +127,17 @@ public class VisPB extends Composite {
 				public void onSuccess(List<ProduktBatchKompDTO> result) {
 					FlexTable ft2 = new FlexTable();
 					skjul = new Button("Skjul");
-					skjul.setStyleName("Button-Komponenter");
+					skjul.setStyleName("Button-Ret");
 					skjul.addClickHandler(new SkjulClick());
 					ft2.setWidget(0, 0, skjul); //Her sættes Skjul-knappen i flextable 2
 
 					//ft2.setWidget(0, 0, ft.getWidget(eventRow, 3)); //
-					ft.setWidget(eventRow, 5, ft2);//her sættes ft2 i den korrekte referede række
+					ft.setWidget(eventRow, 6, ft2);//her sættes ft2 i den korrekte referede række
 
-					ft2.setText(0, 1, "Råvarebatch ID");
+					ft2.setText(0, 1, "RB ID");
 					ft2.setText(0, 2, "Tara");
 					ft2.setText(0, 3, "Netto");
-					ft2.setText(0, 4, "Operatør ID");
+					ft2.setText(0, 4, "Opr ID");
 					ft2.setText(0, 5, "Terminal");
 
 					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -148,6 +153,7 @@ public class VisPB extends Composite {
 						ft2.setText(i+2, 2, Double.toString(result.get(i).getTara()));
 						ft2.setText(i+2, 3, Double.toString(result.get(i).getNetto()));
 						ft2.setText(i+2, 4, Integer.toString(result.get(i).getOprId()));
+						ft2.setText(i+2, 5, result.get(i).getHost());
 						//						ft2.setText(i+2, 5, result.get(i).getIP); Mangler database implementering
 					}
 
@@ -170,7 +176,7 @@ public class VisPB extends Composite {
 			pbkompnew.setStyleName("Button-Komponenter");
 			pbkompnew.addClickHandler(new KompClick());
 
-			ft.setWidget(eventRow, 5, pbkompnew);
+			ft.setWidget(eventRow, 6, pbkompnew);
 
 		}
 
