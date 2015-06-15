@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -27,20 +28,20 @@ public class VisPB extends Composite {
 	private FlexTable ft;
 	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
+	private Label error;
 
 
 	public VisPB() {
 		vPane = new VerticalPanel();
+		error = new Label("Loading...");
+		vPane.add(error);
 		initWidget(vPane);
 		ft = new FlexTable();
 		run();
 
-
-
 	}
 	private void run() {
-		vPane.clear();
-		vPane.add(ft);
+		
 		Controller.service.getPBList(Controller.token, new AsyncCallback<List<ProduktBatchDTO>>() {
 
 			@Override
@@ -51,7 +52,8 @@ public class VisPB extends Composite {
 			@Override
 			public void onSuccess(List<ProduktBatchDTO> result) {
 				Controller.refreshToken();
-				
+				vPane.clear();
+				vPane.add(ft);
 				ft.setText(0, 0, "PB ID");
 				ft.setText(0, 1, "Recept ID");
 				ft.setText(0, 2, "Status");
@@ -101,8 +103,10 @@ public class VisPB extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-
+			
 			eventRow = ft.getCellForEvent(event).getRowIndex();
+			((Button) ft.getWidget(eventRow, 5)).setText("Loading...");
+			((Button) ft.getWidget(eventRow, 5)).setEnabled(false);
 			//			ft.setWidget(eventRow, 3, pbkompnew);
 
 			Controller.service.getPBKList(Controller.token, Integer.parseInt(ft.getText(eventRow, 0)),  new AsyncCallback<List<ProduktBatchKompDTO>>(){
@@ -192,6 +196,8 @@ public class VisPB extends Composite {
 
 				@Override
 				public void onClick(ClickEvent event) {
+//					tilbage.setText("Loading...");
+					tilbage.setEnabled(false);
 					run();
 
 				}

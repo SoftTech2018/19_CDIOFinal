@@ -9,15 +9,19 @@ import cdio.shared.RaavareDTO;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class VisRaavarer extends Composite {
 	
 		private VerticalPanel vPane;
+		private Label error;
 		
 		public VisRaavarer() {
 			vPane = new VerticalPanel();
+			error = new Label("Loading...");
+			vPane.add(error);
 			initWidget(vPane);
 			
 			Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>() {
@@ -33,7 +37,7 @@ public class VisRaavarer extends Composite {
 				@Override
 				public void onSuccess(List<RaavareDTO> result) {
 					Controller.refreshToken();
-					
+					vPane.clear();
 					FlexTable ft = new FlexTable();
 					ft.setText(0, 0, "ID");
 					ft.setText(0, 1, "Navn");
