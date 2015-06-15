@@ -1,6 +1,5 @@
 package cdio.client;
 
-import cdio.client.contents.PopupLogin;
 import cdio.client.contents.StartPage;
 import cdio.shared.DALException;
 import cdio.shared.TokenException;

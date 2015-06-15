@@ -3,7 +3,6 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
 import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
@@ -12,8 +11,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -21,6 +18,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -49,8 +47,19 @@ public class RetOpr extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				error.setText(caught.getMessage());	
-				error.setStyleName("TextLabel-ErrorMessage");
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					error.setText(caught.getMessage());	
+					error.setStyleName("TextLabel-ErrorMessage");					
+				}
 			}
 
 			@Override
@@ -142,7 +151,6 @@ public class RetOpr extends Composite {
 			cprValid = FieldVerifier.isValidCpr(uCpr);
 			if (uAdmin || uFarm || uVeark || uOpr)
 				roleValid = true;
-
 			
 			// Lav nye widgets der kan redigeres og erstat de oprindelige med disse
 			oNavn = new TextBox();
@@ -226,10 +234,21 @@ public class RetOpr extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					((Button) ft.getWidget(eventRow, 9)).setText("Ok");
-					((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
-					error.setText(caught.getMessage());
-					error.setStyleName("TextLabel-ErrorMessage");
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+					} else {
+						((Button) ft.getWidget(eventRow, 9)).setText("Ok");
+						((Button) ft.getWidget(eventRow, 9)).setEnabled(false);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextLabel-ErrorMessage");						
+					}
 				}
 
 				@Override
@@ -248,7 +267,6 @@ public class RetOpr extends Composite {
 					run(); // Reload siden
 					Controller.refreshToken();
 				}
-				
 			});
 		}
 	}

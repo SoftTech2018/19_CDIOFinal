@@ -228,7 +228,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void createUser(String token, UserDTO user) throws TokenException, DALException {
-		throw new TokenException("Test");
+		throw new TokenException("Test"); // TESTKODE
 //		if (TEST_DELAY)
 //			try {
 //				Thread.sleep(2000);

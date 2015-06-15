@@ -3,8 +3,8 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.FieldVerifier;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SletOpr extends Composite {
@@ -39,8 +40,19 @@ public class SletOpr extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				error.setText(caught.getMessage());
-				error.setStyleName("TextLabel-ErrorMessage");
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");					
+				}
 			}
 
 			@Override
@@ -122,9 +134,20 @@ public class SletOpr extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					vPane.add(error);
-					error.setText(caught.getMessage());
-					error.setStyleName("TextLabel-ErrorMessage");
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+					} else {
+						vPane.add(error);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextLabel-ErrorMessage");						
+					}
 				}
 
 				@Override
@@ -132,10 +155,7 @@ public class SletOpr extends Composite {
 					Window.alert("Bruger " + userId + " er blevet slettet.");
 					run();
 				}
-			});
-			
+			});	
 		}
-		
 	}
-
 }

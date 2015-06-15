@@ -5,6 +5,7 @@ import cdio.client.contents.OpretPB;
 import cdio.client.contents.OpretRB;
 import cdio.client.contents.OpretRaavare;
 import cdio.client.contents.OpretRecept;
+import cdio.client.contents.PopupLogin;
 import cdio.client.contents.RetOpr;
 import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
@@ -16,6 +17,7 @@ import cdio.client.contents.VisPB;
 import cdio.client.contents.VisRB;
 import cdio.client.contents.VisRaavarer;
 import cdio.client.contents.VisRecept;
+import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -28,6 +30,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class Menu extends Composite {
@@ -58,7 +61,18 @@ public class Menu extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				error.setText(caught.getMessage());
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					error.setText(caught.getMessage());					
+				}
 			}
 
 			@Override
@@ -351,6 +365,5 @@ public class Menu extends Composite {
 		public void onClick(ClickEvent event) {
 			Controller.logud();
 		}
-
 	}
 }

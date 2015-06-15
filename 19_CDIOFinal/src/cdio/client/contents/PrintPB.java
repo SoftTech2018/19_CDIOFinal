@@ -3,18 +3,17 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
-import cdio.client.ServiceAsync;
 import cdio.shared.PbViewDTO;
 import cdio.shared.ProduktBatchDTO;
+import cdio.shared.TokenException;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class PrintPB extends Composite{
@@ -58,8 +57,19 @@ public class PrintPB extends Composite{
 
 			@Override
 			public void onFailure(Throwable caught) {
-				error.setText(caught.getMessage());
-				error.setStyleName("TextLabel-ErrorMessage");
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					error.setText(caught.getMessage());
+					error.setStyleName("TextLabel-ErrorMessage");
+				}
 			}
 
 			@Override
