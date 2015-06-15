@@ -446,9 +446,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (Exception DALException){
 				check = true;
 			}
-		}
+		
 				if (check){
 			throw new DALException("Recepten er i brug");
+		} 
 		} else {
 			throw new TokenException("Adgang nægtet");		
 		}
