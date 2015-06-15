@@ -26,7 +26,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		ResultSet rs = Connector.doQuery(txt.getProductBatch(pbId));		
 		try {
 			if (!rs.first()) throw new DALException("Produktbatch " + pbId + " findes ikke");
-			return new ProduktBatchDTO (rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"));
+			return new ProduktBatchDTO (rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"), rs.getString("begyndt"), rs.getString("afsluttet"));
 		}
 		catch (SQLException e) {throw new DALException(e); }
 	}
@@ -37,7 +37,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 		ResultSet rs = Connector.doQuery(txt.getCommand(6));
 		try {
 			while (rs.next()) {
-				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato")));
+				list.add(new ProduktBatchDTO(rs.getInt("pb_id"), rs.getInt("status"), rs.getInt("recept_id"), rs.getString("dato"), rs.getString("begyndt"), rs.getString("afsluttet")));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
