@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
+import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -13,18 +14,19 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SletProduktbatch extends Composite{
-	
+
 	private VerticalPanel vPane;
 	private Label error;
 	private FlexTable ft;
 	private TextBox id;
 	private Label desc;
 	private Button btn;
-	
+
 	public SletProduktbatch(){
 		vPane = new VerticalPanel();
 		initWidget(vPane);
@@ -33,7 +35,7 @@ public class SletProduktbatch extends Composite{
 
 	private void run(){
 		vPane.clear();
-		
+
 		desc = new Label("Indtast ID for Produktbatch der ønskes slettet");
 		id = new TextBox();
 		id.addKeyUpHandler(new idCheck());
@@ -47,22 +49,36 @@ public class SletProduktbatch extends Composite{
 		ft.setWidget(2, 0, btn);
 
 		vPane.add(ft);
-		
+
 		btn.addClickHandler(new ClickHandler(){
 
 			@Override
 			public void onClick(ClickEvent event) {
 				btn.setText("Loading");
 				btn.setEnabled(false);
-				
+
 				Controller.service.deleteProduktBatch(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
 
 					@Override
 					public void onFailure(Throwable caught) {
-						Window.alert(caught.getMessage());
-						id.setText("");
-						btn.setText("Slet Recept");
-						btn.setEnabled(true);
+						if (caught instanceof TokenException){
+							final PopupLogin pop = new PopupLogin();
+							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+								public void setPosition(int offsetWidth, int offsetHeight) {
+									int left = (Window.getClientWidth() - offsetWidth) / 3;
+									int top = (Window.getClientHeight() - offsetHeight) / 3;
+									pop.setPopupPosition(left, top);
+								}
+							});
+							id.setText("");
+							btn.setText("Slet Recept");
+							btn.setEnabled(true);
+						} else {
+							Window.alert(caught.getMessage());
+							id.setText("");
+							btn.setText("Slet Recept");
+							btn.setEnabled(true);
+						}
 					}
 
 					@Override
@@ -73,13 +89,13 @@ public class SletProduktbatch extends Composite{
 						btn.setEnabled(true);
 						Controller.refreshToken();
 					}
-					
+
 				});
 			}
 
 		});
 	}
-	
+
 	private class idCheck implements KeyUpHandler{
 
 		@Override
