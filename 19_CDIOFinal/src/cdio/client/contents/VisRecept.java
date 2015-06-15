@@ -10,14 +10,18 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VisRecept extends Composite {
 
 	private VerticalPanel vPane;
+	private Label error;
 
 	public VisRecept() {
 		vPane = new VerticalPanel();
+		error = new Label("Loading...");
+		vPane.add(error);
 		initWidget(vPane);
 
 		Controller.service.getReceptList(Controller.token, new AsyncCallback<List<ReceptDTO>>(){
@@ -30,6 +34,7 @@ public class VisRecept extends Composite {
 
 			@Override
 			public void onSuccess(List<ReceptDTO> result) {
+				error.setText("");
 				FlexTable ft = new FlexTable();
 				ft.setStyleName("FlexTable-Content");	
 				ft.setText(0, 0, "Recept Id");
