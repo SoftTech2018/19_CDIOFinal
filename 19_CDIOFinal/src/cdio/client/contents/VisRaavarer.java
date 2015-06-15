@@ -5,11 +5,15 @@ import java.util.List;
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
 import cdio.shared.RaavareDTO;
+import cdio.shared.TokenException;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -17,6 +21,7 @@ public class VisRaavarer extends Composite {
 	
 		private VerticalPanel vPane;
 		private Label error;
+		private Button ok;
 		
 		public VisRaavarer() {
 			vPane = new VerticalPanel();
@@ -24,14 +29,26 @@ public class VisRaavarer extends Composite {
 			vPane.add(error);
 			initWidget(vPane);
 			
+			
 			Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>() {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					
-					FlexTable ft = new FlexTable();
-					ft.setText(0, 0, "Fejl");
-					vPane.add(ft);
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+						ok.setEnabled(true);
+					} else {
+						ok.setEnabled(true);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextBox-ErrorMessage");	
+					}
 				}
 
 				@Override

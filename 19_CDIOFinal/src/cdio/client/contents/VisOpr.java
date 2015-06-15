@@ -4,21 +4,26 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.client.ServiceAsync;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class VisOpr extends Composite {
 
 	private VerticalPanel vPane;
 	private Label error;
+	private Button ok;
 
 	public VisOpr() {
 		vPane = new VerticalPanel();
@@ -31,8 +36,21 @@ public class VisOpr extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+					ok.setEnabled(true);
+				} else {
+					ok.setEnabled(true);
+					error.setText(caught.getMessage());
+					error.setStyleName("TextBox-ErrorMessage");	
+				}
 			}
 
 			@Override
@@ -103,9 +121,21 @@ public class VisOpr extends Composite {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						FlexTable ft2 = new FlexTable();
-						ft2.setText(0, 0, caught.getMessage());
-						vPane.add(ft2);
+						if (caught instanceof TokenException){
+							final PopupLogin pop = new PopupLogin();
+							pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+								public void setPosition(int offsetWidth, int offsetHeight) {
+									int left = (Window.getClientWidth() - offsetWidth) / 3;
+									int top = (Window.getClientHeight() - offsetHeight) / 3;
+									pop.setPopupPosition(left, top);
+								}
+							});
+							ok.setEnabled(true);
+						} else {
+							ok.setEnabled(true);
+							error.setText(caught.getMessage());
+							error.setStyleName("TextBox-ErrorMessage");	
+						}
 						
 
 					}

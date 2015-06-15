@@ -7,9 +7,11 @@ import cdio.client.ServiceAsync;
 import cdio.shared.ProduktBatchDTO;
 import cdio.shared.ProduktBatchKompDTO;
 import cdio.shared.RaavareDTO;
+import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
@@ -19,6 +21,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ToggleButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -29,6 +32,7 @@ public class VisPB extends Composite {
 	//	private ToggleButton pbkomp;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
 	private Label error;
+	private Button ok;
 
 
 	public VisPB() {
@@ -46,7 +50,21 @@ public class VisPB extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ft.setText(0, 0, caught.getMessage());
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+					ok.setEnabled(true);
+				} else {
+					ok.setEnabled(true);
+					error.setText(caught.getMessage());
+					error.setStyleName("TextBox-ErrorMessage");	
+				}
 			}
 
 			@Override
@@ -118,8 +136,21 @@ public class VisPB extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-
-					ft.setText(0, 0, caught.getMessage());
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+						ok.setEnabled(true);
+					} else {
+						ok.setEnabled(true);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextBox-ErrorMessage");	
+					}
 
 				}
 
