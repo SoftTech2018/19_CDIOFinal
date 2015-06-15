@@ -2,6 +2,7 @@ package cdio.client.contents;
 
 import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -146,9 +147,14 @@ public class OpretOpr extends Composite {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					ok.setEnabled(true);
-					error.setText(caught.getMessage());
-					error.setStyleName("TextBox-ErrorMessage");
+					if (caught instanceof TokenException){
+						Window.alert(caught.getMessage());
+						Controller.logud();
+					} else {
+						ok.setEnabled(true);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextBox-ErrorMessage");	
+					}
 				}
 
 				@Override

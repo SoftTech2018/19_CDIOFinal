@@ -17,6 +17,7 @@ public class Controller extends Composite {
 	public static ServiceAsync service;
 	public static int minutes;
 	public static int seconds;
+	
 	private VerticalPanel vPane;
 	private HorizontalPanel hPane;
 	private Menu menu;
@@ -68,7 +69,7 @@ public class Controller extends Composite {
 				menu.changeMenu(result); // Lav en specifik menu baseret på brugerens rolle
 				minutes = 30;
 				seconds = 0;
-				menu.timer();
+				Menu.timer();
 			}
 		});
 	}
@@ -80,9 +81,9 @@ public class Controller extends Composite {
 	}
 
 	// Fjerner alle widgets og laver en ny login-session.
-	public void logud(){
+	public static void logud(){
 		Controller.token = null;
-		menu.cancelTimer();
+		Menu.cancelTimer();
 		RootPanel.get().clear();
 		RootPanel.get().add(new Login(service));
 	}

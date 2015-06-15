@@ -36,9 +36,10 @@ public class Menu extends Composite {
 	private Controller con;
 	private String username;
 	private Label error;
-	private Label time;
-	private Button logud;
-	private Timer sec;
+	
+	private static Label time;
+	private static Button logud;
+	private static Timer sec;
 
 	// Tom menu
 	public Menu(Controller controller) {
@@ -309,7 +310,7 @@ public class Menu extends Composite {
 		return ft;
 	}
 
-	public void timer(){
+	public static void timer(){
 		sec = new Timer(){
 			@Override
 			public void run() {
@@ -337,7 +338,7 @@ public class Menu extends Composite {
 		sec.scheduleRepeating(1000); // Opdater hvert minut
 	}
 	
-	public void cancelTimer(){
+	public static void cancelTimer(){
 		sec.cancel();
 	}
 
@@ -346,7 +347,7 @@ public class Menu extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
-			con.logud();
+			Controller.logud();
 		}
 
 	}
