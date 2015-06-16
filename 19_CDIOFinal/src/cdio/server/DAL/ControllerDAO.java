@@ -246,8 +246,13 @@ public class ControllerDAO implements IControllerDAO {
 		raavareDAO.deleteRaavare(id);
 	}
 	
-	public void getRecept(int id) throws DALException{
+	public void getRecept(int id) throws DALException {
 		receptDAO.getRecept(id);
+	}
+
+	@Override
+	public void setTimeStamp(int id, int var, String time) throws DALException {
+		pbDAO.setTimeStamp(id, var, time);		
 	}
 }
 	
