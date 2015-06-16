@@ -52,6 +52,8 @@ public interface ServiceAsync {
 	void getPbView(String token, int receptId,
 			AsyncCallback<List<PbViewDTO>> asyncCallback);
 	
+	void getReceptKompListe(String token, int receptid, AsyncCallback<List<ReceptKompDTO>> asynccallback);
+	
 	void createRecept(String token, ReceptDTO recept, AsyncCallback<Void> asyncCallback);
 
 	void getRaavareID(String token,  int raavareid, AsyncCallback<Void> asyncCallback);

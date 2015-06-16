@@ -54,6 +54,8 @@ public interface Service extends RemoteService {
 	
 	List<PbViewDTO> getPbView(String token, int receptId) throws TokenException, DALException;
 	
+	List<ReceptKompDTO> getReceptKompListe(String token, int receptid) throws TokenException, DALException;
+	
 	ProduktBatchDTO createPB(String token, ProduktBatchDTO pb)throws TokenException, DALException;
 	
 	List<RaavareBatchDTO> getRaavareBatchList(String token) throws TokenException, DALException;

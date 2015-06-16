@@ -314,7 +314,21 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		} else {
 			throw new TokenException("Adgang nægtet");
 		}
-		
+	}
+	
+	public List<ReceptKompDTO> getReceptKompListe(String token, int receptid) throws TokenException, DALException{
+		if(TEST_DELAY)
+			try{
+				Thread.sleep(2000);
+			}
+		catch (InterruptedException e){}
+		if(getRole(token).equalsIgnoreCase("Farmaceut")){
+			List<ReceptKompDTO> list = dao.getReceptKompListe(receptid);
+			return list;
+		} else {
+			throw new TokenException("Adgang nægtet!");
+		}
+
 		
 	}
 
