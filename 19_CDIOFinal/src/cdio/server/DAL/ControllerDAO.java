@@ -246,7 +246,6 @@ public class ControllerDAO implements IControllerDAO {
 		raavareDAO.deleteRaavare(id);
 	}
 	
-	@Override
 	public void getRecept(int id) throws DALException{
 		receptDAO.getRecept(id);
 	}
