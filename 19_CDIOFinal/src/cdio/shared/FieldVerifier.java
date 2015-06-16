@@ -127,6 +127,12 @@ public class FieldVerifier {
 		for(int i=0; i<tol.length(); i++){
 			if(tol.charAt(i)==','){
 				ny = tol.replace(",", ".");
+				if(tol.charAt(i)=='.'){
+					String[] sString = tol.split("\\.");
+					if(sString[1].length()>2){
+						return false;
+					}
+				}
 			}
 		}		
 		try{		
@@ -139,10 +145,6 @@ public class FieldVerifier {
 				return false;
 			}		
 		} catch (NumberFormatException e){
-			return false;
-		}
-		String[] sString = ny.split("\\.");
-		if(sString[1].length()>2){
 			return false;
 		}
 		return true;		
