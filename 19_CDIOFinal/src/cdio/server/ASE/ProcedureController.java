@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import cdio.server.DAL.IControllerDAO;
@@ -26,7 +27,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private List<ReceptKompDTO> receptKompListe;
 	private List<ProduktBatchKompDTO> pbKompListe;
 	private List<ReceptKompDTO> restListe;
-	private ReceptKompDTO receptKomp;
+	private ReceptKompDTO receptKomp, rest;
 	private PrintWriter out;
 	private BufferedReader in;
 
@@ -36,7 +37,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 		this.dao = dao;
 		this.host = host;
 		this.port = port;
-		this.state = State.START;		
+		this.state = State.START;
+		restListe = new ArrayList<ReceptKompDTO>();
 	}
 	
 
@@ -102,6 +104,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				try{
 					menu.show("Indtast operatornummer:");
 					input = trans.RM20int("Tast bruger ID:","","");
+//					input = trans.RM20("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -166,6 +169,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				try{
 					menu.show("Indtast varenummer:");
 					input = trans.RM20int("Tast produktbatch nr.:","","");
+//					input = trans.RM20("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -182,18 +186,27 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
 					mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
-					mc.restListe=mc.receptKompListe;
-					if(!dao.getProduktBatchKompListIsEmpty(mc.prod_batch_id)){
-					
-						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);						
-					
+					for(ReceptKompDTO rk : mc.receptKompListe){
+						mc.restListe.add(mc.receptKompListe.get(mc.receptKompListe.indexOf(rk)));
+					}
+					boolean tom = dao.getProduktBatchKompListIsEmpty(mc.prod_batch_id);
+					System.out.println(tom);
+					if(!tom){
+						int pos;
+						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);
+						System.out.println("");
+						System.out.println(mc.restListe.size());
 						for(ReceptKompDTO rk : mc.getReceptKompListe()){
+							pos = mc.restListe.indexOf(rk);
 							for(ProduktBatchKompDTO pbk : mc.getpbKompListe()){
 								if(rk.getRaavareId()==dao.getRaaID(pbk.getRbId())){
-									mc.restListe.remove(rk);
+									System.out.println(pos);
+									mc.restListe.remove(pos);
 								}
 							}
 						}
+						System.out.println("");
+						System.out.println(mc.restListe.size());
 						if(mc.restListe.isEmpty()){
 							trans.P111("Nr er brugt; tast nyt.");
 							return SETUP;							
@@ -294,7 +307,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						menu.show("Beholder ej pasat. Prov igen.");
 						trans.RM20("Beholder ej pasat. Prov igen.", "OK", "?");
 						return CLEAR;
-					}					
+					}
 				} catch (NumberFormatException | IOException e) {
 					try {
 						menu.show("Fejl. Prov igen.");
