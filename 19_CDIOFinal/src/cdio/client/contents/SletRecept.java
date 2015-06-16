@@ -42,6 +42,7 @@ public class SletRecept extends Composite {
 		id.addKeyUpHandler(new idCheck());
 
 		btn = new Button("Slet Recept");
+		btn.setEnabled(false);
 
 		ft = new FlexTable();
 
