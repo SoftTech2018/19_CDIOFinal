@@ -38,6 +38,7 @@ public class SletRecept extends Composite {
 
 		desc = new Label("Indtast ID for Recept der ønskes slettet");
 		id = new TextBox();
+		id.setStyleName("TextBox-Opret");
 		id.addKeyUpHandler(new idCheck());
 
 		btn = new Button("Slet Recept");
@@ -99,10 +100,10 @@ public class SletRecept extends Composite {
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-SletReceptError");
+				id.setStyleName("TextBox-OpretError");
 				btn.setEnabled(false);
 			} else {
-				id.setStyleName("TextBox-SletRecept");
+				id.setStyleName("TextBox-Opret");
 				btn.setEnabled(true);
 			}
 		}
