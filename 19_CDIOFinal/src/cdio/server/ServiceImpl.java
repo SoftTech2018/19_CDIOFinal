@@ -494,6 +494,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (InterruptedException e) {}
 		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
+			dao.getProduktBatch(id);
 			try{
 				dao.deleteProduktBatch(id);
 			} catch (Exception DALException){
