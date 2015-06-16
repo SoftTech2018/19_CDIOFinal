@@ -6,6 +6,7 @@ import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
+import cdio.shared.TokenException;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -17,6 +18,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
@@ -131,12 +133,30 @@ public class OpretRB extends Composite {
 			Controller.service.createRaavareBatch(Controller.token, raavareBatch, new AsyncCallback<Void>(){
 
 				@Override
+//				public void onFailure(Throwable caught) {
+//					opret.setEnabled(true);	
+//					error.setText(caught.getMessage());
+//					error.setStyleName("TextBox-ErrorMessage");
+//				}
+				
 				public void onFailure(Throwable caught) {
-					opret.setEnabled(true);	
-					error.setText(caught.getMessage());
-					error.setStyleName("TextBox-ErrorMessage");
+					if (caught instanceof TokenException){
+						final PopupLogin pop = new PopupLogin();
+						pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+							public void setPosition(int offsetWidth, int offsetHeight) {
+								int left = (Window.getClientWidth() - offsetWidth) / 3;
+								int top = (Window.getClientHeight() - offsetHeight) / 3;
+								pop.setPopupPosition(left, top);
+							}
+						});
+						opret.setEnabled(true);
+					} else {
+						opret.setEnabled(true);
+						error.setText(caught.getMessage());
+						error.setStyleName("TextBox-ErrorMessage");	
+					}
 				}
-
+				
 				@Override
 				public void onSuccess(Void result) {
 					Window.alert("Råvare Batch " + rbID.getText() + " blev oprettet!");
