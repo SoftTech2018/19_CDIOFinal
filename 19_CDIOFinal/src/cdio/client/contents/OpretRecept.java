@@ -26,6 +26,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRecept extends Composite {
 
+	
+	
 	private VerticalPanel vPane, vPane1;
 	private FlexTable ft, ft3, ft2, ft4;
 	private TextBox receptid, navn, raavareid, nomNetto, tolerance;
