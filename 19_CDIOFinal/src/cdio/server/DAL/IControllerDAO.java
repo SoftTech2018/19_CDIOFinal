@@ -95,7 +95,7 @@ public interface IControllerDAO {
 	
 	public void deleteRaavare(int id) throws DALException;
 	
-	public void getRecept(int id) throws DALException;
+	public void setTimeStamp(int id, int var, String time) throws DALException;
 	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;

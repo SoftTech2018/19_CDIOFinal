@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cdio.server.DAL.IControllerDAO;
@@ -229,6 +230,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
 						dao.updatePbStatus(mc.getProdBatchID(), 1);
+						
 //						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
@@ -600,6 +602,26 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 	private void setHost(String host){
 		this.host=host;
+	}
+	
+	private String prettyTime(){ return prettyTime(System.currentTimeMillis()); }
+	private String prettyTime(long millis){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(millis);
+		int sec = cal.get(Calendar.SECOND);
+		String _sec = String.format("%02d", sec);
+		int min = cal.get(Calendar.MINUTE);
+		String _min = String.format("%02d", min);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		String _hour = String.format("%02d", hour);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		String _day = String.format("%02d", day);
+		int month = cal.get(Calendar.MONTH) +1;
+		String _month = String.format("%02d", month);
+		int year = cal.get(Calendar.YEAR);
+		String _year = Integer.toString(year);
+		String time = _year+"/"+_month+"/"+_day+" - "+_hour+":"+_min+":"+_sec;
+		return time;
 	}
 
 }

@@ -67,3 +67,4 @@ SELECT * FROM produktbatch WHERE pb_id = #1 AND status = 0
 DELETE FROM produktbatch WHERE pb_id = #1
 SELECT * FROM receptkomponent WHERE raavare_id = #1
 DELETE FROM raavare WHERE raavare_id = #1
+UPDATE produktbatch SET #1 = #2 WHERE pb_id = #3;

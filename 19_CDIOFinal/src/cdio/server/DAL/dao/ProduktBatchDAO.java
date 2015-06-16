@@ -132,4 +132,9 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void setTimeStamp(int id, int var, String time) throws DALException {
+		Connector.doUpdate(txt.setTimeStamp(id, var, time));
+	}
 }

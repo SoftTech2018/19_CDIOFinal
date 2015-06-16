@@ -320,5 +320,17 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
 		return output;
 	}
+	
+	public String setTimeStamp(int id, int var, String time){
+		String output = sqlCommands[70];
+		if(var==0){
+			output = output.replaceFirst(illegalString + "1", "begyndt");			
+		} else if (var==1){
+			output = output.replaceFirst(illegalString + "1", "afsluttet");
+		}
+		output = output.replaceFirst(illegalString + "2", time);
+		output = output.replaceFirst(illegalString + "3", Integer.toString(id));
+		return output;
+	}
 
 }

@@ -16,4 +16,5 @@ public interface IProduktBatchDAO {
 	int getLatestPbId() throws DALException;
 	public void checkReceptID(int id) throws DALException;
 	public void deleteProduktBatch(int id) throws DALException;
+	void setTimeStamp(int id, int var, String time) throws DALException;
 }
