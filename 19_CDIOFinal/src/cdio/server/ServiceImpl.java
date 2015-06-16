@@ -39,53 +39,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private TokenHandler th;
 	private IControllerDAO dao;
 
-	public ServiceImpl(){
+	public ServiceImpl() throws FileNotFoundException, DALException{
 		th = new TokenHandler();
-		runASE();
-	}
-
-	public void runASE(){
-		int port;
-		String host;
-
-		//		if (args.length == 2){
-		//			port = Integer.parseInt(args[1]);
-		//			host = args[0];
-		//		}
-		//		else {
-		port = 8000;
-				host = "169.254.2.3";
-//		host = "localhost";
-		//		}
-
-		IProcedure menu = new Procedure();
-
-		try {
-			Connector con = new Connector();
-			dao = new ControllerDAO();
-			ITransmitter trans = new Transmitter();
-			IProcedureController menuCon = new ProcedureController(menu,dao, host, port, trans);
-			Thread menuThread = new Thread((Runnable) menuCon);
-			menuThread.start();
-
-		} catch (FileNotFoundException e) {
-			System.out.println("Noget i filbehandlingen gik grueligt galt :-( Kontakt udvikleren.");
-			e.printStackTrace();
-		} catch (DALException e){
-			System.out.println("DALException");
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		dao = new ControllerDAO();
 	}
 
 	/**

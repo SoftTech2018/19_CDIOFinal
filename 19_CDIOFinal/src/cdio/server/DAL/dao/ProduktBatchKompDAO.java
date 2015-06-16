@@ -8,7 +8,6 @@ import java.util.List;
 
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.TextReader;
-import cdio.server.DAL.dto.ProdBatchInfo;
 import cdio.server.DAL.idao.IProduktBatchKompDAO;
 import cdio.shared.DALException;
 import cdio.shared.ProduktBatchKompDTO;
@@ -50,17 +49,6 @@ public class ProduktBatchKompDAO implements IProduktBatchKompDAO {
 		try {
 			while (rs.next()) {
 				list.add(new ProduktBatchKompDTO(rs.getInt("pb_id"), rs.getInt("rb_id"), rs.getDouble("tara"),rs.getDouble("netto"),rs.getInt("opr_id"),rs.getString("terminal")));
-			}
-		} catch (SQLException e) { throw new DALException(e); }
-		return list;
-	}
-	
-	public List<ProdBatchInfo> getProdBatchInfoView() throws DALException{
-		List<ProdBatchInfo> list = new ArrayList<ProdBatchInfo>();
-		ResultSet rs = Connector.doQuery(txt.getCommand(52));
-		try {
-			while (rs.next()) {
-				list.add(new ProdBatchInfo(rs.getInt("recept_id"), rs.getString("recept_navn"), rs.getDouble("netto"), rs.getInt("pb_id"), rs.getInt("opr_id"), rs.getString("opr_navn"), rs.getInt("status")));
 			}
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
