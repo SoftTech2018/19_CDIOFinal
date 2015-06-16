@@ -128,6 +128,7 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "3", Double.toString(produktbatchkomponent.getTara()));
 		output = output.replaceFirst(illegalString + "4", Double.toString(produktbatchkomponent.getNetto()));
 		output = output.replaceFirst(illegalString + "5", Integer.toString(produktbatchkomponent.getOprId()));
+		output = output.replaceFirst(illegalString + "6", produktbatchkomponent.getHost());
 		return output;
 	}
 	
