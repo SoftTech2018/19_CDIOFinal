@@ -11,10 +11,17 @@ import cdio.shared.DALException;
 public class Connector{
 
 	private final String
+	/*
+	 * Dette er den centrale Database stillet til rådighed af Stig/Ronnie
+	 */
 	//	server					= "62.79.16.16",  // database-serveren
 	//	database				= "grp19",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	//	username				= "grp19", // dit brugernavn = dit studienummer 
 	//	password				= "WxqW2GBF"; // dit password som du har valgt til din database
+	
+	/*
+	 * Dette er den lokale Database på din egen computer
+	 */
 	server					= "localhost",  // database-serveren
 	database				= "cdio_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	username				= "root", // dit brugernavn = dit studienummer 
