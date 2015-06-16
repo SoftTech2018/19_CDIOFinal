@@ -466,6 +466,7 @@ public class OpretRecept extends Composite {
 			tilfoej.setEnabled(false);
 			}}
 	}
+	
 
 	private class tolCheck implements KeyUpHandler{
 
