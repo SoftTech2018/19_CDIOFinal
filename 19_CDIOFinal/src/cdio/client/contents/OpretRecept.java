@@ -141,6 +141,7 @@ public class OpretRecept extends Composite {
 					ft.setText(1, 2, "Fejl i listekald");
 				}}
 
+			
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
 				int i = 0;
