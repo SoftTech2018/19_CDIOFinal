@@ -156,12 +156,12 @@ public class OpretRB extends Composite {
 			Controller.service.createRaavareBatch(Controller.token, raavareBatch, new AsyncCallback<Void>(){
 
 				@Override
-//				public void onFailure(Throwable caught) {
-//					opret.setEnabled(true);	
-//					error.setText(caught.getMessage());
-//					error.setStyleName("TextBox-ErrorMessage");
-//				}
-				
+				//				public void onFailure(Throwable caught) {
+				//					opret.setEnabled(true);	
+				//					error.setText(caught.getMessage());
+				//					error.setStyleName("TextBox-ErrorMessage");
+				//				}
+
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
 						final PopupLogin pop = new PopupLogin();
@@ -179,7 +179,7 @@ public class OpretRB extends Composite {
 						error.setStyleName("TextBox-ErrorMessage");	
 					}
 				}
-				
+
 				@Override
 				public void onSuccess(Void result) {
 					Window.alert("Råvare Batch " + rbID.getText() + " blev oprettet!");

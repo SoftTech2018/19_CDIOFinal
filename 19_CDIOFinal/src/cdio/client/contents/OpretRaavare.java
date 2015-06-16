@@ -38,10 +38,10 @@ public class OpretRaavare extends Composite {
 	}
 
 	public void run(){
-//		opretRaavarer = new Label("Opret råvare");
-//		opretRaavarer.setStyleName("FlexTable-Header");
-//		vPane.add(opretRaavarer);
-		
+		//		opretRaavarer = new Label("Opret råvare");
+		//		opretRaavarer.setStyleName("FlexTable-Header");
+		//		vPane.add(opretRaavarer);
+
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -70,20 +70,31 @@ public class OpretRaavare extends Composite {
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
 
-		
-		
+
+
 		vPane.add(ft);
 		getListe();
 	}
-	
+
 	private void getListe(){
 		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ft.setText(1, 2, "Fejl i listekald");
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					ft.setText(1, 2, "Fejl i listekald");
+				}
 			}			
-			
+
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
 				int i = 0;
@@ -92,16 +103,16 @@ public class OpretRaavare extends Composite {
 						i=rv.getRaavareId();
 					}
 				}
-				
+
 				liste = new int[i+1];
-				
+
 				for(RaavareDTO rv : result){
 					liste[rv.getRaavareId()]=1;
 				}
 			}					
 		});
 	}
-	
+
 	private class OpretClick implements ClickHandler{
 
 		@Override
@@ -112,12 +123,12 @@ public class OpretRaavare extends Composite {
 			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
 				@Override
-//				public void onFailure(Throwable caught) {
-//					opret.setEnabled(true);	
-//					error.setText(caught.getMessage());
-//					error.setStyleName("TextBox-ErrorMessage");
-//				}
-				
+				//				public void onFailure(Throwable caught) {
+				//					opret.setEnabled(true);	
+				//					error.setText(caught.getMessage());
+				//					error.setStyleName("TextBox-ErrorMessage");
+				//				}
+
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
 						final PopupLogin pop = new PopupLogin();
@@ -135,7 +146,7 @@ public class OpretRaavare extends Composite {
 						error.setStyleName("TextBox-ErrorMessage");	
 					}
 				}
-				
+
 				@Override
 				public void onSuccess(Void result) {
 					Window.alert("Råvare " + navn.getText() + " blev oprettet!");
