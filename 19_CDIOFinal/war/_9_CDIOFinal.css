@@ -23,6 +23,11 @@ html {
 	font-size: 10pt;
 }
 
+.Recept-Positiv{
+	color: green;
+	font-size: 10pt;
+}
+
 .TextBox-Ret{
 	font-size: 10pt;
 	width: 90%;

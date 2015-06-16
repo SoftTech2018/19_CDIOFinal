@@ -33,7 +33,7 @@ public class OpretRecept extends Composite {
 	private Label error;
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, receptOprettet, netEle, tolEle, ravEle;
 	private HorizontalPanel hp;
-	private int[] liste;
+	private int[] liste, receptListe;
 
 	public OpretRecept() {
 
@@ -116,10 +116,11 @@ public class OpretRecept extends Composite {
 		hp.add(vPane);
 		hp.add(vPane1);
 
-		getListe();
+		getRaavareListe();
+		getReceptListe();
 	}
 
-	private void getListe(){
+	private void getRaavareListe(){
 		Controller.service.getRaavareList(Controller.token, new AsyncCallback<List<RaavareDTO>>(){
 
 			@Override
@@ -154,6 +155,35 @@ public class OpretRecept extends Composite {
 				}
 			}					
 		});
+	}
+	
+	
+	private void getReceptListe(){
+		Controller.service.getReceptList(Controller.token, new AsyncCallback<List<ReceptDTO>>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ft.setText(2, 2, caught.getMessage());
+				
+			}
+
+			@Override
+			public void onSuccess(List<ReceptDTO> result) {
+				int i = 0;
+				for(ReceptDTO rc : result){
+					if(rc.getReceptId()>i){
+						i=rc.getReceptId();
+					}
+				}
+				
+				receptListe = new int[i+1];
+				for(ReceptDTO rc : result){
+					receptListe[rc.getReceptId()]=1;
+				}
+			}
+			
+		});
+		
 	}
 
 	private class nyReceptClick implements ClickHandler{
@@ -221,7 +251,7 @@ public class OpretRecept extends Composite {
 					gemKomp.setText("Gem Komponent");
 					gemKomp.setEnabled(false);
 					Window.alert("Receptkomponent oprettet!");
-					error.setStyleName("Recept-Error");
+					error.setStyleName("Recept-Positiv");
 					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
 					tilfoej.setEnabled(true);
 				}
@@ -273,7 +303,7 @@ public class OpretRecept extends Composite {
 					receptOprettet = true;
 					tilfoej.setEnabled(true);
 					error.setText("Recept er oprettet. Tilføj nye receptkomponenter!");
-					error.setStyleName("Recept-Error");
+					error.setStyleName("Recept-Positiv");
 				}
 			}
 					);
@@ -304,12 +334,24 @@ public class OpretRecept extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
+			error.setText("");
 			if(!FieldVerifier.isValidUserId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
 				receptidValid = false;
-			} else{
+			}	
+			
+			else{
 				id.setStyleName("TextBox-Opret");
 				receptidValid = true;
+			}
+			
+			if(receptidValid){
+				if(receptListe[Integer.parseInt(id.getText())]==1){
+					error.setText("ReceptId optaget. Vælg et andet.");
+					error.setStyleName("Recept-Error");
+					id.setStyleName("TextBox-OpretError");
+					receptidValid = false;
+				}
 			}
 
 			if(navnValid && receptidValid)
