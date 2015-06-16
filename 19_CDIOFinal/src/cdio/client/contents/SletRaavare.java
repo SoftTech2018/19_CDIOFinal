@@ -43,6 +43,7 @@ public class SletRaavare extends Composite{
 		id.addKeyUpHandler(new idCheck());
 
 		btn = new Button("Slet Råvare");
+		btn.setEnabled(false);
 
 		ft = new FlexTable();
 
