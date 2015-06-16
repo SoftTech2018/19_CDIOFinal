@@ -28,7 +28,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private List<ReceptKompDTO> receptKompListe;
 	private List<ProduktBatchKompDTO> pbKompListe;
 	private List<ReceptKompDTO> restListe;
-	private ReceptKompDTO receptKomp, rest;
+	private ReceptKompDTO receptKomp;
 	private PrintWriter out;
 	private BufferedReader in;
 
@@ -40,7 +40,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 		this.port = port;
 		this.state = State.START;
 	}
-	
+
 
 	@Override
 	public void run() {
@@ -58,10 +58,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 			start();
 		} catch (UnknownHostException e) {
 			System.out.println("UnknownHostException fejl");
-//			System.exit(1);
 		} catch (IOException e) {
 			System.out.println("Fejl ved forbindelse til vaegten. Programmet lukket.");
-//			System.exit(1);
 		}
 	}
 
@@ -76,12 +74,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 				String test = trans.RM20("123456789012345678901234567890", "", "");
 				System.out.println("Test: "+test);
 				if(test.equalsIgnoreCase("es")){
-					System.out.println("rdln1: "+in.readLine());
-				} else if (test.equalsIgnoreCase("l")){
-//					System.out.println("rdln2"+in.readLine());					
+					in.readLine();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			menu.show("");
@@ -104,7 +99,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 				try{
 					menu.show("Indtast operatornummer:");
 					input = trans.RM20int("Tast bruger ID:","","");
-//					input = trans.RM20("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -118,7 +112,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						return START;
 					}
 					name = dao.getUser(inputInt).getName();
-//					name = dao.getOprDAO().getOperatoer(inputInt).getName();
 					menu.show("Bruger valgt: "+name+". Er dette korrekt?");		
 					nameInput = trans.RM20("Bekraft bruger:",name," ?");
 					if (nameInput.toLowerCase().equals("q")){
@@ -139,7 +132,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 				} catch (NumberFormatException e) {
 					try {
 						menu.show("Forkert input type. Prov igen.");
-//						trans.RM20cancel();
 						trans.RM20("Forkert input type. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("IOException fejl");
@@ -156,7 +148,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					return START;
 				} catch (DALException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return START;
 				}
@@ -173,7 +164,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 				try{
 					menu.show("Indtast varenummer:");
 					input = trans.RM20int("Tast produktbatch nr.:","","");
-//					input = trans.RM20("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -216,10 +206,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 							trans.P111("Nr er brugt; tast nyt.");
 							return SETUP;							
 						}
-						
 					}
 					product = dao.getReceptName(mc.getProdBatchID());
-//					product = dao.getReceptDAO().getRecept(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId()).getReceptNavn();
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
 					prodInput = trans.RM20("Bekraft recept:",product," ?");
 					if (prodInput.toLowerCase().equals("q")){
@@ -229,15 +217,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					if(prodInput.equals(product)){
 						menu.show("Produkt bekraftet.");
-//						mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
-//						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
-//						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
-//						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
 						if(dao.getProduktBatch(mc.getProdBatchID()).getStatus()==0){
 							dao.updatePbStatus(mc.getProdBatchID(), 1);
 							dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());							
 						}
-//						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
@@ -250,7 +233,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Forkert input type. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("IOException fejl");
-//						System.exit(1);
 					}
 					return SETUP;
 				} catch (IOException e){
@@ -259,14 +241,12 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Produkt findes ikke. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-//						System.exit(1);
 					}
 					return SETUP;
 				} catch (DALException e) {
 					try {
 						trans.P111("");
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					e.printStackTrace();
@@ -284,14 +264,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, answer = "OK";
 				try{
-//					menu.show("Ingen belastning, bekraft.");
-//					input = trans.RM20("Fjern belastning!","OK","?");
-//					menu.show(input);
-//					if(input.toLowerCase().equals("q")){
-//						menu.show("Proceduren afbrudt af brugeren");
-//						trans.P111("");
-//						return START;
-//					}
 					menu.show("Pasat beholder og bekraft.");
 					input = trans.RM20("Pasat beholder, bekraft:","OK","?");
 					menu.show(input);
@@ -301,13 +273,11 @@ public class ProcedureController implements Runnable, IProcedureController {
 						return START;
 					}
 					trans.P111("");
-					trans.T(); //Simulator svarer ikke korrekt på tarering
+					trans.T();
 					if (input.toUpperCase().equals(answer)) {
 						menu.show("Beholder pasat");
-						mc.setTara(Double.parseDouble(trans.T())); //Simulator svarer ikke korrekt på tarering
-//						mc.setTara(Double.parseDouble("0.555"));
+						mc.setTara(Double.parseDouble(trans.T()));
 						menu.show("Vagt tareret: "+mc.getTara());
-//						mc.setReceptKomp(mc.getReceptKompListe().remove(0));
 						mc.setReceptKomp(mc.restListe.get(0));
 						mc.setRaavareID(mc.getReceptKomp().getRaavareId());
 						return WEIGH;
@@ -322,7 +292,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Fejl. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-//						System.exit(1);
 					}
 					return CLEAR;
 				}				
@@ -335,90 +304,33 @@ public class ProcedureController implements Runnable, IProcedureController {
 			}
 			@Override
 			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
-				String input = null, answer = "OK",raavare,raavareInput;
-				int inputInt = 0;
 				try{
-//					menu.show("Indtast varenummer:");
-//					input = trans.RM20("Tast raavarebatch nr:","","");
-//					menu.show(input);
-//					if(input.toLowerCase().equals("q")){
-//						menu.show("Proceduren afbrudt af brugeren");
-//						trans.P111("");
-//						return START;
-//					}
-//					trans.P111("");
-//					inputInt = Integer.parseUnsignedInt(input);
-//					raavare = dao.getRaavareDAO().getRaavare(dao.getRbDAO().getRaavareBatch(inputInt).getRaavareId()).getRaavareNavn();
-//					menu.show("Produkt valgt: "+raavare+". Er dette korrekt?");
-//					raavareInput = trans.RM20("Bekraft produkt:",raavare," ?");
-//					if (raavareInput.toLowerCase().equals("q")){
-//						menu.show("Proceduren afbrudt af brugeren");
-//						trans.P111("");
-//						return START;
-//					}
-//					if(raavareInput.equals(raavare)){
-//						menu.show("Produkt bekraftet.");
-//						mc.setRaavareID(inputInt);
-//					} else {
-//						menu.show("Forkert produkt. Prov igen.");
-//						trans.RM20("Forkert produkt. Prov igen.", "OK", "?");
-//						return WEIGH;
-//					}
-					
-//					menu.show("Afvej vare og bekraft.");
-//					input = trans.RM20("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+":","OK","?");
-//					menu.show(input);
-//					if(input.toLowerCase().equals("q")){
-//						menu.show("Proceduren afbrudt af brugeren");
-//						trans.P111("");
-//						return START;
-//					}
 					trans.P111("");
-//					if (input.toUpperCase().equals(answer)) {
-						menu.show("Afvej og kvitter med dor-knap");
-//						trans.P111("Afvej "+dao.getRaavareDAO().getRaavare(mc.getRaavareID()).getRaavareNavn()+" : "+mc.getReceptKomp().getNomNetto()+"kg");
-						trans.P111("Afvej "+dao.getSpecificRaavare(mc.getRaavareID())+" : "+mc.getReceptKomp().getNomNetto()+"kg");
-						trans.startST(true);
-						mc.setAfvejning(Double.parseDouble(trans.listenST()));
-						trans.startST(false);
-						menu.show(mc.getAfvejning()+" afvejet.");
-						trans.P111("");
-						double tolerance = mc.getReceptKomp().getNomNetto()*mc.getReceptKomp().getTolerance();
-						double min = mc.getReceptKomp().getNomNetto()-tolerance;
-						double max = mc.getReceptKomp().getNomNetto()+tolerance;
-						System.out.println(mc.getAfvejning());
-						System.out.println(min);
-						System.out.println(max);
-						if(mc.getAfvejning()<min || mc.getAfvejning()>max){
-							System.out.println("tolerance");
-							trans.P111("Afvejet uden for tolerancen");
-							try {
-								Thread.sleep(1000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							return WEIGH;
-						} else {
-							return REMOVE_CONTAINER;
-						}
-//					} else {
-//						menu.show("Vare ej afvejet. Prov igen.");
-//						trans.RM20("Ikke afvejet. Prov igen.", "OK", "?");
-//						return WEIGH;
-//					}
-
+					menu.show("Afvej og kvitter med dor-knap");
+					trans.P111("Afvej "+dao.getSpecificRaavare(mc.getRaavareID())+" : "+mc.getReceptKomp().getNomNetto()+"kg");
+					trans.startST(true);
+					mc.setAfvejning(Double.parseDouble(trans.listenST()));
+					trans.startST(false);
+					menu.show(mc.getAfvejning()+" afvejet.");
+					trans.P111("");
+					double tolerance = mc.getReceptKomp().getNomNetto()*mc.getReceptKomp().getTolerance();
+					double min = mc.getReceptKomp().getNomNetto()-tolerance;
+					double max = mc.getReceptKomp().getNomNetto()+tolerance;
+					if(mc.getAfvejning()<min || mc.getAfvejning()>max){
+						trans.P111("Afvejet uden for tolerancen");
+						return WEIGH;
+					} else {
+						return REMOVE_CONTAINER;
+					}
 				} catch (NumberFormatException | IOException e) {
 					try {
 						menu.show("Fejl. Prov igen.");
 						trans.RM20("Fejl. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-//						System.exit(1);
 					}
 					return WEIGH;
 				} catch (DALException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return WEIGH;
 				}
@@ -443,20 +355,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					if (input.equals(answer)) {
-//						fileAccess.updProductInventory(mc.getVareID(), mc.getAfvejning());
-//						menu.show("Beholdning opdateret:");
-//						menu.show("Vare ID: "+mc.getVareID()+", Afvejning: "+mc.getAfvejning());
-
-//						dao.getPbKompDAO().createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
 						mc.restListe.remove(0);
-//						mc.getpbKompListe().add(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID()));
-//						if(mc.getReceptKompListe().isEmpty()){
-						if(mc.restListe.isEmpty()){	
-//							dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(2);
-//							for(ProduktBatchKompDTO pb : mc.getpbKompListe()){
-//								dao.createProduktBatchKomp(pb);
-//							}
+						if(mc.restListe.isEmpty()){
 							dao.updatePbStatus(mc.prod_batch_id, 2);
 							dao.setTimeStamp(mc.getProdBatchID(), 1, mc.prettyTime());
 							trans.RM20("Afvejning faerdig!", "OK", "");
@@ -476,7 +377,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Fejl. Prov igen", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-//						System.exit(1);
 					}
 					return REMOVE_CONTAINER;
 				} catch (DALException e) {
@@ -485,41 +385,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 				}
 			}
 		},
-//		RESTART {
-//
-//			@Override
-//			String desc() {
-//				return "State: RESTART";
-//			}
-//
-//			@Override
-//			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
-//				String input = null, answer = "OK";
-//				try{
-//					menu.show("Foretag ny vejning?");
-//					input = trans.RM20("Foretag ny vejning?","OK","");
-//					menu.show(input);
-//					trans.P111("");
-//					if (input.equals(answer)) {
-//						menu.show("Proceduren genstartes.");
-//						return SETUP;
-//					} else {
-//						menu.show("Proceduren afbrudt af brugeren.");
-//						return START;
-//					}
-//
-//				} catch (NumberFormatException | IOException e) {
-//					try {
-//						menu.show("Fejl. Prov igen.");
-//						trans.RM20("Fejl. Prov igen", "OK", "?");
-//					} catch (IOException e1) {
-//						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-//						System.exit(1);
-//					}
-//					return RESTART;
-//				}
-//			}			
-//		},
 		STOP {
 			@Override
 			String desc() {
@@ -550,7 +415,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setRaavareID(int id){
 		this.raavare_id=id;
 	}
-	
+
 	private int getReceptID(){
 		return recept_id;
 	}
@@ -558,7 +423,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setReceptID(int id){
 		this.recept_id=id;
 	}
-	
+
 	private int getProdBatchID(){
 		return prod_batch_id;
 	}
@@ -566,7 +431,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setProdBatchID(int id){
 		this.prod_batch_id=id;
 	}
-	
+
 	private List<ReceptKompDTO> getReceptKompListe(){
 		return receptKompListe;
 	}
@@ -574,11 +439,11 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setReceptKompListe(List<ReceptKompDTO> liste){
 		this.receptKompListe=liste;
 	}
-	
+
 	private List<ProduktBatchKompDTO> getpbKompListe(){
 		return pbKompListe;
 	}
-	
+
 	private ReceptKompDTO getReceptKomp(){
 		return receptKomp;
 	}
@@ -586,7 +451,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setReceptKomp(ReceptKompDTO receptKomp){
 		this.receptKomp=receptKomp;
 	}
-	
+
 	private double getAfvejning(){
 		return afvejning;
 	}
@@ -602,7 +467,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setTara(double tara){
 		this.tara=tara;
 	}
-	
+
 	private String getHost(){
 		return this.host;
 	}
@@ -610,7 +475,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private void setHost(String host){
 		this.host=host;
 	}
-	
+
 	private String prettyTime(){ return prettyTime(System.currentTimeMillis()); }
 	private String prettyTime(long millis){
 		Calendar cal = Calendar.getInstance();
