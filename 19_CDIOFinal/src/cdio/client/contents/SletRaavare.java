@@ -39,6 +39,7 @@ public class SletRaavare extends Composite{
 
 		desc = new Label("Indtast ID for Råvare der ønskes slettet");
 		id = new TextBox();
+		id.setStyleName("TextBox-Opret");
 		id.addKeyUpHandler(new idCheck());
 
 		btn = new Button("Slet Råvare");
@@ -105,10 +106,10 @@ public class SletRaavare extends Composite{
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-SletRåvareError");
+				id.setStyleName("TextBox-OpretError");
 				btn.setEnabled(false);
 			} else {
-				id.setStyleName("TextBox-SletRåvare");
+				id.setStyleName("TextBox-Opret");
 				btn.setEnabled(true);
 			}
 		}
