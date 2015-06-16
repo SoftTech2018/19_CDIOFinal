@@ -1,5 +1,6 @@
 package cdio;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
@@ -15,10 +16,12 @@ import cdio.server.DAL.TextReader;
 import cdio.server.DAL.dao.OperatoerDAO;
 import cdio.server.DAL.dao.ReceptKompDAO;
 import cdio.server.DAL.idao.IOperatoerDAO;
+import cdio.shared.DALException;
 
 public class OperatoerDAOTest {
 	
 	IOperatoerDAO oprDAO;
+	TextReader txt;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -35,7 +38,7 @@ public class OperatoerDAOTest {
 		catch (IllegalAccessException e) { e.printStackTrace(); }
 		catch (ClassNotFoundException e) { e.printStackTrace(); }
 		catch (SQLException e) { e.printStackTrace(); }
-		TextReader txt = new TextReader();
+		txt = new TextReader("war");
 		oprDAO = new OperatoerDAO(txt);
 	}
 
@@ -44,13 +47,13 @@ public class OperatoerDAOTest {
 	}
 
 	@Test
-	public void testOperatoerDAO() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetOperatoer() {
-		fail("Not yet implemented");
+		try {
+			int oprID = oprDAO.getOperatoer(1).getUserId();
+			assertEquals(1,oprID);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test

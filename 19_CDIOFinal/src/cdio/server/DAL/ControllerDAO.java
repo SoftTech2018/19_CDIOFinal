@@ -245,7 +245,9 @@ public class ControllerDAO implements IControllerDAO {
 	public void deleteRaavare(int id) throws DALException {
 		raavareDAO.deleteRaavare(id);
 	}
-
 	
+	public void getRecept(int id) throws DALException{
+		receptDAO.getRecept(id);
+	}
 }
 	

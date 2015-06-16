@@ -41,7 +41,7 @@ public class SletProduktbatch extends Composite{
 		id.setStyleName("TextBox-Opret");
 		id.addKeyUpHandler(new idCheck());
 		btn = new Button("Slet Produktbatch");
-
+		btn.setEnabled(false);
 		ft = new FlexTable();
 		ft.setWidget(0, 0, desc);
 		ft.setWidget(1, 0, id);
