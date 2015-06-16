@@ -444,6 +444,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
+			dao.getRecept(id);
 			try {
 				dao.checkReceptID(id);
 			} catch (Exception DALException){
