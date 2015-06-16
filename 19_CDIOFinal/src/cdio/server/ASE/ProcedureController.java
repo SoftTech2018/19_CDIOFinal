@@ -39,7 +39,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 		this.host = host;
 		this.port = port;
 		this.state = State.START;
-		restListe = new ArrayList<ReceptKompDTO>();
 	}
 	
 
@@ -114,6 +113,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
+					if(dao.isOpr(inputInt)){
+						trans.P111("Uautoriseret bruger");
+						return START;
+					}
 					name = dao.getUser(inputInt).getName();
 //					name = dao.getOprDAO().getOperatoer(inputInt).getName();
 					menu.show("Bruger valgt: "+name+". Er dette korrekt?");		
@@ -185,6 +188,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
 					}
+					mc.restListe = new ArrayList<ReceptKompDTO>();
 					mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
 					mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
 					for(ReceptKompDTO rk : mc.receptKompListe){
@@ -229,8 +233,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 //						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
-						dao.updatePbStatus(mc.getProdBatchID(), 1);
-						dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());
+						if(mc.getProdBatchID()==0){
+							dao.updatePbStatus(mc.getProdBatchID(), 1);
+							dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());							
+						}
 //						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
