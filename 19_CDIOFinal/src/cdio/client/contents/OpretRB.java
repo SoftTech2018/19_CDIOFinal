@@ -90,6 +90,7 @@ public class OpretRB extends Composite {
 					});
 				} else {
 					ft.setText(2, 2, caught.getMessage());
+					getRaavareListe();
 				}
 			}
 
@@ -125,7 +126,8 @@ public class OpretRB extends Composite {
 						}
 					});
 				} else {
-					ft.setText(1, 2, "Fejl i råvarebatch listekald");					
+					ft.setText(1, 2, caught.getMessage());
+					getRBListe();
 				}
 			}
 

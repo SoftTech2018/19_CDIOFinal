@@ -214,20 +214,31 @@ public class FieldVerifier {
 	 * @return
 	 */
 	public static boolean isValidMaengde(String input){
-		try {
-			double i = Double.parseDouble(input);
-			if(i<=0 || i>99999999){
-				throw new NumberFormatException();
+		String ny = input;
+		for(int i=0; i<input.length(); i++){
+			if(input.charAt(i)==','){
+				ny = input.replace(",", ".");
 			}
-			if(input.contains(",") || input.contains(".")){
-				input.replace(",", ".");
-			//	input.
+			if(ny.charAt(i)=='.'){
+				String[] sString = ny.split("\\.");
+				if (sString[1].length()>4){
+					return false;
+				}
 			}
+		}
+		try{
+			Double m =	Double.parseDouble(ny); 
 
-			return true;
+			if(m < 0.0000){
+				return false;
+			}
+			if(m > 99999999.0000){
+				return false;
+			}		
 		} catch (NumberFormatException e){
 			return false;
 		}
+		return true;			
 	}
 
 	public static boolean isValidRaavareName(String name) {
