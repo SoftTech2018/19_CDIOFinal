@@ -99,6 +99,8 @@ public interface IControllerDAO {
 	
 	public void setTimeStamp(int id, int var, String time) throws DALException;
 	
+	public boolean isOpr(int id) throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;
