@@ -230,7 +230,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
 						dao.updatePbStatus(mc.getProdBatchID(), 1);
-						
+						dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());
 //						dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).setStatus(1);
 						return CLEAR;
 					} else {
@@ -452,6 +452,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //								dao.createProduktBatchKomp(pb);
 //							}
 							dao.updatePbStatus(mc.prod_batch_id, 2);
+							dao.setTimeStamp(mc.getProdBatchID(), 1, mc.prettyTime());
 							trans.RM20("Afvejning faerdig!", "OK", "");
 							return START;
 						} else {
