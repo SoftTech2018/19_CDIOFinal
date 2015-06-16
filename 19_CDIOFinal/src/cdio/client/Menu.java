@@ -354,6 +354,8 @@ public class Menu extends Composite {
 						if (Controller.minutes == -1){
 							cancelTimer();
 							time.setText("00:00");
+							PopupLogin pop = new PopupLogin();
+							pop.center();
 						}
 					} 
 					else 

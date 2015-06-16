@@ -1,4 +1,4 @@
-SELECT * FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id WHERE operatoer.opr_id = #1
+SELECT * FROM operatoer NATURAL JOIN roller WHERE operatoer.opr_id = #1
 CALL createOPR('#1', '#2', '#3', '#4', #5, #6, #7, #8)
 UPDATE operatoer SET opr_navn = '#1', ini = '#2', cpr = '#3', password = '#4' WHERE opr_id = #5
 SELECT * FROM operatoer INNER JOIN roller ON operatoer.opr_id = roller.opr_id

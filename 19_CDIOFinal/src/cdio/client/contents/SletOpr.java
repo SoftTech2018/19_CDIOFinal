@@ -9,6 +9,7 @@ import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -45,13 +46,18 @@ public class SletOpr extends Composite {
 			public void onFailure(Throwable caught) {
 				if (caught instanceof TokenException){
 					final PopupLogin pop = new PopupLogin();
-					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
-						public void setPosition(int offsetWidth, int offsetHeight) {
-							int left = (Window.getClientWidth() - offsetWidth) / 3;
-							int top = (Window.getClientHeight() - offsetHeight) / 3;
-							pop.setPopupPosition(left, top);
+					pop.center();
+					Timer t = new Timer(){
+						@Override
+						public void run() {
+							if (!pop.isShowing()){
+								this.cancel();
+								SletOpr.this.run();
+							}
 						}
-					});
+					};
+					t.scheduleRepeating(100);
+					
 				} else {
 					error.setText(caught.getMessage());
 					error.setStyleName("TextLabel-ErrorMessage");					

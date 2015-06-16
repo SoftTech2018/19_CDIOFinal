@@ -186,18 +186,18 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 
 	@Override
 	public void createUser(String token, UserDTO user) throws TokenException, DALException {
-		throw new TokenException("Test"); // TESTKODE
-//		if (TEST_DELAY)
-//			try {
-//				Thread.sleep(2000);
-//			} catch (InterruptedException e) {}
-//		
-//		if (getRole(token).equalsIgnoreCase("Admin")){
-//			dao.createUser(user);						
-//		}
-//		else {
-//			throw new TokenException("Adgang nægtet");
-//		}
+//		throw new TokenException("Test"); // TESTKODE
+		if (TEST_DELAY)
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		
+		if (getRole(token).equalsIgnoreCase("Admin")){
+			dao.createUser(user);						
+		}
+		else {
+			throw new TokenException("Adgang nægtet");
+		}
 	}
 
 	@Override

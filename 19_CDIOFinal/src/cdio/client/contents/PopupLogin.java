@@ -121,17 +121,17 @@ public class PopupLogin extends PopupPanel {
 
 							@Override
 							public void onSuccess(final String token) {	
-								Controller.refreshToken();
-								
-								// Vent 1 sek før vi går videre, for at sikre at refreshToken er udført
+								Controller.token = token;
+								Controller.refreshToken(); // nulstiller timeren til 30 min
 								Timer t = new Timer(){
-
 									@Override
 									public void run() {
-										hide();
+										if (!token.equals(Controller.token)){
+											hide();
+										}
 									}
 								};
-								t.schedule(1000); // 1000 ms = 1 sek
+								t.scheduleRepeating(100);
 							}
 						});
 					}

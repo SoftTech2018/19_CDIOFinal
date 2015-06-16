@@ -122,7 +122,7 @@ public class Controller extends Composite {
 			public void onSuccess(String result) {
 				Menu.cancelTimer();
 				Controller.token = result;
-				Controller.minutes = 30;
+				Controller.minutes = 1;
 				Controller.seconds = 0;
 				Menu.timer();
 			}
