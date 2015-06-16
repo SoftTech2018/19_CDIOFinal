@@ -27,7 +27,7 @@ public class OpretRaavare extends Composite {
 	private FlexTable ft;
 	private TextBox id, navn, leverandør;
 	private Button opret;
-	private Label error;
+	private Label error, opretRaavarer;
 	private boolean idValid=false, navnValid=false, levValid=false;
 	private int[] liste;
 
@@ -38,7 +38,10 @@ public class OpretRaavare extends Composite {
 	}
 
 	public void run(){
-
+//		opretRaavarer = new Label("Opret råvare");
+//		opretRaavarer.setStyleName("FlexTable-Header");
+//		vPane.add(opretRaavarer);
+		
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");

@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class VisRecept extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error;
+	private Label error, visRecept;
 
 	public VisRecept() {
 		vPane = new VerticalPanel();
@@ -33,6 +33,9 @@ public class VisRecept extends Composite {
 			@Override
 			public void onSuccess(List<ReceptDTO> result) {
 				error.setText("");
+				visRecept = new Label("Vis recept");
+				visRecept.setStyleName("FlexTable-Header");
+				vPane.add(visRecept);
 				FlexTable ft = new FlexTable();
 				ft.setStyleName("FlexTable-Content");	
 				ft.setText(0, 0, "Recept Id");
