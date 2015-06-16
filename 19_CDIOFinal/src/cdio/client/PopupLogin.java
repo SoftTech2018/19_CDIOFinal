@@ -1,6 +1,5 @@
-package cdio.client.contents;
+package cdio.client;
 
-import cdio.client.Controller;
 import cdio.shared.FieldVerifier;
 import cdio.shared.UserDTO;
 

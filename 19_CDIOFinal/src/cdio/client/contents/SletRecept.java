@@ -1,6 +1,7 @@
 package cdio.client.contents;
 
 import cdio.client.Controller;
+import cdio.client.PopupLogin;
 import cdio.shared.FieldVerifier;
 import cdio.shared.TokenException;
 

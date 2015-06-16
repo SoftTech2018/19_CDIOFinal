@@ -3,6 +3,7 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
+import cdio.client.PopupLogin;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.TokenException;
 

@@ -5,7 +5,6 @@ import cdio.client.contents.OpretPB;
 import cdio.client.contents.OpretRB;
 import cdio.client.contents.OpretRaavare;
 import cdio.client.contents.OpretRecept;
-import cdio.client.contents.PopupLogin;
 import cdio.client.contents.RetOpr;
 import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
