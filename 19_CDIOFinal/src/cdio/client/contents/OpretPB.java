@@ -44,7 +44,7 @@ public class OpretPB extends Composite {
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 
-		ft.setText(0, 0, "Opret Produktbatch");	
+		ft.setText(0, 0, "Opret produktbatch");	
 		ft.setText(1, 0, "Receptnummer:");
 		receptNr = new ListBox();
 		receptNr.setVisibleItemCount(1); // Laver det til en dropdown-menu
