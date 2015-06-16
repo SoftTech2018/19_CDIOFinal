@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public class ReceptKompDTO implements Serializable
 {
-	int receptId;                  // auto genereres fra 1..n   
-	int raavareId;             // i omraadet 1-99999999
-	double nomNetto;            // skal vaere positiv og passende stor
-	double tolerance;           // skal vaere positiv og passende stor
+	private int receptId;                  // auto genereres fra 1..n   
+	private int raavareId;             // i omraadet 1-99999999
+	private double nomNetto;            // skal vaere positiv og passende stor
+	private double tolerance;           // skal vaere positiv og passende stor
 	
 	
 	public ReceptKompDTO(){

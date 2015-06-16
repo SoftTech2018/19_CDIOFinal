@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class ProduktBatchKompDTO implements Serializable 
 {
-	int pbId; 	  // produktbatchets id
-	int rbId;        // i omraadet 1-99999999
-	double tara;
-	double netto;
-	int oprId;					// operatoer-nummer
-	String host;
+	private int pbId; 	  // produktbatchets id
+	private int rbId;        // i omraadet 1-99999999
+	private double tara;
+	private double netto;
+	private int oprId;					// operatoer-nummer
+	private String host;
 
 	
 	public ProduktBatchKompDTO(int pbId, int rbId, double tara, double netto, int oprId, String host)

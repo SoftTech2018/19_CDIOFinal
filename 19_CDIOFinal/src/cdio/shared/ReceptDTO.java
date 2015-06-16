@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 public class ReceptDTO implements Serializable{
 	/** Recept nr i omraadet 1-99999999 */
-	int receptId;
+	private int receptId;
 	/** Receptnavn min. 2 max. 20 karakterer */
-	String receptNavn;
+	private String receptNavn;
 	/** liste af kompenenter i recepten */
 	
 	public ReceptDTO(){

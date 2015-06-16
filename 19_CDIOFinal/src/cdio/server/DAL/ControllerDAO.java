@@ -254,5 +254,10 @@ public class ControllerDAO implements IControllerDAO {
 	public void setTimeStamp(int id, int var, String time) throws DALException {
 		pbDAO.setTimeStamp(id, var, time);		
 	}
+
+	@Override
+	public boolean isOpr(int id) throws DALException {
+		return oprDAO.getOperatoer(id).isOperatoer();
+	}
 }
 	
