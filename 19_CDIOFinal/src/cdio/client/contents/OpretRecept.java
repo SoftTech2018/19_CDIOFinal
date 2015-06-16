@@ -58,8 +58,8 @@ public class OpretRecept extends Composite {
 		hp.clear();
 
 		ft = new FlexTable();
-		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
+		ft.setStyleName("FlexTable-Content");
 		ft.setText(0, 0, "Opret Recept");
 
 		ft.setText(2, 0, "Receptnavn:");
@@ -67,27 +67,33 @@ public class OpretRecept extends Composite {
 
 		navn.addKeyUpHandler(new NameCheck()); 
 		navn.setStyleName("TextBox-Opret");
+		navn.setWidth("70%");
 		ft.setWidget(2, 1, navn);
 
 		ft.setText(3, 0, "Receptnummer:");
 		receptid = new TextBox();
 		receptid.addKeyUpHandler(new IdCheck()); 
 		receptid.setStyleName("Textbox-Opret");
+		receptid.setWidth("70%");
 		ft.setWidget(3, 1, receptid);
 
 		nyRecept = new Button("Start forfra");
 		nyRecept.addClickHandler(new nyReceptClick());
 		nyRecept.setEnabled(true);
+		nyRecept.setStyleName("Recept-Komponenter");
 		ft.setWidget(10, 0, nyRecept);
-
+		
 		opret = new Button("Opret");
+		opret.setStyleName("Recept-Komponenter");
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);		
 
 		ft3 = new FlexTable();
+		ft3.setStyleName("FlexTable-Content");
 		tilfoej = new Button("Ny komponent");
 		tilfoej.setStyleName("Recept-Komponenter");
+		tilfoej.setEnabled(false);
 		tilfoej.addClickHandler(new kompClick());
 		ft3.setWidget(0, 1, tilfoej);
 		ft3.setText(0, 0, "");
@@ -95,6 +101,7 @@ public class OpretRecept extends Composite {
 		error = new Label("");
 
 		ft4 = new FlexTable();
+//		ft4.setStyleName("FlexTable-Content");
 		ft4.setWidget(12, 0, error);
 		ft4.setText(0, 1, "");
 		ft4.setWidget(0, 2, error);
@@ -103,8 +110,8 @@ public class OpretRecept extends Composite {
 		vPane.add(ft4);
 		vPane1.add(ft3);
 
-		vPane.setWidth("400 px");
-		vPane1.setWidth("400 px");
+		vPane.setWidth("400px");
+		vPane1.setWidth("400px");
 		//hp.add(error);
 		hp.add(vPane);
 		hp.add(vPane1);
@@ -216,6 +223,7 @@ public class OpretRecept extends Composite {
 					Window.alert("Receptkomponent oprettet!");
 					error.setStyleName("Recept-Error");
 					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
+					tilfoej.setEnabled(true);
 				}
 			});
 		}
@@ -226,7 +234,7 @@ public class OpretRecept extends Composite {
 		public void onClick(ClickEvent event) {
 			opret.setText("loading");
 			opret.setEnabled(false);
-
+			
 			ReceptDTO recept = new ReceptDTO(
 					Integer.parseInt(receptid.getText()), 
 					navn.getText());
@@ -260,9 +268,10 @@ public class OpretRecept extends Composite {
 				@Override
 				public void onSuccess(Void result) {
 					opret.setText("Opret");
-					opret.setEnabled(true);
+					opret.setEnabled(false);
 					Window.alert("Recept " + navn.getText() + " blev oprettet!");
 					receptOprettet = true;
+					tilfoej.setEnabled(true);
 					error.setText("Recept er oprettet. Tilføj nye receptkomponenter!");
 					error.setStyleName("Recept-Error");
 				}
@@ -314,10 +323,12 @@ public class OpretRecept extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
+			tilfoej.setEnabled(false);
 			FlexTable ft2 = new FlexTable();
-			ok = new Button("Tilføj");
+			ft2.setStyleName("FlexTable-Content");
 			ft2.setText(1, 0, "Indtast råvareID");
 			raavareid = new TextBox();
+			raavareid.setStyleName("TextBox-Opret");
 			raavareid.addKeyUpHandler(new rIdCheck()); 
 			ft2.setWidget(1, 1, raavareid);
 			String rid = raavareid.getText();
@@ -326,6 +337,7 @@ public class OpretRecept extends Composite {
 
 			ft2.setText(2, 0, "Indtast nettovægt mellem 0,05-20,0 kg");
 			nomNetto = new TextBox();
+			nomNetto.setStyleName("TextBox-Opret");
 			nomNetto.addKeyUpHandler(new nettoCheck());
 			String nNet = nomNetto.getText();
 			if(nNet != null){
@@ -336,20 +348,21 @@ public class OpretRecept extends Composite {
 
 			ft2.setText(3, 0, "Indtast tolerance mellem 0,1-10,0%");
 			tolerance = new TextBox();
+			tolerance.setStyleName("TextBox-Opret");
 			tolerance.addKeyUpHandler(new tolCheck());
 			String tol = tolerance.getText();
 			if(tol != null){
 				tolEle = true; 
 			}
+			ft2.setWidget(3, 1, tolerance);
 
 			gemKomp = new Button();
 			gemKomp = new Button("Gem Komponent");
 			gemKomp.setStyleName("Recept-Komponenter");
 			gemKomp.addClickHandler(new gemKomp());
-			ft3.setWidget(0, 8, gemKomp);
 			gemKomp.setEnabled(false);
+			ft2.setWidget(1, 8, gemKomp);
 
-			ft2.setWidget(3, 1, tolerance);
 
 			vPane1.add(ft2);
 
@@ -362,7 +375,7 @@ public class OpretRecept extends Composite {
 			error.setText("");
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-OpretError");
+				id.setStyleName("TextBox-Opret");
 				raavareidValid = false;
 
 			} else{
@@ -374,14 +387,16 @@ public class OpretRecept extends Composite {
 				if(liste[Integer.parseInt(id.getText())]!=1){
 					error.setText("Ukendt råvareId, prøv et andet");
 					error.setStyleName("Recept-Error");
-					id.setStyleName("TextBox-ErrorMessage");
+					id.setStyleName("TextBox-OpretError");
 					raavareidValid = false;
 				}
 
 				if( receptOprettet && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle){
 					gemKomp.setEnabled(true);
 				}
-				else gemKomp.setEnabled(false);
+				else{ gemKomp.setEnabled(false);
+				tilfoej.setEnabled(false);}
+				
 			}
 
 		}
@@ -402,8 +417,9 @@ public class OpretRecept extends Composite {
 			}
 			if( receptOprettet && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
 				gemKomp.setEnabled(true);
-			else gemKomp.setEnabled(false);
-		}
+			else {gemKomp.setEnabled(false);
+			tilfoej.setEnabled(false);
+			}}
 	}
 
 	private class tolCheck implements KeyUpHandler{
@@ -419,7 +435,8 @@ public class OpretRecept extends Composite {
 			}
 			if( receptOprettet && raavareidValid && nettoValid && tolValid && netEle && tolEle && ravEle)
 				gemKomp.setEnabled(true);
-			else gemKomp.setEnabled(false);
-		}
+			else {gemKomp.setEnabled(false);
+			tilfoej.setEnabled(false);
+			}}
 	}
 }

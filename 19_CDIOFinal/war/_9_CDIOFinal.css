@@ -162,6 +162,8 @@ html {
 	width: 200px;
 }
 
+
+
 .FlexTable-Header{
 	font-weight: bold;
 	color: #555555;
@@ -193,7 +195,6 @@ html {
 	margin: 0px;
 	width: 45px;	
 }
-
 .TextLabel-Logud{
 	font-size: 11px;
 	color: #555555;
@@ -202,6 +203,8 @@ html {
 .FlexTable-Content{
 	width: 100%;
 }
+
+
 
 .Button-Komponenter{
 	height: 20px;
