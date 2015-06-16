@@ -525,4 +525,23 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public Integer getUserId(String token) throws TokenException, DALException {
 		return Integer.parseInt(th.getUserID(token));
 	}
+	
+	@Override
+	public void deleteRaavare(String token, int raavare_id) throws TokenException, DALException {
+		if (TEST_DELAY)
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {}
+		boolean check = false;
+		if(getRole(token).equalsIgnoreCase("Farmaceut")){
+			try{
+				dao.deleteRaavare(raavare_id);
+			} catch (Exception DALException){
+				check = true;
+			}
+		}
+		if (check){
+			throw new DALException("Raavaren bliver brugt i en recept og kan ikke slettes.");
+		}
+	}
 }

@@ -308,5 +308,17 @@ public class TextReader {
 		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
 		return output;
 	}
+	
+	public String deleteRaavare(int id){
+		String output = sqlCommands[68];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
+		return output;
+	}
+	
+	public String deleteRaavareFinal(int id){
+		String output = sqlCommands[69];
+		output = output.replaceFirst(illegalString + "1", Integer.toString(id));
+		return output;
+	}
 
 }

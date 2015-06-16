@@ -72,4 +72,5 @@ public interface Service extends RemoteService {
 	
 	Integer getUserId(String token) throws TokenException, DALException;
 	
+	void deleteRaavare(String token, int raavare_id) throws TokenException, DALException;
 }

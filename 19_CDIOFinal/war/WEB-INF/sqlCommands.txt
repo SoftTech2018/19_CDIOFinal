@@ -65,3 +65,5 @@ select distinct * from produktbatch left join produktbatchkomponent using (pb_id
 DELETE FROM recept WHERE recept_id = #1
 SELECT * FROM produktbatch WHERE pb_id = #1 AND status = 0
 DELETE FROM produktbatch WHERE pb_id = #1
+SELECT * FROM receptkomponent WHERE raavare_id = #1
+DELETE FROM raavare WHERE raavare_id = #1

@@ -52,5 +52,19 @@ private TextReader txt;
 	public void updateRaavare(RaavareDTO raavare) throws DALException {
 		Connector.doUpdate(txt.updateRaavare(raavare));
 	}
+	
+	public void deleteRaavare(int id) throws DALException {
+		ResultSet rs = Connector.doQuery(txt.deleteRaavare(id));
+		try {
+			if(!rs.next()){
+				Connector.doUpdate(txt.deleteRaavareFinal(id));
+			} else {
+				throw new DALException();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

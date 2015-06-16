@@ -10,6 +10,7 @@ import cdio.client.contents.RetOpr;
 import cdio.client.contents.RetRaavare;
 import cdio.client.contents.SletOpr;
 import cdio.client.contents.SletProduktbatch;
+import cdio.client.contents.SletRaavare;
 import cdio.client.contents.SletRecept;
 import cdio.client.contents.StartPage;
 import cdio.client.contents.VisOpr;
@@ -233,9 +234,19 @@ public class Menu extends Composite {
 				con.setContent(new OpretRaavare());
 			}
 		});
+		
+		Anchor slet = new Anchor("Slet råvare");
+		ft.setWidget(4, 0, slet);
+		slet.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				con.setContent(new SletRaavare());
+			}
+		});
 
 		Anchor visRecept = new Anchor("Vis recept");
-		ft.setWidget(4, 0, visRecept);
+		ft.setWidget(5, 0, visRecept);
 		visRecept.addClickHandler(new ClickHandler(){
 
 			@Override
@@ -245,7 +256,7 @@ public class Menu extends Composite {
 		});
 
 		Anchor opretRecept = new Anchor("Opret recept");
-		ft.setWidget(5, 0, opretRecept);
+		ft.setWidget(6, 0, opretRecept);
 		opretRecept.addClickHandler(new ClickHandler(){
 
 			@Override
@@ -255,7 +266,7 @@ public class Menu extends Composite {
 		});
 
 		Anchor sletRecept = new Anchor("Slet recept");
-		ft.setWidget(6, 0, sletRecept);
+		ft.setWidget(7, 0, sletRecept);
 		sletRecept.addClickHandler(new ClickHandler(){
 
 			@Override
