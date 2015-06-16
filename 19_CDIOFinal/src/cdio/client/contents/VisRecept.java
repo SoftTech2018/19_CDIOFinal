@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -69,10 +70,15 @@ public class VisRecept extends Composite {
 				ft.getCellFormatter().setHorizontalAlignment(0, 6, HasHorizontalAlignment.ALIGN_CENTER);
 				ft.getCellFormatter().setHorizontalAlignment(0, 7, HasHorizontalAlignment.ALIGN_CENTER);
 				for (int i = 0; i < result.size(); i++) {
-					ft.getCellFormatter().setHorizontalAlignment(i+1, 4, HasHorizontalAlignment.ALIGN_CENTER);
-					ft.getCellFormatter().setHorizontalAlignment(i+1, 5, HasHorizontalAlignment.ALIGN_CENTER);
-					ft.getCellFormatter().setHorizontalAlignment(i+1, 6, HasHorizontalAlignment.ALIGN_CENTER);
-					ft.getCellFormatter().setHorizontalAlignment(i+1, 7, HasHorizontalAlignment.ALIGN_CENTER);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 0, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 1, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 2, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 3, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 4, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 5, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 6, HasVerticalAlignment.ALIGN_TOP);
+					ft.getCellFormatter().setVerticalAlignment(i+1, 7, HasVerticalAlignment.ALIGN_TOP);
+
 					vPane.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 					ft.setText(i+1,0,Integer.toString(result.get(i).getReceptId()));
 					ft.setText(i+1, 1, result.get(i).getReceptNavn());
@@ -134,9 +140,9 @@ public class VisRecept extends Composite {
 					ft2.setText(1, 2, "Tolerance");
 					
 					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
-					ft2.getFlexCellFormatter().setWidth(0, 0, "35px");
-					ft2.getFlexCellFormatter().setWidth(0, 1, "35px");
-					ft2.getFlexCellFormatter().setWidth(0, 2, "35px");
+					ft2.getFlexCellFormatter().setWidth(0, 0, "40px");
+					ft2.getFlexCellFormatter().setWidth(0, 1, "40px");
+					ft2.getFlexCellFormatter().setWidth(0, 2, "40px");
 					ft2.getFlexCellFormatter().setWidth(0, 3, "45");
 					ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
 

@@ -219,7 +219,7 @@ public class FieldVerifier {
 			}
 			if(input.contains(",") || input.contains(".")){
 				input.replace(",", ".");
-				input.
+			//	input.
 			}
 
 			return true;
