@@ -119,178 +119,182 @@ public class FieldVerifier {
 			return false;
 		}
 
-	return true;			
-}
+		return true;			
+	}
 
-public static boolean isValidTol(String tol){
-	String ny = tol;
-	for(int i=0; i<tol.length(); i++){
-		if(tol.charAt(i)==','){
-			ny = tol.replace(",", ".");
-		}
-	}		
-	try{		
-		Double input =	Double.parseDouble(ny); 
-
-		if(input < 0.1){
-			return false;
-		}
-		if(input >= 10.0 ){
-			return false;
+	public static boolean isValidTol(String tol){
+		String ny = tol;
+		for(int i=0; i<tol.length(); i++){
+			if(tol.charAt(i)==','){
+				ny = tol.replace(",", ".");
+			}
 		}		
-	} catch (NumberFormatException e){
-		return false;
-	}
-	String[] sString = ny.split("\\.");
-	if(sString[1].length()>2){
-		return false;
-	}
-	return true;		
-}
+		try{		
+			Double input =	Double.parseDouble(ny); 
 
-/**
- * Tjek om et receptnavn er valid
- * @param name navnet der skal tjekkes
- * @return True hvis navn er valid
- */
-public static boolean isValidReceptName(String name) {
-	for (int i=0; i < name.length(); i++){
-		String sString = name.substring(i, i+1);
-		if (sString.matches("[0-9]")){
+			if(input < 0.1){
+				return false;
+			}
+			if(input >= 10.0 ){
+				return false;
+			}		
+		} catch (NumberFormatException e){
+			return false;
+		}
+		String[] sString = ny.split("\\.");
+		if(sString[1].length()>2){
+			return false;
+		}
+		return true;		
+	}
+
+	/**
+	 * Tjek om et receptnavn er valid
+	 * @param name navnet der skal tjekkes
+	 * @return True hvis navn er valid
+	 */
+	public static boolean isValidReceptName(String name) {
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+			if (!illigalChars(name))
+				return false;
+			if (name.length() <= 1) {
+				return false;			
+			}
+
+		}
+		// max 22 karakterer
+		return name.length() <= 22;
+	}
+
+	/**
+	 * Tjek om et råvare id er valid
+	 * @param id
+	 * @return
+	 */
+	public static boolean isValidRaavareId(String id){
+		try {
+			int i = Integer.parseInt(id);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
+
+	/**
+	 * Tjek om et råvare batch id er valid
+	 * @param id
+	 * @return
+	 */
+	public static boolean isValidRaavareBatchId(String id){
+		try {
+			int i = Integer.parseInt(id);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
+
+	/**
+	 * Tjek om mængde er valid
+	 * @param id
+	 * @return
+	 */
+	public static boolean isValidMaengde(String input){
+		try {
+			double i = Double.parseDouble(input);
+			if(i<=0 || i>99999999){
+				throw new NumberFormatException();
+			}
+			if(input.contains(",") || input.contains(".")){
+				input.replace(",", ".");
+				input.
+			}
+
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
+
+	public static boolean isValidRaavareName(String name) {
+		if (name.length() <= 1) {
+			return false;			
+		}
+		if (name.length() > 22){
 			return false;
 		}
 		if (!illigalChars(name))
 			return false;
-		if (name.length() <= 1) {
-			return false;			
-		}
-
-	}
-	// max 22 karakterer
-	return name.length() <= 22;
-}
-
-/**
- * Tjek om et råvare id er valid
- * @param id
- * @return
- */
-public static boolean isValidRaavareId(String id){
-	try {
-		int i = Integer.parseInt(id);
-		if(i<=0 || i>99999999){
-			throw new NumberFormatException();
-		}
-
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]"))
+				return false;
+		}		
 		return true;
-	} catch (NumberFormatException e){
-		return false;
 	}
-}
 
-/**
- * Tjek om et råvare batch id er valid
- * @param id
- * @return
- */
-public static boolean isValidRaavareBatchId(String id){
-	try {
-		int i = Integer.parseInt(id);
-		if(i<=0 || i>99999999){
-			throw new NumberFormatException();
+	public static boolean isValidLeverandorName(String name) {
+		for (int i=0; i < name.length(); i++){
+			String sString = name.substring(i, i+1);
+			if (sString.matches("[0-9]")){
+				return false;
+			}
+			if (!illigalChars(name))
+				return false;
+			if (name.length() <= 1) {
+				return false;			
+			}
+
 		}
+		// max 22 karakterer
+		return name.length() <= 22;
+	}
 
+	/**
+	 * Tjek om en brugers rolle(r) er valid. 
+	 * @param user Brugeren der skal tjekkes
+	 * @return True hvis brugeren har netop én rolle
+	 */
+	public static boolean isValidRoles(UserDTO user) {
+		int count = 0;
+		if(user.isAdmin())
+			count++;
+		if(user.isFarmaceut())
+			count++;
+		if(user.isVaerkfoerer())
+			count++;
+		if(user.isOperatoer())
+			count++;
+
+		if(count != 1)
+			return false;
+		else 
+			return true;
+	}
+
+	/**
+	 * Tjek om en string indeholder et eller flere ulovlige tegn
+	 * @param string
+	 * @return True hvis stringen IKKE indeholder ulovlige tegn
+	 */
+	public static boolean illigalChars(String string){
+		for (int i=0; i<string.length(); i++){
+			char p = string.charAt(i);
+			if (p=='#' || p=='<' || p=='>' || p=='"' || p=='&')
+				return false;
+		}
 		return true;
-	} catch (NumberFormatException e){
-		return false;
 	}
-}
-
-/**
- * Tjek om mængde er valid
- * @param id
- * @return
- */
-public static boolean isValidMaengde(String id){
-	try {
-		int i = Integer.parseInt(id);
-		if(i<=0 || i>99999999){
-			throw new NumberFormatException();
-		}
-
-		return true;
-	} catch (NumberFormatException e){
-		return false;
-	}
-}
-
-public static boolean isValidRaavareName(String name) {
-	if (name.length() <= 1) {
-		return false;			
-	}
-	if (name.length() > 22){
-		return false;
-	}
-	if (!illigalChars(name))
-		return false;
-	for (int i=0; i < name.length(); i++){
-		String sString = name.substring(i, i+1);
-		if (sString.matches("[0-9]"))
-			return false;
-	}		
-	return true;
-}
-
-public static boolean isValidLeverandorName(String name) {
-	for (int i=0; i < name.length(); i++){
-		String sString = name.substring(i, i+1);
-		if (sString.matches("[0-9]")){
-			return false;
-		}
-		if (!illigalChars(name))
-			return false;
-		if (name.length() <= 1) {
-			return false;			
-		}
-
-	}
-	// max 22 karakterer
-	return name.length() <= 22;
-}
-
-/**
- * Tjek om en brugers rolle(r) er valid. 
- * @param user Brugeren der skal tjekkes
- * @return True hvis brugeren har netop én rolle
- */
-public static boolean isValidRoles(UserDTO user) {
-	int count = 0;
-	if(user.isAdmin())
-		count++;
-	if(user.isFarmaceut())
-		count++;
-	if(user.isVaerkfoerer())
-		count++;
-	if(user.isOperatoer())
-		count++;
-
-	if(count != 1)
-		return false;
-	else 
-		return true;
-}
-
-/**
- * Tjek om en string indeholder et eller flere ulovlige tegn
- * @param string
- * @return True hvis stringen IKKE indeholder ulovlige tegn
- */
-public static boolean illigalChars(String string){
-	for (int i=0; i<string.length(); i++){
-		char p = string.charAt(i);
-		if (p=='#' || p=='<' || p=='>' || p=='"' || p=='&')
-			return false;
-	}
-	return true;
-}
 }

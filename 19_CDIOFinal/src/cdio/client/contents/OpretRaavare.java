@@ -123,12 +123,6 @@ public class OpretRaavare extends Composite {
 			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
 				@Override
-				//				public void onFailure(Throwable caught) {
-				//					opret.setEnabled(true);	
-				//					error.setText(caught.getMessage());
-				//					error.setStyleName("TextBox-ErrorMessage");
-				//				}
-
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
 						final PopupLogin pop = new PopupLogin();

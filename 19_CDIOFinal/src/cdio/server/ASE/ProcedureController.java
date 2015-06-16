@@ -113,7 +113,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					inputInt = Integer.parseUnsignedInt(input);
-					if(dao.isOpr(inputInt)){
+					if(!dao.isOpr(inputInt)){
 						trans.P111("Uautoriseret bruger");
 						return START;
 					}
@@ -181,7 +181,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						return START;
 					}
 					trans.P111("");
-					mc.setProdBatchID(Integer.parseUnsignedInt(input));
+					mc.setProdBatchID(Integer.parseInt(input));
 					try{
 						dao.getProduktBatch(mc.prod_batch_id);
 					} catch (DALException e){
@@ -233,7 +233,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 //						mc.setReceptID(dao.getPbDAO().getProduktBatch(mc.getProdBatchID()).getReceptId());
 //						mc.setReceptKompListe(dao.setReceptKompListe(mc.getReceptID()));
 //						mc.setReceptKompListe(dao.getReceptKompDAO().getReceptKompList(mc.getReceptID()));
-						if(mc.getProdBatchID()==0){
+						if(dao.getProduktBatch(mc.getProdBatchID()).getStatus()==0){
 							dao.updatePbStatus(mc.getProdBatchID(), 1);
 							dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());							
 						}
