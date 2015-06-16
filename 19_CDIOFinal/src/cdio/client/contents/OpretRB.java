@@ -78,9 +78,18 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
 					ft.setText(2, 2, caught.getMessage());
-				
+				}
 			}
 
 			@Override
@@ -105,7 +114,18 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ft.setText(1, 2, "Fejl i råvarebatch listekald");
+				if (caught instanceof TokenException){
+					final PopupLogin pop = new PopupLogin();
+					pop.setPopupPositionAndShow(new PopupPanel.PositionCallback() {
+						public void setPosition(int offsetWidth, int offsetHeight) {
+							int left = (Window.getClientWidth() - offsetWidth) / 3;
+							int top = (Window.getClientHeight() - offsetHeight) / 3;
+							pop.setPopupPosition(left, top);
+						}
+					});
+				} else {
+					ft.setText(1, 2, "Fejl i råvarebatch listekald");					
+				}
 			}
 
 			@Override
