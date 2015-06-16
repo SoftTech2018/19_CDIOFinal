@@ -429,6 +429,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		}
 	}
 
+	// MÅ IKKE ÆNDRES!!!!! (MVH JON)
 	@Override
 	public String refreshToken(String token) throws TokenException, DALException {
 		if (TEST_DELAY)
@@ -436,11 +437,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 		
-		if(th.validateToken(token) != null){
-			return th.createToken(th.getUserID(token));
-		} else {
-			throw new TokenException("Adgang nægtet");		
-		}
+		int userId = Integer.parseInt(th.getUserID(token));
+		dao.getUser(userId); // Der kastes exception hvis bruger id ikke findes.
+		
+		return th.createToken(Integer.toString(userId));
 	}
 
 	@Override

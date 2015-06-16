@@ -8,6 +8,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -121,7 +122,16 @@ public class PopupLogin extends PopupPanel {
 							@Override
 							public void onSuccess(final String token) {	
 								Controller.refreshToken();
-								hide();
+								
+								// Vent 1 sek før vi går videre, for at sikre at refreshToken er udført
+								Timer t = new Timer(){
+
+									@Override
+									public void run() {
+										hide();
+									}
+								};
+								t.schedule(1000); // 1000 ms = 1 sek
 							}
 						});
 					}
