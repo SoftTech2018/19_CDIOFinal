@@ -12,11 +12,11 @@ import java.io.Serializable;
 public class RaavareDTO implements Serializable
 {
     /** i omraadet 1-99999999 vaelges af brugerne */
-    int raavareId;                     
+	private int raavareId;                     
     /** min. 2 max. 20 karakterer */
-    String raavareNavn;                
+	private String raavareNavn;                
     /** min. 2 max. 20 karakterer */
-    String leverandoer;         
+	private String leverandoer;         
 	
     public RaavareDTO()
     {

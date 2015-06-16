@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class RaavareBatchDTO implements Serializable
 {
-	int rbId;                     // i omraadet 1-99999999
-	int raavareId;             // i omraadet 1-99999999
-	double maengde;             // kan vaere negativ 
+	private int rbId;                     // i omraadet 1-99999999
+	private int raavareId;             // i omraadet 1-99999999
+	private double maengde;             // kan vaere negativ 
 
 	public RaavareBatchDTO(int rbId, int raavareId, double maengde)
 	{

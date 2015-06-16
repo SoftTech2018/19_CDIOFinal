@@ -54,8 +54,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		//		}
 		//		else {
 		port = 8000;
-		//		host = "169.254.2.3";
-		host = "localhost";
+				host = "169.254.2.3";
+//		host = "localhost";
 		//		}
 
 		IProcedure menu = new Procedure();
