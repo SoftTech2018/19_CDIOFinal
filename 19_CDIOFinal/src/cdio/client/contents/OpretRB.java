@@ -96,6 +96,7 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
+				ft.setText(2, 2, "");
 				int i = 0;
 				for(RaavareDTO rv : result){
 					if(rv.getRaavareId()>i){
@@ -133,6 +134,7 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
+				ft.setText(1, 2, "");
 				int i = 0;
 				for(RaavareBatchDTO rv : result){
 					if(rv.getRaavareId()>i){
