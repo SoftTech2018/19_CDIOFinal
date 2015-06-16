@@ -21,12 +21,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class VisOpr extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error;
+	private Label error,visBrugere;
 	private Button ok;
+	
 
 	public VisOpr() {
 		vPane = new VerticalPanel();
 		error = new Label("Loading...");
+		visBrugere = new Label("Vis brugere");
 		vPane.add(error);
 		initWidget(vPane);
 
@@ -55,6 +57,8 @@ public class VisOpr extends Composite {
 			public void onSuccess(List<UserDTO> result) { //Formatering af cellerne når man viser brugere i systemet
 				Controller.refreshToken();
 				vPane.clear();
+				vPane.add(visBrugere);
+				visBrugere.setStyleName("FlexTable-Header");
 				FlexTable ft = new FlexTable();
 				vPane.add(ft);
 				ft.setStyleName("FlexTable-Content");

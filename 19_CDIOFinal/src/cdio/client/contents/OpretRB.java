@@ -43,7 +43,7 @@ public class OpretRB extends Composite {
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-		ft.setText(0, 0, "Opret Råvare Batch");
+		ft.setText(0, 0, "Opret råvarebatch");
 
 		ft.setText(1, 0, "Råvare Batch ID:");
 		rbID = new TextBox();

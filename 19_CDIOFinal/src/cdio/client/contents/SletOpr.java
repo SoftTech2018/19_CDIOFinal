@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SletOpr extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error;
+	private Label error, sletBrugere;
 	private FlexTable ft;
 
 	public SletOpr() {
@@ -33,6 +33,9 @@ public class SletOpr extends Composite {
 
 	private void run(){
 		vPane.clear();
+		sletBrugere = new Label("Slet brugere");
+		sletBrugere.setStyleName("FlexTable-Header");
+		vPane.add(sletBrugere);
 		error = new Label("Loading...");
 		vPane.add(error);
 

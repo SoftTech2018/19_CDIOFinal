@@ -53,6 +53,7 @@ public class OperatoerDAOTest {
 			assertEquals(1,oprID);
 		} catch (DALException e) {
 			e.printStackTrace();
+			//hej
 		}
 	}
 

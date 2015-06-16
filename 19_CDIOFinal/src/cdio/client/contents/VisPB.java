@@ -25,7 +25,7 @@ public class VisPB extends Composite {
 	private VerticalPanel vPane;
 	private FlexTable ft;
 	private Button pbkomp, pbkompnew, skjul, print, tilbage;
-	private Label error;
+	private Label error, visPB;
 	private Button ok;
 
 	public VisPB() {
@@ -63,6 +63,9 @@ public class VisPB extends Composite {
 			public void onSuccess(List<ProduktBatchDTO> result) {
 				Controller.refreshToken();
 				vPane.clear();
+				visPB = new Label("Vis produktbatch");
+				visPB.setStyleName("FlexTable-Header");
+				vPane.add(visPB);
 				vPane.add(ft);
 				ft.setText(0, 0, "PB ID");
 				ft.setText(0, 1, "Recept ID");
@@ -72,7 +75,7 @@ public class VisPB extends Composite {
 				ft.setText(0, 5, "Afsluttet");
 
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "30px");
+				ft.getFlexCellFormatter().setWidth(0, 0, "35px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "60px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "45px");
 				ft.getFlexCellFormatter().setWidth(0, 3, "70px");

@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RetOpr extends Composite {
 
-	private Label error;
+	private Label error, retBrugere;
 	private VerticalPanel vPane;
 	private int eventRow, openEventRow;
 	private FlexTable ft;
@@ -41,6 +41,9 @@ public class RetOpr extends Composite {
 
 	public void run(){	
 		vPane.clear();
+		retBrugere = new Label("Ret brugere");
+		retBrugere.setStyleName("FlexTable-Header");
+		vPane.add(retBrugere);
 		error = new Label("Loading...");
 		vPane.add(error);
 		Controller.service.getOprList(Controller.token, new AsyncCallback<List<UserDTO>>(){

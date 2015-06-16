@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SletRecept extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error;
+	private Label error, sletRecept;
 	private FlexTable ft;
 	private TextBox id;
 	private Label desc;
@@ -35,7 +35,9 @@ public class SletRecept extends Composite {
 
 	private void run(){
 		vPane.clear();
-
+		sletRecept = new Label("Slet recept");
+		sletRecept.setStyleName("FlexTable-Header");
+		vPane.add(sletRecept);
 		desc = new Label("Indtast ID for Recept der ønskes slettet");
 		id = new TextBox();
 		id.setStyleName("TextBox-Opret");

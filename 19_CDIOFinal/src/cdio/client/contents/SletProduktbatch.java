@@ -24,7 +24,7 @@ public class SletProduktbatch extends Composite{
 	private Label error;
 	private FlexTable ft;
 	private TextBox id;
-	private Label desc;
+	private Label desc, sletPB;
 	private Button btn;
 
 	public SletProduktbatch(){
@@ -35,7 +35,10 @@ public class SletProduktbatch extends Composite{
 
 	private void run(){
 		vPane.clear();
-
+		sletPB = new Label("Slet produktbatch");
+		sletPB.setStyleName("FlexTable-Header");
+		vPane.add(sletPB);
+		
 		desc = new Label("Indtast ID for Produktbatch der ønskes slettet");
 		id = new TextBox();
 		id.setStyleName("TextBox-Opret");

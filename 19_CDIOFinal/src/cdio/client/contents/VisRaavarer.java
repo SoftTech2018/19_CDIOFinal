@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class VisRaavarer extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error;
+	private Label error, visRaavarer;
 	private Button ok;
 
 	public VisRaavarer() {
@@ -52,6 +52,9 @@ public class VisRaavarer extends Composite {
 			public void onSuccess(List<RaavareDTO> result) {
 				Controller.refreshToken();
 				vPane.clear();
+				visRaavarer = new Label("Vis råvarer");
+				visRaavarer.setStyleName("FlexTable-Header");
+				vPane.add(visRaavarer);
 				FlexTable ft = new FlexTable();
 				ft.setText(0, 0, "ID");
 				ft.setText(0, 1, "Navn");

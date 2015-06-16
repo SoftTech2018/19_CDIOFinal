@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RetRaavare  extends Composite {
 
-	private Label error;
+	private Label error, retRaavarer;
 	private VerticalPanel vPane;
 	private String uID, uNavn, uLeverandoer;
 	private FlexTable ft;
@@ -49,6 +49,9 @@ public class RetRaavare  extends Composite {
 			}
 
 			public void onSuccess(List<RaavareDTO> result) {
+				retRaavarer = new Label("Ret råvarer");
+				retRaavarer.setStyleName("FlexTable-Header");
+				vPane.add(retRaavarer);
 				error.setText("");
 				ft = new FlexTable();
 				ft.setStyleName("FlexTable-Content");
