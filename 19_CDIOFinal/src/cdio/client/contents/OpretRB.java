@@ -3,6 +3,7 @@ package cdio.client.contents;
 import java.util.List;
 
 import cdio.client.Controller;
+import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
@@ -77,7 +78,9 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ft.setText(1, 2, "Fejl i listekald");
+				
+					ft.setText(2, 2, caught.getMessage());
+				
 			}
 
 			@Override
@@ -102,7 +105,7 @@ public class OpretRB extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				ft.setText(1, 2, "Fejl i listekald");
+				ft.setText(1, 2, "Fejl i råvarebatch listekald");
 			}
 
 			@Override

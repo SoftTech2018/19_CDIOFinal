@@ -221,7 +221,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		
 		if (getRole(token).equalsIgnoreCase("Farmaceut")){
 			return dao.getRaavareList();
-		}else {
+		}else if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
+			return dao.getRaavareList();
+		} else {
 			throw new TokenException("Adgang nægtet");		
 		}
 	}
