@@ -117,7 +117,7 @@ public class OpretRecept extends Composite {
 		hp.add(vPane1);
 
 		getRaavareListe();
-		getReceptListe();
+		
 	}
 
 	private void getRaavareListe(){
@@ -364,6 +364,7 @@ public class OpretRecept extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			getReceptListe();
 			opret.setEnabled(false);
 			tilfoej.setEnabled(false);
 			FlexTable ft2 = new FlexTable();

@@ -98,8 +98,14 @@ public class FieldVerifier {
 			if(netto.charAt(i)==','){
 				ny = netto.replace(",", ".");
 			}
-		}		
-		try{		
+		}			
+		for(int i = 0; i>ny.length(); i++){
+			if(ny.charAt(i)=='.'){
+				String[] sString = ny.split("\\.");
+				if(sString[1].length()>4){
+					return false;				
+				}
+		try{
 			Double input =	Double.parseDouble(ny); 
 
 			if(input < 0.05){
@@ -111,9 +117,8 @@ public class FieldVerifier {
 		} catch (NumberFormatException e){
 			return false;
 		}
-		String[] sString = ny.split("\\.");
-		if(sString[1].length()>4){
-			return false;
+		
+		}
 		}
 		return true;		
 	}
