@@ -39,10 +39,6 @@ public class OpretRaavare extends Composite {
 	}
 
 	public void run(){
-		//		opretRaavarer = new Label("Opret råvare");
-		//		opretRaavarer.setStyleName("FlexTable-Header");
-		//		vPane.add(opretRaavarer);
-
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
@@ -71,8 +67,6 @@ public class OpretRaavare extends Composite {
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
 
-
-
 		vPane.add(ft);
 		getListe();
 	}
@@ -92,21 +86,21 @@ public class OpretRaavare extends Composite {
 						}
 					});
 				} else {
-					ft.setText(1, 2, "Fejl i listekald");
+					ft.setText(1, 2, caught.getMessage());
+					getListe();
 				}
 			}			
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
+				ft.setText(1, 2, "");
 				int i = 0;
 				for(RaavareDTO rv : result){
 					if(rv.getRaavareId()>i){
 						i=rv.getRaavareId();
 					}
 				}
-
 				liste = new int[i+1];
-
 				for(RaavareDTO rv : result){
 					liste[rv.getRaavareId()]=1;
 				}
@@ -148,11 +142,8 @@ public class OpretRaavare extends Composite {
 					vPane.clear();
 					run();
 				}
-
 			} );
-
 		}
-
 	}
 
 	private class IdCheck implements KeyUpHandler{
@@ -174,14 +165,12 @@ public class OpretRaavare extends Composite {
 					idValid = true;
 				}
 			}
-
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
 			}
 		}
-
 	}
 
 	private class NameCheck implements KeyUpHandler{
@@ -196,7 +185,6 @@ public class OpretRaavare extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				navnValid = true;
-
 			} 
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
@@ -204,7 +192,6 @@ public class OpretRaavare extends Composite {
 				opret.setEnabled(false);
 			}
 		}
-
 	}
 
 	private class LevCheck implements KeyUpHandler{
@@ -219,19 +206,12 @@ public class OpretRaavare extends Composite {
 			else{
 				name.setStyleName("TextBox-Opret");
 				levValid = true;
-
 			} 
 			if(navnValid && idValid && levValid)
 				opret.setEnabled(true);
 			else {
 				opret.setEnabled(false);
 			}
-
 		}
-
 	}
-
-
-
-
 }

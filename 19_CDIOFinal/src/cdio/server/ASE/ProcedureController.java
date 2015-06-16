@@ -144,7 +144,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Bruger findes ikke. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
-						System.exit(1);
 					}
 					return START;
 				} catch (DALException e) {
