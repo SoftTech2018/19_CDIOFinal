@@ -23,6 +23,7 @@ public class OperatoerDAOTest {
 
 	IOperatoerDAO oprDAO;
 	TextReader txt;
+	Connector conn;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -31,11 +32,12 @@ public class OperatoerDAOTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		Connector.runScript();
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		try { new Connector(); } 
+		try {new Connector();} 
 		catch (InstantiationException e) { e.printStackTrace(); }
 		catch (IllegalAccessException e) { e.printStackTrace(); }
 		catch (ClassNotFoundException e) { e.printStackTrace(); }
@@ -60,7 +62,7 @@ public class OperatoerDAOTest {
 
 	@Test
 	public void testCreateOperatoer() {
-		int oprID = 0, temp = 0;
+		int oprID = 1, temp = 0;
 		try {
 			for(UserDTO oprDto : oprDAO.getOperatoerList()){
 				temp = oprDto.getUserId();
@@ -84,6 +86,7 @@ public class OperatoerDAOTest {
 					break;
 				}				
 			}
+			System.out.println(oprID);
 			oprDAO.updateOperatoer(new UserDTO(Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), false, true, false, false));
 			assertEquals("update test"+oprID, oprDAO.getOperatoer(oprID).getName());
 		} catch (DALException e) {e.printStackTrace();}		

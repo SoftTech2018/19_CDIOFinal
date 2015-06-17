@@ -1,5 +1,9 @@
 package cdio.server.DAL;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -31,11 +35,13 @@ public class Connector{
 
 	private Connection conn;
 	private static Statement stm;
+	private static ScriptRunner runner;
 
 	public Connector() throws InstantiationException, IllegalAccessException,
 	ClassNotFoundException, SQLException {
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database, username, password);
 		stm		= conn.createStatement();
+		runner = new ScriptRunner(conn,true,true);
 	}
 
 	/**
@@ -76,6 +82,21 @@ public class Connector{
 		}
 		catch (SQLException e) { 
 			throw new DALException(e); 
+		}
+	}
+	
+	public static void runScript() throws DALException {
+		try {
+			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Desktop/cdio_db5.sql")));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
