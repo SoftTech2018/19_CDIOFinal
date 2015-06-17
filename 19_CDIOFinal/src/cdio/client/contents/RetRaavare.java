@@ -24,13 +24,13 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class RetRaavare  extends Composite {
 
-	private Label error, retRaavarer;
+	private Label error, retRaavarer, id;
 	private VerticalPanel vPane;
 	private String uID, uNavn, uLeverandoer;
 	private FlexTable ft;
 	private int eventRow, openEventRow;
-	private boolean idValid, nameValid, leverandoerValid;
-	private TextBox oID, oNavn, oLeverandoer;
+	private boolean nameValid, leverandoerValid;
+	private TextBox oNavn, oLeverandoer;
 
 	public RetRaavare() {
 		vPane = new VerticalPanel();
@@ -51,12 +51,13 @@ public class RetRaavare  extends Composite {
 
 			public void onSuccess(List<RaavareDTO> result) {
 				retRaavarer = new Label("Ret råvarer");
+				id = new Label("ID");
 				retRaavarer.setStyleName("FlexTable-Header");
 				vPane.add(retRaavarer);
 				error.setText("");
 				ft = new FlexTable();
 				ft.setStyleName("FlexTable-Content");
-				ft.setText(0, 0, "ID");
+				ft.setText(0, 0, "id");
 				ft.setText(0, 1, "Navn");
 				ft.setText(0, 2, "Leverandør");
 				ft.setText(0, 3, "");
@@ -93,20 +94,19 @@ public class RetRaavare  extends Composite {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
 			openEventRow = eventRow;
 
-			uID = ft.getText(eventRow, 0);
+//			uID = ft.getText(eventRow, 0);
 			uNavn = ft.getText(eventRow, 1);
 			uLeverandoer = ft.getText(eventRow, 2);
 
-			idValid = FieldVerifier.isValidUserId(uID);
 			nameValid = FieldVerifier.isValidName(uNavn);
 			leverandoerValid = true; //unødvendigt
 
 			//Her laves nye widgets der kan redigeres i og erstatter de oprindelige med disse
-			oID = new TextBox();
-			oID.setText(uID);
-			oID.addKeyUpHandler(new IDCheck());
-			oID.setStyleName("TextBox-Ret");
-			ft.setWidget(eventRow, 0, oID);
+//			oID = new TextBox();
+//			oID.setText(uID);
+//			oID.addKeyUpHandler(new IDCheck());
+//			oID.setStyleName("TextBox-Ret");
+//			ft.setWidget(eventRow, 0, oID);
 
 			oNavn = new TextBox();
 			oNavn.setText(uNavn);
@@ -141,7 +141,7 @@ public class RetRaavare  extends Composite {
 			}
 			((Button) ft.getWidget(eventRow, 4)).setEnabled(false);
 
-			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(((TextBox) ft.getWidget(eventRow, 0)).getText()), ((TextBox)ft.getWidget(eventRow, 1)).getText(), ((TextBox)ft.getWidget(eventRow, 2)).getText());
+			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ((TextBox)ft.getWidget(eventRow, 1)).getText(), ((TextBox)ft.getWidget(eventRow, 2)).getText());
 			Controller.service.updateRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 
 				@Override
@@ -164,14 +164,13 @@ public class RetRaavare  extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
-					uID = ((TextBox) ft.getWidget(eventRow, 0)).getText();
-					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
-					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 2)).getText();
+					Controller.refreshToken();
+//					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
+//					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 2)).getText();
 
 					openEventRow = 0;
 					Window.alert("Raavare" + " blev opdateret");
 					run(); //Reload siden
-					Controller.refreshToken();
 				}
 			});
 		}
@@ -197,25 +196,25 @@ public class RetRaavare  extends Composite {
 		}
 	}
 
-	private class IDCheck implements KeyUpHandler{
-
-		@Override
-		public void onKeyUp(KeyUpEvent event) {
-			TextBox id = (TextBox) event.getSource();
-			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-RetError");
-				idValid = false;
-			} else {
-				id.setStyleName("TextBox-Ret");
-				idValid = true;
-			}
-
-			if (idValid && nameValid && leverandoerValid)
-				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
-			else
-				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
-		}
-	}
+//	private class IDCheck implements KeyUpHandler{
+//
+//		@Override
+//		public void onKeyUp(KeyUpEvent event) {
+//			TextBox id = (TextBox) event.getSource();
+//			if(!FieldVerifier.isValidUserId(id.getText())){
+//				id.setStyleName("TextBox-RetError");
+//				idValid = false;
+//			} else {
+//				id.setStyleName("TextBox-Ret");
+//				idValid = true;
+//			}
+//
+//			if (idValid && nameValid && leverandoerValid)
+//				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
+//			else
+//				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
+//		}
+//	}
 
 	private class NameCheck implements KeyUpHandler{
 
@@ -231,7 +230,7 @@ public class RetRaavare  extends Composite {
 				nameValid = true;
 			}
 
-			if (idValid && nameValid && leverandoerValid)
+			if (nameValid && leverandoerValid)
 				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
 			else
 				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
