@@ -285,6 +285,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					System.out.println(test);
 					if(test==mc.raavare_id){
 						mc.rb_ID=input;
+						if(dao.getRecept(mc.recept_id)
 						return CLEAR;
 					} else {
 						trans.P111("ID og batch nr matcher ikke");

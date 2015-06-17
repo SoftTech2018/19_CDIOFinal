@@ -298,8 +298,8 @@ public class ControllerDAO implements IControllerDAO {
 		raavareDAO.deleteRaavare(id);
 	}
 	
-	public void getRecept(int id) throws DALException {
-		receptDAO.getRecept(id);
+	public ReceptDTO getRecept(int id) throws DALException {
+		return receptDAO.getRecept(id);
 	}
 
 	@Override
