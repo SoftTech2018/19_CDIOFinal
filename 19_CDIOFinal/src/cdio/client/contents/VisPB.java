@@ -164,7 +164,7 @@ public class VisPB extends Composite {
 					ft2.setText(1, 3, "Opr ID");
 					ft2.setText(1, 4, "Terminal");
 
-					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
+					ft2.getRowFormatter().setStyleName(1, "FlexTable-Header");
 					ft2.getFlexCellFormatter().setWidth(0, 0, "35px");
 					ft2.getFlexCellFormatter().setWidth(0, 1, "35px");
 					ft2.getFlexCellFormatter().setWidth(0, 2, "35px");
