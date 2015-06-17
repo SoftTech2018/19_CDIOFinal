@@ -17,13 +17,14 @@ public class ServerASE implements Runnable{
 	private List<String> ip;
 	static List<Thread> active;
 	private List<String> activeIp;
-	private int port;
+	private int port, portCheck;
 
 	public ServerASE(){
 		ip = new ArrayList<String>();
 		active = new ArrayList<Thread>();
 		activeIp = new ArrayList<String>();
-		port = 8000; // Hvilken port benyttes
+		port = 8000; // Hvilken port benyttes til afvejningsproceduren
+		portCheck = 8000; // Hvilken port benyttes til at tjekke om vægten er tændt (23, 80, 8000?)
 
 		/*
 		 * Tilføj de vægtes IP-adresser der skal tjekkes.
@@ -61,7 +62,7 @@ public class ServerASE implements Runnable{
 					Socket w = null;
 					try {
 						w = new Socket();
-						w.connect(new InetSocketAddress(ip.get(i), port), 1000);  // 1000 = 1 sek til at connecte
+						w.connect(new InetSocketAddress(ip.get(i), portCheck), 1000);  // 1000 = 1 sek til at connecte
 					} catch (SocketTimeoutException e){
 						System.out.println("Kunne ikke forbinde til: " + ip.get(i));
 					}
@@ -69,7 +70,7 @@ public class ServerASE implements Runnable{
 						w.close(); // Luk socket så ProcedureController kan oprette sin egen socket
 						IProcedure menu = new Procedure();
 						ITransmitter trans = new Transmitter();
-						IControllerDAO dao = new ControllerDAO();
+						IControllerDAO dao = new ControllerDAO(0);
 
 						IProcedureController ase = new ProcedureController(menu, dao , ip.get(i), port, trans);
 						Thread t = new Thread((Runnable) ase);

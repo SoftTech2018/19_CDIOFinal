@@ -6,13 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import ASE.IProcedure;
-import ASE.IProcedureController;
-import ASE.ITransmitter;
-import ASE.Procedure;
-import ASE.ProcedureController;
-import ASE.ServerASE;
-import ASE.Transmitter;
 import cdio.server.DAL.dao.OperatoerDAO;
 import cdio.server.DAL.dao.ProduktBatchDAO;
 import cdio.server.DAL.dao.ProduktBatchKompDAO;
