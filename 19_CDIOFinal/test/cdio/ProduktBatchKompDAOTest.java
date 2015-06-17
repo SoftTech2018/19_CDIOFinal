@@ -27,6 +27,7 @@ public class ProduktBatchKompDAOTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		Connector.runScript();
 	}
 
 	@Before
@@ -56,7 +57,14 @@ public class ProduktBatchKompDAOTest {
 
 	@Test
 	public void testGetProduktBatchKompList() {
-		
+		try {
+			boolean liste = pbkDAO.getProduktBatchKompList().isEmpty();
+			System.out.println(liste);
+			assertEquals(false, liste);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -84,14 +92,14 @@ public class ProduktBatchKompDAOTest {
 
 	@Test
 	public void testUpdateProduktBatchKomp() {
-		int pbID = 0, rbID = 0;
 		try {
+			int pbID = 0, rbID = 0;
 			for(ProduktBatchKompDTO pbkDto : pbkDAO.getProduktBatchKompList()){
-				if (String.valueOf(pbkDto.getTara()).startsWith("10")){
+//				if (String.valueOf(pbkDto.getTara()).startsWith("10")){
 					pbID = pbkDto.getPbId();
 					rbID = pbkDto.getRbId();
-					break;
-				}				
+//					break;
+//				}				
 			}
 			double tara = pbkDAO.getProduktBatchKomp(pbID, rbID).getTara();
 			pbkDAO.updateProduktBatchKomp(new ProduktBatchKompDTO(pbID, rbID, tara+400,pbkDAO.getProduktBatchKomp(pbID, rbID).getNetto(), pbkDAO.getProduktBatchKomp(pbID, rbID).getOprId(), "123.123.123.123"));
