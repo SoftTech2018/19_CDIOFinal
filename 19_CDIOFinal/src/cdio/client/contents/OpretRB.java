@@ -30,7 +30,7 @@ public class OpretRB extends Composite {
 	private FlexTable ft;
 	private TextBox rbID, raavareID, mængde;
 	private Button opret;
-	private Label error;
+	private Label error,pass;
 	private boolean rbIDValid=false, raavareIDValid=false, maengdeValid=false;
 	private int[] raavareListe,rbListe;
 
@@ -68,10 +68,12 @@ public class OpretRB extends Composite {
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
+		
+//		error.setStyleName("Recept-Error");
+//		pass.setStyleName("Recept-Positiv");
 
 		vPane.add(ft);
 		getRaavareListe();
-		getRBListe();
 	}
 
 	private void getRaavareListe(){
@@ -90,7 +92,6 @@ public class OpretRB extends Composite {
 					});
 				} else {
 					ft.setText(2, 2, caught.getMessage());
-					getRaavareListe();
 				}
 			}
 
@@ -108,7 +109,9 @@ public class OpretRB extends Composite {
 				for(RaavareDTO rv : result){
 					raavareListe[rv.getRaavareId()]=1;
 				}
-			}					
+				Controller.refreshToken();
+				getRBListe();
+			}
 		});
 	}
 
@@ -128,7 +131,6 @@ public class OpretRB extends Composite {
 					});
 				} else {
 					ft.setText(1, 2, caught.getMessage());
-					getRBListe();
 				}
 			}
 
@@ -147,6 +149,7 @@ public class OpretRB extends Composite {
 				for(RaavareBatchDTO rv : result){
 					rbListe[rv.getRbId()]=1;
 				}
+				Controller.refreshToken();
 			}					
 		});
 	}
@@ -161,12 +164,6 @@ public class OpretRB extends Composite {
 			Controller.service.createRaavareBatch(Controller.token, raavareBatch, new AsyncCallback<Void>(){
 
 				@Override
-				//				public void onFailure(Throwable caught) {
-				//					opret.setEnabled(true);	
-				//					error.setText(caught.getMessage());
-				//					error.setStyleName("TextBox-ErrorMessage");
-				//				}
-
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){
 						final PopupLogin pop = new PopupLogin();
@@ -189,6 +186,7 @@ public class OpretRB extends Composite {
 				public void onSuccess(Void result) {
 					Window.alert("Råvare Batch " + rbID.getText() + " blev oprettet!");
 					vPane.clear();
+					Controller.refreshToken();
 					run();
 				}
 			} );
@@ -204,7 +202,7 @@ public class OpretRB extends Composite {
 			if(!FieldVerifier.isValidRaavareBatchId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
 				rbIDValid = false;
-			} else{				
+			} else{
 				if(rbListe[Integer.parseInt(id.getText())]==1){
 					ft.setText(1, 2, "Råvare Batch ID optaget. Vælg et andet.");
 					id.setStyleName("TextBox-OpretError");
@@ -212,6 +210,7 @@ public class OpretRB extends Composite {
 				} else {
 					id.setStyleName("TextBox-Opret");
 					rbIDValid = true;
+					ft.setText(1, 2, "Råvare Batch ID godkendt.");
 				}
 			}
 

@@ -160,7 +160,15 @@ public class Transmitter implements ITransmitter {
 		out.println("ST");
 		in.readLine();
 		String reply = in.readLine();
-		return reply.substring(9,(reply.length()-3));
+		System.out.println(reply);
+		System.out.println(reply.charAt(2));
+		if(reply.charAt(2)=='-'){
+			throw new IOException();
+		} else if(reply.charAt(8)=='-'){
+			throw new IOException();
+		} else {			
+			return reply.substring(9,(reply.length()-3));
+		}
 	}
 	
 }

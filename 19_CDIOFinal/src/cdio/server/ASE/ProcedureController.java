@@ -21,7 +21,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private IProcedure menu;
 	private ITransmitter trans;
 	private IControllerDAO dao;
-	private int opr_id,raavare_id,recept_id,prod_batch_id;
+	private int opr_id,raavare_id,recept_id,prod_batch_id,rb_ID;
 	private double afvejning,tara;
 	private int port;
 	private String host;
@@ -31,6 +31,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private ReceptKompDTO receptKomp;
 	private PrintWriter out;
 	private BufferedReader in;
+	private int pos,raa,rec;
 
 	public ProcedureController(IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
 		this.menu = menu;
@@ -70,15 +71,15 @@ public class ProcedureController implements Runnable, IProcedureController {
 	public void start(){
 		menu.show("Overvagning af vagtbetjening");
 		do{
-			try {
-				String test = trans.RM20("123456789012345678901234567890", "", "");
-				System.out.println("Test: "+test);
-				if(test.equalsIgnoreCase("es")){
-					in.readLine();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+						try {
+							String test = trans.RM20("123456789012345678901234567890", "", "");
+							System.out.println("Test: "+test);
+							if(test.equalsIgnoreCase("es")){
+								in.readLine();
+							}
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 			menu.show("");
 			menu.show(state.desc());
 			this.state = this.state.changeState(menu,dao,trans,this);		
@@ -98,7 +99,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 				int inputInt = 0;
 				try{
 					menu.show("Indtast operatornummer:");
-					input = trans.RM20int("Tast bruger ID:","","");
+										input = trans.RM20int("Tast bruger ID:","","");
+//					input = trans.RM20("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -160,9 +162,14 @@ public class ProcedureController implements Runnable, IProcedureController {
 			@Override
 			State changeState(IProcedure menu, IControllerDAO dao, ITransmitter trans, ProcedureController mc) {
 				String input = null, product, prodInput;
+				mc.pbKompListe=null;
+				mc.receptKompListe=null;
+				mc.restListe=null;
+				mc.restListe = new ArrayList<ReceptKompDTO>();
 				try{
 					menu.show("Indtast varenummer:");
 					input = trans.RM20int("Tast produktbatch nr.:","","");
+//					input = trans.RM20("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -177,34 +184,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("Ukendt nr; tast nyt.");
 						return SETUP;
 					}
-					mc.restListe = new ArrayList<ReceptKompDTO>();
-					mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
-					mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
-					for(ReceptKompDTO rk : mc.receptKompListe){
-						mc.restListe.add(mc.receptKompListe.get(mc.receptKompListe.indexOf(rk)));
-					}
-					boolean tom = dao.getProduktBatchKompListIsEmpty(mc.prod_batch_id);
-					System.out.println(tom);
-					if(!tom){
-						int pos;
-						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);
-						System.out.println("");
-						System.out.println(mc.restListe.size());
-						for(ReceptKompDTO rk : mc.getReceptKompListe()){
-							pos = mc.restListe.indexOf(rk);
-							for(ProduktBatchKompDTO pbk : mc.getpbKompListe()){
-								if(rk.getRaavareId()==dao.getRaaID(pbk.getRbId())){
-									System.out.println(pos);
-									mc.restListe.remove(pos);
-								}
-							}
-						}
-						System.out.println("");
-						System.out.println(mc.restListe.size());
-						if(mc.restListe.isEmpty()){
-							trans.P111("Nr er brugt; tast nyt.");
-							return SETUP;							
-						}
+					if(dao.getProduktBatch(mc.prod_batch_id).getStatus()==2){
+						trans.P111("Nr er brugt; tast nyt.");
+						return SETUP;
 					}
 					product = dao.getReceptName(mc.getProdBatchID());
 					menu.show("Produkt valgt: "+product+". Er dette korrekt?");
@@ -220,7 +202,15 @@ public class ProcedureController implements Runnable, IProcedureController {
 							dao.updatePbStatus(mc.getProdBatchID(), 1);
 							dao.setTimeStamp(mc.getProdBatchID(), 0, mc.prettyTime());							
 						}
-						return CLEAR;
+						mc.setReceptID(dao.getProduktBatch(mc.getProdBatchID()).getReceptId());
+						mc.receptKompListe=dao.getReceptKompListe(mc.recept_id);
+						for(ReceptKompDTO rk : mc.receptKompListe){
+							if(!mc.restListe.contains(rk)){
+								mc.restListe.add(rk);
+							}
+						}
+						mc.pbKompListe=dao.getPBKList(mc.prod_batch_id);
+						return CHECK;
 					} else {
 						menu.show("Forkert produkt. Prov igen.");
 						trans.RM20("Forkert produkt. Prov igen.", "OK", "?");
@@ -253,6 +243,55 @@ public class ProcedureController implements Runnable, IProcedureController {
 				}				
 			}
 		},
+		CHECK {
+			@Override
+			String desc() {
+				return "State: CHECK";
+			}
+
+			@Override
+			State changeState(IProcedure menu, IControllerDAO dao,ITransmitter trans, ProcedureController mc) {
+				String in;
+				int input,test;
+				try {
+					mc.setReceptKomp(mc.restListe.get(0));
+					mc.setRaavareID(mc.getReceptKomp().getRaavareId());
+					if(dao.getProduktBatch(mc.getProdBatchID()).getStatus()==1){
+						for(ProduktBatchKompDTO pbk : mc.pbKompListe){
+							if(mc.raavare_id==dao.getRaaID(pbk.getRbId())){
+								mc.restListe.remove(0);
+								return CHECK;
+							}
+						}						
+					}
+					trans.P111("");
+					in = trans.RM20int(dao.getSpecificRaavare(mc.raavare_id)+" batch nr", "", "");
+//					in = Integer.parseInt(trans.RM20(dao.getSpecificRaavare(mc.raavare_id)+" batch nr", "", ""));
+					if(in.toLowerCase().equals("q")){
+						menu.show("Proceduren afbrudt af brugeren");
+						trans.P111("");
+						return START;
+					}
+					input = Integer.parseInt(in);
+					System.out.println(mc.raavare_id);
+					System.out.println(input);
+					test=dao.getRbDAO().getRaavareBatch(input).getRaavareId();
+					System.out.println(test);
+					if(test==mc.raavare_id){
+						mc.rb_ID=input;
+						return CLEAR;
+					} else {
+						trans.P111("ID og batch nr matcher ikke");
+						return CHECK;						
+					}
+					
+				} catch (NumberFormatException | IOException | DALException e) {
+					return CHECK;
+				}
+			}
+
+
+		},
 		CLEAR {
 			@Override
 			String desc() {
@@ -277,8 +316,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 						menu.show("Beholder pasat");
 						mc.setTara(Double.parseDouble(trans.T()));
 						menu.show("Vagt tareret: "+mc.getTara());
-						mc.setReceptKomp(mc.restListe.get(0));
-						mc.setRaavareID(mc.getReceptKomp().getRaavareId());
 						return WEIGH;
 					} else {
 						menu.show("Beholder ej pasat. Prov igen.");
@@ -288,7 +325,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				} catch (NumberFormatException | IOException e) {
 					try {
 						menu.show("Fejl. Prov igen.");
-						trans.RM20("Fejl. Prov igen.", "OK", "?");
+						trans.P111("Fejl. Prov igen.");
 					} catch (IOException e1) {
 						System.out.println("Fejl ved forbindelse til vagten. Programmet lukket.");
 					}
@@ -354,7 +391,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					if (input.equals(answer)) {
-						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.raavare_id, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
+						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.rb_ID, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
 						mc.restListe.remove(0);
 						if(mc.restListe.isEmpty()){
 							dao.updatePbStatus(mc.prod_batch_id, 2);
@@ -362,7 +399,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 							trans.RM20("Afvejning faerdig!", "OK", "");
 							return START;
 						} else {
-							return CLEAR;
+							return CHECK;
 						}
 					} else {
 						menu.show("Beholder ej fjernet. Prov igen.");
