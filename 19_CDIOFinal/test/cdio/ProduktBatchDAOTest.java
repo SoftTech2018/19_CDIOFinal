@@ -28,6 +28,7 @@ public class ProduktBatchDAOTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		Connector.runScript();
 	}
 
 	@Before
