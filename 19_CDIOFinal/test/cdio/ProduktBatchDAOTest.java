@@ -75,7 +75,7 @@ public class ProduktBatchDAOTest {
 	public void testCreateProduktBatch() {
 		int pbID = 0, temp = 0;
 		try {
-			for(cdio.shared.ProduktBatchDTO pbDto : pbDAO.getProduktBatchList()){
+			for(ProduktBatchDTO pbDto : pbDAO.getProduktBatchList()){
 				temp = pbDto.getPbId();
 				if (temp>pbID){
 					pbID = temp;
