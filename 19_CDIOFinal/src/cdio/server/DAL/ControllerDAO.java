@@ -11,6 +11,7 @@ import cdio.server.ASE.IProcedureController;
 import cdio.server.ASE.ITransmitter;
 import cdio.server.ASE.Procedure;
 import cdio.server.ASE.ProcedureController;
+import cdio.server.ASE.ServerASE;
 import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.dao.OperatoerDAO;
 import cdio.server.DAL.dao.ProduktBatchDAO;
@@ -58,6 +59,9 @@ public class ControllerDAO implements IControllerDAO {
 		receptKompDAO = new ReceptKompDAO(txt);
 		rbDAO = new RaavareBatchDAO(txt);
 		raavareDAO = new RaavareDAO(txt);
+		
+//		Thread t = new Thread((Runnable) new ServerASE());
+//		t.start();
 	}
 	
 	/**
@@ -80,10 +84,10 @@ public class ControllerDAO implements IControllerDAO {
 		IProcedure menu = new Procedure();
 		try {
 			Connector con = new Connector();
-			ITransmitter trans = new Transmitter();
-			IProcedureController menuCon = new ProcedureController(menu, this, host, port, trans);
-			Thread menuThread = new Thread((Runnable) menuCon);
-			menuThread.start();
+//			ITransmitter trans = new Transmitter();
+//			IProcedureController menuCon = new ProcedureController(menu, this, host, port, trans);
+//			Thread menuThread = new Thread((Runnable) menuCon);
+//			menuThread.start();
 
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block

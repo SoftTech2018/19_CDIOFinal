@@ -1,7 +1,9 @@
 package cdio.server.ASE;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import cdio.shared.DALException;
 public class ServerASE implements Runnable{
 
 	private List<String> ip;
-	private List<Thread> active;
+	static List<Thread> active;
 	private List<String> activeIp;
 	private int port;
 
@@ -25,16 +27,19 @@ public class ServerASE implements Runnable{
 		/*
 		 * Tilføj de vægtes IP-adresser der skal tjekkes.
 		 */
-		ip.add("169.254.2.2");
-		ip.add("169.254.2.3");
+		//		ip.add("169.254.2.2");
+		//		ip.add("169.254.2.3");
+		ip.add("192.168.1.24");
+		ip.add("localHost");
+		ip.add("192.168.1.213");
 	}
 
 	@Override
 	public void run() {
-		try {
-			while (true){
+		while (true){
+			try {
 				for (int p=0; p<active.size(); p++){
-					
+
 					/*
 					 * Tjek om tråden (afvejningsproceduren) stadig er aktiv.
 					 * Hvis ikke fjernes den fra listen over aktive, og tilføjes igen til listen der forsøges at tilsluttes til
@@ -48,32 +53,42 @@ public class ServerASE implements Runnable{
 				}
 
 				for (int i=0; i<ip.size(); i++){
-					InetAddress address = InetAddress.getByName(ip.get(i));
-
 					/*
 					 *  Tjek om der kan oprettes forbindelse til IP på port 7 (echo). 
 					 *  I så fald oprettes en afvejningsprocedure på vægten.
 					 */
-					if (address.isReachable(500)){ // 500 = 0,5 sek
+					Socket w = null;
+					try {
+						w = new Socket();
+						w.connect(new InetSocketAddress(ip.get(i), port), 1000);  // 1000 = 1 sek til at connecte
+					} catch (SocketTimeoutException e){
+						System.out.println("Kunne ikke forbinde til: " + ip.get(i));
+					}
+					if (w.isConnected()){
+						w.close(); // Luk socket så ProcedureController kan oprette sin egen socket
 						IProcedure menu = new Procedure();
 						ITransmitter trans = new Transmitter();
 						IControllerDAO dao = new ControllerDAO();
+
 						IProcedureController ase = new ProcedureController(menu, dao , ip.get(i), port, trans);
 						Thread t = new Thread((Runnable) ase);
 						t.start();
+
 						active.add(t);
 						activeIp.add(ip.get(i));
 						System.out.println("Afvejningsprocedure startet på ip: " + ip.get(i));
 						ip.remove(i); 
 					}
 				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DALException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }
+
+

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,15 +72,15 @@ public class ProcedureController implements Runnable, IProcedureController {
 	public void start(){
 		menu.show("Overvagning af vagtbetjening");
 		do{
-						try {
-							String test = trans.RM20("123456789012345678901234567890", "", "");
-							System.out.println("Test: "+test);
-							if(test.equalsIgnoreCase("es")){
-								in.readLine();
-							}
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+			try {
+				String test = trans.RM20("123456789012345678901234567890", "", "");
+				System.out.println("Test: "+test);
+				if(test.equalsIgnoreCase("es")){
+					in.readLine();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			menu.show("");
 			menu.show(state.desc());
 			this.state = this.state.changeState(menu,dao,trans,this);		
@@ -99,8 +100,8 @@ public class ProcedureController implements Runnable, IProcedureController {
 				int inputInt = 0;
 				try{
 					menu.show("Indtast operatornummer:");
-										input = trans.RM20int("Tast bruger ID:","","");
-//					input = trans.RM20("Tast bruger ID:","","");
+					input = trans.RM20int("Tast bruger ID:","","");
+					//					input = trans.RM20("Tast bruger ID:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -131,6 +132,11 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Forkert bruger. Prov igen.", "OK", "?");
 						return START;
 					}
+				}
+					catch (SocketException e){ 
+						System.out.println("Ingen forbindelse til vægten!");
+						e.printStackTrace();
+						return STOP;
 				} catch (NumberFormatException e) {
 					try {
 						menu.show("Forkert input type. Prov igen.");
@@ -169,7 +175,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				try{
 					menu.show("Indtast varenummer:");
 					input = trans.RM20int("Tast produktbatch nr.:","","");
-//					input = trans.RM20("Tast produktbatch nr.:","","");
+					//					input = trans.RM20("Tast produktbatch nr.:","","");
 					menu.show(input);
 					if(input.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
@@ -266,7 +272,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					}
 					trans.P111("");
 					in = trans.RM20int(dao.getSpecificRaavare(mc.raavare_id)+" batch nr", "", "");
-//					in = Integer.parseInt(trans.RM20(dao.getSpecificRaavare(mc.raavare_id)+" batch nr", "", ""));
+					//					in = Integer.parseInt(trans.RM20(dao.getSpecificRaavare(mc.raavare_id)+" batch nr", "", ""));
 					if(in.toLowerCase().equals("q")){
 						menu.show("Proceduren afbrudt af brugeren");
 						trans.P111("");
@@ -284,7 +290,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.P111("ID og batch nr matcher ikke");
 						return CHECK;						
 					}
-					
+
 				} catch (NumberFormatException | IOException | DALException e) {
 					return CHECK;
 				}
