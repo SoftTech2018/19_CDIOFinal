@@ -89,7 +89,7 @@ public class SletRaavare extends Composite{
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.alert("Råvaren blev slettet");
+						Window.alert("Råvare ID " + id.getText() + " blev slettet");
 						id.setText("");
 						btn.setText("Slet Råvare");
 						Controller.refreshToken();

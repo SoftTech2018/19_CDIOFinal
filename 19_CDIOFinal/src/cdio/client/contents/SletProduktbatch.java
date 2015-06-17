@@ -85,7 +85,7 @@ public class SletProduktbatch extends Composite{
 
 					@Override
 					public void onSuccess(Void result) {
-						Window.alert("Produktbatchen blev slettet");
+						Window.alert("Produktbatch ID " + id.getText() + " blev slettet");
 						id.setText("");
 						btn.setText("Slet Recept");
 						btn.setEnabled(true);
