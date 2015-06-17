@@ -43,6 +43,7 @@ public class VisRecept extends Composite {
 
 			@Override
 			public void onSuccess(List<ReceptDTO> result) {
+				Controller.refreshToken();
 				error.setText("");
 				visRecept = new Label("Vis recept");
 				visRecept.setStyleName("FlexTable-Header");
@@ -128,6 +129,7 @@ public class VisRecept extends Composite {
 
 				@Override
 				public void onSuccess(List<ReceptKompDTO> result) {
+					Controller.refreshToken();
 					ft2 = new FlexTable();
 					skjul = new Button("Skjul");
 					skjul.setStyleName("Button-Ret");

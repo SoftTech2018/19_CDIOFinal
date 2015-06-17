@@ -145,6 +145,8 @@ public class OpretRecept extends Composite {
 			
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
+				Controller.refreshToken();
+				tilfoej.setText("Ny komponent");
 				int i = 0;
 				for(RaavareDTO rv : result){
 					if(rv.getRaavareId()>i){
@@ -173,6 +175,7 @@ public class OpretRecept extends Composite {
 
 			@Override
 			public void onSuccess(List<ReceptDTO> result) {
+				Controller.refreshToken();
 				int i = 0;
 				for(ReceptDTO rc : result){
 					if(rc.getReceptId()>i){
@@ -252,6 +255,7 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
+					Controller.refreshToken();
 					gemKomp.setText("Gem Komponent");
 					gemKomp.setEnabled(false);
 					Window.alert("Receptkomponent oprettet!");
@@ -301,6 +305,7 @@ public class OpretRecept extends Composite {
 
 				@Override
 				public void onSuccess(Void result) {
+					Controller.refreshToken();
 					opret.setText("Opret");
 					opret.setEnabled(false);
 					Window.alert("Recept " + navn.getText() + " blev oprettet!");
@@ -368,6 +373,7 @@ public class OpretRecept extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			tilfoej.setText("loading..");
 			getRaavareListe();
 			opret.setEnabled(false);
 			tilfoej.setEnabled(false);
