@@ -53,6 +53,7 @@ public class VisRB extends Composite {
 
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
+				Controller.refreshToken();
 				vPane.clear();
 				visRB = new Label("Vis råvarebatch");
 				visRB.setStyleName("FlexTable-Header");
