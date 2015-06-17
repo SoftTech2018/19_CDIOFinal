@@ -88,7 +88,7 @@ public class SletRecept extends Composite {
 					@Override
 					public void onSuccess(Void result) {
 						Controller.refreshToken();
-						Window.alert("Recepten blev slettet");
+						Window.alert("Recept id " + id.getText()+ " blev slettet");
 						id.setText("");
 						btn.setText("Slet Recept");
 						btn.setEnabled(true);
