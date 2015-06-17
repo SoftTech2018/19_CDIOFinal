@@ -69,6 +69,8 @@ public class ProduktBatchKompDAOTest {
 				}
 			}
 			
+			//s
+			
 			System.out.println(pbID);
 			
 		} catch (DALException e) {
