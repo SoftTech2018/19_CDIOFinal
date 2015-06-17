@@ -155,14 +155,19 @@ public class OpretRaavare extends Composite {
 			final TextBox id = (TextBox) event.getSource();
 			ft.setText(1, 2, "");
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
+				ft.setText(1, 2, "Ugyldigt. Vælg et andet.");	
+				ft.getCellFormatter().setStyleName(1, 2, "Recept-Error");
 				id.setStyleName("TextBox-OpretError");
 				idValid = false;
-			} else{				
+			} else{
 				if(liste[Integer.parseInt(id.getText())]==1){
-					ft.setText(1, 2, "Råvare ID optaget. Vælg et andet.");
+					ft.setText(1, 2, "Optaget. Vælg et andet.");	
+					ft.getCellFormatter().setStyleName(1, 2, "Recept-Error");
 					id.setStyleName("TextBox-OpretError");
 					idValid = false;
 				} else {
+					ft.getCellFormatter().setStyleName(1, 2, "Recept-Positiv");
+					ft.setText(1, 2, "Godkendt!");
 					id.setStyleName("TextBox-Opret");
 					idValid = true;
 				}
