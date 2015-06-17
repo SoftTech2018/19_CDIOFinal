@@ -30,7 +30,7 @@ public class OpretRB extends Composite {
 	private FlexTable ft;
 	private TextBox rbID, raavareID, mængde;
 	private Button opret;
-	private Label error,pass;
+	private Label error;
 	private boolean rbIDValid=false, raavareIDValid=false, maengdeValid=false;
 	private int[] raavareListe,rbListe;
 
@@ -68,9 +68,6 @@ public class OpretRB extends Composite {
 		opret.addClickHandler(new OpretClick());
 		opret.setEnabled(false);
 		ft.setWidget(10, 1, opret);
-		
-//		error.setStyleName("Recept-Error");
-//		pass.setStyleName("Recept-Positiv");
 
 		vPane.add(ft);
 		getRaavareListe();
@@ -91,13 +88,13 @@ public class OpretRB extends Composite {
 						}
 					});
 				} else {
-					ft.setText(2, 2, caught.getMessage());
+					ft.setText(2,2,caught.getMessage());
 				}
 			}
 
 			@Override
 			public void onSuccess(List<RaavareDTO> result) {
-				ft.setText(2, 2, "");
+				ft.setText(2,2,"");
 				int i = 0;
 				for(RaavareDTO rv : result){
 					if(rv.getRaavareId()>i){
@@ -130,13 +127,13 @@ public class OpretRB extends Composite {
 						}
 					});
 				} else {
-					ft.setText(1, 2, caught.getMessage());
+					ft.setText(2,2,caught.getMessage());
 				}
 			}
 
 			@Override
 			public void onSuccess(List<RaavareBatchDTO> result) {
-				ft.setText(1, 2, "");
+				ft.setText(2,2,"");
 				int i = 0;
 				for(RaavareBatchDTO rv : result){
 					if(rv.getRaavareId()>i){
@@ -201,16 +198,20 @@ public class OpretRB extends Composite {
 			ft.setText(1, 2, "");
 			if(!FieldVerifier.isValidRaavareBatchId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
+				ft.setText(1,2,"Ugyldigt. Vælg et andet.");	
+				ft.getCellFormatter().setStyleName(1, 2, "Recept-Error");
 				rbIDValid = false;
 			} else{
 				if(rbListe[Integer.parseInt(id.getText())]==1){
-					ft.setText(1, 2, "Råvare Batch ID optaget. Vælg et andet.");
+					ft.setText(1,2,"Optaget. Vælg et andet.");	
+					ft.getCellFormatter().setStyleName(1, 2, "Recept-Error");
 					id.setStyleName("TextBox-OpretError");
 					rbIDValid = false;
 				} else {
 					id.setStyleName("TextBox-Opret");
 					rbIDValid = true;
-					ft.setText(1, 2, "Råvare Batch ID godkendt.");
+					ft.getCellFormatter().setStyleName(1,2,"Recept-Positiv");
+					ft.setText(1,2,"Godkendt!");
 				}
 			}
 
@@ -230,13 +231,18 @@ public class OpretRB extends Composite {
 			ft.setText(2, 2, "");
 			if(!FieldVerifier.isValidRaavareId(id.getText())){
 				id.setStyleName("TextBox-OpretError");
+				ft.setText(2, 2, "Ugyldigt. Vælg et andet.");
+				ft.getCellFormatter().setStyleName(2, 2, "Recept-Error");
 				raavareIDValid = false;
 			} else{
 				if(raavareListe[Integer.parseInt(id.getText())]==1){
 					id.setStyleName("TextBox-Opret");
+					ft.getCellFormatter().setStyleName(2,2,"Recept-Positiv");
+					ft.setText(2,2,"Godkendt!");
 					raavareIDValid = true;
 				} else {
-					ft.setText(2, 2, "Råvare ID ukendt. Vælg et andet.");
+					ft.setText(2, 2, "Ukendt. Vælg et andet.");
+					ft.getCellFormatter().setStyleName(2, 2, "Recept-Error");
 					id.setStyleName("TextBox-OpretError");
 					raavareIDValid = false;
 				}
@@ -255,12 +261,46 @@ public class OpretRB extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox name = (TextBox) event.getSource();
-			if (!FieldVerifier.isValidMaengde(mængde.getText())){
+			String inTXT = mængde.getText();
+			if (!FieldVerifier.isValidMaengde(inTXT)){
 				name.setStyleName("TextBox-OpretError");
 				maengdeValid = false;
+				double input;
+				try{
+					String ny=inTXT;
+					for(int i=0; i<inTXT.length(); i++){
+						if(inTXT.charAt(i)==','){
+							ny = inTXT.replace(",", ".");
+						}
+					}
+					input = Double.parseDouble(ny);
+					if(input<0.0000){
+						ft.setText(3, 2, "For lille. Vælg en anden.");
+						ft.getCellFormatter().setStyleName(3, 2, "Recept-Error");
+					} else if (input>99999999.0000){
+						ft.setText(3, 2, "For stor. Vælg en anden.");
+						ft.getCellFormatter().setStyleName(3, 2, "Recept-Error");
+					} else {
+						for(int i=0; i<ny.length(); i++){
+							if(ny.charAt(i)=='.'){
+								String[] sString = ny.split("\\.");
+								if (sString[1].length()>4){
+									ft.setText(3, 2, "For mange decimaler. Vælg en anden.");
+									ft.getCellFormatter().setStyleName(3, 2, "Recept-Error");
+								}
+							}
+						}
+					}
+
+				} catch (NumberFormatException e){
+					ft.setText(3, 2, "Ugyldigt format. Vælg en anden.");
+					ft.getCellFormatter().setStyleName(3, 2, "Recept-Error");					
+				}
 			}
 			else{
 				name.setStyleName("TextBox-Opret");
+				ft.getCellFormatter().setStyleName(3, 2, "Recept-Positiv");
+				ft.setText(3, 2, "Godkendt!");
 				maengdeValid = true;
 			}
 
