@@ -398,7 +398,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try{ dao.createReceptKomp(receptkomp);
 			}
 			catch(Exception DALException){
-				throw new DALException("Adgang nægtet!");
+				throw new DALException("Råvareid i receptkomponent allerede oprettet");
 			}
 		} else {
 			throw new TokenException("Adgang nægtet");		

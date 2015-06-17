@@ -4,6 +4,7 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.client.PopupLogin;
+import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -245,7 +246,6 @@ public class OpretRecept extends Composite {
 						gemKomp.setEnabled(true);
 					}
 					else{
-
 						gemKomp.setText("Gem Komponent");
 						gemKomp.setEnabled(true);
 						error.setText(caught.getMessage());
