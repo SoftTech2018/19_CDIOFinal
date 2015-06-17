@@ -438,7 +438,8 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (InterruptedException e) {}
 		
 		int userId = Integer.parseInt(th.getUserID(token));
-		dao.getUser(userId); // Der kastes exception hvis bruger id ikke findes.
+	
+//		UserDTO user = dao.getUser(userId); // Der kastes exception hvis bruger id ikke findes.
 		
 		return th.createToken(Integer.toString(userId));
 	}
