@@ -104,6 +104,7 @@ public class OpretRaavare extends Composite {
 				for(RaavareDTO rv : result){
 					liste[rv.getRaavareId()]=1;
 				}
+				Controller.refreshToken();
 			}					
 		});
 	}
@@ -140,6 +141,7 @@ public class OpretRaavare extends Composite {
 				public void onSuccess(Void result) {
 					Window.alert("Råvare " + navn.getText() + " blev oprettet!");
 					vPane.clear();
+					Controller.refreshToken();
 					run();
 				}
 			} );
