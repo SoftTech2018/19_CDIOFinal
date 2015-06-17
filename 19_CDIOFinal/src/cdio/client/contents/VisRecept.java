@@ -57,8 +57,8 @@ public class VisRecept extends Composite {
 				
 				
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
-				ft.getFlexCellFormatter().setWidth(0, 0, "150px");
-				ft.getFlexCellFormatter().setWidth(0, 1, "150px");
+				ft.getFlexCellFormatter().setWidth(0, 0, "100px");
+				ft.getFlexCellFormatter().setWidth(0, 1, "100px");
 				ft.getFlexCellFormatter().setWidth(0, 2, "55px");
 				ft.getFlexCellFormatter().setWidth(0, 3, "85px");
 				ft.getFlexCellFormatter().setWidth(0, 4, "85px");
@@ -88,7 +88,7 @@ public class VisRecept extends Composite {
 					komp.setText("Komponenter");
 					komp.setStyleName("Button-Komponenter");
 					komp.addClickHandler(new KompClick());
-					ft.setWidget(i+1, 4, komp);
+					ft.setWidget(i+1, 2, komp);
 		
 				}	
 					
@@ -104,8 +104,8 @@ public class VisRecept extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			eventRow = ft.getCellForEvent(event).getRowIndex();
-			((Button) ft.getWidget(eventRow, 4)).setText("Loading...");
-			((Button) ft.getWidget(eventRow, 4)).setEnabled(false);
+			((Button) ft.getWidget(eventRow, 2)).setText("Loading...");
+			((Button) ft.getWidget(eventRow, 2)).setEnabled(false);
 				
 
 			Controller.service.getReceptKompListe(Controller.token, Integer.parseInt(ft.getText(eventRow,  0)), new AsyncCallback<List<ReceptKompDTO>>(){
@@ -132,22 +132,24 @@ public class VisRecept extends Composite {
 					Controller.refreshToken();
 					ft2 = new FlexTable();
 					skjul = new Button("Skjul");
-					skjul.setStyleName("Button-Ret");
+					skjul.setStyleName("Button-Komponenter");
 					skjul.addClickHandler(new SkjulClick());
 					ft2.setWidget(0, 0, skjul); //Her sættes Skjul-knappen i flextable 2
-
-					ft.setWidget(eventRow, 4, ft2);
+					ft2.setText(0, 1, "");
+					ft2.setText(0, 2, "");
+						
+					ft.setWidget(eventRow, 2, ft2);
 					
 					ft2.setText(1, 0, "Råvare ID");
 					ft2.setText(1, 1, "Netto");
 					ft2.setText(1, 2, "Tolerance");
 					
+					
 					ft2.getRowFormatter().setStyleName(0, "FlexTable-Header");
-					ft2.getFlexCellFormatter().setWidth(0, 0, "40px");
-					ft2.getFlexCellFormatter().setWidth(0, 1, "40px");
-					ft2.getFlexCellFormatter().setWidth(0, 2, "40px");
-					ft2.getFlexCellFormatter().setWidth(0, 3, "45");
-					ft2.getFlexCellFormatter().setWidth(0, 4, "100px");
+					ft2.getFlexCellFormatter().setWidth(0, 0, "65px");
+					ft2.getFlexCellFormatter().setWidth(0, 1, "65px");
+					ft2.getFlexCellFormatter().setWidth(0, 2, "65px");
+					ft2.setWidth("250px");
 
 					for(int i = 0; i < result.size(); i++){
 						ft2.setText(i+3, 0, Integer.toString(result.get(i).getRaavareId()));
@@ -180,7 +182,7 @@ public class VisRecept extends Composite {
 			kompNew.setStyleName("Button-Komponenter");
 			kompNew.addClickHandler(new KompClick());
 
-			ft.setWidget(eventRow, 4, kompNew);
+			ft.setWidget(eventRow, 2, kompNew);
 
 			
 		}
