@@ -56,27 +56,7 @@ public class ProduktBatchKompDAOTest {
 
 	@Test
 	public void testGetProduktBatchKompList() {
-		try {
-			int pbID = 0, rbID = 0, tempPB = 0, tempRB = 0;
-			for(ProduktBatchKompDTO pbkDto : pbkDAO.getProduktBatchKompList()){
-				tempPB = pbkDto.getPbId();
-				tempRB = pbkDto.getRbId();
-				if (tempPB>pbID){
-					pbID = tempPB;
-				}
-				if (tempRB>pbID){
-					rbID = tempRB;
-				}
-			}
-			
-			//s
-			
-			System.out.println(pbID);
-			
-		} catch (DALException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Test
