@@ -69,7 +69,7 @@ public class OpretOpr extends Composite {
 		ft = new FlexTable();
 		ft.setStyleName("FlexTable-Content");
 		ft.getRowFormatter().setStyleName(0, "FlexTable-Header");	
-		ft.setText(0, 0, "Opret Operatør");
+		ft.setText(0, 0, "Opret bruger");
 
 		//		ft.setText(1, 0, "Bruger ID:");
 		//		id = new TextBox();
