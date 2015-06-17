@@ -58,7 +58,7 @@ public class OpretRB extends Composite {
 		raavareID.setStyleName("Textbox-Opret");
 		ft.setWidget(2, 1, raavareID);
 
-		ft.setText(3, 0, "Mængde:");
+		ft.setText(3, 0, "Mængde(kg):");
 		mængde = new TextBox();
 		mængde.addKeyUpHandler(new MaengdeCheck()); 
 		mængde.setStyleName("Textbox-Opret");

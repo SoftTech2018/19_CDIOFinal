@@ -60,7 +60,7 @@ public class VisRB extends Composite {
 				vPane.add(visRB);
 				ft.setText(0, 0, "RB ID");
 				ft.setText(0, 1, "Raavare ID");
-				ft.setText(0, 2, "Mængde");
+				ft.setText(0, 2, "Mængde(kg)");
 				ft.getRowFormatter().setStyleName(0, "FlexTable-Header");
 				ft.getFlexCellFormatter().setWidth(0, 0, "50px");
 				ft.getFlexCellFormatter().setWidth(0, 1, "85px");
