@@ -41,7 +41,7 @@ public class Connector{
 	ClassNotFoundException, SQLException {
 		conn	= connectToDatabase("jdbc:mysql://"+server+":"+port+"/"+database, username, password);
 		stm		= conn.createStatement();
-		runner = new ScriptRunner(conn,true,true);
+		runner = new ScriptRunner(conn,false,true);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Connector{
 	
 	public static void runScript() throws DALException {
 		try {
-			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Desktop/cdio_db5.sql")));
+			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Dropbox/CDIO/2. Semester/Videregående Programmering/FInal/Database/Script/cdio_db5.sql")));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

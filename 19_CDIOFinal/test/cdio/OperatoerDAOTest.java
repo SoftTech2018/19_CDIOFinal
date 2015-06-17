@@ -78,13 +78,10 @@ public class OperatoerDAOTest {
 
 	@Test
 	public void testUpdateOperatoer() {
-		int oprID = 0;
 		try {
+			int oprID = 0;
 			for(UserDTO oprDto : oprDAO.getOperatoerList()){
-				if (oprDto.getName().startsWith("test")){
-					oprID = oprDto.getUserId();
-					break;
-				}				
+					oprID = oprDto.getUserId();			
 			}
 			System.out.println(oprID);
 			oprDAO.updateOperatoer(new UserDTO(Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), "update test"+Integer.toString(oprID), false, true, false, false));
