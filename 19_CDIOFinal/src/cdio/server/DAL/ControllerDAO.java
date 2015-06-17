@@ -311,5 +311,10 @@ public class ControllerDAO implements IControllerDAO {
 	public boolean isOpr(int id) throws DALException {
 		return oprDAO.getOperatoer(id).isOperatoer();
 	}
+
+	@Override
+	public ReceptKompDTO getReceptKomp(int recID, int raaID) throws DALException {
+		return receptKompDAO.getReceptKomp(recID, raaID);
+	}
 }
 	

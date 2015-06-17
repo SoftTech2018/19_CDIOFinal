@@ -285,7 +285,10 @@ public class ProcedureController implements Runnable, IProcedureController {
 					System.out.println(test);
 					if(test==mc.raavare_id){
 						mc.rb_ID=input;
-						if(dao.getRecept(mc.recept_id)
+						if(dao.getReceptKomp(mc.recept_id, mc.raavare_id).getNomNetto()>dao.getRbDAO().getRaavareBatch(mc.rb_ID).getMaengde()){
+							trans.P111("Batch for lille.");
+							return CHECK;
+						}
 						return CLEAR;
 					} else {
 						trans.P111("ID og batch nr matcher ikke");
@@ -399,6 +402,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 					if (input.equals(answer)) {
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.rb_ID, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
+						dao.getRbDAO().getRaavareBatch(mc.rb_ID).setMaengde(dao.getRbDAO().getRaavareBatch(mc.rb_ID).getMaengde()-mc.afvejning);
 						mc.restListe.remove(0);
 						if(mc.restListe.isEmpty()){
 							dao.updatePbStatus(mc.prod_batch_id, 2);

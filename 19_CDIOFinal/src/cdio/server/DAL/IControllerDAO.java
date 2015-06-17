@@ -101,6 +101,8 @@ public interface IControllerDAO {
 	
 	public boolean isOpr(int id) throws DALException;
 	
+	public ReceptKompDTO getReceptKomp(int recID, int raaID) throws DALException;
+	
 //	DTO getOperatoer(int oprId) throws DALException;
 //	List<DTO> getOperatoerList() throws DALException;
 //	void createOperatoer(DTO opr) throws DALException;
