@@ -129,24 +129,4 @@ public class ProduktBatchDAOTest {
 		} catch (DALException e) {e.printStackTrace();}
 	}
 
-	@Test
-	public void testDeleteProduktBatch() {
-//		int pbID = 0, temp = 0;
-//		try {
-//			for(ProduktBatchDTO pbDto : pbDAO.getProduktBatchList()){
-//				temp = pbDto.getPbId();
-//				if (temp>pbID){
-//					pbID = temp;
-//				}				
-//			}
-//			pbID++;
-//			pbDAO.createProduktBatch(new ProduktBatchDTO(pbID, 0, 3, "16-06-2014", "16-06-2014", "16-06-2014"));
-//			pbDAO.deleteProduktBatch(pbID);
-//			assertEquals(pbID-1, pbDAO.getProduktBatchList().size());
-//		} catch (DALException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-	}
-
 }
