@@ -1,4 +1,4 @@
-package cdio.server.ASE;
+package ASE;
 
 public class Procedure implements IProcedure {
 

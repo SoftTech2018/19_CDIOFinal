@@ -1,4 +1,4 @@
-package cdio.server.ASE;
+package ASE;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -4,13 +4,13 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
 
+import ASE.IProcedure;
+import ASE.IProcedureController;
+import ASE.ITransmitter;
+import ASE.Procedure;
+import ASE.ProcedureController;
+import ASE.Transmitter;
 import cdio.client.Service;
-import cdio.server.ASE.IProcedure;
-import cdio.server.ASE.IProcedureController;
-import cdio.server.ASE.ITransmitter;
-import cdio.server.ASE.Procedure;
-import cdio.server.ASE.ProcedureController;
-import cdio.server.ASE.Transmitter;
 import cdio.server.DAL.Connector;
 import cdio.server.DAL.ControllerDAO;
 import cdio.server.DAL.IControllerDAO;
@@ -39,7 +39,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	private TokenHandler th;
 	private IControllerDAO dao;
 
-	public ServiceImpl() throws FileNotFoundException, DALException{
+	public ServiceImpl() throws FileNotFoundException, DALException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
 		th = new TokenHandler();
 		dao = new ControllerDAO();
 	}

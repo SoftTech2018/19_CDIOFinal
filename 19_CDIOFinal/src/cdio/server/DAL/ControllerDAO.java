@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import cdio.server.ASE.IProcedure;
-import cdio.server.ASE.IProcedureController;
-import cdio.server.ASE.ITransmitter;
-import cdio.server.ASE.Procedure;
-import cdio.server.ASE.ProcedureController;
-import cdio.server.ASE.ServerASE;
-import cdio.server.ASE.Transmitter;
+import ASE.IProcedure;
+import ASE.IProcedureController;
+import ASE.ITransmitter;
+import ASE.Procedure;
+import ASE.ProcedureController;
+import ASE.ServerASE;
+import ASE.Transmitter;
 import cdio.server.DAL.dao.OperatoerDAO;
 import cdio.server.DAL.dao.ProduktBatchDAO;
 import cdio.server.DAL.dao.ProduktBatchKompDAO;
@@ -49,8 +49,8 @@ public class ControllerDAO implements IControllerDAO {
 	IRaavareDAO raavareDAO;
 	TextReader txt;
 	
-	public ControllerDAO() throws FileNotFoundException, DALException{
-		runASE();
+	public ControllerDAO() throws FileNotFoundException, DALException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+		Connector con = new Connector();
 		txt = new TextReader();
 		oprDAO = new OperatoerDAO(txt);
 		pbDAO = new ProduktBatchDAO(txt);
@@ -59,49 +59,18 @@ public class ControllerDAO implements IControllerDAO {
 		receptKompDAO = new ReceptKompDAO(txt);
 		rbDAO = new RaavareBatchDAO(txt);
 		raavareDAO = new RaavareDAO(txt);
-		
-//		Thread t = new Thread((Runnable) new ServerASE());
-//		t.start();
 	}
 	
-	/**
-	 * Starter ASE-programmet på en defineret vægt.
-	 */
-	public void runASE(){
-		int port;
-		String host;
-
-		//		if (args.length == 2){
-		//			port = Integer.parseInt(args[1]);
-		//			host = args[0];
-		//		}
-		//		else {
-		port = 8000;
-		host = "169.254.2.3";
-//		host = "localhost";
-		//		}
-
-		IProcedure menu = new Procedure();
-		try {
-			Connector con = new Connector();
-//			ITransmitter trans = new Transmitter();
-//			IProcedureController menuCon = new ProcedureController(menu, this, host, port, trans);
-//			Thread menuThread = new Thread((Runnable) menuCon);
-//			menuThread.start();
-
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public ControllerDAO(int i) throws FileNotFoundException, DALException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
+		Connector con = new Connector();
+		txt = new TextReader("war");
+		oprDAO = new OperatoerDAO(txt);
+		pbDAO = new ProduktBatchDAO(txt);
+		pbkompDAO = new ProduktBatchKompDAO(txt);
+		receptDAO = new ReceptDAO(txt);
+		receptKompDAO = new ReceptKompDAO(txt);
+		rbDAO = new RaavareBatchDAO(txt);
+		raavareDAO = new RaavareDAO(txt);
 	}
 	
 	public IOperatoerDAO getOprDAO(){
