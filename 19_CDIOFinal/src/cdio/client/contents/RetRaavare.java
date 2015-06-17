@@ -167,9 +167,8 @@ public class RetRaavare  extends Composite {
 					Controller.refreshToken();
 //					uNavn = ((TextBox) ft.getWidget(eventRow, 1)).getText();
 //					uLeverandoer = ((TextBox) ft.getWidget(eventRow, 2)).getText();
-
 					openEventRow = 0;
-					Window.alert("Raavare" + " blev opdateret");
+					Window.alert("Raavare ID " + ft.getText(eventRow, 0) + " blev opdateret");
 					run(); //Reload siden
 				}
 			});
