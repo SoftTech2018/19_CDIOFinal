@@ -27,7 +27,7 @@ public class Connector{
 	 * Dette er den lokale Database på din egen computer
 	 */
 	server					= "localhost",  // database-serveren
-	database				= "cdio_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	database				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
 	username				= "root", // dit brugernavn = dit studienummer 
 	password				= ""; // dit password som du har valgt til din database
 
