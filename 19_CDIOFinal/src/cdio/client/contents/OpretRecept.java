@@ -206,6 +206,7 @@ public class OpretRecept extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			nyRecept.setEnabled(false);
 			gemKomp.setText("Loading");
 			gemKomp.setEnabled(false);
 
@@ -244,8 +245,10 @@ public class OpretRecept extends Composite {
 						});
 						gemKomp.setText("Gem Komponent");
 						gemKomp.setEnabled(true);
+						nyRecept.setEnabled(true);
 					}
 					else{
+						nyRecept.setEnabled(true);
 						gemKomp.setText("Gem Komponent");
 						gemKomp.setEnabled(true);
 						error.setText(caught.getMessage());
@@ -262,6 +265,7 @@ public class OpretRecept extends Composite {
 					error.setStyleName("Recept-Positiv");
 					error.setText("Receptkomponent med råvareid "+raavareid.getText() +" er oprettet. Tilføj flere ved at vælge 'ny komponent'");
 					tilfoej.setEnabled(true);
+					nyRecept.setEnabled(true);
 				}
 			});
 		}
