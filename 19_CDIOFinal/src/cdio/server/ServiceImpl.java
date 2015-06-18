@@ -459,8 +459,14 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			dao.getProduktBatch(id);
-			dao.deleteProduktBatch(id);
+			try{
+				dao.deleteProduktBatch(id);
+			} catch (Exception DALException){
+				check = true;
+			}
 		}
+		if (check)
+			throw new DALException("Produktbatchen er påbegyndt og kan ikke slettes.");
 	}
 
 	@Override
