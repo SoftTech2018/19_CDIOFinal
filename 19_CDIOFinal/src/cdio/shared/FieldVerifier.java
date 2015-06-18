@@ -11,15 +11,9 @@ public class FieldVerifier {
 		if (!illigalChars(name))
 			return false;
 
-//		for (int i=0; i < name.length(); i++){
-//			String sString = name.substring(i, i+1);
-//			if (sString.matches("[0-9]")){
-//				return false;
-//			}
-//		}
-		if (name.length() == 0) {
+		if (name.length() == 0) 
 			return false;			
-		}
+
 		// max 30 karakterer
 		return name.length() <= 30;
 	}
@@ -32,9 +26,8 @@ public class FieldVerifier {
 	public static boolean isValidUserId(String id){
 		try {
 			int i = Integer.parseInt(id);
-			if(i<=0 || i>99999999){
+			if(i<=0 || i>99999999)
 				throw new NumberFormatException();
-			}
 			return true;
 		} catch (NumberFormatException e){
 			return false;
@@ -47,12 +40,10 @@ public class FieldVerifier {
 	 * @return
 	 */
 	public static boolean isValidPassword(String pass){
-		if (pass == null)
-			return false;
-		if (pass.length()<4)
+		if (!illigalChars(pass))
 			return false;
 
-		if (!illigalChars(pass))
+		if (pass.length()<4)
 			return false;
 
 		return true;
@@ -64,18 +55,19 @@ public class FieldVerifier {
 	 * @return True hvis initial er valid
 	 */
 	public static boolean isValidInitial(String ini){
-		if (ini == null)
+		if (!illigalChars(ini))
 			return false;
 		if (ini.length()>3)
-			return false;
-		if (!illigalChars(ini))
 			return false;
 		return true;
 	}
 
-	
-	
+
+
 	public static boolean isValidCpr(String cpr){
+		if (!illigalChars(cpr))
+			return false;
+
 		if (cpr.length() < 11 || cpr.length() > 11){
 			return false;
 		}
@@ -113,21 +105,18 @@ public class FieldVerifier {
 
 		try{
 			Double input =	Double.parseDouble(ny); 
-
-			if(input < 0.05){
-				return false;
-			}
-			if(input > 20.0 ){
-				return false;
-			}		
+			if(input < 0.05)
+				return false;		
+			if(input > 20.0 )
+				return false;			
 		} catch (NumberFormatException e){
 			return false;
 		}
-
 		return true;			
 	}
 
 	public static boolean isValidTol(String tol){
+
 		String ny = tol;
 		for(int i=0; i<tol.length(); i++){
 			if(tol.charAt(i)==','){
@@ -161,17 +150,16 @@ public class FieldVerifier {
 	 * @return True hvis navn er valid
 	 */
 	public static boolean isValidReceptName(String name) {
+		if (!illigalChars(name))
+			return false;
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-			if (!illigalChars(name))
-				return false;
 			if (name.length() <= 1) {
 				return false;			
 			}
-
 		}
 		// max 22 karakterer
 		return name.length() <= 22;
@@ -233,28 +221,27 @@ public class FieldVerifier {
 		}
 		try{
 			Double m =	Double.parseDouble(ny); 
-
-			if(m < 0.0000){
+			if(m < 0){
 				return false;
 			}
-			if(m > 99999999.0000){
+			if(m > 99999999){
 				return false;
 			}		
+			return true;			
 		} catch (NumberFormatException e){
 			return false;
 		}
-		return true;			
 	}
 
 	public static boolean isValidRaavareName(String name) {
+		if (!illigalChars(name))
+			return false;
 		if (name.length() <= 1) {
 			return false;			
 		}
 		if (name.length() > 22){
 			return false;
 		}
-		if (!illigalChars(name))
-			return false;
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]"))
@@ -264,17 +251,16 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidLeverandorName(String name) {
+		if (!illigalChars(name))
+			return false;
 		for (int i=0; i < name.length(); i++){
 			String sString = name.substring(i, i+1);
 			if (sString.matches("[0-9]")){
 				return false;
 			}
-			if (!illigalChars(name))
-				return false;
 			if (name.length() <= 1) {
 				return false;			
 			}
-
 		}
 		// max 22 karakterer
 		return name.length() <= 22;
@@ -308,6 +294,8 @@ public class FieldVerifier {
 	 * @return True hvis stringen IKKE indeholder ulovlige tegn
 	 */
 	public static boolean illigalChars(String string){
+		if (string == null)
+			return false;
 		for (int i=0; i<string.length(); i++){
 			char p = string.charAt(i);
 			if (p=='#' || p=='<' || p=='>' || p=='"' || p=='&')

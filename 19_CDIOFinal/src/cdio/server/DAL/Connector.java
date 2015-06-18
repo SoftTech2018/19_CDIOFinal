@@ -18,18 +18,18 @@ public class Connector{
 	/*
 	 * Dette er den centrale Database stillet til rådighed af Stig/Ronnie
 	 */
-	//	server					= "62.79.16.16",  // database-serveren
-	//	database				= "grp19",  //"jdbcdatabase", // navnet paa din database = dit studienummer
-	//	username				= "grp19", // dit brugernavn = dit studienummer 
-	//	password				= "WxqW2GBF"; // dit password som du har valgt til din database
-	
+	server					= "62.79.16.16",  // database-serveren
+	database				= "grp19",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	username				= "grp19", // brugernavn 
+	password				= "WxqW2GBF"; // dit password som du har valgt til din database
+
 	/*
 	 * Dette er den lokale Database på din egen computer
 	 */
-	server					= "localhost",  // database-serveren
-	database				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
-	username				= "root", // dit brugernavn = dit studienummer 
-	password				= ""; // dit password som du har valgt til din database
+	//	server					= "localhost",  // database-serveren
+	//	database				= "19_db",  //"jdbcdatabase", // navnet paa din database = dit studienummer
+	//	username				= "root", // dit brugernavn = dit studienummer 
+	//	password				= ""; // dit password som du har valgt til din database
 
 	private final int port = 3306;
 
@@ -84,7 +84,7 @@ public class Connector{
 			throw new DALException(e); 
 		}
 	}
-	
+
 	public static void runScript() throws DALException {
 		try {
 			runner.runScript(new BufferedReader(new FileReader("/Users/JacobWorckJepsen/Dropbox/CDIO/2. Semester/Videregående Programmering/FInal/Database/Script/cdio_db5.sql")));
