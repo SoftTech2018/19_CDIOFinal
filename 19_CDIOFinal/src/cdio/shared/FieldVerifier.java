@@ -11,12 +11,12 @@ public class FieldVerifier {
 		if (!illigalChars(name))
 			return false;
 
-		for (int i=0; i < name.length(); i++){
-			String sString = name.substring(i, i+1);
-			if (sString.matches("[0-9]")){
-				return false;
-			}
-		}
+//		for (int i=0; i < name.length(); i++){
+//			String sString = name.substring(i, i+1);
+//			if (sString.matches("[0-9]")){
+//				return false;
+//			}
+//		}
 		if (name.length() == 0) {
 			return false;			
 		}
@@ -74,21 +74,24 @@ public class FieldVerifier {
 	}
 
 	public static boolean isValidCpr(String cpr){
-		for (int i=0; i < cpr.length(); i++){
-			String sString = cpr.substring(i, i+1);
-			if (sString.matches("[a-z]")){
-				return false;
-			} else if (sString.matches("[!]")){
-
-				return false;
-			}
-		}
 		if (cpr.length() < 11 || cpr.length() > 11){
 			return false;
 		}
 		if (!(cpr.charAt(6)=='-')){
 			return false;
 		}
+		String[] sString = cpr.split("\\-");
+		for (char c : sString[0].toCharArray()){
+			if(String.valueOf(c).matches("\\D")){
+				return false;
+			}
+		}
+		for (char c : sString[1].toCharArray()){
+			if(String.valueOf(c).matches("\\D")){
+				return false;
+			}
+		}
+
 		return true;
 	}
 
