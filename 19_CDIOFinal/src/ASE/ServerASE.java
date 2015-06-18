@@ -17,15 +17,14 @@ public class ServerASE implements Runnable{
 	private List<String> ipList;
 	private List<Thread> active;
 	private List<String> activeIp;
-	private int port, portCheck;
+	private int port;
 
 	public ServerASE(){
 		ipList = new ArrayList<String>();
 		active = new ArrayList<Thread>();
 		activeIp = new ArrayList<String>();
 		port = 8000; // Hvilken port benyttes til afvejningsproceduren
-		portCheck = 8000; // Hvilken port benyttes til at tjekke om vægten er tændt (23, 80, 8000?)
-
+		
 		/*
 		 * Tilføj de vægtes IP-adresser der skal tjekkes.
 		 */
@@ -59,20 +58,19 @@ public class ServerASE implements Runnable{
 					 *  Tjek om der kan oprettes forbindelse til IP på port 7 (echo). 
 					 *  I så fald oprettes en afvejningsprocedure på vægten.
 					 */
-					Socket w = null;
+					Socket socket = null;
 					try {
-						w = new Socket();
-						w.connect(new InetSocketAddress(ipList.get(i), portCheck), 1000);  // 1000 = 1 sek til at connecte
+						socket = new Socket();
+						socket.connect(new InetSocketAddress(ipList.get(i), port), 1000);  // 1000 = 1 sek til at connecte
 					} catch (SocketTimeoutException e){
 						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
 					}
-					if (w.isConnected()){
-						w.close(); // Luk socket så ProcedureController kan oprette sin egen socket
+					if (socket.isConnected()){
 						IProcedure menu = new Procedure();
 						ITransmitter trans = new Transmitter();
 						IControllerDAO dao = new ControllerDAO(0);
 
-						IProcedureController ase = new ProcedureController(menu, dao , ipList.get(i), port, trans);
+						IProcedureController ase = new ProcedureController(socket, menu, dao , ipList.get(i), port, trans);
 						Thread t = new Thread((Runnable) ase);
 						t.start();
 
@@ -104,5 +102,3 @@ public class ServerASE implements Runnable{
 		}
 	}
 }
-
-

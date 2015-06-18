@@ -33,26 +33,27 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private PrintWriter out;
 	private BufferedReader in;
 	private int pos,raa,rec;
+	private Socket socket;
 
-	public ProcedureController(IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
+	public ProcedureController(Socket socket, IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
 		this.menu = menu;
 		this.trans = trans;
 		this.dao = dao;
 		this.host = host;
 		this.port = port;
+		this.socket = socket;
 		this.state = State.START;
 	}
 
 
 	@Override
 	public void run() {
-		connect(host, port);		
+		connect(socket);		
 	}
 
 	@Override
-	public void connect(String host, int port){
-		try (Socket	socket = new Socket(host, port);
-				PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+	public void connect(Socket socket){
+		try (	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			trans.connected(in, out);
 			this.out=out;
@@ -69,7 +70,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	 * @see wcuMain.IMenuController#start()
 	 */
 	@Override
-	public void start(){
+	public void start() throws IOException{
 		menu.show("Overvagning af vagtbetjening");
 		do{
 			try {
@@ -86,6 +87,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 			this.state = this.state.changeState(menu,dao,trans,this);		
 		}
 		while(!state.equals(State.STOP));
+		socket.close();
 	}
 
 	public enum State {
