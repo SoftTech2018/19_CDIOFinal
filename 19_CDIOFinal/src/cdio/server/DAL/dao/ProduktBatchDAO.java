@@ -116,7 +116,11 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 	}
 
 	public void checkReceptID(int id) throws DALException{
-		Connector.doUpdate(txt.deleteRecept(id));
+		try{
+			Connector.doUpdate(txt.deleteRecept(id));
+		} catch (Exception DALException) {
+			throw new DALException("Recepten er i brug");
+		}
 	}
 	
 	public void deleteProduktBatch(int id) throws DALException{

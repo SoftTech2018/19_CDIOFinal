@@ -409,15 +409,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
 			dao.getRecept(id);
-			try {
-				dao.checkReceptID(id);
-			} catch (Exception DALException){
-				check = true;
-			}
-
-			if (check){
-				throw new DALException("Recepten er i brug");
-			} 
+			dao.checkReceptID(id);
 		} else {
 			throw new TokenException("Adgang nægtet");		
 		}
