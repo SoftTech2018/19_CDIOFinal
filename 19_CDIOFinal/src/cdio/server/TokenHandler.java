@@ -18,7 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class TokenHandler {
 	private static TokenHandler instance;
-	private static final int TOKEN_LIFETIME = 1; //in minuttes.
+	private static final int TOKEN_LIFETIME = 30; //in minuttes.
 	private final static String KEY = "Summer petrichor"; //16 chars = 16 byte = 128 bit
 	private final static String SIGNATURE = "Tessaract, the four dimensional equivalent of a cube."; 
 	private final static String SIGNATURE_KEY = "Tetradecahedrons";
