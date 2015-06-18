@@ -279,6 +279,7 @@ public class OpretRecept extends Composite {
 
 			Controller.service.createRecept(Controller.token, recept, new AsyncCallback<Void>(){
 
+				
 				@Override
 				public void onFailure(Throwable caught) {
 					if (caught instanceof TokenException){

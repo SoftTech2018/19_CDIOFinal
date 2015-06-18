@@ -342,6 +342,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			throw new TokenException("Adgang nægtet");		
 		 }
 	}
+	
 
 	@Override
 	public void createRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
