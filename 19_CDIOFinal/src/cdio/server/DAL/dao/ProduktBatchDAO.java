@@ -125,7 +125,7 @@ public class ProduktBatchDAO implements IProduktBatchDAO {
 			if(rs.next()){
 				Connector.doUpdate(txt.deleteProduktBatchFinal(id));
 			} else{
-				throw new DALException();
+				throw new DALException("Produktbatchen er påbegyndt og kan ikke slettes.");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
