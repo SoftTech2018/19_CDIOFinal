@@ -99,7 +99,7 @@ public class RetRaavare  extends Composite {
 			uLeverandoer = ft.getText(eventRow, 2);
 
 			nameValid = FieldVerifier.isValidName(uNavn);
-			leverandoerValid = true; //unødvendigt
+			leverandoerValid = FieldVerifier.illigalChars(uLeverandoer); //unødvendigt
 
 			//Her laves nye widgets der kan redigeres i og erstatter de oprindelige med disse
 //			oID = new TextBox();
@@ -116,6 +116,7 @@ public class RetRaavare  extends Composite {
 
 			oLeverandoer = new TextBox();
 			oLeverandoer.setText(uLeverandoer);
+			oLeverandoer.addKeyUpHandler(new LeverandoerCheck());
 			oLeverandoer.setStyleName("TextBox-Ret");
 			ft.setWidget(eventRow, 2, oLeverandoer);
 
@@ -234,5 +235,26 @@ public class RetRaavare  extends Composite {
 			else
 				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
 		}
+	}
+	
+	private class LeverandoerCheck implements KeyUpHandler{
+
+		@Override
+		public void onKeyUp(KeyUpEvent event) {
+			TextBox leverandoer = (TextBox) event.getSource();
+			if(!FieldVerifier.illigalChars(leverandoer.getText())){
+				leverandoer.setStyleName("TextBox-RetError");
+				leverandoerValid = false;
+			} else {
+				leverandoer.setStyleName("TextBox-Ret");
+				leverandoerValid = true;
+			}
+
+			if (nameValid && leverandoerValid)
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(true);
+			else
+				((Button) ft.getWidget(eventRow, 3)).setEnabled(false);
+		}
+		
 	}
 }
