@@ -497,16 +497,9 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
-		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
 			dao.getRaavareID(raavare_id);
-			try{
-				dao.deleteRaavare(raavare_id);
-			} catch (Exception DALException){
-				check = true;
-			}
+			dao.deleteRaavare(raavare_id);
 		}
-		if (check)
-			throw new DALException("Raavaren bliver brugt i en recept og kan ikke slettes.");
 	}
 }

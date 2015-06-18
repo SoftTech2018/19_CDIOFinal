@@ -59,7 +59,7 @@ private TextReader txt;
 			if(!rs.next()){
 				Connector.doUpdate(txt.deleteRaavareFinal(id));
 			} else {
-				throw new DALException();
+				throw new DALException("Raavaren bliver brugt i en recept og kan ikke slettes.");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
