@@ -42,8 +42,9 @@ public class ControllerDAO implements IControllerDAO {
 	IRaavareDAO raavareDAO;
 	TextReader txt;
 	
-	public ControllerDAO() throws FileNotFoundException, DALException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{
-		Connector con = new Connector();
+	public ControllerDAO() throws DALException{
+		try {
+			Connector con = new Connector();
 		txt = new TextReader();
 		oprDAO = new OperatoerDAO(txt);
 		pbDAO = new ProduktBatchDAO(txt);
@@ -52,6 +53,11 @@ public class ControllerDAO implements IControllerDAO {
 		receptKompDAO = new ReceptKompDAO(txt);
 		rbDAO = new RaavareBatchDAO(txt);
 		raavareDAO = new RaavareDAO(txt);
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException | FileNotFoundException e) {
+			e.printStackTrace();
+			throw new DALException("Kunne ikke oprette forbindelse til Databasen.");
+		}
 	}
 	
 	public ControllerDAO(int i) throws FileNotFoundException, DALException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException{

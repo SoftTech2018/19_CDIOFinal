@@ -2,6 +2,7 @@ package cdio.client;
 
 import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
+import cdio.shared.TokenException;
 import cdio.shared.UserDTO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -92,19 +93,21 @@ public class Login extends Composite {
 
 					@Override
 					public void onFailure(Throwable caught) {
-						errorMsg.setText(caught.getMessage()); // Fejlbesked
 						send.setText("Login");
 						password.setText("");
 						if (caught instanceof DALException || caught.getMessage().equalsIgnoreCase("Du har ikke adgang til at logge ind.")){
+							errorMsg.setText(caught.getMessage()); // Fejlbesked
 							userName.setStyleName("TextBox-Error");
 							userName.setFocus(true);
 							idValid = false;
 						}
-						else {
+						else if (caught instanceof TokenException){
+							errorMsg.setText(caught.getMessage());
 							password.setFocus(true);
 							password.setStyleName("TextBox-Error");
 							passValid = false;
-						}
+						} else
+							errorMsg.setText("Server/Database kunne ikke kontaktes");
 					}
 
 					@Override
