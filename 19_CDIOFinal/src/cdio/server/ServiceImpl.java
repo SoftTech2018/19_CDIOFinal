@@ -405,8 +405,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
-
-		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
 			dao.getRecept(id);
 			dao.checkReceptID(id);
@@ -449,17 +447,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
-		boolean check = false;
 		if(getRole(token).equalsIgnoreCase("Vaerkfoerer")){
 			dao.getProduktBatch(id);
-			try{
-				dao.deleteProduktBatch(id);
-			} catch (Exception DALException){
-				check = true;
-			}
+			dao.deleteProduktBatch(id);
 		}
-		if (check)
-			throw new DALException("Produktbatchen er påbegyndt og kan ikke slettes.");
 	}
 
 	@Override
