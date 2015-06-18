@@ -433,7 +433,7 @@ public class OpretRecept extends Composite {
 			error.setText("");
 			TextBox id = (TextBox) event.getSource();
 			if(!FieldVerifier.isValidUserId(id.getText())){
-				id.setStyleName("TextBox-Opret");
+				id.setStyleName("TextBox-OpretError");
 				raavareidValid = false;
 
 			} else{

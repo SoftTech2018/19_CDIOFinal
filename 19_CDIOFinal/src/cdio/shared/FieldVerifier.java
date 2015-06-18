@@ -117,7 +117,7 @@ public class FieldVerifier {
 			if(input < 0.05){
 				return false;
 			}
-			if(input >= 20.1 ){
+			if(input > 20.0 ){
 				return false;
 			}		
 		} catch (NumberFormatException e){
@@ -146,7 +146,7 @@ public class FieldVerifier {
 			if(input < 0.1){
 				return false;
 			}
-			if(input >= 10.0 ){
+			if(input > 10.0 ){
 				return false;
 			}		
 		} catch (NumberFormatException e){
