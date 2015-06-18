@@ -354,15 +354,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 
-		if(getRole(token).equalsIgnoreCase("Farmaceut")){
-			try{
-				dao.createRaavare(raavare);
-			}
-			catch(DALException e){
-				throw new DALException("Råvareid findes allerede!");
-			}
-		} else
+		if(!getRole(token).equalsIgnoreCase("Farmaceut")){
 			throw new TokenException("Adgang nægtet");			
+		}
+		
+		if(!FieldVerifier.isValidRaavareId(String.valueOf(raavare.getRaavareId())) || !FieldVerifier.isValidRaavareName(raavare.getRaavareNavn()) || !FieldVerifier.isValidLeverandorName(raavare.getLeverandoer())){		
+			throw new DALException("Ugyldigt input");
+		}
+		
+		dao.createRaavare(raavare);
 	}
 
 	@Override
