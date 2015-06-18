@@ -56,8 +56,12 @@ public class ReceptKompDAO implements IReceptKompDAO {
 
 	@Override
 	public void createReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
-		Connector.doUpdate(txt.createReceptKomp(receptkomponent));
+		Connector.doUpdate(txt.createReceptKomp(receptkomponent)); 
+		
+		
 	}
+
+	
 
 	@Override
 	public void updateReceptKomp(ReceptKompDTO receptkomponent) throws DALException {
