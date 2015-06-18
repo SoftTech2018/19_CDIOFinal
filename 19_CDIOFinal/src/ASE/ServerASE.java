@@ -30,8 +30,6 @@ public class ServerASE implements Runnable{
 		/*
 		 * Tilføj de vægtes IP-adresser der skal tjekkes.
 		 */
-		//		ip.add("169.254.2.2");
-		//		ip.add("169.254.2.3");
 		ipList.add("169.254.2.2");
 		ipList.add("169.254.2.3");
 		ipList.add("localHost");

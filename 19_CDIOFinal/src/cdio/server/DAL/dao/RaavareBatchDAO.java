@@ -53,6 +53,11 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 		} catch (SQLException e) { throw new DALException(e); }
 		return list;
 	}
+	
+	@Override
+	public void updateRaavareBatchMaengde(RaavareBatchDTO dto) throws DALException {
+		Connector.doUpdate(txt.updateRaavareBatchMaengde(dto));
+	}
 
 	@Override
 	public void createRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {

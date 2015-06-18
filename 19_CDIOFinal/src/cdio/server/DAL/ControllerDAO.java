@@ -278,5 +278,10 @@ public class ControllerDAO implements IControllerDAO {
 	public ReceptKompDTO getReceptKomp(int recID, int raaID) throws DALException {
 		return receptKompDAO.getReceptKomp(recID, raaID);
 	}
+
+	@Override
+	public void updateRbMaengde(RaavareBatchDTO dto) throws DALException {
+		rbDAO.updateRaavareBatch(dto);
+	}
 }
 	

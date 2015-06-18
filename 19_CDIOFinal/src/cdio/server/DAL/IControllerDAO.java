@@ -21,6 +21,8 @@ import cdio.shared.UserDTO;
 
 public interface IControllerDAO {
 	
+	void updateRbMaengde(RaavareBatchDTO dto) throws DALException;
+	
 	public IOperatoerDAO getOprDAO();
 	
 	public IProduktBatchDAO getPbDAO();

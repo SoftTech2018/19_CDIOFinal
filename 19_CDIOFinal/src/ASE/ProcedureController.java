@@ -14,6 +14,7 @@ import java.util.List;
 import cdio.server.DAL.IControllerDAO;
 import cdio.shared.DALException;
 import cdio.shared.ProduktBatchKompDTO;
+import cdio.shared.RaavareBatchDTO;
 import cdio.shared.ReceptKompDTO;
 
 public class ProcedureController implements Runnable, IProcedureController {
@@ -293,7 +294,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 					System.out.println(test);
 					if(test==mc.raavare_id){
 						mc.rb_ID=input;
-						if(dao.getReceptKomp(mc.recept_id, mc.raavare_id).getNomNetto()>dao.getRbDAO().getRaavareBatch(mc.rb_ID).getMaengde()){
+						if(dao.getReceptKomp(mc.recept_id, mc.raavare_id).getNomNetto()>=dao.getRbDAO().getRaavareBatch(mc.rb_ID).getMaengde()){
 							trans.P111("Batch for lille.");
 							return CHECK;
 						}
@@ -410,7 +411,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 					if (input.equals(answer)) {
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.rb_ID, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
-						dao.getRbDAO().getRaavareBatch(mc.rb_ID).setMaengde(dao.getRbDAO().getRaavareBatch(mc.rb_ID).getMaengde()-mc.afvejning);
+						RaavareBatchDTO p = dao.getRbDAO().getRaavareBatch(mc.rb_ID);// Kode skal testessbnl
+						p.setMaengde(p.getMaengde()-mc.afvejning);// Kode skal testessbnl
+						dao.updateRbMaengde(p); // Kode skal testessbnl
 						mc.restListe.remove(0);
 						if(mc.restListe.isEmpty()){
 							dao.updatePbStatus(mc.prod_batch_id, 2);

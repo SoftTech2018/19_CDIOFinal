@@ -221,6 +221,13 @@ public class TextReader {
 		return output;
 	}
 	
+	public String updateRaavareBatchMaengde(RaavareBatchDTO raavarebatch){
+		String output = sqlCommands[71];
+		output = output.replaceFirst(illegalString + "1", Double.toString(raavarebatch.getMaengde()));
+		output = output.replaceFirst(illegalString + "2", Integer.toString(raavarebatch.getRbId()));
+		return output;
+	}
+	
 	public String getRaavare(int raavareId){
 		String output = sqlCommands[28];
 		output = output.replaceFirst(illegalString + "1", Integer.toString(raavareId));
