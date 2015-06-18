@@ -373,11 +373,7 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			} catch (InterruptedException e) {}
 
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
-			try{ dao.getRaavareID(raavareid);
-			}
-			catch(DALException e){
-				throw new DALException("Råvareid ukendt!");
-			}		
+			dao.getRaavareID(raavareid);	
 		} else
 			throw new TokenException("Adgang nægtet");
 	}
