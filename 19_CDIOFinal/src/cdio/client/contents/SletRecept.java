@@ -59,6 +59,7 @@ public class SletRecept extends Composite {
 
 			@Override
 			public void onClick(ClickEvent event) {
+				id.setEnabled(false);
 				btn.setText("Loading");
 				btn.setEnabled(false);
 				Controller.service.checkReceptID(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
@@ -76,12 +77,11 @@ public class SletRecept extends Composite {
 							});
 							id.setText("");
 							btn.setText("Slet Recept");
-							btn.setEnabled(true);
 						} else {
 							Window.alert(caught.getMessage());
 							id.setText("");
+							id.setEnabled(true);
 							btn.setText("Slet Recept");
-							btn.setEnabled(true);
 						}
 					}
 
@@ -90,8 +90,8 @@ public class SletRecept extends Composite {
 						Controller.refreshToken();
 						Window.alert("Recept id " + id.getText()+ " blev slettet");
 						id.setText("");
+						id.setEnabled(true);
 						btn.setText("Slet Recept");
-						btn.setEnabled(true);
 					}
 				});
 			}

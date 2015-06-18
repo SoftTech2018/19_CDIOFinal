@@ -58,9 +58,12 @@ public class SletRaavare extends Composite{
 		vPane.add(ft);
 		
 		btn.addClickHandler(new ClickHandler(){
-
+			
+			
+			
 			@Override
 			public void onClick(ClickEvent event) {
+				id.setEnabled(false);
 				btn.setText("Loading");
 				btn.setEnabled(false);
 				Controller.service.deleteRaavare(Controller.token, Integer.parseInt(id.getText()), new AsyncCallback<Void>(){
@@ -78,12 +81,11 @@ public class SletRaavare extends Composite{
 							});
 							id.setText("");
 							btn.setText("Slet Råvare");
-							btn.setEnabled(true);
 						} else {
 							Window.alert(caught.getMessage());
 							id.setText("");
+							id.setEnabled(true);
 							btn.setText("Slet Råvare");
-							btn.setEnabled(true);
 						}
 					}
 
@@ -91,6 +93,7 @@ public class SletRaavare extends Composite{
 					public void onSuccess(Void result) {
 						Window.alert("Råvare ID " + id.getText() + " blev slettet");
 						id.setText("");
+						id.setEnabled(true);
 						btn.setText("Slet Råvare");
 						Controller.refreshToken();
 						btn.setEnabled(true);
