@@ -73,12 +73,12 @@ public class SletProduktbatch extends Composite{
 								}
 							});
 							id.setText("");
-							btn.setText("Slet Recept");
+							btn.setText("Slet Produktbatch");
 							btn.setEnabled(true);
 						} else {
 							Window.alert(caught.getMessage());
 							id.setText("");
-							btn.setText("Slet Recept");
+							btn.setText("Slet Produktbatch");
 							btn.setEnabled(true);
 						}
 					}
@@ -87,7 +87,7 @@ public class SletProduktbatch extends Composite{
 					public void onSuccess(Void result) {
 						Window.alert("Produktbatch ID " + id.getText() + " blev slettet");
 						id.setText("");
-						btn.setText("Slet Recept");
+						btn.setText("Slet Produktbatch");
 						btn.setEnabled(true);
 						Controller.refreshToken();
 					}
