@@ -141,6 +141,9 @@ public class RetRaavare  extends Composite {
 				((Button) ft.getWidget(i, 3)).setEnabled(false);
 			}
 			((Button) ft.getWidget(eventRow, 4)).setEnabled(false);
+			
+			oNavn.setEnabled(false);
+			oLeverandoer.setEnabled(false);
 
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(ft.getText(eventRow, 0)), ((TextBox)ft.getWidget(eventRow, 1)).getText(), ((TextBox)ft.getWidget(eventRow, 2)).getText());
 			Controller.service.updateRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
