@@ -333,18 +333,15 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
-
-		if (getRole(token).equalsIgnoreCase("Farmaceut")){
-			try{
-				dao.createRecept(recept);}
-			catch(DALException e){
-				throw new DALException("Receptnummer findes allerede!");
-			}
-		} else {
-			throw new TokenException("Adgang nægtet");		
+		if(!FieldVerifier.isValidUserId(Integer.toString(recept.getReceptId())) || !FieldVerifier.isValidReceptName(recept.getReceptNavn())){
+			throw new DALException("Ugyldigt input");
 		}
+		if (getRole(token).equalsIgnoreCase("Farmaceut")){
+				dao.createRecept(recept);}
+		else {
+			throw new TokenException("Adgang nægtet");		
+		 }
 	}
-	
 
 	@Override
 	public void createRaavare(String token, RaavareDTO raavare) throws TokenException, DALException{
@@ -388,13 +385,17 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {}
 
+		if(!FieldVerifier.isValidUserId(Integer.toString(receptkomp.getReceptId())) 
+				|| !FieldVerifier.isValidUserId(Integer.toString(receptkomp.getRaavareId())) 
+				|| !FieldVerifier.isValidNetto(Double.toString(receptkomp.getNomNetto())) 
+				|| !FieldVerifier.isValidTol(Double.toString(receptkomp.getTolerance()))){
+			throw new DALException("Ugyldigt input");
+		}
+	
 		if(getRole(token).equalsIgnoreCase("Farmaceut")){
-			try{ dao.createReceptKomp(receptkomp);
-			}
-			catch(Exception DALException){
-				throw new DALException("Råvareid i receptkomponent allerede oprettet");
-			}
-		} else 
+			dao.createReceptKomp(receptkomp);}
+			
+		else 
 			throw new TokenException("Adgang nægtet");		
 	}
 
