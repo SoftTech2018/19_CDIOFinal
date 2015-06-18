@@ -74,12 +74,10 @@ public class SletProduktbatch extends Composite{
 							});
 							id.setText("");
 							btn.setText("Slet Produktbatch");
-							btn.setEnabled(true);
 						} else {
 							Window.alert(caught.getMessage());
 							id.setText("");
 							btn.setText("Slet Produktbatch");
-							btn.setEnabled(true);
 						}
 					}
 
