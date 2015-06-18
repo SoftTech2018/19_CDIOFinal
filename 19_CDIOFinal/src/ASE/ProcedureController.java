@@ -70,7 +70,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 	 * @see wcuMain.IMenuController#start()
 	 */
 	@Override
-	public void start() throws IOException{
+	public void start(){
 		menu.show("Overvagning af vagtbetjening");
 		do{
 			try {
@@ -81,13 +81,19 @@ public class ProcedureController implements Runnable, IProcedureController {
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+				this.state = State.STOP;
 			}
 			menu.show("");
 			menu.show(state.desc());
 			this.state = this.state.changeState(menu,dao,trans,this);		
 		}
 		while(!state.equals(State.STOP));
-		socket.close();
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public enum State {
@@ -145,7 +151,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						trans.RM20("Forkert input type. Prov igen.", "OK", "?");
 					} catch (IOException e1) {
 						System.out.println("IOException fejl");
-						System.exit(1);
+						return STOP;
 					}
 					return START;
 				} catch (IOException e){

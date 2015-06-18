@@ -1,7 +1,9 @@
 package ASE;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.net.NoRouteToHostException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.sql.SQLException;
@@ -30,9 +32,9 @@ public class ServerASE implements Runnable{
 		 */
 		//		ip.add("169.254.2.2");
 		//		ip.add("169.254.2.3");
-		ipList.add("192.168.1.24");
+		ipList.add("169.254.2.2");
+		ipList.add("169.254.2.3");
 		ipList.add("localHost");
-		ipList.add("192.168.1.213");
 	}
 
 	@Override
@@ -63,6 +65,10 @@ public class ServerASE implements Runnable{
 						socket = new Socket();
 						socket.connect(new InetSocketAddress(ipList.get(i), port), 1000);  // 1000 = 1 sek til at connecte
 					} catch (SocketTimeoutException e){
+						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
+					} catch (ConnectException e){
+						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
+					} catch (NoRouteToHostException e){
 						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
 					}
 					if (socket.isConnected()){
