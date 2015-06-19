@@ -25,7 +25,7 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 		ResultSet rs = Connector.doQuery(txt.getRaavareBatch(rbId));		
 	    try {
 	    	if (!rs.first()) throw new DALException("Raavarebatch " + rbId + " findes ikke");
-	    	return new RaavareBatchDTO (rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getInt("maengde"));
+	    	return new RaavareBatchDTO (rs.getInt("rb_id"), rs.getInt("raavare_id"), rs.getDouble("maengde"));
 	    }
 	    catch (SQLException e) {throw new DALException(e); }
 	}
@@ -65,8 +65,8 @@ public class RaavareBatchDAO implements IRaavareBatchDAO {
 	}
 
 	@Override
-	public void updateRaavareBatch(RaavareBatchDTO raavarebatch) throws DALException {
-		Connector.doUpdate(txt.updateRaavareBatch(raavarebatch));
+	public void updateRaavareBatch(RaavareBatchDTO dto) throws DALException {
+		Connector.doUpdate(txt.updateRaavareBatch(dto));
 	}
 
 }

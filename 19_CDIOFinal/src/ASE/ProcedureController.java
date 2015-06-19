@@ -68,7 +68,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 	@Override
 	public void start(){
 		menu.show("Overvagning af vagtbetjening");
-		do{
 			try {
 				String test = trans.RM20("123456789012345678901234567890", "", "");
 				System.out.println("Test: "+test);
@@ -79,6 +78,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 				e.printStackTrace();
 				this.state = State.STOP;
 			}
+			do{
 			menu.show("");
 			menu.show(state.desc());
 			this.state = this.state.changeState(menu,dao,trans,this);		
@@ -89,7 +89,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("PROGRAMMET AFSLUTTET!!!!! ASFUAN");
 	}
 
 	public enum State {
@@ -406,9 +406,9 @@ public class ProcedureController implements Runnable, IProcedureController {
 					trans.P111("");
 					if (input.equals(answer)) {
 						dao.createProduktBatchKomp(new ProduktBatchKompDTO(mc.prod_batch_id, mc.rb_ID, mc.getTara(), mc.getAfvejning(), mc.getOprID(),mc.getHost()));
-						RaavareBatchDTO p = dao.getRbDAO().getRaavareBatch(mc.rb_ID);// Kode skal testessbnl
-						p.setMaengde(p.getMaengde()-mc.afvejning);// Kode skal testessbnl
-						dao.updateRbMaengde(p); // Kode skal testessbnl
+						RaavareBatchDTO p = dao.getRbDAO().getRaavareBatch(mc.rb_ID);
+						p.setMaengde(p.getMaengde()-mc.afvejning);
+						dao.updateRbMaengde(p);
 						mc.restListe.remove(0);
 						if(mc.restListe.isEmpty()){
 							dao.updatePbStatus(mc.prod_batch_id, 2);
