@@ -113,6 +113,7 @@ public class OpretRaavare extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			opret.setText("loading");
 			opret.setEnabled(false);
 			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandoer.getText());
 
@@ -129,8 +130,10 @@ public class OpretRaavare extends Composite {
 								pop.setPopupPosition(left, top);
 							}
 						});
+						opret.setText("Opret");
 						opret.setEnabled(true);
 					} else {
+						opret.setText("Opret");
 						opret.setEnabled(true);
 						error.setText(caught.getMessage());
 						error.setStyleName("TextBox-ErrorMessage");	

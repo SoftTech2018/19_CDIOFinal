@@ -154,6 +154,7 @@ public class OpretRB extends Composite {
 
 		@Override
 		public void onClick(ClickEvent event) {
+			opret.setText("loading");
 			opret.setEnabled(false);
 			RaavareBatchDTO raavareBatch = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(maengde.getText()));
 
@@ -170,8 +171,10 @@ public class OpretRB extends Composite {
 								pop.setPopupPosition(left, top);
 							}
 						});
+						opret.setText("Opret");
 						opret.setEnabled(true);
 					} else {
+						opret.setText("Opret");
 						opret.setEnabled(true);
 						error.setText(caught.getMessage());
 						error.setStyleName("TextBox-ErrorMessage");	
