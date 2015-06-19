@@ -4,7 +4,6 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.client.PopupLogin;
-import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareBatchDTO;
 import cdio.shared.RaavareDTO;
@@ -28,7 +27,7 @@ public class OpretRB extends Composite {
 
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private TextBox rbID, raavareID, mængde;
+	private TextBox rbID, raavareID, maengde;
 	private Button opret;
 	private Label error;
 	private boolean rbIDValid=false, raavareIDValid=false, maengdeValid=false;
@@ -59,10 +58,10 @@ public class OpretRB extends Composite {
 		ft.setWidget(2, 1, raavareID);
 
 		ft.setText(3, 0, "Mængde(kg):");
-		mængde = new TextBox();
-		mængde.addKeyUpHandler(new MaengdeCheck()); 
-		mængde.setStyleName("Textbox-Opret");
-		ft.setWidget(3, 1, mængde);
+		maengde = new TextBox();
+		maengde.addKeyUpHandler(new MaengdeCheck()); 
+		maengde.setStyleName("Textbox-Opret");
+		ft.setWidget(3, 1, maengde);
 
 		opret = new Button("Opret");
 		opret.addClickHandler(new OpretClick());
@@ -156,7 +155,7 @@ public class OpretRB extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			RaavareBatchDTO raavareBatch = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(mængde.getText()));
+			RaavareBatchDTO raavareBatch = new RaavareBatchDTO(Integer.parseInt(rbID.getText()),Integer.parseInt(raavareID.getText()),Double.parseDouble(maengde.getText()));
 
 			Controller.service.createRaavareBatch(Controller.token, raavareBatch, new AsyncCallback<Void>(){
 
@@ -261,7 +260,7 @@ public class OpretRB extends Composite {
 		@Override
 		public void onKeyUp(KeyUpEvent event) {
 			TextBox name = (TextBox) event.getSource();
-			String inTXT = mængde.getText();
+			String inTXT = maengde.getText();
 			if (!FieldVerifier.isValidMaengde(inTXT)){
 				name.setStyleName("TextBox-OpretError");
 				maengdeValid = false;

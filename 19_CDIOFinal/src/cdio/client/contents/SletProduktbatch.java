@@ -22,7 +22,6 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SletProduktbatch extends Composite{
 
 	private VerticalPanel vPane;
-	private Label error;
 	private FlexTable ft;
 	private TextBox id;
 	private Label desc, sletPB;

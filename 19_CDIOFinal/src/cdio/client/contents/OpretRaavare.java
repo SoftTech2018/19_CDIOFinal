@@ -26,9 +26,9 @@ public class OpretRaavare extends Composite {
 
 	private VerticalPanel vPane;
 	private FlexTable ft;
-	private TextBox id, navn, leverandør;
+	private TextBox id, navn, leverandoer;
 	private Button opret;
-	private Label error, opretRaavarer;
+	private Label error;
 	private boolean idValid=false, navnValid=false, levValid=false;
 	private int[] liste;
 
@@ -57,10 +57,10 @@ public class OpretRaavare extends Composite {
 		ft.setWidget(2, 1, navn);
 
 		ft.setText(3, 0, "Leverandør:");
-		leverandør = new TextBox();
-		leverandør.addKeyUpHandler(new LevCheck()); 
-		leverandør.setStyleName("Textbox-Opret");
-		ft.setWidget(3, 1, leverandør);
+		leverandoer = new TextBox();
+		leverandoer.addKeyUpHandler(new LevCheck()); 
+		leverandoer.setStyleName("Textbox-Opret");
+		ft.setWidget(3, 1, leverandoer);
 
 		opret = new Button("Opret");
 		opret.addClickHandler(new OpretClick());
@@ -114,7 +114,7 @@ public class OpretRaavare extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			opret.setEnabled(false);
-			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandør.getText());
+			RaavareDTO raavare = new RaavareDTO(Integer.parseInt(id.getText()),navn.getText(),leverandoer.getText());
 
 			Controller.service.createRaavare(Controller.token, raavare, new AsyncCallback<Void>(){
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import cdio.client.Controller;
 import cdio.client.PopupLogin;
-import cdio.shared.DALException;
 import cdio.shared.FieldVerifier;
 import cdio.shared.RaavareDTO;
 import cdio.shared.ReceptDTO;
@@ -27,13 +26,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class OpretRecept extends Composite {
-
-	
 	
 	private VerticalPanel vPane, vPane1;
-	private FlexTable ft, ft3, ft2, ft4;
+	private FlexTable ft, ft3, ft4;
 	private TextBox receptid, navn, raavareid, nomNetto, tolerance;
-	private Button opret, tilfoej, gemKomp, ok, nyRecept;
+	private Button opret, tilfoej, gemKomp, nyRecept;
 	private Label error;
 	private boolean receptidValid, navnValid, nettoValid, tolValid, raavareidValid, receptOprettet, netEle, tolEle, ravEle;
 	private HorizontalPanel hp;

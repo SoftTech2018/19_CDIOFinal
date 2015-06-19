@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class SletRecept extends Composite {
 
 	private VerticalPanel vPane;
-	private Label error, sletRecept;
+	private Label sletRecept;
 	private FlexTable ft;
 	private TextBox id;
 	private Label desc;
