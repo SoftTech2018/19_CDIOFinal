@@ -62,19 +62,15 @@ public class ServerASE implements Runnable{
 					try {
 						socket = new Socket();
 						socket.connect(new InetSocketAddress(ipList.get(i), port), 1000);  // 1000 = 1 sek til at connecte
-					} catch (SocketTimeoutException e){
+					} catch (SocketTimeoutException | ConnectException | NoRouteToHostException e){
 						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
-					} catch (ConnectException e){
-						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
-					} catch (NoRouteToHostException e){
-						System.out.println("Kunne ikke forbinde til: " + ipList.get(i));
-					}
+					}  
 					if (socket.isConnected()){
 						IProcedure menu = new Procedure();
 						ITransmitter trans = new Transmitter();
 						IControllerDAO dao = new ControllerDAO(0);
 
-						IProcedureController ase = new ProcedureController(socket, menu, dao , ipList.get(i), port, trans);
+						IProcedureController ase = new ProcedureController(socket, menu, dao, trans);
 						Thread t = new Thread((Runnable) ase);
 						t.start();
 

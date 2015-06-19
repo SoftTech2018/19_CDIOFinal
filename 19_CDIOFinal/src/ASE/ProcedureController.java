@@ -25,23 +25,19 @@ public class ProcedureController implements Runnable, IProcedureController {
 	private IControllerDAO dao;
 	private int opr_id,raavare_id,recept_id,prod_batch_id,rb_ID;
 	private double afvejning,tara;
-	private int port;
 	private String host;
 	private List<ReceptKompDTO> receptKompListe;
 	private List<ProduktBatchKompDTO> pbKompListe;
 	private List<ReceptKompDTO> restListe;
 	private ReceptKompDTO receptKomp;
-	private PrintWriter out;
 	private BufferedReader in;
-	private int pos,raa,rec;
 	private Socket socket;
 
-	public ProcedureController(Socket socket, IProcedure menu, IControllerDAO dao, String host, int port, ITransmitter trans) {
+	public ProcedureController(Socket socket, IProcedure menu, IControllerDAO dao, ITransmitter trans) {
 		this.menu = menu;
 		this.trans = trans;
 		this.dao = dao;
-		this.host = host;
-		this.port = port;
+		this.host = socket.getInetAddress().getHostAddress();
 		this.socket = socket;
 		this.state = State.START;
 	}
@@ -57,7 +53,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 		try (	PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			trans.connected(in, out);
-			this.out=out;
 			this.in=in;
 			start();
 		} catch (UnknownHostException e) {
@@ -474,10 +469,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 		this.raavare_id=id;
 	}
 
-	private int getReceptID(){
-		return recept_id;
-	}
-
 	private void setReceptID(int id){
 		this.recept_id=id;
 	}
@@ -488,18 +479,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 	private void setProdBatchID(int id){
 		this.prod_batch_id=id;
-	}
-
-	private List<ReceptKompDTO> getReceptKompListe(){
-		return receptKompListe;
-	}
-
-	private void setReceptKompListe(List<ReceptKompDTO> liste){
-		this.receptKompListe=liste;
-	}
-
-	private List<ProduktBatchKompDTO> getpbKompListe(){
-		return pbKompListe;
 	}
 
 	private ReceptKompDTO getReceptKomp(){
@@ -528,10 +507,6 @@ public class ProcedureController implements Runnable, IProcedureController {
 
 	private String getHost(){
 		return this.host;
-	}
-
-	private void setHost(String host){
-		this.host=host;
 	}
 
 	private String prettyTime(){ return prettyTime(System.currentTimeMillis()); }
