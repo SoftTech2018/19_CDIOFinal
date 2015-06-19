@@ -113,7 +113,7 @@ public class ProcedureController implements Runnable, IProcedureController {
 						return START;
 					}
 					trans.P111("");
-					inputInt = Integer.parseUnsignedInt(input);
+					inputInt = Integer.parseInt(input);
 					if(!dao.isOpr(inputInt)){
 						trans.P111("Uautoriseret bruger");
 						return START;
